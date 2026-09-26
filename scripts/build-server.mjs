@@ -1,4 +1,4 @@
-import { copyFile, mkdir } from "node:fs/promises";
+import { mkdir } from "node:fs/promises";
 import path from "node:path";
 import { build } from "esbuild";
 
@@ -19,6 +19,3 @@ await build({
     js: "process.env.NODE_ENV ||= 'production';",
   },
 });
-
-// The bundled v3 API resolves its OpenAPI document beside server.mjs.
-await copyFile("server/api/v3/openapi.yaml", path.join(outputDirectory, "openapi.yaml"));

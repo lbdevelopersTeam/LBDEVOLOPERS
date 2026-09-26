@@ -82,11 +82,12 @@ export async function storeUpload(db: Kysely<Database>, file: Express.Multer.Fil
 
   const id = crypto.randomUUID();
   try {
-    const item = await db.insertInto('media_assets').values({
+    await db.insertInto('media_assets').values({
       id, uploaded_by: uploadedBy, provider, object_key: objectKey, public_url: publicUrl,
       original_name: path.basename(file.originalname).slice(0, 255), mime_type: mime, byte_size: file.size,
       checksum_sha256: checksum, width: null, height: null, alt_text: altText.slice(0, 300), status: 'ready', deleted_at: null,
-    }).returningAll().executeTakeFirstOrThrow();
+    }).execute();
+    const item = await db.selectFrom('media_assets').selectAll().where('id', '=', id).executeTakeFirstOrThrow();
     return { item, reused: false };
   } catch (error) {
     await cleanup?.().catch(() => undefined);

@@ -26,15 +26,9 @@
     "db:verify:curated-projects": "tsx server/db/verify-curated-projects.ts",
     "db:setup": "npm run db:migrate && npm run db:seed",
     "db:verify": "tsx server/db/verify.ts",
+    "hostinger:deploy": "npm run db:setup && npm run db:verify && npm run build",
     "verify:auth": "node scripts/verify-auth.mjs",
-    "db:backup": "node scripts/backup-db.mjs",
-    "mysql:migrate": "tsx server/mysql/migrate.ts",
-    "mysql:seed": "tsx server/mysql/seed.ts",
-    "mysql:seed:curated-projects": "tsx server/mysql/seed-curated-projects.ts",
-    "mysql:validate:curated-projects": "tsx server/mysql/seed-curated-projects.ts --dry-run",
-    "mysql:setup": "npm run mysql:migrate && npm run mysql:seed && npm run mysql:seed:curated-projects && npm run mysql:verify && npm run mysql:verify:curated-projects",
-    "mysql:verify": "tsx server/mysql/verify.ts",
-    "mysql:verify:curated-projects": "tsx server/mysql/verify-curated-projects.ts"
+    "db:backup": "node scripts/backup-db.mjs"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1116.0",
@@ -62,7 +56,6 @@
     "motion": "^12.23.24",
     "multer": "^2.4.0",
     "mysql2": "^3.24.2",
-    "pg": "^8.23.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router-dom": "^7.14.1",
@@ -73,12 +66,10 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
-    "@electric-sql/pglite": "^0.5.6",
     "@types/compression": "^1.8.1",
     "@types/express": "^4.17.21",
     "@types/multer": "^2.2.0",
     "@types/node": "^22.14.0",
-    "@types/pg": "^8.23.1",
     "@types/sanitize-html": "^2.16.1",
     "@types/supertest": "^7.2.1",
     "autoprefixer": "^10.4.21",

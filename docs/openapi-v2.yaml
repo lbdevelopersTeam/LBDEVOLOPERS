@@ -2,7 +2,7 @@ openapi: 3.1.0
 info:
   title: LB CodeBase API
   version: 2.0.0
-  description: PostgreSQL-backed public content and authenticated administration API.
+  description: MariaDB-backed public content and authenticated administration API.
 servers:
   - url: /api/v2
 tags:
@@ -15,7 +15,7 @@ paths:
       tags: [Public]
       operationId: getHealth
       responses:
-        '200': { description: PostgreSQL is reachable }
+        '200': { description: MariaDB is reachable }
         '503': { $ref: '#/components/responses/Unavailable' }
   /auth/login:
     post:

@@ -82,7 +82,7 @@ async function main() {
         created_by: admin.id,
         updated_by: admin.id,
         deleted_at: null,
-      }).onConflict((conflict) => conflict.column('id').doUpdateSet({ deleted_at: null })).execute();
+      }).onDuplicateKeyUpdate({ deleted_at: null }).execute();
       await updateProject(db, id, input, admin.id);
       process.stdout.write(`Upserted ${input.title}.\n`);
     }

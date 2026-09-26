@@ -45,9 +45,9 @@ export const errorHandler: ErrorRequestHandler = (error: unknown, _req, res, _ne
   if (['LIMIT_FILE_COUNT', 'LIMIT_FIELD_COUNT', 'LIMIT_FIELD_KEY', 'LIMIT_FIELD_VALUE', 'LIMIT_PART_COUNT'].includes(errorCode)) return res.status(422).json(errorBody(new ApiError(422, 'UPLOAD_FORM_INVALID', 'The upload form contains too many or invalid fields.'), requestId));
   if (error instanceof SyntaxError && typeof error === 'object' && 'status' in error && error.status === 400) return res.status(400).json(errorBody(new ApiError(400, 'MALFORMED_JSON', 'The JSON request body is malformed.'), requestId));
 
-  const pgCode = errorCode;
-  if (pgCode === '23505') return res.status(409).json(errorBody(new ApiError(409, 'CONFLICT', 'A record with that unique value already exists.'), requestId));
-  if (pgCode === '23503') return res.status(409).json(errorBody(new ApiError(409, 'RELATION_CONFLICT', 'The record is still referenced by another resource.'), requestId));
+  const databaseCode = errorCode;
+  if (databaseCode === 'ER_DUP_ENTRY' || databaseCode === '1062') return res.status(409).json(errorBody(new ApiError(409, 'CONFLICT', 'A record with that unique value already exists.'), requestId));
+  if (['ER_NO_REFERENCED_ROW_2', 'ER_ROW_IS_REFERENCED_2', '1451', '1452'].includes(databaseCode)) return res.status(409).json(errorBody(new ApiError(409, 'RELATION_CONFLICT', 'The record is still referenced by another resource.'), requestId));
 
   process.stderr.write(`${JSON.stringify({ level: 'error', requestId, event: 'request_failed', message: error instanceof Error ? error.message : String(error) })}\n`);
   return res.status(500).json(errorBody(new ApiError(500, 'INTERNAL_ERROR', 'The request could not be completed.'), requestId));

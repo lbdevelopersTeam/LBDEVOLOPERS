@@ -1,1 +1,0 @@
-ALTER TABLE app.blog_posts ADD COLUMN IF NOT EXISTS live_url text NOT NULL DEFAULT '';

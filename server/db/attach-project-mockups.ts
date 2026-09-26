@@ -102,7 +102,7 @@ async function main() {
           alt_text: mockup.altText,
           status: 'ready',
           deleted_at: null,
-        }).onConflict((conflict) => conflict.column('id').doUpdateSet({
+        }).onDuplicateKeyUpdate({
           public_url: mockup.publicUrl,
           original_name: mockup.fileName,
           mime_type: 'image/jpeg',
@@ -111,7 +111,7 @@ async function main() {
           alt_text: mockup.altText,
           status: 'ready',
           deleted_at: null,
-        })).execute();
+        }).execute();
 
         const existingLink = await trx.selectFrom('project_media')
           .select('media_id')

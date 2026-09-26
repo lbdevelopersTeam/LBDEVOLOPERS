@@ -13,11 +13,16 @@ type ServiceInput = z.infer<typeof serviceInput>;
 type TestimonialInput = z.infer<typeof testimonialInput>;
 type DbExecutor = Kysely<Database> | Transaction<Database>;
 
-// node-postgres treats JavaScript arrays as PostgreSQL arrays. JSONB inputs must
-// therefore be serialized explicitly so the same code works in real PostgreSQL.
+// MariaDB stores structured fields as JSON text; serialize on write and parse on read.
 const json = (value: unknown): JsonValue => JSON.stringify(value) as unknown as JsonValue;
 const iso = (value: Date | string | null | undefined) => value ? new Date(value).toISOString() : '';
-const values = <T>(value: unknown): T[] => Array.isArray(value) ? value as T[] : [];
+const values = <T>(value: unknown): T[] => {
+  if (Array.isArray(value)) return value as T[];
+  if (typeof value === 'string') {
+    try { const parsed = JSON.parse(value); return Array.isArray(parsed) ? parsed as T[] : []; } catch { return []; }
+  }
+  return [];
+};
 const CORE_EXPERTISE_CATEGORY = 'Core Expertise';
 
 const uniqueNames = (names: string[]) => {
@@ -73,15 +78,15 @@ function mapProject(row: Selectable<ProjectTable>, relations: Awaited<ReturnType
 
 export async function listProjects(db: Kysely<Database>, query: ListQuery, publicOnly = false) {
   let base = db.selectFrom('projects').selectAll();
-  let count = db.selectFrom('projects').select(sql<number>`count(*)::int`.as('count'));
+  let count = db.selectFrom('projects').select(sql<number>`count(*)`.as('count'));
   if (!query.includeDeleted) { base = base.where('deleted_at', 'is', null); count = count.where('deleted_at', 'is', null); }
   if (publicOnly) { base = base.where('status', '=', 'published'); count = count.where('status', '=', 'published'); }
   else if (query.status) { const status = query.status as 'draft' | 'published' | 'archived'; base = base.where('status', '=', status); count = count.where('status', '=', status); }
   if (query.category) { base = base.where('category', '=', query.category); count = count.where('category', '=', query.category); }
   if (query.search) {
     const search = `%${query.search}%`;
-    base = base.where((eb) => eb.or([eb('title', 'ilike', search), eb('short_description', 'ilike', search)]));
-    count = count.where((eb) => eb.or([eb('title', 'ilike', search), eb('short_description', 'ilike', search)]));
+    base = base.where((eb) => eb.or([eb('title', 'like', search), eb('short_description', 'like', search)]));
+    count = count.where((eb) => eb.or([eb('title', 'like', search), eb('short_description', 'like', search)]));
   }
   const [rows, totalRow] = await Promise.all([
     base.orderBy(publicOnly ? 'featured' : 'sort_order', publicOnly ? 'desc' : 'asc').orderBy('sort_order').orderBy('id').limit(query.limit).offset(query.offset).execute(),
@@ -215,10 +220,10 @@ function mapTeam(row: Selectable<TeamMemberTable>, relations: Awaited<ReturnType
 
 export async function listTeam(db: Kysely<Database>, query: ListQuery, publicOnly = false) {
   let base = db.selectFrom('team_members').selectAll();
-  let count = db.selectFrom('team_members').select(sql<number>`count(*)::int`.as('count'));
+  let count = db.selectFrom('team_members').select(sql<number>`count(*)`.as('count'));
   if (!query.includeDeleted) { base = base.where('deleted_at', 'is', null); count = count.where('deleted_at', 'is', null); }
   if (publicOnly) { base = base.where('active', '=', true); count = count.where('active', '=', true); }
-  if (query.search) { const search = `%${query.search}%`; base = base.where((eb) => eb.or([eb('name', 'ilike', search), eb('role', 'ilike', search)])); count = count.where((eb) => eb.or([eb('name', 'ilike', search), eb('role', 'ilike', search)])); }
+  if (query.search) { const search = `%${query.search}%`; base = base.where((eb) => eb.or([eb('name', 'like', search), eb('role', 'like', search)])); count = count.where((eb) => eb.or([eb('name', 'like', search), eb('role', 'like', search)])); }
   const [rows, total] = await Promise.all([base.orderBy('display_order').orderBy('id').limit(query.limit).offset(query.offset).execute(), count.executeTakeFirstOrThrow()]);
   const relations = await teamRelations(db, rows.map((row) => row.id), publicOnly);
   return { items: rows.map((row) => mapTeam(row, relations)), total: Number(total.count) };
@@ -300,12 +305,12 @@ function mapBlog(row: Selectable<BlogPostTable>) {
 
 export async function listBlogs(db: Kysely<Database>, query: ListQuery, publicOnly = false) {
   let base = db.selectFrom('blog_posts').selectAll();
-  let count = db.selectFrom('blog_posts').select(sql<number>`count(*)::int`.as('count'));
+  let count = db.selectFrom('blog_posts').select(sql<number>`count(*)`.as('count'));
   if (!query.includeDeleted) { base = base.where('deleted_at', 'is', null); count = count.where('deleted_at', 'is', null); }
   if (publicOnly) { base = base.where('status', '=', 'published').where('published_at', '<=', new Date()); count = count.where('status', '=', 'published').where('published_at', '<=', new Date()); }
   else if (query.status) { const status = query.status as 'draft' | 'published' | 'scheduled' | 'archived'; base = base.where('status', '=', status); count = count.where('status', '=', status); }
   if (query.category) { base = base.where('category', '=', query.category); count = count.where('category', '=', query.category); }
-  if (query.search) { const search = `%${query.search}%`; base = base.where((eb) => eb.or([eb('title', 'ilike', search), eb('excerpt', 'ilike', search)])); count = count.where((eb) => eb.or([eb('title', 'ilike', search), eb('excerpt', 'ilike', search)])); }
+  if (query.search) { const search = `%${query.search}%`; base = base.where((eb) => eb.or([eb('title', 'like', search), eb('excerpt', 'like', search)])); count = count.where((eb) => eb.or([eb('title', 'like', search), eb('excerpt', 'like', search)])); }
   const [rows, total] = await Promise.all([base.orderBy('published_at', 'desc').orderBy('id').limit(query.limit).offset(query.offset).execute(), count.executeTakeFirstOrThrow()]);
   return { items: rows.map(mapBlog), total: Number(total.count) };
 }
