@@ -1,4 +1,4 @@
-const CACHE_NAME = 'lb-developers-media-v3';
+const CACHE_NAME = 'lb-codebase-media-v4';
 const MEDIA_MATCH = /\.(?:png|jpg|jpeg|webp|avif|gif|svg|mp4|woff2?)$/i;
 
 self.addEventListener('install', (event) => {
