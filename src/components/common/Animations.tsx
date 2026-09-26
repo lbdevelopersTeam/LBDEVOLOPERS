@@ -259,20 +259,20 @@ export const Marquee = ({ children, speed = 25, reverse = false }: { children: R
 };
 
 /**
- * Hero Background Media Container - Optimized for instant mobile rendering
+ * Hero Background Media Container
  */
 export const HeroBackground = ({ videoSrc, poster }: { videoSrc?: string, poster?: string }) => {
   const fallbackPoster = poster || '/images/thesearchforabsolutesection.jpg';
-  const isDesktop = useDesktopMotion();
   const [videoFailed, setVideoFailed] = useState(false);
-  const [videoReady, setVideoReady] = useState(() => Boolean(isDesktop && videoSrc && readyVideoSources.has(videoSrc)));
+  const [videoReady, setVideoReady] = useState(() => Boolean(videoSrc && readyVideoSources.has(videoSrc)));
   const shouldReduceMotion = useReducedMotion();
-  const canPlayVideo = Boolean(videoSrc) && isDesktop && !videoFailed && !shouldReduceMotion;
+  const canPlayVideo = Boolean(videoSrc) && !videoFailed && !shouldReduceMotion;
+  const showPoster = !videoSrc || videoFailed || shouldReduceMotion;
 
   useEffect(() => {
     setVideoFailed(false);
-    setVideoReady(Boolean(isDesktop && videoSrc && readyVideoSources.has(videoSrc)));
-  }, [videoSrc, isDesktop]);
+    setVideoReady(Boolean(videoSrc && readyVideoSources.has(videoSrc)));
+  }, [videoSrc]);
 
   const markVideoReady = (video: HTMLVideoElement) => {
     video.defaultMuted = true;
@@ -286,12 +286,14 @@ export const HeroBackground = ({ videoSrc, poster }: { videoSrc?: string, poster
     <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden bg-brand-dark" aria-hidden="true">
       <div className="absolute inset-0 bg-brand-dark/20 z-10" />
       <div className="absolute inset-0 bg-gradient-to-b from-brand-dark/0 via-transparent to-brand-dark z-10" />
-      <img
-        src={fallbackPoster}
-        alt=""
-        decoding="async"
-        className="absolute inset-0 h-full w-full object-cover"
-      />
+      {showPoster && (
+        <img
+          src={fallbackPoster}
+          alt=""
+          decoding="async"
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+      )}
       {canPlayVideo && (
         <video
           autoPlay
@@ -317,19 +319,17 @@ export const HeroBackground = ({ videoSrc, poster }: { videoSrc?: string, poster
 };
 
 /**
- * Defers decorative video transfer and decoding until the media enters the viewport.
- * On mobile/constrained devices, switches to static poster or lightweight background
- * to eliminate battery drain, thermal throttling, and mobile network stall.
+ * Defers decorative video transfer and decoding until the media enters the viewport,
+ * then pauses it again when it leaves.
  */
 export const DeferredVideo = ({ src, className, poster }: { src: string; className?: string; poster?: string }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [shouldLoad, setShouldLoad] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const shouldReduceMotion = useReducedMotion();
-  const isDesktop = useDesktopMotion();
 
   useEffect(() => {
-    if (!isDesktop || shouldReduceMotion) return undefined;
+    if (shouldReduceMotion) return undefined;
     const video = videoRef.current;
     if (!video) return undefined;
 
@@ -345,10 +345,10 @@ export const DeferredVideo = ({ src, className, poster }: { src: string; classNa
     }, { rootMargin: '100px', threshold: 0.01 });
     observer.observe(video);
     return () => observer.disconnect();
-  }, [shouldReduceMotion, isDesktop]);
+  }, [shouldReduceMotion]);
 
   useEffect(() => {
-    if (!isDesktop || shouldReduceMotion) return undefined;
+    if (shouldReduceMotion) return undefined;
     const video = videoRef.current;
     if (!video) return undefined;
     video.defaultMuted = true;
@@ -357,17 +357,18 @@ export const DeferredVideo = ({ src, className, poster }: { src: string; classNa
       video.pause();
       return undefined;
     }
+    video.load();
     return () => video.pause();
-  }, [shouldLoad, src, isDesktop, shouldReduceMotion]);
+  }, [shouldLoad, src, shouldReduceMotion]);
 
   useEffect(() => {
     const video = videoRef.current;
-    if (!video || !shouldLoad || shouldReduceMotion || !isDesktop) return;
+    if (!video || !shouldLoad || shouldReduceMotion) return;
     if (isVisible) void video.play().catch(() => undefined);
     else video.pause();
-  }, [isVisible, shouldReduceMotion, shouldLoad, isDesktop]);
+  }, [isVisible, shouldReduceMotion, shouldLoad]);
 
-  if (!isDesktop || shouldReduceMotion) {
+  if (shouldReduceMotion) {
     return poster ? (
       <img src={poster} alt="" loading="lazy" decoding="async" className={className} aria-hidden="true" />
     ) : null;
