@@ -949,9 +949,11 @@
 }
 
 @supports (content-visibility: auto) {
-  #main-content > div > section:not(:first-child) {
-    content-visibility: auto;
-    contain-intrinsic-size: auto 720px;
+  @media (min-width: 1024px) and (hover: hover) and (pointer: fine) {
+    #main-content > div > section:not(:first-child) {
+      content-visibility: auto;
+      contain-intrinsic-size: auto 720px;
+    }
   }
 }
 

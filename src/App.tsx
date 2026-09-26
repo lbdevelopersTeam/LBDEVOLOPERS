@@ -12,7 +12,7 @@ import { MotionConfig } from 'motion/react';
 import { FloatingShapes } from './components/common/Animations';
 import ScrollToTop from './components/common/ScrollToTop';
 import { useSeo, type SeoOptions } from './lib/seo';
-const Home = lazy(() => import('./pages/Home'));
+import Home from './pages/Home';
 const About = lazy(() => import('./pages/About'));
 const Services = lazy(() => import('./pages/Services'));
 const Portfolio = lazy(() => import('./pages/Portfolio'));
@@ -203,6 +203,7 @@ export default function App() {
 function AppShell() {
   const location = useLocation();
   const isAdmin = location.pathname.startsWith('/admin');
+  const isHome = location.pathname === '/';
 
   return (
     <>
@@ -215,7 +216,7 @@ function AppShell() {
         Skip to content
       </a>
       <div id="top" className="flex min-h-screen flex-col">
-        {!isAdmin && <FloatingShapes />}
+        {!isAdmin && !isHome && <FloatingShapes />}
         {!isAdmin && <Navbar />}
         <main id="main-content" tabIndex={-1} className="flex-grow outline-none">
           <AnimatedRoutes />

@@ -7,7 +7,7 @@ import PartnerShowcase from '../components/common/PartnerShowcase';
 import { ArrowRight, Code, Palette, Zap, Globe, Cpu, Smartphone, BarChart as ChartBar, Send, Shield, Activity, Rocket } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { cn } from '../lib/utils';
-import { DeferredVideo, Magnetic, TextReveal, LetterReveal, MouseFollower } from '../components/common/Animations';
+import { DeferredVideo, Magnetic, TextReveal, LetterReveal } from '../components/common/Animations';
 import { BlogPost, cachedFetch, fallbackBlogs, fallbackProjects, mergeCuratedProjects, Paginated, Project } from '../lib/content';
 import { useContactEmail } from '../lib/site-settings';
 
@@ -87,8 +87,6 @@ export default function Home() {
 
   return (
     <div className="overflow-hidden relative bg-brand-dark">
-      <MouseFollower />
-
       {/* Hero Section */}
       <section id="home-hero" className="section-transition relative min-h-screen flex items-center pt-24 sm:pt-28 md:pt-32 pb-12 overflow-hidden bg-black">
         <div className="absolute inset-0 z-0 bg-black" />
@@ -407,7 +405,8 @@ export default function Home() {
               <img 
                 src="/images/sectionimage1.webp"
                 alt="DNA" 
-                loading="lazy"
+                loading="eager"
+                fetchPriority="low"
                 decoding="async"
                 width={1264}
                 height={844}
@@ -479,7 +478,8 @@ export default function Home() {
               <img
                 src={featuredProject.image || featuredProject.thumbnail}
                 alt={featuredProject.title}
-                loading="lazy"
+                loading="eager"
+                fetchPriority="low"
                 decoding="async"
                 className="absolute inset-0 h-full w-full object-cover transition-transform duration-1000 group-hover:scale-105"
                 referrerPolicy="no-referrer"
@@ -531,7 +531,8 @@ export default function Home() {
                     <img
                       src={project.image || project.thumbnail}
                       alt={project.title}
-                      loading="lazy"
+                      loading="eager"
+                      fetchPriority="low"
                       decoding="async"
                       className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                       referrerPolicy="no-referrer"

@@ -245,14 +245,14 @@ export const Marquee = ({ children, speed = 25, reverse = false }: { children: R
   const motionEnabled = useDesktopMotion();
 
   return (
-    <div className="flex select-none overflow-hidden">
+    <div className={`flex select-none ${motionEnabled ? 'overflow-hidden' : 'no-scrollbar overflow-x-auto'}`}>
       <motion.div
-        animate={{ x: reverse ? ["0%", "50%"] : ["0%", "-50%"] }}
-        transition={{ duration: motionEnabled ? speed : speed * 1.2, repeat: Infinity, ease: "linear" }}
-        className="flex shrink-0 items-center gap-12 will-change-transform"
+        animate={motionEnabled ? { x: reverse ? ["0%", "50%"] : ["0%", "-50%"] } : undefined}
+        transition={motionEnabled ? { duration: speed, repeat: Infinity, ease: "linear" } : undefined}
+        className={`flex shrink-0 items-center gap-12 ${motionEnabled ? 'will-change-transform' : ''}`}
       >
         {children}
-        {children}
+        {motionEnabled && children}
       </motion.div>
     </div>
   );
@@ -339,12 +339,19 @@ export const DeferredVideo = ({ src, className, poster }: { src: string; classNa
       return undefined;
     }
 
-    const observer = new IntersectionObserver(([entry]) => {
-      setIsVisible(entry.isIntersecting);
+    const preloadObserver = new IntersectionObserver(([entry]) => {
       if (entry.isIntersecting) setShouldLoad(true);
-    }, { rootMargin: '100px', threshold: 0.01 });
-    observer.observe(video);
-    return () => observer.disconnect();
+    }, { rootMargin: '800px 0px', threshold: 0.01 });
+    const visibilityObserver = new IntersectionObserver(([entry]) => {
+      setIsVisible(entry.isIntersecting);
+    }, { threshold: 0.01 });
+
+    preloadObserver.observe(video);
+    visibilityObserver.observe(video);
+    return () => {
+      preloadObserver.disconnect();
+      visibilityObserver.disconnect();
+    };
   }, [shouldReduceMotion]);
 
   useEffect(() => {
@@ -377,11 +384,10 @@ export const DeferredVideo = ({ src, className, poster }: { src: string; classNa
   return (
     <video
       ref={videoRef}
-      autoPlay
       muted
       loop
       playsInline
-      preload="none"
+      preload="auto"
       poster={poster}
       disablePictureInPicture
       aria-hidden="true"
