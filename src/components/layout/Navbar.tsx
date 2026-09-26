@@ -145,10 +145,15 @@ export default function Navbar() {
         <div className="flex items-center justify-between">
           <Link 
             to="/" 
-            className="brand-logo"
+            className="brand-logo-image-frame"
+            aria-label="LB CodeBase home"
           >
-            <motion.div whileHover={{ scale: 1.02 }} className="brand-mark">LB</motion.div>
-            <span className="brand-text">CodeBase</span>
+            <motion.img
+              whileHover={{ scale: 1.03 }}
+              src="/images/LB CodeBase Logo.png"
+              alt="LB CodeBase"
+              className="brand-logo-image"
+            />
           </Link>
 
           {/* Desktop Nav */}
@@ -226,9 +231,8 @@ export default function Navbar() {
             
             <div onClick={(event) => event.stopPropagation()} className="glass relative z-10 mx-auto flex max-h-[calc(100dvh-6rem)] w-full max-w-md flex-col overflow-y-auto overscroll-contain rounded-[2rem] border border-white/10 bg-brand-dark/90 p-4 shadow-[0_30px_90px_rgba(0,0,0,0.55)]">
               <div className="mb-4 flex items-center justify-between border-b border-white/10 pb-4">
-                <Link to="/" onClick={(event) => closeThenNavigate(event, '/')} className="brand-logo">
-                  <span className="brand-mark">LB</span>
-                  <span className="brand-text">CodeBase</span>
+                <Link to="/" onClick={(event) => closeThenNavigate(event, '/')} className="brand-logo-image-frame" aria-label="LB CodeBase home">
+                  <img src="/images/LB CodeBase Logo.png" alt="LB CodeBase" className="brand-logo-image" />
                 </Link>
                 <button
                   type="button"

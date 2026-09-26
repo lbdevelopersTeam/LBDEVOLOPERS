@@ -818,6 +818,25 @@
     max-width: 100%;
   }
 
+  .brand-logo-image-frame {
+    position: relative;
+    display: block;
+    width: 9.5rem;
+    height: 2.5rem;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  .brand-logo-image {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 165%;
+    max-width: none;
+    height: auto;
+    transform: translate(-50%, -50%);
+  }
+
   .brand-logo .brand-mark {
     font-size: 1.35rem;
     font-weight: 900;
@@ -838,6 +857,11 @@
   }
 
   @media (min-width: 640px) {
+    .brand-logo-image-frame {
+      width: 11rem;
+      height: 2.75rem;
+    }
+
     .brand-logo .brand-mark {
       font-size: 1.6rem;
     }
