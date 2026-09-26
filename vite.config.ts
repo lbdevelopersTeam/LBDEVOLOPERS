@@ -44,6 +44,10 @@ export default defineConfig(() => {
       ],
     },
     build: {
+      // Vite's modern default currently assumes a newer Safari release. Keep
+      // the public site parseable on older iPhones still in active use.
+      target: ['es2018', 'safari12'],
+      cssTarget: 'safari12',
       chunkSizeWarningLimit: 900,
       rollupOptions: {
         output: {

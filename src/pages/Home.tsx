@@ -7,7 +7,7 @@ import PartnerShowcase from '../components/common/PartnerShowcase';
 import { ArrowRight, Code, Palette, Zap, Globe, Cpu, Smartphone, BarChart as ChartBar, Send, Shield, Activity, Rocket } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { cn } from '../lib/utils';
-import { DeferredVideo, Magnetic, TextReveal, LetterReveal, MouseFollower } from '../components/common/Animations';
+import { DeferredVideo, Magnetic, MouseFollower } from '../components/common/Animations';
 import { BlogPost, cachedFetch, fallbackBlogs, fallbackProjects, mergeCuratedProjects, Paginated, Project } from '../lib/content';
 import { useContactEmail } from '../lib/site-settings';
 
@@ -92,40 +92,30 @@ export default function Home() {
       {/* Hero Section */}
       <section id="home-hero" className="section-transition relative min-h-screen flex items-center pt-24 sm:pt-28 md:pt-32 pb-12 overflow-hidden bg-black">
         <div className="absolute inset-0 z-0 bg-black" />
-        <motion.div className="max-w-[1600px] mx-auto w-full px-4 sm:px-6 relative z-10">
+        <div className="max-w-[1600px] mx-auto w-full px-4 sm:px-6 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             <div className="lg:col-span-7">
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+              <div
                 className="inline-flex items-center gap-3 px-5 py-2 bg-white/[0.03] rounded-full border border-white/10 mb-10 backdrop-blur-xl"
               >
                 <span className="flex h-2 w-2 rounded-full bg-brand-primary animate-pulse shadow-[0_0_15px_rgba(61,90,254,0.8)]" />
-                <LetterReveal text="NEXT-GEN DIGITAL BUREAU" className="text-[10px] font-black uppercase tracking-[0.5em] text-white/60" />
-              </motion.div>
+                <span className="text-[10px] font-black uppercase tracking-[0.5em] text-white/70">NEXT-GEN DIGITAL BUREAU</span>
+              </div>
               
               <div className="overflow-hidden mb-12">
-                <motion.h1
-                  initial={{ y: "100%" }}
-                  animate={{ y: 0 }}
-                  transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
+                <h1
                   className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-black leading-[0.95] tracking-tighter uppercase"
                 >
                   ENGINEERING <br />
                   <span className="text-brand-primary italic">ABSOLUTE.</span>
-                </motion.h1>
+                </h1>
               </div>
               
-              <TextReveal 
-                text="We architect high-fidelity digital ecosystems for visionary brands. Defining the intersection of cinematic design and absolute technical performance."
-                className="text-white/60 text-lg md:text-2xl max-w-2xl leading-tight font-light mb-16"
-              />
+              <p className="mb-16 max-w-2xl text-lg font-light leading-tight text-white/70 md:text-2xl">
+                We architect high-fidelity digital ecosystems for visionary brands. Defining the intersection of cinematic design and absolute technical performance.
+              </p>
               
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 1 }}
+              <div
                 className="flex flex-col sm:flex-row gap-4 sm:gap-6"
               >
                 <Magnetic strength={0.2}>
@@ -138,7 +128,7 @@ export default function Home() {
                     Explore Archive
                   </Button>
                 </Magnetic>
-              </motion.div>
+              </div>
             </div>
             
             {/* Side Video */}
@@ -152,7 +142,7 @@ export default function Home() {
               </div>
             </div>
           </div>
-        </motion.div>
+        </div>
 
         {/* System status removed site-wide */}
       </section>
