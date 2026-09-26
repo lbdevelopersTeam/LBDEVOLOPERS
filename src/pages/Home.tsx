@@ -405,10 +405,12 @@ export default function Home() {
             <div className="relative">
               <div className="absolute -inset-10 bg-brand-primary/5 blur-[100px]" />
               <img 
-                src="/images/sectionimage1.png" 
+                src="/images/sectionimage1.webp"
                 alt="DNA" 
                 loading="lazy"
                 decoding="async"
+                width={1264}
+                height={844}
                 className="relative z-10 w-full rounded-[1rem] md:rounded-[2rem] transition-all duration-1000 border border-white/10"
                 referrerPolicy="no-referrer"
               />
@@ -705,7 +707,7 @@ export default function Home() {
                 >
                   <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-xl overflow-hidden flex-shrink-0">
                     <img 
-                      src={post.image || post.coverImage || (i % 2 === 0 ? '/images/designwebsiteservice.png' : '/images/digitalauditservice.webp')}
+                      src={post.image || post.coverImage || (i % 2 === 0 ? '/images/designwebsiteservice.webp' : '/images/digitalauditservice.webp')}
                       alt={post.title || 'Side post'} 
                       loading="lazy"
                       decoding="async"

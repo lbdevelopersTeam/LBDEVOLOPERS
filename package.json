@@ -26,7 +26,8 @@
     "db:verify": "tsx server/db/verify.ts",
     "hostinger:deploy": "npm run build",
     "verify:auth": "node scripts/verify-auth.mjs",
-    "db:backup": "node scripts/backup-db.mjs"
+    "db:backup": "node scripts/backup-db.mjs",
+    "optimize:images": "node scripts/optimize-images.mjs"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1116.0",
@@ -72,6 +73,7 @@
     "@types/supertest": "^7.2.1",
     "autoprefixer": "^10.4.21",
     "esbuild": "^0.28.1",
+    "sharp": "^0.35.4",
     "supertest": "^7.2.2",
     "tailwindcss": "^4.1.14",
     "tsx": "^4.21.0",

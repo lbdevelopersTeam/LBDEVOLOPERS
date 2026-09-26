@@ -12,8 +12,7 @@ import { MotionConfig } from 'motion/react';
 import { FloatingShapes } from './components/common/Animations';
 import ScrollToTop from './components/common/ScrollToTop';
 import { useSeo, type SeoOptions } from './lib/seo';
-import Home from './pages/Home';
-
+const Home = lazy(() => import('./pages/Home'));
 const About = lazy(() => import('./pages/About'));
 const Services = lazy(() => import('./pages/Services'));
 const Portfolio = lazy(() => import('./pages/Portfolio'));

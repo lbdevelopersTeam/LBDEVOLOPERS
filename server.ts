@@ -122,9 +122,15 @@ async function startServer() {
     app.use(express.static(distPath, {
       setHeaders: (res, filePath) => {
         const normalizedPath = filePath.replace(/\\/g, '/');
-        if (normalizedPath.includes('/assets/')) res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
-        else if (normalizedPath.endsWith('/index.html') || normalizedPath.endsWith('/sw.js')) res.setHeader('Cache-Control', 'no-cache');
-        else res.setHeader('Cache-Control', 'public, max-age=3600, stale-while-revalidate=86400');
+        if (normalizedPath.includes('/assets/')) {
+          res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+        } else if (/\.(?:png|jpe?g|webp|avif|gif|svg|mp4|woff2?)$/i.test(normalizedPath)) {
+          res.setHeader('Cache-Control', 'public, max-age=2592000, stale-while-revalidate=86400');
+        } else if (normalizedPath.endsWith('/index.html') || normalizedPath.endsWith('/sw.js')) {
+          res.setHeader('Cache-Control', 'no-cache');
+        } else {
+          res.setHeader('Cache-Control', 'public, max-age=3600, stale-while-revalidate=86400');
+        }
       },
     }));
     app.get('*', (_req, res) => {

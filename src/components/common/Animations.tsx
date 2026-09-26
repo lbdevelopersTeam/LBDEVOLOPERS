@@ -160,11 +160,11 @@ export const SectionTransitionEffects = () => {
 };
 
 /**
- * Subtle Background Blob that follows mouse
+ * Subtle Background Blob that follows mouse - only on desktop to prevent mobile GPU compositing lag
  */
 export const MouseFollower = () => {
   return (
-    <div className="fixed top-[20%] left-[10%] w-[450px] h-[450px] bg-brand-primary/[0.03] rounded-full blur-[120px] pointer-events-none z-0" />
+    <div className="fixed top-[20%] left-[10%] w-[450px] h-[450px] bg-brand-primary/[0.03] rounded-full blur-[120px] pointer-events-none z-0 hidden md:block" aria-hidden="true" />
   );
 };
 
@@ -239,44 +239,42 @@ export const FloatingShapes = () => {
 };
 
 /**
- * Endless marquee for logos/partners
+ * Endless marquee for logos/partners - Hardware accelerated on all devices
  */
-export const Marquee = ({ children, speed = 20, reverse = false }: { children: React.ReactNode, speed?: number, reverse?: boolean }) => {
+export const Marquee = ({ children, speed = 25, reverse = false }: { children: React.ReactNode, speed?: number, reverse?: boolean }) => {
   const motionEnabled = useDesktopMotion();
 
   return (
-    <div className={`flex group select-none ${motionEnabled ? 'overflow-hidden' : 'overflow-x-auto'}`}>
+    <div className="flex select-none overflow-hidden">
       <motion.div
-        animate={motionEnabled ? { x: reverse ? ["0%", "50%"] : ["0%", "-50%"] } : undefined}
-        transition={{ duration: speed, repeat: Infinity, ease: "linear" }}
-        className="flex shrink-0 items-center gap-12"
+        animate={{ x: reverse ? ["0%", "50%"] : ["0%", "-50%"] }}
+        transition={{ duration: motionEnabled ? speed : speed * 1.2, repeat: Infinity, ease: "linear" }}
+        className="flex shrink-0 items-center gap-12 will-change-transform"
       >
         {children}
-        {motionEnabled && children}
+        {children}
       </motion.div>
     </div>
   );
 };
 
 /**
- * Hero Background Media Container
+ * Hero Background Media Container - Optimized for instant mobile rendering
  */
 export const HeroBackground = ({ videoSrc, poster }: { videoSrc?: string, poster?: string }) => {
   const fallbackPoster = poster || '/images/thesearchforabsolutesection.jpg';
+  const isDesktop = useDesktopMotion();
   const [videoFailed, setVideoFailed] = useState(false);
-  const [videoReady, setVideoReady] = useState(() => Boolean(videoSrc && readyVideoSources.has(videoSrc)));
+  const [videoReady, setVideoReady] = useState(() => Boolean(isDesktop && videoSrc && readyVideoSources.has(videoSrc)));
   const shouldReduceMotion = useReducedMotion();
-  const showVideo = Boolean(videoSrc) && !videoFailed && !shouldReduceMotion;
-  const showPoster = !videoSrc || videoFailed || shouldReduceMotion;
+  const canPlayVideo = Boolean(videoSrc) && isDesktop && !videoFailed && !shouldReduceMotion;
 
   useEffect(() => {
     setVideoFailed(false);
-    setVideoReady(Boolean(videoSrc && readyVideoSources.has(videoSrc)));
-  }, [videoSrc]);
+    setVideoReady(Boolean(isDesktop && videoSrc && readyVideoSources.has(videoSrc)));
+  }, [videoSrc, isDesktop]);
 
   const markVideoReady = (video: HTMLVideoElement) => {
-    // WebKit requires the media element itself to be muted before play() is
-    // requested, even when the corresponding React prop is already present.
     video.defaultMuted = true;
     video.muted = true;
     if (videoSrc) readyVideoSources.add(videoSrc);
@@ -288,50 +286,50 @@ export const HeroBackground = ({ videoSrc, poster }: { videoSrc?: string, poster
     <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden bg-brand-dark" aria-hidden="true">
       <div className="absolute inset-0 bg-brand-dark/20 z-10" />
       <div className="absolute inset-0 bg-gradient-to-b from-brand-dark/0 via-transparent to-brand-dark z-10" />
-          {showPoster && (
-            <img
-              src={fallbackPoster}
-              alt=""
-              decoding="async"
-              className="absolute inset-0 h-full w-full object-cover"
-            />
-          )}
-          {showVideo && (
-            <video 
-              autoPlay 
-              muted 
-              loop 
-              playsInline 
-              preload="metadata"
-              disablePictureInPicture
-              tabIndex={-1}
-              onLoadedData={(event) => markVideoReady(event.currentTarget)}
-              onCanPlay={(event) => markVideoReady(event.currentTarget)}
-              onError={() => {
-                setVideoReady(false);
-                setVideoFailed(true);
-              }}
-              className={`absolute inset-0 h-full w-full transform-gpu object-cover will-change-[opacity] transition-opacity duration-100 ease-out ${videoReady ? 'opacity-100' : 'opacity-0'}`}
-            >
-              <source src={videoSrc} type="video/mp4" />
-            </video>
-          )}
+      <img
+        src={fallbackPoster}
+        alt=""
+        decoding="async"
+        className="absolute inset-0 h-full w-full object-cover"
+      />
+      {canPlayVideo && (
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          disablePictureInPicture
+          tabIndex={-1}
+          onLoadedData={(event) => markVideoReady(event.currentTarget)}
+          onCanPlay={(event) => markVideoReady(event.currentTarget)}
+          onError={() => {
+            setVideoReady(false);
+            setVideoFailed(true);
+          }}
+          className={`absolute inset-0 h-full w-full transform-gpu object-cover will-change-[opacity] transition-opacity duration-700 ease-out ${videoReady ? 'opacity-100' : 'opacity-0'}`}
+        >
+          <source src={videoSrc} type="video/mp4" />
+        </video>
+      )}
     </div>
   );
 };
 
 /**
- * Defers decorative, below-the-fold video transfer and decoding until the
- * media enters the viewport, then pauses it again when it leaves.
+ * Defers decorative video transfer and decoding until the media enters the viewport.
+ * On mobile/constrained devices, switches to static poster or lightweight background
+ * to eliminate battery drain, thermal throttling, and mobile network stall.
  */
 export const DeferredVideo = ({ src, className, poster }: { src: string; className?: string; poster?: string }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [shouldLoad, setShouldLoad] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const shouldReduceMotion = useReducedMotion();
+  const isDesktop = useDesktopMotion();
 
   useEffect(() => {
-    if (shouldReduceMotion) return undefined;
+    if (!isDesktop || shouldReduceMotion) return undefined;
     const video = videoRef.current;
     if (!video) return undefined;
 
@@ -344,35 +342,35 @@ export const DeferredVideo = ({ src, className, poster }: { src: string; classNa
     const observer = new IntersectionObserver(([entry]) => {
       setIsVisible(entry.isIntersecting);
       if (entry.isIntersecting) setShouldLoad(true);
-    }, { rootMargin: '0px', threshold: 0.01 });
+    }, { rootMargin: '100px', threshold: 0.01 });
     observer.observe(video);
     return () => observer.disconnect();
-  }, [shouldReduceMotion]);
+  }, [shouldReduceMotion, isDesktop]);
 
   useEffect(() => {
+    if (!isDesktop || shouldReduceMotion) return undefined;
     const video = videoRef.current;
     if (!video) return undefined;
     video.defaultMuted = true;
     video.muted = true;
     if (!shouldLoad) {
       video.pause();
-      video.load();
       return undefined;
     }
-
-    video.load();
     return () => video.pause();
-  }, [shouldLoad, src]);
+  }, [shouldLoad, src, isDesktop, shouldReduceMotion]);
 
   useEffect(() => {
     const video = videoRef.current;
-    if (!video || !shouldLoad || shouldReduceMotion) return;
+    if (!video || !shouldLoad || shouldReduceMotion || !isDesktop) return;
     if (isVisible) void video.play().catch(() => undefined);
     else video.pause();
-  }, [isVisible, shouldReduceMotion, shouldLoad]);
+  }, [isVisible, shouldReduceMotion, shouldLoad, isDesktop]);
 
-  if (shouldReduceMotion) {
-    return poster ? <img src={poster} alt="" decoding="async" className={className} aria-hidden="true" /> : null;
+  if (!isDesktop || shouldReduceMotion) {
+    return poster ? (
+      <img src={poster} alt="" loading="lazy" decoding="async" className={className} aria-hidden="true" />
+    ) : null;
   }
 
   return (
