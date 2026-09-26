@@ -124,7 +124,11 @@ export default function ClientReviews() {
     const controller = new AbortController();
     const timeout = window.setTimeout(() => controller.abort(), 8_000);
     try {
-      const response = await fetch('/api/v2/testimonials', { credentials: 'include', signal: controller.signal });
+      const response = await fetch('/api/v2/testimonials', {
+        credentials: 'include',
+        cache: 'no-store',
+        signal: controller.signal,
+      });
       if (!response.ok) throw new Error(`Reviews request failed with ${response.status}`);
       const payload = await response.json() as TestimonialsResponse;
       if (!Array.isArray(payload.items)) throw new Error('Reviews response was invalid');
