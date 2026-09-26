@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS users (
   UNIQUE KEY users_email_uq (email),
   KEY users_active_role_idx (is_active, role, deleted_at),
   CONSTRAINT users_username_chk CHECK (CHAR_LENGTH(username) BETWEEN 3 AND 64)
-) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS sessions (
   id CHAR(36) CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS sessions (
   KEY sessions_user_active_idx (user_id, revoked_at, expires_at),
   KEY sessions_expiry_idx (expires_at),
   CONSTRAINT sessions_user_fk FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS projects (
   id CHAR(36) CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS projects (
   CONSTRAINT projects_updated_by_fk FOREIGN KEY (updated_by) REFERENCES users(id) ON DELETE SET NULL,
   CONSTRAINT projects_version_chk CHECK (version > 0),
   CONSTRAINT projects_sort_order_chk CHECK (sort_order >= 0)
-) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS technologies (
   id CHAR(36) CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
@@ -77,7 +77,7 @@ CREATE TABLE IF NOT EXISTS technologies (
   UNIQUE KEY technologies_slug_uq (slug),
   UNIQUE KEY technologies_name_uq (name),
   KEY technologies_active_name_idx (deleted_at, name)
-) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS project_technologies (
   project_id CHAR(36) CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
@@ -90,7 +90,7 @@ CREATE TABLE IF NOT EXISTS project_technologies (
   CONSTRAINT project_technologies_project_fk FOREIGN KEY (project_id) REFERENCES projects(id) ON DELETE CASCADE,
   CONSTRAINT project_technologies_technology_fk FOREIGN KEY (technology_id) REFERENCES technologies(id) ON DELETE RESTRICT,
   CONSTRAINT project_technologies_order_chk CHECK (display_order >= 0)
-) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS contact_messages (
   id CHAR(36) CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
@@ -109,7 +109,7 @@ CREATE TABLE IF NOT EXISTS contact_messages (
   KEY contact_messages_email_idx (email, created_at),
   CONSTRAINT contact_messages_name_chk CHECK (CHAR_LENGTH(name) BETWEEN 2 AND 120),
   CONSTRAINT contact_messages_body_chk CHECK (CHAR_LENGTH(message) BETWEEN 10 AND 5000)
-) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS idempotency_keys (
   scope VARCHAR(180) CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
@@ -127,7 +127,7 @@ CREATE TABLE IF NOT EXISTS idempotency_keys (
   KEY idempotency_actor_idx (actor_user_id, created_at),
   CONSTRAINT idempotency_actor_fk FOREIGN KEY (actor_user_id) REFERENCES users(id) ON DELETE SET NULL,
   CONSTRAINT idempotency_status_chk CHECK (response_status BETWEEN 200 AND 599)
-) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS audit_logs (
   id BIGINT NOT NULL AUTO_INCREMENT,
@@ -143,7 +143,7 @@ CREATE TABLE IF NOT EXISTS audit_logs (
   KEY audit_actor_idx (actor_user_id, created_at),
   KEY audit_request_idx (request_id),
   CONSTRAINT audit_actor_fk FOREIGN KEY (actor_user_id) REFERENCES users(id) ON DELETE SET NULL
-) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS outbox_events (
   id CHAR(36) CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
@@ -160,4 +160,4 @@ CREATE TABLE IF NOT EXISTS outbox_events (
   KEY outbox_dispatch_idx (processed_at, available_at, attempts, id),
   KEY outbox_aggregate_idx (aggregate_type, aggregate_id, created_at),
   CONSTRAINT outbox_attempts_chk CHECK (attempts BETWEEN 0 AND 100)
-) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

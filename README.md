@@ -1,6 +1,6 @@
 # LB CodeBase
 
-The React portfolio has two explicit backend contracts. The current `/api/v2` client remains backed by PostgreSQL for compatibility, while the production-oriented `/api/v3` is a separate MySQL 8.0.34+ API with signed cursor pagination, idempotent writes, optimistic concurrency, database sessions, audit history, and transactional outbox records.
+The React portfolio has two explicit backend contracts. The current `/api/v2` client remains backed by PostgreSQL for compatibility, while the production-oriented `/api/v3` is a separate MySQL 8.0.34+/MariaDB 10.6+ API with signed cursor pagination, idempotent writes, optimistic concurrency, database sessions, audit history, and transactional outbox records.
 
 ## Local setup
 
@@ -31,7 +31,7 @@ Homepage client reviews are loaded from the public `/api/v2/testimonials` endpoi
 
 ## MySQL API v3
 
-1. Install Oracle MySQL 8.0.34 or newer.
+1. Install Oracle MySQL 8.0.34+ or MariaDB 10.6+ (including Hostinger's managed database).
 2. Review and run `server/mysql/provision.example.sql` with an administrative account after replacing its password placeholders.
 3. Configure `MYSQL_DATABASE_URL`, `MYSQL_MIGRATION_URL`, `MYSQL_ADMIN_INITIAL_PASSWORD`, and `API_CURSOR_SECRET` from `.env.example`.
 4. Run `npm run mysql:setup`.

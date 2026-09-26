@@ -4,7 +4,7 @@
 
 CREATE DATABASE IF NOT EXISTS lb_developers_v3
   CHARACTER SET utf8mb4
-  COLLATE utf8mb4_0900_ai_ci;
+  COLLATE utf8mb4_unicode_ci;
 
 CREATE USER IF NOT EXISTS 'lb_v3_migrator'@'127.0.0.1'
   IDENTIFIED BY 'replace-with-a-strong-migration-password';

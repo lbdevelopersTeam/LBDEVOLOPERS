@@ -4,10 +4,10 @@ import { describe, expect, it } from 'vitest';
 import { mysqlPoolOptions } from '../client';
 
 describe('MySQL v3 schema artifacts', () => {
-  it('uses an explicit MySQL 8 transactional and integrity model', async () => {
+  it('uses a portable MySQL/MariaDB transactional and integrity model', async () => {
     const migration = await fs.readFile(path.resolve(process.cwd(), 'server/mysql/migrations/001_initial.sql'), 'utf8');
     expect(migration).toContain('ENGINE=InnoDB');
-    expect(migration).toContain('utf8mb4_0900_ai_ci');
+    expect(migration).toContain('utf8mb4_unicode_ci');
     expect(migration).toContain('FOREIGN KEY');
     expect(migration).toContain('CHECK (version > 0)');
     expect(migration).toContain('CREATE TABLE IF NOT EXISTS idempotency_keys');

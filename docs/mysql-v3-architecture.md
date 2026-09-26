@@ -4,7 +4,7 @@
 
 `/api/v3` is a new MySQL-backed contract. It does not rename or silently change `/api/v2`, so the current React client remains compatible while consumers move deliberately. Set `API_V3_REQUIRED=true` only after MySQL is provisioned, migrated, seeded, and monitored in the target environment.
 
-Target engine: Oracle MySQL 8.0.34 or newer. The schema intentionally uses MySQL 8 enforced checks and the `utf8mb4_0900_ai_ci` collation; it is not a MariaDB migration.
+Target engine: Oracle MySQL 8.0.34+ or MariaDB 10.6+. The schema uses enforced checks, InnoDB, and the portable `utf8mb4_unicode_ci` collation so it can run on Hostinger's managed MariaDB service.
 
 ## Reliability model
 

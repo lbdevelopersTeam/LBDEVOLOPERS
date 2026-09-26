@@ -36,7 +36,7 @@ export async function migrateMysql(connectionUrl = process.env.MYSQL_MIGRATION_U
         checksum CHAR(64) CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
         applied_at DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
         PRIMARY KEY (name)
-      ) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+      ) ENGINE=InnoDB DEFAULT CHARACTER SET=utf8mb4 COLLATE=utf8mb4_unicode_ci
     `);
     const [lockRows] = await connection.execute<MigrationLockRow[]>('SELECT GET_LOCK(?, 30) AS acquired', [migrationLock]);
     if (lockRows[0]?.acquired !== 1) throw new Error('Could not acquire the MySQL migration lock within 30 seconds.');

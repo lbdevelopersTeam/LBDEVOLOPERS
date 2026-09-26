@@ -18,9 +18,12 @@ export async function verifyMysql(): Promise<void> {
     const version = versionResult.rows[0]?.version || '';
     const match = version.match(/^(\d+)\.(\d+)\.(\d+)/);
     const [major, minor, patch] = match ? match.slice(1).map(Number) : [];
-    const supported = major === 8 && (minor > 0 || (minor === 0 && patch >= 34));
+    const isMariaDb = /mariadb/i.test(version);
+    const supportedMysql = !isMariaDb && major === 8 && (minor > 0 || (minor === 0 && patch >= 34));
+    const supportedMariaDb = isMariaDb && (major > 10 || (major === 10 && minor >= 6));
+    const supported = supportedMysql || supportedMariaDb;
     if (!supported) {
-      throw new Error(`MySQL 8.0.34 or newer is required; connected server reports ${version || 'an unknown version'}.`);
+      throw new Error(`MySQL 8.0.34+ or MariaDB 10.6+ is required; connected server reports ${version || 'an unknown version'}.`);
     }
 
     const tablesResult = await sql<{ tableName: string }>`
@@ -38,6 +41,7 @@ export async function verifyMysql(): Promise<void> {
 
     process.stdout.write(`${JSON.stringify({
       database: 'mysql',
+      engine: isMariaDb ? 'mariadb' : 'mysql',
       version,
       timezone: versionResult.rows[0]?.timezone,
       migrations: Number(migrations.rows[0]?.count || 0),
