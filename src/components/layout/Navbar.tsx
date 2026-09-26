@@ -133,7 +133,10 @@ export default function Navbar() {
         scrolled ? 'pt-3 sm:pt-4' : 'pt-4 sm:pt-8'
       )}
     >
-      <div
+      <motion.div 
+        initial={{ y: -100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
         className={cn(
           "max-w-[1400px] mx-auto rounded-[2rem] transition-[background-color,border-color,box-shadow,padding] duration-300 border border-transparent",
           scrolled ? "bg-brand-dark/40 backdrop-blur-2xl border-white/10 px-4 py-3 shadow-[0_20px_50px_rgba(0,0,0,0.5)] sm:px-8" : "px-3 py-3 sm:px-4 sm:py-4"
@@ -176,7 +179,7 @@ export default function Navbar() {
             ))}
           </div>
 
-          <div className="ml-auto flex shrink-0 items-center gap-4">
+          <div className="flex items-center gap-4">
             <Magnetic strength={0.1}>
               <Link
                 to="/contact"
@@ -193,7 +196,7 @@ export default function Navbar() {
               aria-expanded={isOpen}
               aria-controls="mobile-navigation"
               disabled={isMenuExiting}
-              className="relative z-[120] flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl border border-white/15 bg-white/10 text-white lg:hidden"
+              className="lg:hidden w-11 h-11 flex-shrink-0 flex items-center justify-center bg-white/5 rounded-xl border border-white/10 text-white relative z-[120]"
               onClick={() => {
                 if (isOpen) beginMenuClose();
                 else {
@@ -206,7 +209,7 @@ export default function Navbar() {
             </button>
           </div>
         </div>
-      </div>
+      </motion.div>
 
       {/* Mobile Menu */}
       <AnimatePresence initial={false} onExitComplete={finishMenuClose}>
