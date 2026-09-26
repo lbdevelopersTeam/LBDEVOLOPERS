@@ -267,6 +267,7 @@ export const HeroBackground = ({ videoSrc, poster }: { videoSrc?: string, poster
   const [videoReady, setVideoReady] = useState(() => Boolean(videoSrc && readyVideoSources.has(videoSrc)));
   const shouldReduceMotion = useReducedMotion();
   const showVideo = Boolean(videoSrc) && !videoFailed && !shouldReduceMotion;
+  const showPoster = !videoSrc || videoFailed || shouldReduceMotion;
 
   useEffect(() => {
     setVideoFailed(false);
@@ -287,12 +288,14 @@ export const HeroBackground = ({ videoSrc, poster }: { videoSrc?: string, poster
     <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden bg-brand-dark" aria-hidden="true">
       <div className="absolute inset-0 bg-brand-dark/20 z-10" />
       <div className="absolute inset-0 bg-gradient-to-b from-brand-dark/0 via-transparent to-brand-dark z-10" />
-          <img
-            src={fallbackPoster}
-            alt=""
-            decoding="async"
-            className="absolute inset-0 h-full w-full object-cover"
-          />
+          {showPoster && (
+            <img
+              src={fallbackPoster}
+              alt=""
+              decoding="async"
+              className="absolute inset-0 h-full w-full object-cover"
+            />
+          )}
           {showVideo && (
             <video 
               autoPlay 
