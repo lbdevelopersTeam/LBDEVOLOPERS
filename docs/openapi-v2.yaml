@@ -1,0 +1,488 @@
+openapi: 3.1.0
+info:
+  title: LB Developers API
+  version: 2.0.0
+  description: PostgreSQL-backed public content and authenticated administration API.
+servers:
+  - url: /api/v2
+tags:
+  - name: Public
+  - name: Auth
+  - name: Admin
+paths:
+  /health:
+    get:
+      tags: [Public]
+      operationId: getHealth
+      responses:
+        '200': { description: PostgreSQL is reachable }
+        '503': { $ref: '#/components/responses/Unavailable' }
+  /auth/login:
+    post:
+      tags: [Auth]
+      operationId: login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/Login' }
+      responses:
+        '200': { description: Session established, content: { application/json: { schema: { $ref: '#/components/schemas/Session' } } } }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '429': { $ref: '#/components/responses/RateLimited' }
+  /auth/session:
+    get:
+      tags: [Auth]
+      operationId: getSession
+      security: [{ sessionCookie: [] }]
+      responses:
+        '200': { description: Active session, content: { application/json: { schema: { $ref: '#/components/schemas/Session' } } } }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+  /auth/logout:
+    post:
+      tags: [Auth]
+      operationId: logout
+      security: [{ sessionCookie: [], csrfToken: [] }]
+      responses:
+        '200': { description: Session revoked }
+        '403': { $ref: '#/components/responses/Forbidden' }
+  /projects:
+    get:
+      tags: [Public]
+      operationId: listProjects
+      parameters: [{ $ref: '#/components/parameters/Page' }, { $ref: '#/components/parameters/Limit' }, { $ref: '#/components/parameters/Search' }, { name: category, in: query, schema: { type: string } }]
+      responses:
+        '200': { description: Published projects, content: { application/json: { schema: { $ref: '#/components/schemas/ProjectPage' } } } }
+  /projects/{identifier}:
+    get:
+      tags: [Public]
+      operationId: getProject
+      parameters: [{ $ref: '#/components/parameters/Identifier' }]
+      responses:
+        '200': { description: Published project, content: { application/json: { schema: { $ref: '#/components/schemas/Project' } } } }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /team:
+    get:
+      tags: [Public]
+      operationId: listTeamMembers
+      parameters: [{ $ref: '#/components/parameters/Page' }, { $ref: '#/components/parameters/Limit' }, { $ref: '#/components/parameters/Search' }]
+      responses:
+        '200': { description: Active team members }
+  /team/{identifier}:
+    get:
+      tags: [Public]
+      operationId: getTeamMember
+      parameters: [{ $ref: '#/components/parameters/Identifier' }]
+      responses:
+        '200': { description: Active team profile }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /team/{identifier}/vcard:
+    get:
+      tags: [Public]
+      operationId: downloadTeamMemberVcard
+      parameters: [{ $ref: '#/components/parameters/Identifier' }]
+      responses: { '200': { description: vCard download } }
+  /team/{memberIdentifier}/projects/{projectIdentifier}:
+    get:
+      tags: [Public]
+      operationId: getTeamMemberProject
+      parameters:
+        - { name: memberIdentifier, in: path, required: true, schema: { type: string } }
+        - { name: projectIdentifier, in: path, required: true, schema: { type: string } }
+      responses: { '200': { description: Published member project and related work }, '404': { $ref: '#/components/responses/NotFound' } }
+  /blog:
+    get:
+      tags: [Public]
+      operationId: listBlogPosts
+      parameters: [{ $ref: '#/components/parameters/Page' }, { $ref: '#/components/parameters/Limit' }, { $ref: '#/components/parameters/Search' }]
+      responses:
+        '200': { description: Published blog posts }
+  /blog/{identifier}:
+    get:
+      tags: [Public]
+      operationId: getBlogPost
+      parameters: [{ $ref: '#/components/parameters/Identifier' }]
+      responses:
+        '200': { description: Published blog post }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /services:
+    get:
+      tags: [Public]
+      operationId: listServices
+      responses: { '200': { description: Active services } }
+  /technologies:
+    get:
+      tags: [Public]
+      operationId: listTechnologies
+      responses: { '200': { description: Technology catalog } }
+  /skills:
+    get:
+      tags: [Public]
+      operationId: listSkills
+      responses: { '200': { description: Skill catalog } }
+  /testimonials:
+    get:
+      tags: [Public]
+      operationId: listTestimonials
+      responses: { '200': { description: Active testimonials } }
+  /settings:
+    get:
+      tags: [Public]
+      operationId: getPublicSettings
+      responses: { '200': { description: Public settings only } }
+  /messages:
+    post:
+      tags: [Public]
+      operationId: createContactMessage
+      requestBody:
+        required: true
+        content: { application/json: { schema: { $ref: '#/components/schemas/ContactMessageInput' } } }
+      responses:
+        '201': { description: Message accepted }
+        '422': { $ref: '#/components/responses/Validation' }
+        '429': { $ref: '#/components/responses/RateLimited' }
+  /admin/projects:
+    get:
+      tags: [Admin]
+      operationId: adminListProjects
+      security: [{ sessionCookie: [] }]
+      responses: { '200': { description: All projects }, '401': { $ref: '#/components/responses/Unauthorized' } }
+    post:
+      tags: [Admin]
+      operationId: adminCreateProject
+      security: [{ sessionCookie: [], csrfToken: [] }]
+      requestBody: { required: true, content: { application/json: { schema: { $ref: '#/components/schemas/ProjectInput' } } } }
+      responses: { '201': { description: Project created }, '403': { $ref: '#/components/responses/Forbidden' }, '422': { $ref: '#/components/responses/Validation' } }
+  /admin/projects/{id}:
+    put:
+      tags: [Admin]
+      operationId: adminUpdateProject
+      security: [{ sessionCookie: [], csrfToken: [] }]
+      parameters: [{ $ref: '#/components/parameters/Id' }]
+      requestBody: { required: true, content: { application/json: { schema: { $ref: '#/components/schemas/ProjectInput' } } } }
+      responses: { '200': { description: Project updated }, '409': { description: Slug or version conflict }, '422': { $ref: '#/components/responses/Validation' } }
+    delete:
+      tags: [Admin]
+      operationId: adminArchiveProject
+      security: [{ sessionCookie: [], csrfToken: [] }]
+      parameters: [{ $ref: '#/components/parameters/Id' }]
+      responses: { '204': { description: Project archived }, '403': { $ref: '#/components/responses/Forbidden' } }
+  /admin/team:
+    get:
+      tags: [Admin]
+      operationId: adminListTeam
+      security: [{ sessionCookie: [] }]
+      responses: { '200': { description: All team profiles } }
+    post:
+      tags: [Admin]
+      operationId: adminCreateTeamMember
+      security: [{ sessionCookie: [], csrfToken: [] }]
+      responses: { '201': { description: Team profile created }, '422': { $ref: '#/components/responses/Validation' } }
+  /admin/team/{id}:
+    get:
+      tags: [Admin]
+      operationId: adminGetTeamMember
+      security: [{ sessionCookie: [] }]
+      parameters: [{ $ref: '#/components/parameters/Id' }]
+      responses: { '200': { description: Team profile; ownership rules apply }, '403': { $ref: '#/components/responses/Forbidden' } }
+    put:
+      tags: [Admin]
+      operationId: adminUpdateTeamMember
+      security: [{ sessionCookie: [], csrfToken: [] }]
+      parameters: [{ $ref: '#/components/parameters/Id' }]
+      responses: { '200': { description: Team profile updated }, '403': { $ref: '#/components/responses/Forbidden' }, '422': { $ref: '#/components/responses/Validation' } }
+    delete:
+      tags: [Admin]
+      operationId: adminArchiveTeamMember
+      security: [{ sessionCookie: [], csrfToken: [] }]
+      parameters: [{ $ref: '#/components/parameters/Id' }]
+      responses: { '204': { description: Team profile archived } }
+  /admin/blog:
+    get:
+      tags: [Admin]
+      operationId: adminListBlogPosts
+      security: [{ sessionCookie: [] }]
+      responses: { '200': { description: All blog posts } }
+    post:
+      tags: [Admin]
+      operationId: adminCreateBlogPost
+      security: [{ sessionCookie: [], csrfToken: [] }]
+      responses: { '201': { description: Blog post created }, '422': { $ref: '#/components/responses/Validation' } }
+  /admin/blog/{id}:
+    put:
+      tags: [Admin]
+      operationId: adminUpdateBlogPost
+      security: [{ sessionCookie: [], csrfToken: [] }]
+      parameters: [{ $ref: '#/components/parameters/Id' }]
+      responses: { '200': { description: Blog post updated } }
+    delete:
+      tags: [Admin]
+      operationId: adminArchiveBlogPost
+      security: [{ sessionCookie: [], csrfToken: [] }]
+      parameters: [{ $ref: '#/components/parameters/Id' }]
+      responses: { '204': { description: Blog post archived } }
+  /admin/services:
+    get:
+      tags: [Admin]
+      operationId: adminListServices
+      security: [{ sessionCookie: [] }]
+      responses: { '200': { description: All services } }
+    post:
+      tags: [Admin]
+      operationId: adminCreateService
+      security: [{ sessionCookie: [], csrfToken: [] }]
+      responses: { '201': { description: Service created } }
+  /admin/services/{id}:
+    put:
+      tags: [Admin]
+      operationId: adminUpdateService
+      security: [{ sessionCookie: [], csrfToken: [] }]
+      parameters: [{ $ref: '#/components/parameters/Id' }]
+      responses: { '200': { description: Service updated } }
+    delete:
+      tags: [Admin]
+      operationId: adminArchiveService
+      security: [{ sessionCookie: [], csrfToken: [] }]
+      parameters: [{ $ref: '#/components/parameters/Id' }]
+      responses: { '204': { description: Service archived } }
+  /admin/testimonials:
+    get:
+      tags: [Admin]
+      operationId: adminListTestimonials
+      security: [{ sessionCookie: [] }]
+      responses: { '200': { description: All testimonials } }
+    post:
+      tags: [Admin]
+      operationId: adminCreateTestimonial
+      security: [{ sessionCookie: [], csrfToken: [] }]
+      responses: { '201': { description: Testimonial created } }
+  /admin/testimonials/{id}:
+    put:
+      tags: [Admin]
+      operationId: adminUpdateTestimonial
+      security: [{ sessionCookie: [], csrfToken: [] }]
+      parameters: [{ $ref: '#/components/parameters/Id' }]
+      responses: { '200': { description: Testimonial updated } }
+    delete:
+      tags: [Admin]
+      operationId: adminArchiveTestimonial
+      security: [{ sessionCookie: [], csrfToken: [] }]
+      parameters: [{ $ref: '#/components/parameters/Id' }]
+      responses: { '204': { description: Testimonial archived } }
+  /admin/technologies:
+    get:
+      tags: [Admin]
+      operationId: adminListTechnologies
+      security: [{ sessionCookie: [] }]
+      responses: { '200': { description: Technology catalog } }
+    post:
+      tags: [Admin]
+      operationId: adminCreateTechnology
+      security: [{ sessionCookie: [], csrfToken: [] }]
+      responses: { '201': { description: Technology created } }
+  /admin/technologies/{id}:
+    put:
+      tags: [Admin]
+      operationId: adminUpdateTechnology
+      security: [{ sessionCookie: [], csrfToken: [] }]
+      parameters: [{ $ref: '#/components/parameters/Id' }]
+      responses: { '200': { description: Technology updated } }
+    delete:
+      tags: [Admin]
+      operationId: adminArchiveTechnology
+      security: [{ sessionCookie: [], csrfToken: [] }]
+      parameters: [{ $ref: '#/components/parameters/Id' }]
+      responses: { '204': { description: Technology archived } }
+  /admin/skills:
+    get:
+      tags: [Admin]
+      operationId: adminListSkills
+      security: [{ sessionCookie: [] }]
+      responses: { '200': { description: Skill catalog } }
+    post:
+      tags: [Admin]
+      operationId: adminCreateSkill
+      security: [{ sessionCookie: [], csrfToken: [] }]
+      responses: { '201': { description: Skill created } }
+  /admin/skills/{id}:
+    put:
+      tags: [Admin]
+      operationId: adminUpdateSkill
+      security: [{ sessionCookie: [], csrfToken: [] }]
+      parameters: [{ $ref: '#/components/parameters/Id' }]
+      responses: { '200': { description: Skill updated } }
+    delete:
+      tags: [Admin]
+      operationId: adminArchiveSkill
+      security: [{ sessionCookie: [], csrfToken: [] }]
+      parameters: [{ $ref: '#/components/parameters/Id' }]
+      responses: { '204': { description: Skill archived } }
+  /admin/messages:
+    get:
+      tags: [Admin]
+      operationId: adminListMessages
+      security: [{ sessionCookie: [] }]
+      responses: { '200': { description: Paginated contact workflow } }
+  /admin/messages/{id}:
+    patch:
+      tags: [Admin]
+      operationId: adminUpdateMessageStatus
+      security: [{ sessionCookie: [], csrfToken: [] }]
+      parameters: [{ $ref: '#/components/parameters/Id' }]
+      responses: { '200': { description: Message status updated } }
+  /admin/settings:
+    get:
+      tags: [Admin]
+      operationId: adminListSettings
+      security: [{ sessionCookie: [] }]
+      responses: { '200': { description: Public and private settings } }
+  /admin/settings/{key}:
+    put:
+      tags: [Admin]
+      operationId: adminUpsertSetting
+      security: [{ sessionCookie: [], csrfToken: [] }]
+      parameters: [{ name: key, in: path, required: true, schema: { type: string } }]
+      responses: { '200': { description: Setting saved }, '422': { $ref: '#/components/responses/Validation' } }
+  /admin/media:
+    get:
+      tags: [Admin]
+      operationId: adminListMedia
+      security: [{ sessionCookie: [] }]
+      responses: { '200': { description: Media metadata } }
+    post:
+      tags: [Admin]
+      operationId: adminUploadMedia
+      security: [{ sessionCookie: [], csrfToken: [] }]
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [file]
+              properties: { file: { type: string, format: binary }, altText: { type: string, maxLength: 300 } }
+      responses:
+        '200':
+          description: Existing checksum-identical upload reused
+          content: { application/json: { schema: { $ref: '#/components/schemas/MediaUploadResponse' } } }
+        '201':
+          description: Upload stored
+          content: { application/json: { schema: { $ref: '#/components/schemas/MediaUploadResponse' } } }
+        '413': { description: File too large }
+        '415': { description: Type or signature rejected }
+  /admin/media/{id}:
+    delete:
+      tags: [Admin]
+      operationId: adminDeleteMedia
+      security: [{ sessionCookie: [], csrfToken: [] }]
+      parameters: [{ $ref: '#/components/parameters/Id' }]
+      responses: { '204': { description: Media metadata archived } }
+  /admin/users:
+    get:
+      tags: [Admin]
+      operationId: adminListUsers
+      security: [{ sessionCookie: [] }]
+      responses: { '200': { description: Users; super-admin only }, '403': { $ref: '#/components/responses/Forbidden' } }
+    post:
+      tags: [Admin]
+      operationId: adminCreateUser
+      security: [{ sessionCookie: [], csrfToken: [] }]
+      responses: { '201': { description: User created; super-admin only }, '403': { $ref: '#/components/responses/Forbidden' }, '422': { $ref: '#/components/responses/Validation' } }
+  /admin/users/{id}:
+    patch:
+      tags: [Admin]
+      operationId: adminUpdateUser
+      security: [{ sessionCookie: [], csrfToken: [] }]
+      parameters: [{ $ref: '#/components/parameters/Id' }]
+      responses: { '200': { description: User updated and relevant sessions revoked }, '403': { $ref: '#/components/responses/Forbidden' }, '409': { description: Final super-admin protection } }
+    delete:
+      tags: [Admin]
+      operationId: adminDeleteUser
+      security: [{ sessionCookie: [], csrfToken: [] }]
+      parameters: [{ $ref: '#/components/parameters/Id' }]
+      responses: { '204': { description: User soft-deleted and sessions revoked }, '409': { description: Self/final super-admin protection } }
+  /admin/stats:
+    get:
+      tags: [Admin]
+      operationId: adminGetStats
+      security: [{ sessionCookie: [] }]
+      responses: { '200': { description: Dashboard statistics } }
+  /admin/audit:
+    get:
+      tags: [Admin]
+      operationId: adminListAudit
+      security: [{ sessionCookie: [] }]
+      responses: { '200': { description: Paginated structured audit records }, '403': { $ref: '#/components/responses/Forbidden' } }
+components:
+  securitySchemes:
+    sessionCookie: { type: apiKey, in: cookie, name: lb_session }
+    csrfToken: { type: apiKey, in: header, name: X-CSRF-Token }
+  parameters:
+    Page: { name: page, in: query, schema: { type: integer, minimum: 1, default: 1 } }
+    Limit: { name: limit, in: query, schema: { type: integer, minimum: 1, maximum: 100, default: 20 } }
+    Search: { name: search, in: query, schema: { type: string, maxLength: 200 } }
+    Identifier: { name: identifier, in: path, required: true, schema: { type: string, maxLength: 180 } }
+    Id: { name: id, in: path, required: true, schema: { type: string, maxLength: 100 } }
+  schemas:
+    Login:
+      type: object
+      additionalProperties: false
+      required: [username, password]
+      properties: { username: { type: string, minLength: 3, maxLength: 64, pattern: '^[A-Za-z0-9][A-Za-z0-9_-]*$' }, password: { type: string, minLength: 8, maxLength: 200 } }
+    Session:
+      type: object
+      required: [user, csrfToken]
+      properties:
+        user: { type: object, required: [id, username, email, name, role], properties: { id: { type: string }, username: { type: string }, email: { type: string, format: email }, name: { type: string }, role: { enum: [super_admin, admin, editor, team_member] }, teamMemberId: { type: [string, 'null'] } } }
+        csrfToken: { type: string }
+    Project:
+      type: object
+      required: [id, title, slug, status, technologies, contributors, version]
+      properties: { id: { type: string }, title: { type: string }, slug: { type: string }, thumbnail: { type: string }, thumbnailMediaId: { type: [string, 'null'] }, gallery: { type: array, items: { type: string } }, galleryMediaIds: { type: array, items: { type: string } }, status: { enum: [draft, published, archived] }, technologies: { type: array, items: { type: string } }, contributors: { type: array, items: { type: object } }, version: { type: integer } }
+    ProjectInput:
+      type: object
+      additionalProperties: false
+      required: [title]
+      properties: { title: { type: string, maxLength: 240 }, slug: { type: string, pattern: '^[a-z0-9]+(?:-[a-z0-9]+)*$' }, thumbnail: { type: string }, thumbnailMediaId: { type: [string, 'null'] }, gallery: { type: array, maxItems: 30, items: { type: string } }, galleryMediaIds: { type: array, maxItems: 30, items: { type: string } }, status: { enum: [draft, published, archived], default: draft }, technologies: { type: array, maxItems: 100, items: { type: string } }, contributors: { type: array, maxItems: 50, items: { type: object, required: [memberId, role], properties: { memberId: { type: string }, role: { type: string } } } }, version: { type: integer, minimum: 1 } }
+    ProjectPage:
+      type: object
+      required: [items, page, limit, total, pageCount]
+      properties: { items: { type: array, items: { $ref: '#/components/schemas/Project' } }, page: { type: integer }, limit: { type: integer }, total: { type: integer }, pageCount: { type: integer } }
+    MediaUploadResponse:
+      type: object
+      required: [success, file]
+      properties:
+        success: { const: true }
+        file:
+          type: object
+          required: [id, url, path, name, type, size, reused]
+          properties:
+            id: { type: string }
+            url: { type: string }
+            path: { type: string }
+            name: { type: string }
+            type: { enum: [image/png, image/jpeg, image/webp, application/pdf] }
+            size: { type: integer, minimum: 1, maximum: 10485760 }
+            altText: { type: string }
+            reused: { type: boolean }
+    ContactMessageInput:
+      type: object
+      additionalProperties: false
+      required: [name, email, subject, message]
+      properties: { name: { type: string, minLength: 2, maxLength: 120 }, email: { type: string, format: email, maxLength: 254 }, subject: { type: string, maxLength: 160 }, message: { type: string, minLength: 10, maxLength: 5000 }, memberId: { type: string }, website: { type: string, maxLength: 0 } }
+    Error:
+      type: object
+      required: [success, error]
+      properties:
+        success: { const: false }
+        error:
+          type: object
+          required: [code, message, requestId]
+          properties: { code: { type: string }, message: { type: string }, requestId: { type: string }, fields: { type: object, additionalProperties: { type: array, items: { type: string } } } }
+  responses:
+    Unauthorized: { description: Authentication required or session expired, content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } } }
+    Forbidden: { description: CSRF or RBAC rejected the request, content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } } }
+    NotFound: { description: Resource not found, content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } } }
+    Validation: { description: Input validation failed, content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } } }
+    RateLimited: { description: Rate limit exceeded, headers: { Retry-After: { schema: { type: integer } } }, content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } } }
+    Unavailable: { description: Database unavailable, content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } } }

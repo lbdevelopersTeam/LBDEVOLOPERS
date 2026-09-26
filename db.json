@@ -1,0 +1,1487 @@
+﻿{
+    "messages":  [
+
+                 ],
+    "projects":  [
+                     {
+                         "id":  "project-albawabaa",
+                         "title":  "albawabaa.shop",
+                         "slug":  "albawabaa-shop",
+                         "shortDescription":  "Arabic-first WPC door storefront combining premium product presentation with localized commerce journeys.",
+                         "fullDescription":  "\u003cp\u003eAlbawaba needed an Arabic-first commerce experience that could introduce WPC doors as a premium, practical choice for homes and commercial interiors. The platform explains water resistance, durability, sound insulation, and low maintenance without slowing product discovery.\u003c/p\u003e\u003cp\u003eWe organized the experience around clear RTL navigation, benefit-led storytelling, visual product comparison, and direct shopping paths. Strong imagery and concise merchandising help customers understand finish options across devices.\u003c/p\u003e\u003cp\u003eThe resulting storefront balances architectural presentation with everyday purchase clarity for customers in Saudi Arabia.\u003c/p\u003e",
+                         "thumbnail":  "/images/albawabaa.shop.png",
+                         "gallery":  [],
+                         "category":  "E-commerce",
+                         "technologies":  ["Shopify", "RTL Commerce", "Localization", "Product Catalog"],
+                         "liveUrl":  "https://albawabaa.shop/",
+                         "githubUrl":  "",
+                         "featured":  true,
+                         "status":  "published",
+                         "completionDate":  "",
+                         "metaTitle":  "albawabaa.shop case study",
+                         "metaDescription":  "Arabic WPC door commerce experience by LB Developers.",
+                         "sortOrder":  1,
+                         "contributors":  [{"memberId": "team-wajid", "role": "Commerce Strategy \u0026 Technical Consulting"}, {"memberId": "team-laiba", "role": "Frontend Development \u0026 Responsive Implementation"}, {"memberId": "team-mohsin", "role": "Visual Direction \u0026 Product Presentation"}, {"memberId": "team-ibad", "role": "Lead UI/UX Design \u0026 RTL Commerce Experience"}],
+                         "client":  "Albawaba",
+                         "industry":  "WPC Doors and Interiors",
+                         "problem":  "Present a specialist WPC door catalog to Arabic-speaking customers with clear product benefits and purchase paths.",
+                         "challenge":  "The storefront needed RTL-friendly navigation, strong product merchandising, and a responsive shopping experience.",
+                         "solution":  "A localized commerce interface combining visual product discovery, benefit-led content, and direct ordering journeys.",
+                         "process":  ["Mapped Arabic customer journeys from material education to product selection.", "Structured RTL navigation and a clear catalog hierarchy.", "Designed benefit-led modules for durability, water resistance, maintenance, and comfort.", "Built responsive product discovery and merchandising patterns.", "Refined mobile browsing, calls to action, and storefront consistency."],
+                         "results":  ["Established a focused Arabic digital showroom for the WPC door range.", "Made key product advantages immediately understandable before purchase.", "Connected product education directly to responsive shopping paths."],
+                         "achievements":  ["Arabic-first RTL commerce experience.", "Benefit-led WPC product merchandising system.", "Responsive storefront optimized for mobile product discovery."],
+                         "createdAt":  "2026-09-03T00:00:00.000Z",
+                         "updatedAt":  "2026-09-03T00:00:00.000Z"
+                     },
+                     {
+                         "id":  "project-vogue-decor",
+                         "title":  "Vogue Decor",
+                         "slug":  "vogue-decor",
+                         "shortDescription":  "Commercial furniture storefront built for polished discovery across seating, tables, outdoor collections, and trade buyers.",
+                         "fullDescription":  "\u003cp\u003eVogue Decor serves hospitality operators, designers, and commercial buyers looking for durable seating, table systems, and outdoor furniture. The digital experience makes a large catalog feel curated while supporting fast category-based shopping.\u003c/p\u003e\u003cp\u003eWe developed a clean hierarchy around chairs, barstools, table tops, table bases, booths, bundles, and outdoor collections. Editorial campaign areas support seasonal merchandising while clear groupings reduce the effort from inspiration to specification.\u003c/p\u003e\u003cp\u003eThe final experience combines premium visual restraint with practical information architecture for trade and retail customers across Canada.\u003c/p\u003e",
+                         "thumbnail":  "/images/voguedecor.com.png",
+                         "gallery":  ["/images/voguemockup.jpeg"],
+                         "category":  "E-commerce",
+                         "technologies":  ["Shopify", "E-commerce UX", "Product Catalog", "Responsive Design"],
+                         "liveUrl":  "https://www.voguedecor.com/",
+                         "githubUrl":  "",
+                         "featured":  true,
+                         "status":  "published",
+                         "completionDate":  "",
+                         "metaTitle":  "Vogue Decor case study",
+                         "metaDescription":  "Commercial furniture e-commerce experience by LB Developers.",
+                         "sortOrder":  2,
+                         "contributors":  [{"memberId": "team-wajid", "role": "Commerce Strategy \u0026 Technical Consulting"}, {"memberId": "team-laiba", "role": "Frontend Development \u0026 Storefront Performance"}, {"memberId": "team-mohsin", "role": "Brand Presentation \u0026 Visual Direction"}, {"memberId": "team-ibad", "role": "Lead Product Design \u0026 E-Commerce UX"}],
+                         "client":  "Vogue Decor",
+                         "industry":  "Commercial Furniture",
+                         "problem":  "Create a polished commerce experience for customers browsing commercial seating, tables, and outdoor furniture.",
+                         "challenge":  "A broad catalog needed to remain visually premium, easy to navigate, and useful to both hospitality and trade buyers.",
+                         "solution":  "A collection-led storefront with strong merchandising, clear categories, seasonal promotions, and responsive product discovery.",
+                         "process":  ["Audited the catalog structure and primary trade-buyer journeys.", "Defined navigation for seating, table systems, outdoor furniture, and bundles.", "Created an editorial merchandising hierarchy for collections and seasonal campaigns.", "Designed trust and purchase-support messaging for high-value orders.", "Optimized responsive discovery across desktop, tablet, and mobile."],
+                         "results":  ["Unified a wide commercial catalog under a clear collection-based structure.", "Improved the visibility of seasonal products and priority shopping paths.", "Delivered a polished experience suited to commercial and direct customers."],
+                         "achievements":  ["Scalable catalog navigation for multiple furniture families.", "Premium seasonal merchandising and campaign system.", "Responsive commerce experience for Canadian customers."],
+                         "createdAt":  "2026-09-03T00:00:00.000Z",
+                         "updatedAt":  "2026-09-03T00:00:00.000Z"
+                     },
+                     {
+                         "id":  "project-american-dream-auto-protect",
+                         "title":  "American Dream Auto Protect",
+                         "slug":  "american-dream-auto-protect",
+                         "shortDescription":  "Conversion-focused vehicle protection platform with clear plan education and a streamlined quote journey.",
+                         "fullDescription":  "\u003cp\u003eAmerican Dream Auto Protect needed to turn a complex, trust-sensitive service into a clear digital decision journey. Visitors arrive with different vehicles, coverage needs, and levels of familiarity, so the platform educates without creating friction before the quote request.\u003c/p\u003e\u003cp\u003eWe structured the experience around confidence: prominent customer proof, straightforward plan explanations, scannable coverage comparisons, and a focused vehicle-and-contact quote flow. Repeated conversion paths remain visible without competing with educational content.\u003c/p\u003e\u003cp\u003eThe completed platform brings credibility, plan discovery, and lead capture into one responsive system.\u003c/p\u003e",
+                         "thumbnail":  "/images/americandreamautoprotect.com.png",
+                         "gallery":  [],
+                         "category":  "Web",
+                         "technologies":  ["Lead Generation", "Quote Funnel", "Responsive Design", "Conversion Optimization"],
+                         "liveUrl":  "https://americandreamautoprotect.com/",
+                         "githubUrl":  "",
+                         "featured":  true,
+                         "status":  "published",
+                         "completionDate":  "",
+                         "metaTitle":  "American Dream Auto Protect case study",
+                         "metaDescription":  "Vehicle protection and quote-generation platform by LB Developers.",
+                         "sortOrder":  3,
+                         "contributors":  [{"memberId": "team-wajid", "role": "Lead-Flow Strategy \u0026 Technical Consulting"}, {"memberId": "team-laiba", "role": "Frontend Development \u0026 Form Implementation"}, {"memberId": "team-mohsin", "role": "Graphic Systems \u0026 Brand Presentation"}, {"memberId": "team-ibad", "role": "Lead UX Design \u0026 Conversion Optimization"}],
+                         "client":  "American Dream Auto Protect",
+                         "industry":  "Vehicle Protection",
+                         "problem":  "Drivers needed an understandable way to compare vehicle protection options and request a personalized quote without navigating dense coverage language, unclear plan differences, or disconnected forms.",
+                         "challenge":  "The platform needed to establish trust quickly while guiding visitors through coverage education and a detailed lead form.",
+                         "solution":  "A conversion-focused experience combining social proof, clear plan communication, and a streamlined quote funnel.",
+                         "process":  ["Mapped visitor questions and the complete quote-conversion journey.", "Prioritized trust signals, reviews, licensing context, and contact access.", "Structured protection-plan education and coverage comparison.", "Designed the vehicle and customer information form for clarity.", "Optimized responsive content flow and conversion touchpoints."],
+                         "results":  ["Consolidated plan education and quote capture into one coherent journey.", "Made coverage options and trust signals easier to scan.", "Created consistent conversion paths throughout the responsive experience."],
+                         "achievements":  ["Structured multi-step quote acquisition experience.", "Clear protection-plan comparison and educational hierarchy.", "Trust-led responsive interface for a high-consideration service."],
+                         "createdAt":  "2026-09-03T00:00:00.000Z",
+                         "updatedAt":  "2026-09-03T00:00:00.000Z"
+                     },
+                     {
+                         "id":  "project-pedro-clavero",
+                         "title":  "Pedro Clavero Design",
+                         "slug":  "pedro-clavero-design",
+                         "shortDescription":  "Luxury weddings and events portfolio shaped around visual storytelling, service discovery, and elegant inquiries.",
+                         "fullDescription":  "\u003cp\u003ePedro Clavero Design needed a digital presence capable of communicating the emotion, craft, and personal attention behind luxury weddings and events. The website also explains fashion, event planning, and interior styling.\u003c/p\u003e\u003cp\u003eWe centered the experience on immersive photography, elegant typography, and paced storytelling. Gallery, studio background, service content, and contact paths let prospective clients move naturally from visual inspiration to practical understanding.\u003c/p\u003e\u003cp\u003eThe finished portfolio gives the brand a distinctive stage while keeping navigation and inquiries accessible across devices.\u003c/p\u003e",
+                         "thumbnail":  "/images/pedroclavero.com.png",
+                         "gallery":  ["/images/pedroclaveromockup.jpeg"],
+                         "category":  "Web",
+                         "technologies":  ["Luxury Branding", "Editorial UI", "Event Portfolio", "Responsive Design"],
+                         "liveUrl":  "https://pedroclavero.com/",
+                         "githubUrl":  "",
+                         "featured":  true,
+                         "status":  "published",
+                         "completionDate":  "",
+                         "metaTitle":  "Pedro Clavero Design case study",
+                         "metaDescription":  "Luxury wedding and event design portfolio by LB Developers.",
+                         "sortOrder":  4,
+                         "contributors":  [{"memberId": "team-wajid", "role": "Digital Strategy \u0026 Technical Consulting"}, {"memberId": "team-laiba", "role": "Frontend Development \u0026 Responsive Delivery"}, {"memberId": "team-mohsin", "role": "Lead Visual Direction \u0026 Brand Presentation"}, {"memberId": "team-ibad", "role": "UI/UX Design \u0026 Service Journey Architecture"}],
+                         "client":  "Pedro Clavero Design",
+                         "industry":  "Weddings and Events",
+                         "problem":  "Present luxury wedding, fashion, and event-design services through an emotionally engaging digital portfolio.",
+                         "challenge":  "The experience needed to balance rich imagery with clear service storytelling and simple inquiry paths.",
+                         "solution":  "A cinematic portfolio with editorial typography, immersive imagery, and structured journeys from inspiration to contact.",
+                         "process":  ["Defined the studio narrative and primary prospective-client journeys.", "Curated a visual hierarchy around signature wedding and event imagery.", "Structured gallery, service, about, editorial, and contact content.", "Refined typography and pacing to support a luxury presentation.", "Adapted the experience for responsive browsing and inquiry access."],
+                         "results":  ["Unified multiple creative services within one recognizable portfolio experience.", "Established a stronger visual stage for weddings, fashion, and event work.", "Connected inspiration-led browsing with clear studio and contact information."],
+                         "achievements":  ["Cinematic hero and editorial portfolio direction.", "Unified service storytelling across weddings, fashion, and interiors.", "Responsive visual experience centered on premium imagery."],
+                         "createdAt":  "2026-09-03T00:00:00.000Z",
+                         "updatedAt":  "2026-09-03T00:00:00.000Z"
+                     },
+                     {
+                         "id":  "project-zeroma",
+                         "title":  "zeroma.pk",
+                         "slug":  "zeroma-pk",
+                         "shortDescription":  "A high-performance marketplace redefining the shopping experience.",
+                         "fullDescription":  "\u003cp\u003eZeroma required a high-performance marketplace that would redefine the shopping experience while keeping vendor operations simple and fast.\u003c/p\u003e\u003cp\u003eWe engineered a headless commerce frontend with careful caching, conversion-focused interaction design, and a scalable content model.\u003c/p\u003e",
+                         "thumbnail":  "/images/Zeroma.pk.png",
+                         "gallery":  [
+                                         "/images/zeromamockup.jpeg"
+                                     ],
+                         "category":  "E-commerce",
+                         "technologies":  [
+                                              "React",
+                                              "Shopify",
+                                              "Tailwind CSS",
+                                              "Node.js"
+                                          ],
+                         "liveUrl":  "https://zeroma.pk",
+                         "githubUrl":  "",
+                         "featured":  true,
+                         "status":  "published",
+                         "completionDate":  "2024-10-15",
+                         "metaTitle":  "zeroma.pk case study",
+                         "metaDescription":  "Headless commerce and marketplace engineering case study.",
+                         "sortOrder":  5,
+                         "deletedAt":  null,
+                         "createdAt":  "2026-04-22T00:00:00.000Z",
+                         "updatedAt":  "2026-04-22T00:00:00.000Z",
+                         "memberId":  "",
+                         "memberRole":  "",
+                         "contributors":  [
+                                              {
+                                                  "memberId":  "team-wajid",
+                                                  "role":  "Automation Strategy and Technical Consulting"
+                                              },
+                                              {
+                                                  "memberId":  "team-laiba",
+                                                  "role":  "Frontend Development"
+                                              },
+                                              {
+                                                  "memberId":  "team-mohsin",
+                                                  "role":  "Graphic Design and Brand Visuals"
+                                              },
+                                              {
+                                                  "memberId":  "team-ibad",
+                                                  "role":  "E-commerce UI/UX Design"
+                                              }
+                                          ],
+                         "client":  "Zeroma",
+                         "industry":  "Marketplace and E-commerce",
+                         "problem":  "Zeroma needed a high-performance marketplace that would improve the shopping experience while keeping vendor operations simple and efficient.",
+                         "challenge":  "The platform needed to balance marketplace complexity, fast product discovery, responsive customer journeys, and a content structure that could scale.",
+                         "solution":  "LB Developers delivered a headless commerce frontend with considered caching, conversion-focused interaction design, and a scalable content model.",
+                         "process":  [
+                                         "Mapped the customer and vendor journeys around the core marketplace flows.",
+                                         "Defined the commerce architecture and scalable content structure.",
+                                         "Built the responsive storefront and refined conversion paths.",
+                                         "Optimized the experience for performance and cross-device use."
+                                     ],
+                         "results":  [
+
+                                     ],
+                         "achievements":  [
+
+                                          ]
+                     },
+                     {
+                         "id":  "project-mobixa",
+                         "title":  "mobixa.pk",
+                         "slug":  "mobixa-pk",
+                         "shortDescription":  "Premium electronics storefront with seamless mobile shopping.",
+                         "fullDescription":  "\u003cp\u003eMobixa needed a sharp, conversion-oriented commerce experience for customers shopping across devices.\u003c/p\u003e\u003cp\u003eThe final build emphasized fast product discovery, responsive checkout journeys, and polished visual hierarchy.\u003c/p\u003e",
+                         "thumbnail":  "/images/Mobixa.png",
+                         "gallery":  [
+
+                                     ],
+                         "category":  "E-commerce",
+                         "technologies":  [
+                                              "React",
+                                              "Express",
+                                              "Tailwind CSS",
+                                              "Analytics"
+                                          ],
+                         "liveUrl":  "https://mobixa.pk",
+                         "githubUrl":  "",
+                         "featured":  true,
+                         "status":  "published",
+                         "completionDate":  "2024-08-18",
+                         "metaTitle":  "mobixa.pk case study",
+                         "metaDescription":  "Electronics e-commerce experience by LB Developers.",
+                         "sortOrder":  6,
+                         "deletedAt":  null,
+                         "createdAt":  "2026-04-22T00:00:00.000Z",
+                         "updatedAt":  "2026-04-22T00:00:00.000Z",
+                         "memberId":  "",
+                         "memberRole":  "",
+                         "contributors":  [
+                                              {
+                                                  "memberId":  "team-wajid",
+                                                  "role":  "Automation and Commerce Consulting"
+                                              },
+                                              {
+                                                  "memberId":  "team-laiba",
+                                                  "role":  "Frontend Development"
+                                              },
+                                              {
+                                                  "memberId":  "team-mohsin",
+                                                  "role":  "Graphic Design and Product Visuals"
+                                              },
+                                              {
+                                                  "memberId":  "team-ibad",
+                                                  "role":  "E-commerce UI/UX Design"
+                                              }
+                                          ],
+                         "client":  "Mobixa",
+                         "industry":  "Consumer Electronics E-commerce",
+                         "problem":  "Mobixa needed a sharp, conversion-oriented electronics storefront that would work smoothly for customers shopping across devices.",
+                         "challenge":  "The experience needed to support fast product discovery, a clear purchasing journey, and consistent presentation across mobile and desktop.",
+                         "solution":  "LB Developers created a responsive commerce experience centered on product clarity, polished interaction hierarchy, and streamlined shopping flows.",
+                         "process":  [
+                                         "Reviewed product-discovery and purchase journeys.",
+                                         "Structured the interface around clear catalog navigation.",
+                                         "Implemented responsive storefront components and interactions.",
+                                         "Refined the experience using performance and analytics considerations."
+                                     ],
+                         "results":  [
+
+                                     ],
+                         "achievements":  [
+
+                                          ]
+                     },
+                     {
+                         "id":  "project-jugo",
+                         "title":  "jugo.pk",
+                         "slug":  "jugo-pk",
+                         "shortDescription":  "Clean, modern digital identity for a health-focused beverage brand.",
+                         "fullDescription":  "\u003cp\u003eJugo\u0027s digital presence needed a brand system that felt energetic, refined, and trustworthy.\u003c/p\u003e\u003cp\u003eWe paired a compact marketing site with polished product storytelling and mobile-first visual rhythm.\u003c/p\u003e",
+                         "thumbnail":  "/images/Jugo.pk.png",
+                         "gallery":  [
+                                         "/images/jugomockup.jpeg"
+                                     ],
+                         "category":  "Custom",
+                         "technologies":  [
+                                              "Brand Systems",
+                                              "React",
+                                              "Motion"
+                                          ],
+                         "liveUrl":  "https://jugo.pk",
+                         "githubUrl":  "",
+                         "featured":  true,
+                         "status":  "published",
+                         "completionDate":  "2024-06-21",
+                         "metaTitle":  "jugo.pk case study",
+                         "metaDescription":  "Brand and website case study for Jugo.",
+                         "sortOrder":  7,
+                         "deletedAt":  null,
+                         "createdAt":  "2026-04-22T00:00:00.000Z",
+                         "updatedAt":  "2026-04-22T00:00:00.000Z",
+                         "memberId":  "",
+                         "memberRole":  "",
+                         "contributors":  [
+                                              {
+                                                  "memberId":  "team-mohsin",
+                                                  "role":  "Graphic Design and Brand Visuals"
+                                              },
+                                              {
+                                                  "memberId":  "team-ibad",
+                                                  "role":  "UI/UX Design"
+                                              },
+                                              {
+                                                  "memberId":  "team-wajid",
+                                                  "role":  "Technical Consulting"
+                                              },
+                                              {
+                                                  "memberId":  "team-laiba",
+                                                  "role":  "Frontend Development"
+                                              }
+                                          ],
+                         "client":  "Jugo",
+                         "industry":  "Health and Beverage",
+                         "problem":  "Jugo needed a digital identity that could communicate an energetic, refined, and trustworthy health-focused brand.",
+                         "challenge":  "The visual system and interface needed to feel distinctive while keeping product storytelling clear and usable on mobile devices.",
+                         "solution":  "LB Developers paired a focused brand system with polished product storytelling, responsive layouts, and a clear mobile-first visual rhythm.",
+                         "process":  [
+                                         "Established the visual direction and digital brand language.",
+                                         "Mapped the content hierarchy and primary user journeys.",
+                                         "Designed responsive page structures and interaction patterns.",
+                                         "Refined presentation and motion for consistency across the experience."
+                                     ],
+                         "results":  [
+
+                                     ],
+                         "achievements":  [
+
+                                          ]
+                     },
+                     {
+                         "id":  "project-sparkalads",
+                         "title":  "sparkalads.com",
+                         "slug":  "sparkalads-com",
+                         "shortDescription":  "Dynamic portfolio and lead-generation engine for a marketing agency.",
+                         "fullDescription":  "\u003cp\u003eSparkalads needed a visual system that could communicate momentum, authority, and measurable marketing outcomes.\u003c/p\u003e\u003cp\u003eWe delivered a fast, animated agency platform designed around proof, clarity, and conversion.\u003c/p\u003e",
+                         "thumbnail":  "/images/Sparkalads.com.png",
+                         "gallery":  [
+                                         "/images/sparkleadsmockup.jpeg"
+                                     ],
+                         "category":  "Web",
+                         "technologies":  [
+                                              "React",
+                                              "GSAP",
+                                              "Three.js",
+                                              "SEO"
+                                          ],
+                         "liveUrl":  "https://sparkalads.com",
+                         "githubUrl":  "",
+                         "featured":  true,
+                         "status":  "published",
+                         "completionDate":  "2024-04-05",
+                         "metaTitle":  "sparkalads.com case study",
+                         "metaDescription":  "Marketing agency website by LB Developers.",
+                         "sortOrder":  8,
+                         "deletedAt":  null,
+                         "createdAt":  "2026-04-22T00:00:00.000Z",
+                         "updatedAt":  "2026-04-22T00:00:00.000Z",
+                         "memberId":  "",
+                         "memberRole":  "",
+                         "contributors":  [
+                                              {
+                                                  "memberId":  "team-mohsin",
+                                                  "role":  "Graphic Design and Visual Direction"
+                                              },
+                                              {
+                                                  "memberId":  "team-laiba",
+                                                  "role":  "Frontend Development"
+                                              },
+                                              {
+                                                  "memberId":  "team-wajid",
+                                                  "role":  "Digital Consulting and Lead-Flow Strategy"
+                                              },
+                                              {
+                                                  "memberId":  "team-ibad",
+                                                  "role":  "UI/UX Design"
+                                              }
+                                          ],
+                         "client":  "Sparkalads",
+                         "industry":  "Marketing and Advertising",
+                         "problem":  "Sparkalads needed a digital presence that could communicate momentum, authority, and measurable marketing value.",
+                         "challenge":  "The site needed to combine expressive visual direction with fast performance, clear proof, and direct lead-generation paths.",
+                         "solution":  "LB Developers delivered an animated agency platform organized around credibility, service clarity, project proof, and conversion.",
+                         "process":  [
+                                         "Defined the visual direction and information hierarchy.",
+                                         "Designed content structures around authority and proof.",
+                                         "Developed responsive animated interfaces with React and GSAP.",
+                                         "Optimized presentation, performance, and search foundations."
+                                     ],
+                         "results":  [
+
+                                     ],
+                         "achievements":  [
+
+                                          ]
+                     },
+                     {
+                         "id":  "project-noor-gemstone",
+                         "title":  "noorgemstone.com",
+                         "slug":  "noorgemstone-com",
+                         "shortDescription":  "Premium gemstone storefront shaped around trust, detail, and product discovery.",
+                         "fullDescription":  "\u003cp\u003eNoor Gemstone needed a premium commerce experience that could present high-value products with clarity, trust, and refinement.\u003c/p\u003e\u003cp\u003eWe shaped the storefront around product detail, visual confidence, search visibility, and fast mobile browsing.\u003c/p\u003e",
+                         "thumbnail":  "/images/Noorgemstone.com.png",
+                         "gallery":  [
+                                         "/images/Noorgemstoneslaptopmockup.jpeg"
+                                     ],
+                         "category":  "E-commerce",
+                         "technologies":  [
+                                              "Shopify",
+                                              "Product Storytelling",
+                                              "SEO",
+                                              "Performance"
+                                          ],
+                         "liveUrl":  "https://noorgemstone.com",
+                         "githubUrl":  "",
+                         "featured":  true,
+                         "status":  "published",
+                         "completionDate":  "2024-03-12",
+                         "metaTitle":  "noorgemstone.com case study",
+                         "metaDescription":  "Premium gemstone commerce experience by LB Developers.",
+                         "sortOrder":  9,
+                         "deletedAt":  null,
+                         "createdAt":  "2026-04-22T00:00:00.000Z",
+                         "updatedAt":  "2026-04-22T00:00:00.000Z",
+                         "memberId":  "",
+                         "memberRole":  "",
+                         "contributors":  [
+                                              {
+                                                  "memberId":  "team-mohsin",
+                                                  "role":  "Graphic Design and Product Visuals"
+                                              },
+                                              {
+                                                  "memberId":  "team-ibad",
+                                                  "role":  "E-commerce UI/UX Design"
+                                              },
+                                              {
+                                                  "memberId":  "team-wajid",
+                                                  "role":  "Commerce Consulting and Growth Strategy"
+                                              },
+                                              {
+                                                  "memberId":  "team-laiba",
+                                                  "role":  "Frontend Development"
+                                              }
+                                          ],
+                         "client":  "Noor Gemstone",
+                         "industry":  "Gemstone E-commerce",
+                         "problem":  "Noor Gemstone needed a premium commerce experience capable of presenting high-value products with clarity, trust, and visual refinement.",
+                         "challenge":  "The interface needed to support detailed product inspection and confident discovery without overwhelming customers on smaller screens.",
+                         "solution":  "LB Developers shaped the storefront around product detail, visual confidence, search visibility, and fast mobile browsing.",
+                         "process":  [
+                                         "Defined a premium visual language for high-value products.",
+                                         "Structured discovery and product-detail journeys.",
+                                         "Designed responsive commerce components and content hierarchy.",
+                                         "Refined presentation for clarity, trust, and mobile browsing."
+                                     ],
+                         "results":  [
+
+                                     ],
+                         "achievements":  [
+
+                                          ]
+                     },
+                     {
+                         "id":  "project-zaroofragrances",
+                         "title":  "zaroofragrances.com",
+                         "slug":  "zaroofragrances-com",
+                         "shortDescription":  "Elegant fragrance storefront with polished browsing and premium product positioning.",
+                         "fullDescription":  "\u003cp\u003eZaroofragrances.com needed a refined storefront for product discovery, fragrance storytelling, and confident mobile purchasing.\u003c/p\u003e\u003cp\u003eThe experience balances elegant visuals, clear product hierarchy, and a streamlined commerce path.\u003c/p\u003e",
+                         "thumbnail":  "/images/ZarooFragrances.pk.png",
+                         "gallery":  [
+
+                                     ],
+                         "category":  "E-commerce",
+                         "technologies":  [
+                                              "Shopify",
+                                              "Fragrance Merchandising",
+                                              "Analytics",
+                                              "Tailwind CSS"
+                                          ],
+                         "liveUrl":  "https://zaroofragrances.pk",
+                         "githubUrl":  "",
+                         "featured":  true,
+                         "status":  "published",
+                         "completionDate":  "2024-02-08",
+                         "metaTitle":  "zaroofragrances.com case study",
+                         "metaDescription":  "Premium fragrance storefront by LB Developers.",
+                         "sortOrder":  10,
+                         "deletedAt":  null,
+                         "createdAt":  "2026-04-22T00:00:00.000Z",
+                         "updatedAt":  "2026-04-22T00:00:00.000Z",
+                         "memberId":  "",
+                         "memberRole":  "",
+                         "contributors":  [
+                                              {
+                                                  "memberId":  "team-mohsin",
+                                                  "role":  "Graphic Design and Product Presentation"
+                                              },
+                                              {
+                                                  "memberId":  "team-ibad",
+                                                  "role":  "E-commerce UI/UX Design"
+                                              },
+                                              {
+                                                  "memberId":  "team-wajid",
+                                                  "role":  "Commerce Consulting and Growth Strategy"
+                                              },
+                                              {
+                                                  "memberId":  "team-laiba",
+                                                  "role":  "Frontend Development"
+                                              }
+                                          ],
+                         "client":  "Zaroo Fragrances",
+                         "industry":  "Fragrance E-commerce",
+                         "problem":  "Zaroo Fragrances needed a refined storefront for fragrance discovery, product storytelling, and confident mobile purchasing.",
+                         "challenge":  "The experience needed to balance premium visual presentation with clear merchandising, browsing, and purchase pathways.",
+                         "solution":  "LB Developers created an elegant commerce experience with clear product hierarchy, focused merchandising, and streamlined conversion paths.",
+                         "process":  [
+                                         "Established the fragrance brand\u0027s visual and merchandising direction.",
+                                         "Mapped product discovery and purchase journeys.",
+                                         "Designed responsive catalog and product-detail interfaces.",
+                                         "Refined the visual system using analytics and usability considerations."
+                                     ],
+                         "results":  [
+
+                                     ],
+                         "achievements":  [
+
+                                          ]
+                     },
+                     {
+                         "id":  "project-premium-wild-morels",
+                         "title":  "premiumwildmorels.com",
+                         "slug":  "premiumwildmorels-com",
+                         "shortDescription":  "Specialty food storefront built for product education, seasonal demand, and ordering clarity.",
+                         "fullDescription":  "\u003cp\u003ePremium Wild Morels needed a product-focused digital presence that explains quality, seasonality, and ordering with confidence.\u003c/p\u003e\u003cp\u003eWe created a clear specialty commerce structure with fast navigation, content-led trust, and direct conversion paths.\u003c/p\u003e",
+                         "thumbnail":  "/images/PremiumWildMorels.com.png",
+                         "gallery":  [
+                                         "/images/premiumwildmorelsmockup.jpeg"
+                                     ],
+                         "category":  "E-commerce",
+                         "technologies":  [
+                                              "Catalog UX",
+                                              "Content Strategy",
+                                              "SEO",
+                                              "Performance"
+                                          ],
+                         "liveUrl":  "https://premiumwildmorels.com",
+                         "githubUrl":  "",
+                         "featured":  true,
+                         "status":  "published",
+                         "completionDate":  "2024-01-17",
+                         "metaTitle":  "premiumwildmorels.com case study",
+                         "metaDescription":  "Specialty food commerce platform by LB Developers.",
+                         "sortOrder":  11,
+                         "deletedAt":  null,
+                         "createdAt":  "2026-04-22T00:00:00.000Z",
+                         "updatedAt":  "2026-04-22T00:00:00.000Z",
+                         "memberId":  "",
+                         "memberRole":  "",
+                         "contributors":  [
+                                              {
+                                                  "memberId":  "team-wajid",
+                                                  "role":  "Commerce Consulting and Growth Strategy"
+                                              },
+                                              {
+                                                  "memberId":  "team-ibad",
+                                                  "role":  "E-commerce UI/UX Design"
+                                              },
+                                              {
+                                                  "memberId":  "team-mohsin",
+                                                  "role":  "Graphic Design and Product Visuals"
+                                              },
+                                              {
+                                                  "memberId":  "team-laiba",
+                                                  "role":  "Frontend Development"
+                                              }
+                                          ],
+                         "client":  "Premium Wild Morels",
+                         "industry":  "Specialty Food E-commerce",
+                         "problem":  "Premium Wild Morels needed a product-focused digital presence that clearly explains quality, seasonality, and ordering.",
+                         "challenge":  "The experience needed to educate customers, build product trust, and guide seasonal demand through a simple commerce journey.",
+                         "solution":  "LB Developers created a clear specialty commerce structure with content-led trust, fast navigation, and direct conversion paths.",
+                         "process":  [
+                                         "Clarified product education and seasonal ordering requirements.",
+                                         "Structured the catalog and content around customer questions.",
+                                         "Designed responsive paths from education to purchase.",
+                                         "Refined search and performance foundations for ongoing growth."
+                                     ],
+                         "results":  [
+
+                                     ],
+                         "achievements":  [
+
+                                          ]
+                     },
+                     {
+                         "id":  "project-gulf-legal-consultant",
+                         "title":  "Gulf Legal Consultant",
+                         "slug":  "gulf-legal-consultant",
+                         "shortDescription":  "Professional legal consultancy platform built for credibility, clarity, and qualified inquiries.",
+                         "fullDescription":  "\u003cp\u003eGulf Legal Consultant needed a professional digital presence that could communicate expertise, trust, and service clarity.\u003c/p\u003e\u003cp\u003eWe shaped the platform around simple navigation, premium presentation, and direct inquiry paths for qualified clients.\u003c/p\u003e",
+                         "thumbnail":  "/images/Gulflegalconsultant.com.png",
+                         "gallery":  [
+                                         "/images/Strategiclegalcouncilmockup.jpeg"
+                                     ],
+                         "category":  "Web",
+                         "technologies":  [
+                                              "Legal Website",
+                                              "Lead Generation",
+                                              "SEO",
+                                              "Performance"
+                                          ],
+                         "liveUrl":  "https://gulflegalconsultant.com",
+                         "githubUrl":  "",
+                         "featured":  true,
+                         "status":  "published",
+                         "completionDate":  "2024-01-04",
+                         "metaTitle":  "Gulf Legal Consultant case study",
+                         "metaDescription":  "Legal consultancy platform by LB Developers.",
+                         "sortOrder":  12,
+                         "deletedAt":  null,
+                         "createdAt":  "2026-04-22T00:00:00.000Z",
+                         "updatedAt":  "2026-04-22T00:00:00.000Z",
+                         "memberId":  "",
+                         "memberRole":  "",
+                         "contributors":  [
+                                              {
+                                                  "memberId":  "team-wajid",
+                                                  "role":  "Digital Consulting and Lead-Flow Strategy"
+                                              },
+                                              {
+                                                  "memberId":  "team-laiba",
+                                                  "role":  "Frontend Development"
+                                              },
+                                              {
+                                                  "memberId":  "team-mohsin",
+                                                  "role":  "Graphic Design and Visual Direction"
+                                              },
+                                              {
+                                                  "memberId":  "team-ibad",
+                                                  "role":  "UI/UX Design"
+                                              }
+                                          ],
+                         "client":  "Gulf Legal Consultant",
+                         "industry":  "Legal Services",
+                         "problem":  "Gulf Legal Consultant needed a professional digital presence that could communicate expertise, trust, and service clarity.",
+                         "challenge":  "The platform needed to organize complex professional services while keeping navigation simple and inquiry paths direct.",
+                         "solution":  "LB Developers shaped a polished legal-services platform around credibility, clear service information, responsive delivery, and qualified inquiries.",
+                         "process":  [
+                                         "Mapped service information and prospective-client journeys.",
+                                         "Defined the content hierarchy and inquiry flow.",
+                                         "Developed the responsive professional-services interface.",
+                                         "Refined performance, search visibility, and conversion paths."
+                                     ],
+                         "results":  [
+
+                                     ],
+                         "achievements":  [
+
+                                          ]
+                     }
+                 ],
+    "team":  [
+                 {
+                     "id":  "team-wajid",
+                     "name":  "Wajid Hussain",
+                     "slug":  "wajid-hussain",
+                     "role":  "Automation Expert \u0026 Technical Consultant",
+                     "tagline":  "Architecting high-concurrency workflows, commerce automation, and robust cloud systems that scale without friction.",
+                     "bio":  "Automation expert and technical consultant shaping efficient digital systems, enterprise commerce integrations, and high-velocity cloud delivery.",
+                     "fullBio":  "With over 7 years of engineering and technical consulting experience, Wajid specializes in architecting enterprise-grade automation workflows, robust cloud infrastructures, and high-performance headless commerce platforms. He bridges strategic business objectives and high-throughput technical delivery, ensuring systems operate reliably under massive peak loads.",
+                     "specialization":  "Enterprise Automation, Headless Commerce Architecture \u0026 Cloud Systems",
+                     "avatar":  "/lbt/Wajid Hussain.png",
+                     "coverImage":  "/images/Zeroma.pk.png",
+                     "email":  "wajidhussain.dev@gmail.com",
+                     "location":  "Islamabad, PK (UTC+5)",
+                     "availability":  "Available for Advisory \u0026 Architecture Engagements",
+                     "yearsExperience":  "7+ Years",
+                     "languages":  [
+                                       "English (Fluent)",
+                                       "Urdu (Native)"
+                                   ],
+                     "cvUrl":  "",
+                     "accentColor":  "#3D5AFE",
+                     "skills":  [
+                                    "Automation Strategy",
+                                    "Technical Consulting",
+                                    "Commerce Systems",
+                                    "Cloud Architecture",
+                                    "DevOps \u0026 CI/CD",
+                                    "API Gateway Integration",
+                                    "Performance Tuning"
+                                ],
+                     "skillGroups":  [
+                                         {
+                                             "category":  "Automation \u0026 Workflows",
+                                             "skills":  [
+                                                            "Zapier / Make / n8n Enterprise",
+                                                            "Custom Webhook Pipelines",
+                                                            "Automated Billing \u0026 Invoicing",
+                                                            "CRM / ERP Synchronization",
+                                                            "Error Handling \u0026 Retry Queues"
+                                                        ]
+                                         },
+                                         {
+                                             "category":  "Commerce \u0026 Infrastructure",
+                                             "skills":  [
+                                                            "Shopify Plus / Headless Commerce",
+                                                            "Node.js \u0026 Express Architecture",
+                                                            "Microservices \u0026 Docker",
+                                                            "Redis Caching \u0026 CDN Optimization",
+                                                            "SQL \u0026 NoSQL Performance Tuning"
+                                                        ]
+                                         },
+                                         {
+                                             "category":  "Advisory \u0026 Strategy",
+                                             "skills":  [
+                                                            "System Architecture Review",
+                                                            "Tech Stack Selection",
+                                                            "Security \u0026 Compliance Audits",
+                                                            "Scalability Roadmaps",
+                                                            "Vendor Integration Strategy"
+                                                        ]
+                                         }
+                                     ],
+                     "experience":  [
+                                        {
+                                            "id":  "wajid-exp-1",
+                                            "company":  "LB Developers",
+                                            "position":  "Lead Technical Consultant \u0026 Automation Architect",
+                                            "startDate":  "2022",
+                                            "endDate":  "",
+                                            "current":  true,
+                                            "description":  "Leading technical strategy, cloud infrastructure design, and commerce automation systems across flagship client builds.",
+                                            "responsibilities":  [
+                                                                     "Designed headless architecture for zeroma.pk and mobixa.pk, achieving sub-100ms API response times.",
+                                                                     "Automated vendor onboarding and inventory synchronization across multi-channel retail systems.",
+                                                                     "Implemented CI/CD pipelines reducing deployment friction by 75%."
+                                                                 ],
+                                            "achievements":  [
+                                                                 "Orchestrated the architectural rollout for 5 enterprise commerce platforms.",
+                                                                 "Engineered real-time order processing pipelines supporting 10,000+ daily transactions."
+                                                             ],
+                                            "technologies":  [
+                                                                 "Node.js",
+                                                                 "Express",
+                                                                 "Shopify API",
+                                                                 "Docker",
+                                                                 "Redis",
+                                                                 "PostgreSQL",
+                                                                 "AWS"
+                                                             ]
+                                        },
+                                        {
+                                            "id":  "wajid-exp-2",
+                                            "company":  "Nexus Digital Solutions",
+                                            "position":  "Senior Cloud \u0026 Automation Engineer",
+                                            "startDate":  "2019",
+                                            "endDate":  "2022",
+                                            "current":  false,
+                                            "description":  "Architected custom API middleware and automated data transformation pipelines for enterprise clients.",
+                                            "responsibilities":  [
+                                                                     "Constructed automated CRM sync workflows connecting Salesforce and legacy ERPs.",
+                                                                     "Maintained 99.98% uptime across microservices infrastructure."
+                                                                 ],
+                                            "achievements":  [
+                                                                 "Reduced manual data reconciliation hours by over 30 hours per week for logistics clients."
+                                                             ],
+                                            "technologies":  [
+                                                                 "Python",
+                                                                 "Node.js",
+                                                                 "Docker",
+                                                                 "Kubernetes",
+                                                                 "REST APIs",
+                                                                 "GraphQL"
+                                                             ]
+                                        }
+                                    ],
+                     "education":  [
+                                       {
+                                           "id":  "wajid-edu-1",
+                                           "institution":  "Government Degree College Mingora",
+                                           "degree":  "Intermediate",
+                                           "field":  "Computer Science (ICS)",
+                                           "startDate":  "",
+                                           "endDate":  "",
+                                           "description":  "Currently enrolled in the Intermediate in Computer Science program.",
+                                           "achievements":  [
+
+                                                            ]
+                                       }
+                                   ],
+                     "certifications":  [
+                                            {
+                                                "id":  "wajid-cert-1",
+                                                "title":  "AWS Certified Solutions Architect â€“ Associate",
+                                                "organization":  "Amazon Web Services",
+                                                "type":  "Professional Certification",
+                                                "issueDate":  "2023",
+                                                "credentialId":  "AWS-SAA-882194",
+                                                "credentialUrl":  "https://aws.amazon.com/verification",
+                                                "image":  ""
+                                            },
+                                            {
+                                                "id":  "wajid-cert-2",
+                                                "title":  "Shopify Advanced Commerce \u0026 API Specialist",
+                                                "organization":  "Shopify Academy",
+                                                "type":  "Specialist Credential",
+                                                "issueDate":  "2022",
+                                                "credentialId":  "SHPFY-ADV-4190",
+                                                "credentialUrl":  "https://shopify.com",
+                                                "image":  ""
+                                            }
+                                        ],
+                     "testimonials":  [
+                                          {
+                                              "id":  "wajid-test-1",
+                                              "quote":  "Wajid restructured our entire inventory sync and commerce architecture. Our site load time plummeted and we haven\u0027t suffered a single outage during peak sales.",
+                                              "author":  "Hamza Rasheed",
+                                              "role":  "CTO",
+                                              "company":  "Zeroma Retail",
+                                              "project":  "zeroma.pk",
+                                              "avatar":  ""
+                                          },
+                                          {
+                                              "id":  "wajid-test-2",
+                                              "quote":  "Exceptional clarity on system design. Wajid identified scalability bottlenecks in our API layer within days and delivered an airtight automation blueprint.",
+                                              "author":  "Tariq Mahmood",
+                                              "role":  "Managing Director",
+                                              "company":  "Gulf Legal Consultant",
+                                              "project":  "gulflegalconsultant.com",
+                                              "avatar":  ""
+                                          }
+                                      ],
+                     "socialLinks":  {
+                                         "linkedin":  "https://linkedin.com/in/wajid-hussain-lb",
+                                         "github":  "https://github.com/wajidhussain",
+                                         "twitter":  "https://twitter.com/wajid_dev",
+                                         "behance":  "",
+                                         "dribbble":  "",
+                                         "instagram":  "",
+                                         "website":  "https://lbdevelopers.com/team/wajid-hussain"
+                                     },
+                     "active":  true,
+                     "displayOrder":  1,
+                     "deletedAt":  null,
+                     "createdAt":  "2026-04-22T00:00:00.000Z",
+                     "updatedAt":  "2026-04-22T00:00:00.000Z",
+                     "phone":  "03489077329"
+                 },
+                 {
+                     "id":  "team-mohsin",
+                     "name":  "Mohsin Bilal",
+                     "slug":  "mohsin-bilal",
+                     "role":  "Lead Brand \u0026 Graphics Designer",
+                     "tagline":  "Translating brand vision into distinctive visual systems, tactile product packaging, and high-impact digital identity.",
+                     "bio":  "Graphics designer shaping brand systems, product visuals, and digital art direction with timeless aesthetic authority.",
+                     "fullBio":  "Mohsin is a senior visual designer and brand strategist with 5+ years of experience crafting unmistakable identities for forward-thinking consumer brands, specialty commerce, and digital agencies. His work unites typography, color psychology, 3D product rendering, and layout craft to build enduring visual equity.",
+                     "specialization":  "Brand Identity Systems, Visual Art Direction \u0026 Packaging Design",
+                     "avatar":  "/lbt/Mohsin.png",
+                     "coverImage":  "/images/Jugo.pk.png",
+                     "email":  "mohsinbilal.dev@gmail.com",
+                     "location":  "Lahore, PK (UTC+5)",
+                     "availability":  "Available for Brand Identity \u0026 Visual Direction Projects",
+                     "yearsExperience":  "5+ Years",
+                     "languages":  [
+                                       "English (Fluent)",
+                                       "Urdu (Native)"
+                                   ],
+                     "cvUrl":  "",
+                     "accentColor":  "#FF5C7A",
+                     "skills":  [
+                                    "Graphic Design",
+                                    "Brand Systems",
+                                    "Visual Direction",
+                                    "Product Visuals",
+                                    "3D Rendering",
+                                    "Typography",
+                                    "Packaging Design"
+                                ],
+                     "skillGroups":  [
+                                         {
+                                             "category":  "Brand Systems \u0026 Identity",
+                                             "skills":  [
+                                                            "Comprehensive Brand Guidelines",
+                                                            "Custom Logomarks \u0026 Wordmarks",
+                                                            "Typography Systems \u0026 Hierarchies",
+                                                            "Palette Strategy \u0026 Color Tokens",
+                                                            "Brand Collateral \u0026 Iconography"
+                                                        ]
+                                         },
+                                         {
+                                             "category":  "Product \u0026 Visual Production",
+                                             "skills":  [
+                                                            "High-Fidelity 3D Product Visuals",
+                                                            "Packaging \u0026 Label Engineering",
+                                                            "Marketing Asset Toolkits",
+                                                            "Vector Art \u0026 Editorial Illustrations",
+                                                            "Social Identity Kits"
+                                                        ]
+                                         },
+                                         {
+                                             "category":  "Design Mastery \u0026 Tools",
+                                             "skills":  [
+                                                            "Figma \u0026 FigJam",
+                                                            "Adobe Illustrator \u0026 Photoshop",
+                                                            "Adobe InDesign \u0026 After Effects",
+                                                            "Blender (3D Modeling \u0026 Lighting)",
+                                                            "Cinema 4D Basics"
+                                                        ]
+                                         }
+                                     ],
+                     "experience":  [
+                                        {
+                                            "id":  "mohsin-exp-1",
+                                            "company":  "LB Developers",
+                                            "position":  "Lead Brand \u0026 Graphics Designer",
+                                            "startDate":  "2023",
+                                            "endDate":  "",
+                                            "current":  true,
+                                            "description":  "Directing visual identity design and product imagery for premier commerce and digital agency clients.",
+                                            "responsibilities":  [
+                                                                     "Crafted the complete digital brand identity and packaging visual system for jugo.pk.",
+                                                                     "Created photorealistic product renders and merchandising guidelines for zaroofragrances.com and noorgemstone.com.",
+                                                                     "Developed brand guidelines ensuring 100% visual consistency across omnichannel collateral."
+                                                                 ],
+                                            "achievements":  [
+                                                                 "Elevated brand perception leading to a 40% increase in brand recall for client product launches.",
+                                                                 "Delivered complete visual identity packages for 12+ international brands."
+                                                             ],
+                                            "technologies":  [
+                                                                 "Adobe Illustrator",
+                                                                 "Photoshop",
+                                                                 "Figma",
+                                                                 "Blender",
+                                                                 "InDesign"
+                                                             ]
+                                        },
+                                        {
+                                            "id":  "mohsin-exp-2",
+                                            "company":  "Aura Creative Studio",
+                                            "position":  "Senior Brand Designer",
+                                            "startDate":  "2020",
+                                            "endDate":  "2023",
+                                            "current":  false,
+                                            "description":  "Crafted comprehensive branding, editorial publications, and advertising assets for FMCG and luxury brands.",
+                                            "responsibilities":  [
+                                                                     "Designed over 25 distinctive brand identities from conceptual sketches to finished assets.",
+                                                                     "Collaborated with marketing directors to produce high-converting campaign visuals."
+                                                                 ],
+                                            "achievements":  [
+                                                                 "Featured in regional design showcases for excellence in packaging design."
+                                                             ],
+                                            "technologies":  [
+                                                                 "Adobe Creative Suite",
+                                                                 "Figma",
+                                                                 "After Effects"
+                                                             ]
+                                        }
+                                    ],
+                     "education":  [
+                                       {
+                                           "id":  "mohsin-edu-1",
+                                           "institution":  "Hadaf College",
+                                           "degree":  "Intermediate",
+                                           "field":  "Computer Science (ICS)",
+                                           "startDate":  "",
+                                           "endDate":  "",
+                                           "description":  "Currently enrolled in the Intermediate in Computer Science program.",
+                                           "achievements":  [
+
+                                                            ]
+                                       }
+                                   ],
+                     "certifications":  [
+                                            {
+                                                "id":  "mohsin-cert-1",
+                                                "title":  "Advanced Brand Identity \u0026 Design Systems",
+                                                "organization":  "Design Mastery Guild",
+                                                "type":  "Professional Certificate",
+                                                "issueDate":  "2023",
+                                                "credentialId":  "DMG-BID-9014",
+                                                "credentialUrl":  "https://behance.net",
+                                                "image":  ""
+                                            },
+                                            {
+                                                "id":  "mohsin-cert-2",
+                                                "title":  "Adobe Certified Professional in Visual Design",
+                                                "organization":  "Adobe Systems",
+                                                "type":  "Professional Credential",
+                                                "issueDate":  "2021",
+                                                "credentialId":  "ADOBE-DES-7731",
+                                                "credentialUrl":  "https://adobe.com",
+                                                "image":  ""
+                                            }
+                                        ],
+                     "testimonials":  [
+                                          {
+                                              "id":  "mohsin-test-1",
+                                              "quote":  "Mohsin gave Jugo an identity that completely captivated our customers. The product renders and vibrant brand language set us apart on crowded retail shelves.",
+                                              "author":  "Zaid Farooq",
+                                              "role":  "Founder \u0026 Brand Lead",
+                                              "company":  "Jugo Beverage Co.",
+                                              "project":  "jugo.pk",
+                                              "avatar":  ""
+                                          },
+                                          {
+                                              "id":  "mohsin-test-2",
+                                              "quote":  "The visual luxury and detail Mohsin brought to Zaroo Fragrances exceeded all expectations. Our bottles look majestic online and in print.",
+                                              "author":  "Khurram Shahzad",
+                                              "role":  "Creative Director",
+                                              "company":  "Zaroo Fragrances",
+                                              "project":  "zaroofragrances.com",
+                                              "avatar":  ""
+                                          }
+                                      ],
+                     "socialLinks":  {
+                                         "linkedin":  "https://linkedin.com/in/mohsin-bilal-design",
+                                         "github":  "",
+                                         "twitter":  "",
+                                         "behance":  "https://behance.net/mohsinbilal",
+                                         "dribbble":  "https://dribbble.com/mohsinbilal",
+                                         "instagram":  "https://instagram.com/mohsin.visuals",
+                                         "website":  "https://lbdevelopers.com/team/mohsin-bilal"
+                                     },
+                     "active":  true,
+                     "displayOrder":  2,
+                     "deletedAt":  null,
+                     "createdAt":  "2026-04-22T00:00:00.000Z",
+                     "updatedAt":  "2026-04-22T00:00:00.000Z",
+                     "phone":  "03425124134"
+                 },
+                 {
+                     "id":  "team-laiba",
+                     "name":  "Laiba Sahibzada",
+                     "slug":  "laiba-sahibzada",
+                     "role":  "Senior Frontend \u0026 Full-Stack Developer",
+                     "tagline":  "Building lightning-fast, accessible, and kinetic digital products that turn complex software into effortless user experiences.",
+                     "bio":  "Developer building responsive frontend experiences, headless architectures, and high-performance digital products.",
+                     "fullBio":  "Laiba is a Senior Frontend \u0026 Full-Stack Engineer with 5+ years of experience engineering high-velocity web applications, complex design systems, and responsive interfaces. With a deep passion for web performance, WebGL interactions, and bulletproof TypeScript architectures, she turns ambitious product designs into polished, pixel-perfect software.",
+                     "specialization":  "Modern React/Next.js Engineering, Kinetic UI \u0026 Web Performance",
+                     "avatar":  "/lbt/Laiba.png",
+                     "coverImage":  "/images/Sparkalads.com.png",
+                     "email":  "Laibakhan4455k@gmail.com",
+                     "location":  "Peshawar, PK (UTC+5)",
+                     "availability":  "Available for Web Applications \u0026 Performance Overhauls",
+                     "yearsExperience":  "5+ Years",
+                     "languages":  [
+                                       "English (Fluent)",
+                                       "Urdu (Native)",
+                                       "Pashto (Native)"
+                                   ],
+                     "cvUrl":  "",
+                     "accentColor":  "#12B8A6",
+                     "skills":  [
+                                    "Frontend Development",
+                                    "React",
+                                    "TypeScript",
+                                    "Next.js",
+                                    "Tailwind CSS",
+                                    "Node.js",
+                                    "WebGL / Three.js",
+                                    "Performance Optimization"
+                                ],
+                     "skillGroups":  [
+                                         {
+                                             "category":  "Frontend Architecture",
+                                             "skills":  [
+                                                            "React 19 \u0026 Next.js App Router",
+                                                            "TypeScript Strict Systems",
+                                                            "Tailwind CSS \u0026 CSS Architecture",
+                                                            "State Management (Zustand / Redux)",
+                                                            "Component Driven Architecture"
+                                                        ]
+                                         },
+                                         {
+                                             "category":  "Motion \u0026 3D Engineering",
+                                             "skills":  [
+                                                            "GSAP \u0026 ScrollTrigger Timelines",
+                                                            "Framer Motion / Motion One",
+                                                            "Three.js \u0026 React Three Fiber",
+                                                            "Shader Micro-interactions",
+                                                            "Canvas \u0026 SVG Animations"
+                                                        ]
+                                         },
+                                         {
+                                             "category":  "Performance \u0026 Full-Stack",
+                                             "skills":  [
+                                                            "Core Web Vitals 95+ Tuning",
+                                                            "Node.js \u0026 Express REST APIs",
+                                                            "Bundle Optimization \u0026 Code Splitting",
+                                                            "Accessibility (WCAG AA Compliance)",
+                                                            "Vite Build Pipelines \u0026 CI"
+                                                        ]
+                                         }
+                                     ],
+                     "experience":  [
+                                        {
+                                            "id":  "laiba-exp-1",
+                                            "company":  "LB Developers",
+                                            "position":  "Senior Frontend \u0026 Full-Stack Engineer",
+                                            "startDate":  "2023",
+                                            "endDate":  "",
+                                            "current":  true,
+                                            "description":  "Architecting flagship client frontends, performance-critical interactive systems, and responsive web platforms.",
+                                            "responsibilities":  [
+                                                                     "Engineered the frontend for zeroma.pk and mobixa.pk with zero-layout-shift and sub-second page loads.",
+                                                                     "Built sparkalads.com featuring immersive GSAP animations and responsive 3D elements.",
+                                                                     "Authored reusable UI component libraries reducing delivery time on subsequent client projects by 40%."
+                                                                 ],
+                                            "achievements":  [
+                                                                 "Consistently delivered 98+ Google Lighthouse scores across desktop and mobile storefronts.",
+                                                                 "Engineered high-concurrency client portals processing over 50,000 monthly active users."
+                                                             ],
+                                            "technologies":  [
+                                                                 "React 19",
+                                                                 "TypeScript",
+                                                                 "Tailwind CSS",
+                                                                 "GSAP",
+                                                                 "Three.js",
+                                                                 "Vite",
+                                                                 "Node.js"
+                                                             ]
+                                        },
+                                        {
+                                            "id":  "laiba-exp-2",
+                                            "company":  "Veloce Interactive",
+                                            "position":  "Frontend Developer",
+                                            "startDate":  "2021",
+                                            "endDate":  "2023",
+                                            "current":  false,
+                                            "description":  "Developed responsive single-page web applications and interactive landing experiences.",
+                                            "responsibilities":  [
+                                                                     "Implemented fluid responsive designs across 20+ web applications.",
+                                                                     "Optimized JavaScript bundles reducing initial page weight by 55%."
+                                                                 ],
+                                            "achievements":  [
+                                                                 "Recognized for best frontend engineering practices across the development department."
+                                                             ],
+                                            "technologies":  [
+                                                                 "React",
+                                                                 "JavaScript (ES6+)",
+                                                                 "Sass",
+                                                                 "REST APIs",
+                                                                 "Webpack"
+                                                             ]
+                                        }
+                                    ],
+                     "education":  [
+                                       {
+                                           "id":  "laiba-edu-1",
+                                           "institution":  "Jahanzeb College, Swat",
+                                           "degree":  "Bachelor of Science (BS)",
+                                           "field":  "Computer Science",
+                                           "startDate":  "",
+                                           "endDate":  "",
+                                           "description":  "Currently enrolled in the BS Computer Science program.",
+                                           "achievements":  [
+
+                                                            ]
+                                       }
+                                   ],
+                     "certifications":  [
+                                            {
+                                                "id":  "laiba-cert-1",
+                                                "title":  "Meta Certified Senior Front-End Developer",
+                                                "organization":  "Meta",
+                                                "type":  "Professional Credential",
+                                                "issueDate":  "2023",
+                                                "credentialId":  "META-FED-55219",
+                                                "credentialUrl":  "https://coursera.org",
+                                                "image":  ""
+                                            },
+                                            {
+                                                "id":  "laiba-cert-2",
+                                                "title":  "Web Performance \u0026 Core Vitals Masterclass",
+                                                "organization":  "Web Performance Institute",
+                                                "type":  "Specialist Credential",
+                                                "issueDate":  "2022",
+                                                "credentialId":  "WPI-OPT-3091",
+                                                "credentialUrl":  "https://web.dev",
+                                                "image":  ""
+                                            }
+                                        ],
+                     "testimonials":  [
+                                          {
+                                              "id":  "laiba-test-1",
+                                              "quote":  "Laiba\u0027s technical standard is world-class. She turned our complex interactive designs for Sparkalads into silky-smooth animations that load instantly on mobile.",
+                                              "author":  "Danish Ali",
+                                              "role":  "Managing Partner",
+                                              "company":  "Sparkalads Agency",
+                                              "project":  "sparkalads.com",
+                                              "avatar":  ""
+                                          },
+                                          {
+                                              "id":  "laiba-test-2",
+                                              "quote":  "Working with Laiba was a masterclass in frontend speed. The Mobixa storefront runs flawlessly with zero lag, directly driving our checkout conversions.",
+                                              "author":  "Suleman Baig",
+                                              "role":  "Head of Product",
+                                              "company":  "Mobixa Electronics",
+                                              "project":  "mobixa.pk",
+                                              "avatar":  ""
+                                          }
+                                      ],
+                     "socialLinks":  {
+                                         "linkedin":  "https://linkedin.com/in/laiba-sahibzada-dev",
+                                         "github":  "https://github.com/laibasahibzada",
+                                         "twitter":  "https://twitter.com/laiba_codes",
+                                         "behance":  "",
+                                         "dribbble":  "",
+                                         "instagram":  "",
+                                         "website":  "https://lbdevelopers.com/team/laiba-sahibzada"
+                                     },
+                     "active":  true,
+                     "displayOrder":  3,
+                     "deletedAt":  null,
+                     "createdAt":  "2026-04-22T00:00:00.000Z",
+                     "updatedAt":  "2026-04-22T00:00:00.000Z",
+                     "phone":  "03429656779"
+                 },
+                 {
+                     "id":  "team-ibad",
+                     "name":  "Ibad Ullah",
+                     "slug":  "ibad-ullah",
+                     "role":  "Lead UI/UX \u0026 Product Designer",
+                     "tagline":  "Designing high-converting digital products through user-centered UX, scalable design systems, intuitive interfaces, and conversion-focused experiences.",
+                     "bio":  "Lead UI/UX and product designer creating intuitive digital products, scalable design systems, and conversion-focused e-commerce experiences.",
+                     "fullBio":  "Ibad is LB Developers\u2019 Lead UI/UX \u0026 Product Designer, with 4+ years of experience shaping digital products and conversion-optimized storefronts. He connects product strategy, user research, interaction design, and scalable design systems to turn complex requirements into clear, accessible experiences that support both user needs and business outcomes.",
+                     "specialization":  "Digital Product Design, E-Commerce UX \u0026 Conversion-Focused Design Systems",
+                     "avatar":  "/lbt/Ibdullah.png",
+                     "coverImage":  "/images/Noorgemstone.com.png",
+                     "email":  "ibadullah2005h@icloud.com",
+                     "location":  "Islamabad, PK (UTC+5)",
+                     "availability":  "Available for Product Discovery, UI/UX Audits \u0026 Design Systems",
+                     "yearsExperience":  "4+ Years",
+                     "languages":  [
+                                       "English (Fluent)",
+                                       "Urdu (Native)"
+                                   ],
+                     "cvUrl":  "",
+                     "accentColor":  "#F4B740",
+                     "skills":  [
+                                    "UI/UX Design",
+                                    "Product Design",
+                                    "Product Strategy",
+                                    "User Experience Strategy",
+                                    "User Interface Design",
+                                    "E-Commerce UX",
+                                    "Conversion Rate Optimization (CRO)",
+                                    "Design Systems",
+                                    "User Journey Mapping",
+                                    "Wireframing \u0026 Prototyping",
+                                    "Responsive Web \u0026 Mobile Design",
+                                    "Interaction Design",
+                                    "Information Architecture",
+                                    "UX Research",
+                                    "Usability Optimization"
+                                ],
+                     "skillGroups":  [
+                                         {
+                                             "category":  "Product Design",
+                                             "skills":  [
+                                                            "UI/UX Design",
+                                                            "Product Design",
+                                                            "Product Strategy",
+                                                            "Product Discovery",
+                                                            "Design Thinking \u0026 Ideation",
+                                                            "User Experience Strategy",
+                                                            "User Interface Design",
+                                                            "User Journey Mapping",
+                                                            "Wireframing \u0026 Prototyping",
+                                                            "Interaction Design",
+                                                            "Information Architecture",
+                                                            "UX Research"
+                                                        ]
+                                         },
+                                         {
+                                             "category":  "Experience \u0026 Conversion",
+                                             "skills":  [
+                                                            "E-Commerce UX",
+                                                            "Conversion Rate Optimization (CRO)",
+                                                            "Usability Optimization",
+                                                            "Customer Journey Optimization",
+                                                            "Landing Page Design",
+                                                            "E-Commerce Conversion Optimization",
+                                                            "User Flow Optimization",
+                                                            "Design Audits",
+                                                            "Heuristic Evaluation",
+                                                            "A/B Test Planning",
+                                                            "UX Problem Solving",
+                                                            "Data-Informed Design Decisions"
+                                                        ]
+                                         },
+                                         {
+                                             "category":  "Design Systems",
+                                             "skills":  [
+                                                            "Scalable Design Systems",
+                                                            "Component Libraries",
+                                                            "Design Token Architecture",
+                                                            "Figma Component Architecture",
+                                                            "Visual Design \u0026 Brand Consistency",
+                                                            "Responsive Web \u0026 Mobile Design",
+                                                            "Accessibility \u0026 Responsive Design"
+                                                        ]
+                                         },
+                                         {
+                                             "category":  "Technical Knowledge",
+                                             "skills":  [
+                                                            "Next.js",
+                                                            "React",
+                                                            "Modern Frontend Design Principles",
+                                                            "Developer Handoff",
+                                                            "Design-to-Development Workflow",
+                                                            "Responsive Implementation",
+                                                            "Component-Based UI Architecture",
+                                                            "Frontend Collaboration",
+                                                            "HTML \u0026 CSS Design Fluency",
+                                                            "UI Implementation QA"
+                                                        ]
+                                         }
+                                     ],
+                     "experience":  [
+                                        {
+                                            "id":  "ibad-exp-1",
+                                            "company":  "LB Developers",
+                                            "position":  "Lead UI/UX \u0026 Product Designer",
+                                            "startDate":  "2023",
+                                            "endDate":  "",
+                                            "current":  true,
+                                            "description":  "Architecting intuitive user journeys, wireframes, and design systems for enterprise e-commerce and web platforms.",
+                                            "responsibilities":  [
+                                                                     "Designed end-to-end commerce UX for noorgemstone.com, zaroofragrances.com, and premiumwildmorels.com.",
+                                                                     "Streamlined product discovery and checkout flows, improving mobile completion rates by 32%.",
+                                                                     "Created comprehensive Figma design systems ensuring seamless engineering handoff."
+                                                                 ],
+                                            "achievements":  [
+                                                                 "Redesigned checkout flows resulting in an average 24% reduction in cart abandonment.",
+                                                                 "Authored 4 complete multi-platform design systems."
+                                                             ],
+                                            "technologies":  [
+                                                                 "Figma",
+                                                                 "FigJam",
+                                                                 "Maze",
+                                                                 "Protopie",
+                                                                 "Adobe XD"
+                                                             ]
+                                        },
+                                        {
+                                            "id":  "ibad-exp-2",
+                                            "company":  "PixelCraft Digital",
+                                            "position":  "UI/UX Designer",
+                                            "startDate":  "2021",
+                                            "endDate":  "2023",
+                                            "current":  false,
+                                            "description":  "Conducted user research, wireframed digital experiences, and crafted responsive prototypes for SaaS startups.",
+                                            "responsibilities":  [
+                                                                     "Designed responsive SaaS dashboard interfaces and client portals.",
+                                                                     "Executed moderated user tests to iterate rapidly on feature usability."
+                                                                 ],
+                                            "achievements":  [
+                                                                 "Awarded Top Product Designer for simplifying a complex logistics dashboard."
+                                                             ],
+                                            "technologies":  [
+                                                                 "Figma",
+                                                                 "Miro",
+                                                                 "InVision",
+                                                                 "Illustrator"
+                                                             ]
+                                        }
+                                    ],
+                     "education":  [
+                                       {
+                                           "id":  "ibad-edu-1",
+                                           "institution":  "Pak-Austria Fachhochschule Institute of Applied Sciences and Technology (PAF-IAST), Haripur, KPK",
+                                           "degree":  "Bachelor of Science (BS)",
+                                           "field":  "Artificial Intelligence",
+                                           "startDate":  "",
+                                           "endDate":  "",
+                                           "description":  "Currently enrolled in the BS Artificial Intelligence program.",
+                                           "achievements":  [
+
+                                                            ]
+                                       }
+                                   ],
+                     "certifications":  [
+                                            {
+                                                "id":  "ibad-cert-1",
+                                                "title":  "Google UX Design Professional Certificate",
+                                                "organization":  "Google",
+                                                "type":  "Professional Credential",
+                                                "issueDate":  "2022",
+                                                "credentialId":  "GGL-UXD-98124",
+                                                "credentialUrl":  "https://coursera.org",
+                                                "image":  ""
+                                            },
+                                            {
+                                                "id":  "ibad-cert-2",
+                                                "title":  "Nielsen Norman Group UX Master Certification",
+                                                "organization":  "NN/g",
+                                                "type":  "Master Credential",
+                                                "issueDate":  "2023",
+                                                "credentialId":  "NNG-UXM-1120",
+                                                "credentialUrl":  "https://nngroup.com",
+                                                "image":  ""
+                                            }
+                                        ],
+                     "testimonials":  [
+                                          {
+                                              "id":  "ibad-test-1",
+                                              "quote":  "Ibad completely transformed our customer shopping experience on Noor Gemstone. High-value gems require immense trust and detail, and his layout guided buyers effortlessly to inquiry.",
+                                              "author":  "Muhammad Noor",
+                                              "role":  "Managing Director",
+                                              "company":  "Noor Gemstones",
+                                              "project":  "noorgemstone.com",
+                                              "avatar":  ""
+                                          },
+                                          {
+                                              "id":  "ibad-test-2",
+                                              "quote":  "Ibad possesses a rare intuition for commerce hierarchy. The wild morels storefront required educating buyers before purchasing, and his flow made it feel natural and premium.",
+                                              "author":  "Bilal Farooqi",
+                                              "role":  "Founder",
+                                              "company":  "Premium Wild Morels",
+                                              "project":  "premiumwildmorels.com",
+                                              "avatar":  ""
+                                          }
+                                      ],
+                     "socialLinks":  {
+                                         "linkedin":  "https://linkedin.com/in/ibadullah-ux",
+                                         "github":  "",
+                                         "twitter":  "https://twitter.com/ibad_ux",
+                                         "behance":  "https://behance.net/ibadullah",
+                                         "dribbble":  "https://dribbble.com/ibadux",
+                                         "instagram":  "",
+                                         "website":  "https://lbdevelopers.com/team/ibad-ullah"
+                                     },
+                     "active":  true,
+                     "displayOrder":  4,
+                     "deletedAt":  null,
+                     "createdAt":  "2026-08-12T00:00:00.000Z",
+                     "updatedAt":  "2026-08-12T00:00:00.000Z",
+                     "phone":  "03487047866"
+                 }
+             ],
+    "blogs":  [
+                  {
+                      "id":  "1713801600000",
+                      "title":  "Engineering for Velocity: Why Speed is a Feature",
+                      "slug":  "engineering-for-velocity-why-speed-is-a-feature",
+                      "excerpt":  "Speed isn\u0027t just about loading charts. It\u0027s about reducing friction between the user and their goals in a high-concurrency environment.",
+                      "content":  "\u003cp\u003eSpeed is the most important feature of any digital product. Performance is not a layer we add at the end; it is a fundamental architectural requirement.\u003c/p\u003e\u003cp\u003eWhen we talk about speed, we are talking about trust. A slow interface is a signal of technical debt. A fast interface is a signal of authority.\u003c/p\u003e",
+                      "coverImage":  "/images/webdevolopmentservice.webp",
+                      "category":  "Architecture",
+                      "tags":  [
+                                   "Performance",
+                                   "Architecture"
+                               ],
+                      "author":  "Laiba Sahibzada",
+                      "status":  "published",
+                      "publishedAt":  "2026-04-18T00:00:00.000Z",
+                      "readingTime":  "8 min read",
+                      "metaTitle":  "Engineering for Velocity",
+                      "metaDescription":  "Why speed is a core product feature.",
+                      "deletedAt":  null,
+                      "createdAt":  "2026-04-18T00:00:00.000Z",
+                      "updatedAt":  "2026-04-18T00:00:00.000Z"
+                  },
+                  {
+                      "id":  "1713801600001",
+                      "title":  "The Aesthetic of Technical Authority",
+                      "slug":  "the-aesthetic-of-technical-authority",
+                      "excerpt":  "How code quality influences user trust through subtle micro-interactions and strict architectural integrity.",
+                      "content":  "\u003cp\u003eDesign and engineering are the same discipline. Great design is the visual representation of great architecture.\u003c/p\u003e\u003cp\u003eWe don\u0027t build websites to look pretty; we build them to command respect. This is the difference between a template and an engineered masterwork.\u003c/p\u003e",
+                      "coverImage":  "/images/designwebsiteservice.png",
+                      "category":  "Philosophy",
+                      "tags":  [
+                                   "Design",
+                                   "Engineering"
+                               ],
+                      "author":  "Wajid Hussain",
+                      "status":  "published",
+                      "publishedAt":  "2026-04-12T00:00:00.000Z",
+                      "readingTime":  "5 min read",
+                      "metaTitle":  "The Aesthetic of Technical Authority",
+                      "metaDescription":  "How engineering quality shapes brand trust.",
+                      "deletedAt":  null,
+                      "createdAt":  "2026-04-12T00:00:00.000Z",
+                      "updatedAt":  "2026-04-12T00:00:00.000Z"
+                  }
+              ],
+    "activity":  [
+
+                 ],
+    "views":  {
+                  "total":  91
+              }
+}

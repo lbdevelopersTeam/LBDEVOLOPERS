@@ -1,0 +1,382 @@
+openapi: 3.1.0
+info:
+  title: LB Developers Content API
+  version: 3.0.0
+  description: >-
+    MySQL-backed portfolio delivery API. Writes use idempotency keys or optimistic
+    concurrency, and every response includes an X-Request-Id correlation header.
+servers:
+  - url: /api/v3
+tags:
+  - name: Operations
+  - name: Authentication
+  - name: Projects
+  - name: Contact
+paths:
+  /live:
+    get:
+      tags: [Operations]
+      operationId: getLiveness
+      responses:
+        '200':
+          description: Process is alive.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [status, api]
+                properties:
+                  status: { const: alive }
+                  api: { const: v3 }
+  /ready:
+    get:
+      tags: [Operations]
+      operationId: getReadiness
+      responses:
+        '200':
+          description: API and MySQL dependency are ready.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [status, api, database]
+                properties:
+                  status: { const: ready }
+                  api: { const: v3 }
+                  database: { const: mysql }
+        '503': { $ref: '#/components/responses/ServiceUnavailable' }
+  /auth/sessions:
+    post:
+      tags: [Authentication]
+      operationId: createSession
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              required: [username, password]
+              properties:
+                username: { type: string, minLength: 3, maxLength: 64 }
+                password: { type: string, minLength: 8, maxLength: 200, writeOnly: true }
+      responses:
+        '201':
+          description: Session created. Sets secure session and CSRF cookies.
+          headers:
+            Set-Cookie: { schema: { type: string } }
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/SessionEnvelope' }
+        '401': { $ref: '#/components/responses/Unauthenticated' }
+        '422': { $ref: '#/components/responses/ValidationFailed' }
+        '429': { $ref: '#/components/responses/RateLimited' }
+  /auth/session:
+    get:
+      tags: [Authentication]
+      operationId: getSession
+      security: [{ cookieAuth: [] }]
+      responses:
+        '200':
+          description: Current session.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/SessionEnvelope' }
+        '401': { $ref: '#/components/responses/Unauthenticated' }
+    delete:
+      tags: [Authentication]
+      operationId: deleteSession
+      security: [{ cookieAuth: [] }]
+      parameters:
+        - $ref: '#/components/parameters/CsrfToken'
+      responses:
+        '204': { description: Session revoked. }
+        '401': { $ref: '#/components/responses/Unauthenticated' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+  /projects:
+    get:
+      tags: [Projects]
+      operationId: listProjects
+      parameters:
+        - name: limit
+          in: query
+          schema: { type: integer, minimum: 1, maximum: 50, default: 20 }
+        - name: cursor
+          in: query
+          description: Opaque signed cursor returned by the previous page.
+          schema: { type: string, maxLength: 500 }
+        - name: category
+          in: query
+          schema: { type: string, maxLength: 120 }
+        - name: featured
+          in: query
+          schema: { type: boolean }
+      responses:
+        '200':
+          description: Published projects ordered by sort order and ID.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data, page]
+                properties:
+                  data: { type: array, items: { $ref: '#/components/schemas/Project' } }
+                  page:
+                    type: object
+                    required: [limit, nextCursor]
+                    properties:
+                      limit: { type: integer }
+                      nextCursor: { type: [string, 'null'] }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '422': { $ref: '#/components/responses/ValidationFailed' }
+  /projects/{slug}:
+    get:
+      tags: [Projects]
+      operationId: getProject
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          schema: { type: string, pattern: '^[a-z0-9]+(?:-[a-z0-9]+)*$', maxLength: 180 }
+      responses:
+        '200':
+          description: Published project.
+          headers:
+            ETag: { description: Strong project version validator., schema: { type: string, example: '"project-3"' } }
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ProjectEnvelope' }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /contact-messages:
+    post:
+      tags: [Contact]
+      operationId: createContactMessage
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/ContactMessageInput' }
+      responses:
+        '201':
+          description: Message accepted; repeated keys replay the original response.
+          headers:
+            Idempotency-Replayed: { schema: { type: boolean } }
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data]
+                properties:
+                  data:
+                    type: object
+                    required: [id, status, createdAt]
+                    properties:
+                      id: { type: string }
+                      status: { const: received }
+                      createdAt: { type: string, format: date-time }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '409': { $ref: '#/components/responses/Conflict' }
+        '422': { $ref: '#/components/responses/ValidationFailed' }
+        '429': { $ref: '#/components/responses/RateLimited' }
+  /admin/projects:
+    post:
+      tags: [Projects]
+      operationId: createProject
+      security: [{ cookieAuth: [] }]
+      parameters:
+        - $ref: '#/components/parameters/CsrfToken'
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/ProjectInput' }
+      responses:
+        '201':
+          description: Project created.
+          headers:
+            Location: { schema: { type: string } }
+            ETag: { schema: { type: string } }
+            Idempotency-Replayed: { schema: { type: boolean } }
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ProjectEnvelope' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/Unauthenticated' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '409': { $ref: '#/components/responses/Conflict' }
+        '422': { $ref: '#/components/responses/ValidationFailed' }
+  /admin/projects/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema: { type: string, maxLength: 36 }
+      - $ref: '#/components/parameters/IfMatch'
+      - $ref: '#/components/parameters/CsrfToken'
+    patch:
+      tags: [Projects]
+      operationId: updateProject
+      security: [{ cookieAuth: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/ProjectPatch' }
+      responses:
+        '200':
+          description: Project updated.
+          headers:
+            ETag: { schema: { type: string } }
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ProjectEnvelope' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/Unauthenticated' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '409': { $ref: '#/components/responses/Conflict' }
+        '422': { $ref: '#/components/responses/ValidationFailed' }
+        '428': { $ref: '#/components/responses/PreconditionRequired' }
+    delete:
+      tags: [Projects]
+      operationId: deleteProject
+      security: [{ cookieAuth: [] }]
+      responses:
+        '204': { description: Project soft-deleted. }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/Unauthenticated' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '409': { $ref: '#/components/responses/Conflict' }
+        '428': { $ref: '#/components/responses/PreconditionRequired' }
+components:
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: lb_v3_session
+  parameters:
+    CsrfToken:
+      name: X-CSRF-Token
+      in: header
+      required: true
+      schema: { type: string }
+    IdempotencyKey:
+      name: Idempotency-Key
+      in: header
+      required: true
+      description: Unique for the operation scope for 24 hours.
+      schema: { type: string, minLength: 8, maxLength: 128, pattern: '^[A-Za-z0-9._:-]+$' }
+    IfMatch:
+      name: If-Match
+      in: header
+      required: true
+      description: ETag from the latest project representation.
+      schema: { type: string, example: '"project-3"' }
+  schemas:
+    User:
+      type: object
+      additionalProperties: false
+      required: [id, username, email, displayName, role]
+      properties:
+        id: { type: string }
+        username: { type: string }
+        email: { type: string, format: email }
+        displayName: { type: string }
+        role: { type: string, enum: [super_admin, admin, editor] }
+    SessionEnvelope:
+      type: object
+      required: [data]
+      properties:
+        data:
+          type: object
+          required: [user, csrfToken]
+          properties:
+            user: { $ref: '#/components/schemas/User' }
+            csrfToken: { type: [string, 'null'] }
+            expiresAt: { type: string, format: date-time }
+    Project:
+      type: object
+      additionalProperties: false
+      required: [id, slug, title, summary, descriptionHtml, category, thumbnailUrl, liveUrl, repositoryUrl, featured, status, sortOrder, version, technologies, publishedAt, createdAt, updatedAt]
+      properties:
+        id: { type: string }
+        slug: { type: string }
+        title: { type: string }
+        summary: { type: string }
+        descriptionHtml: { type: string }
+        category: { type: string }
+        thumbnailUrl: { type: [string, 'null'] }
+        liveUrl: { type: [string, 'null'] }
+        repositoryUrl: { type: [string, 'null'] }
+        featured: { type: boolean }
+        status: { type: string, enum: [draft, published, archived] }
+        sortOrder: { type: integer, minimum: 0 }
+        version: { type: integer, minimum: 1 }
+        technologies: { type: array, maxItems: 40, items: { type: string } }
+        publishedAt: { type: [string, 'null'], format: date-time }
+        createdAt: { type: string, format: date-time }
+        updatedAt: { type: string, format: date-time }
+    ProjectInput:
+      type: object
+      additionalProperties: false
+      required: [title]
+      properties:
+        title: { type: string, minLength: 1, maxLength: 240 }
+        slug: { type: string, maxLength: 180, pattern: '^[a-z0-9]+(?:-[a-z0-9]+)*$' }
+        summary: { type: string, maxLength: 500 }
+        descriptionHtml: { type: string, maxLength: 100000 }
+        category: { type: string, maxLength: 120 }
+        thumbnailUrl: { type: [string, 'null'], maxLength: 2048 }
+        liveUrl: { type: [string, 'null'], maxLength: 2048 }
+        repositoryUrl: { type: [string, 'null'], maxLength: 2048 }
+        featured: { type: boolean }
+        status: { type: string, enum: [draft, published, archived] }
+        sortOrder: { type: integer, minimum: 0, maximum: 1000000 }
+        technologies: { type: array, maxItems: 40, items: { type: string, maxLength: 160 } }
+    ProjectPatch:
+      allOf:
+        - $ref: '#/components/schemas/ProjectInput'
+      minProperties: 1
+    ProjectEnvelope:
+      type: object
+      required: [data]
+      properties:
+        data: { $ref: '#/components/schemas/Project' }
+    ContactMessageInput:
+      type: object
+      additionalProperties: false
+      required: [name, email, subject, message]
+      properties:
+        name: { type: string, minLength: 2, maxLength: 120 }
+        email: { type: string, format: email, maxLength: 254 }
+        subject: { type: string, minLength: 1, maxLength: 160 }
+        message: { type: string, minLength: 10, maxLength: 5000 }
+        website: { type: string, maxLength: 0, description: Honeypot field; clients leave it empty. }
+    Error:
+      type: object
+      required: [error]
+      properties:
+        error:
+          type: object
+          required: [code, message, requestId]
+          properties:
+            code: { type: string }
+            message: { type: string }
+            requestId: { type: string }
+            fields:
+              type: object
+              additionalProperties: { type: array, items: { type: string } }
+  responses:
+    BadRequest: { description: Malformed input or protocol precondition., content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } } }
+    Unauthenticated: { description: Authentication is required or invalid., content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } } }
+    Forbidden: { description: The principal is not allowed to perform the action., content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } } }
+    NotFound: { description: Resource not found., content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } } }
+    Conflict: { description: Unique, idempotency, or version conflict., content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } } }
+    ValidationFailed: { description: Request validation failed., content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } } }
+    RateLimited: { description: Rate limit exceeded., content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } } }
+    PreconditionRequired: { description: If-Match is required., content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } } }
+    ServiceUnavailable: { description: A required dependency is unavailable., content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } } }

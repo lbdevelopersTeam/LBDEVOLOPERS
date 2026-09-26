@@ -1,0 +1,289 @@
+import { useState, useEffect, useLayoutEffect, useRef, type MouseEvent } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { motion, AnimatePresence } from 'motion/react';
+import { Menu, X, ArrowRight } from 'lucide-react';
+import { cn } from '../../lib/utils';
+import { Magnetic } from '../common/Animations';
+
+const navLinks = [
+  { name: 'Home', href: '/' },
+  { name: 'About', href: '/about' },
+  { name: 'Portfolio', href: '/portfolio' },
+  { name: 'Services', href: '/services' },
+  { name: 'Tech', href: '/tech' },
+  { name: 'Consultancy', href: '/contact' },
+];
+
+export default function Navbar() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [isMenuExiting, setIsMenuExiting] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const pendingNavigation = useRef<string | null>(null);
+
+  useEffect(() => {
+    let frame = 0;
+    const updateScrollState = () => {
+      frame = 0;
+      setScrolled(window.scrollY > 20);
+    };
+    const handleScroll = () => {
+      if (!frame) frame = window.requestAnimationFrame(updateScrollState);
+    };
+
+    updateScrollState();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (frame) window.cancelAnimationFrame(frame);
+    };
+  }, []);
+
+  useLayoutEffect(() => {
+    setScrolled(window.scrollY > 20);
+  }, [location.pathname]);
+
+  useEffect(() => {
+    pendingNavigation.current = null;
+    if (isOpen) {
+      setIsMenuExiting(true);
+      setIsOpen(false);
+    }
+  }, [location.pathname, location.search, location.hash]);
+
+  useEffect(() => {
+    const desktopViewport = window.matchMedia('(min-width: 1024px)');
+    const closeAtDesktopBreakpoint = () => {
+      if (!desktopViewport.matches) return;
+      const pendingHref = pendingNavigation.current;
+      pendingNavigation.current = null;
+      setIsOpen(false);
+      setIsMenuExiting(false);
+      if (pendingHref) navigate(pendingHref);
+    };
+
+    desktopViewport.addEventListener('change', closeAtDesktopBreakpoint);
+    closeAtDesktopBreakpoint();
+    return () => desktopViewport.removeEventListener('change', closeAtDesktopBreakpoint);
+  }, [navigate]);
+
+  const menuIsActive = isOpen || isMenuExiting;
+
+  useEffect(() => {
+    if (!menuIsActive) return undefined;
+
+    const previousBodyOverflow = document.body.style.overflow;
+    const previousHtmlOverflow = document.documentElement.style.overflow;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setIsMenuExiting(true);
+        setIsOpen(false);
+      }
+    };
+
+    document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
+    window.addEventListener('keydown', closeOnEscape);
+    return () => {
+      document.body.style.overflow = previousBodyOverflow;
+      document.documentElement.style.overflow = previousHtmlOverflow;
+      window.removeEventListener('keydown', closeOnEscape);
+    };
+  }, [menuIsActive]);
+
+  const isActiveLink = (name: string, href: string) => {
+    if (name === 'About') {
+      return location.pathname === '/about' || location.pathname.startsWith('/team/');
+    }
+    return location.pathname === href;
+  };
+
+  const beginMenuClose = () => {
+    if (!isOpen) return;
+    setIsMenuExiting(true);
+    setIsOpen(false);
+  };
+
+  const closeThenNavigate = (event: MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
+      pendingNavigation.current = null;
+      beginMenuClose();
+      return;
+    }
+
+    event.preventDefault();
+    const currentUrl = `${location.pathname}${location.search}${location.hash}`;
+    pendingNavigation.current = href === currentUrl ? null : href;
+    beginMenuClose();
+  };
+
+  const finishMenuClose = () => {
+    const href = pendingNavigation.current;
+    pendingNavigation.current = null;
+    setIsMenuExiting(false);
+    if (href) navigate(href);
+  };
+
+  return (
+    <nav
+      aria-label="Primary navigation"
+      className={cn(
+        'fixed top-0 left-0 right-0 z-[100] px-3 transition-[padding] duration-300 sm:px-6',
+        scrolled ? 'pt-3 sm:pt-4' : 'pt-4 sm:pt-8'
+      )}
+    >
+      <motion.div 
+        initial={{ y: -100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+        className={cn(
+          "max-w-[1400px] mx-auto rounded-[2rem] transition-[background-color,border-color,box-shadow,padding] duration-300 border border-transparent",
+          scrolled ? "bg-brand-dark/40 backdrop-blur-2xl border-white/10 px-4 py-3 shadow-[0_20px_50px_rgba(0,0,0,0.5)] sm:px-8" : "px-3 py-3 sm:px-4 sm:py-4"
+        )}
+      >
+        <div className="flex items-center justify-between">
+          <Link 
+            to="/" 
+            className="brand-logo"
+          >
+            <motion.div whileHover={{ scale: 1.02 }} className="brand-mark">LB</motion.div>
+            <span className="brand-text">Developers</span>
+          </Link>
+
+          {/* Desktop Nav */}
+          <div className="hidden lg:flex items-center bg-white/[0.03] border border-white/5 rounded-full px-2 py-1 backdrop-blur-sm">
+            {navLinks.map((link) => (
+              <Link
+                key={link.name}
+                to={link.href}
+                className={cn(
+                  'text-[9px] font-black uppercase tracking-[0.2em] transition-all duration-500 px-6 py-2.5 rounded-full relative group overflow-hidden',
+                  isActiveLink(link.name, link.href) ? 'text-white' : 'text-white/40 hover:text-white'
+                )}
+              >
+                <span className="relative z-10">{link.name}</span>
+                {isActiveLink(link.name, link.href) && (
+                  <motion.div 
+                    layoutId="nav-pill"
+                    className="absolute inset-0 bg-brand-primary/20 border border-brand-primary/30 rounded-full"
+                    transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                  />
+                )}
+                <div className="absolute inset-0 bg-white/5 translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
+              </Link>
+            ))}
+          </div>
+
+          <div className="flex items-center gap-4">
+            <Magnetic strength={0.1}>
+              <Link
+                to="/contact"
+                className="hidden xl:flex px-8 py-2.5 bg-brand-primary text-white rounded-full text-[9px] font-black uppercase tracking-[0.2em] hover:shadow-[0_0_30px_rgba(61,90,254,0.5)] hover:scale-105 transition-all items-center gap-3 group"
+              >
+                Inquiry
+                <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </Magnetic>
+
+            <button
+              type="button"
+              aria-label={isOpen ? 'Close navigation menu' : 'Open navigation menu'}
+              aria-expanded={isOpen}
+              aria-controls="mobile-navigation"
+              disabled={isMenuExiting}
+              className="lg:hidden w-11 h-11 flex-shrink-0 flex items-center justify-center bg-white/5 rounded-xl border border-white/10 text-white relative z-[120]"
+              onClick={() => {
+                if (isOpen) beginMenuClose();
+                else {
+                  pendingNavigation.current = null;
+                  setIsOpen(true);
+                }
+              }}
+            >
+              {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            </button>
+          </div>
+        </div>
+      </motion.div>
+
+      {/* Mobile Menu */}
+      <AnimatePresence initial={false} onExitComplete={finishMenuClose}>
+        {isOpen && (
+          <motion.div
+            id="mobile-navigation"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Mobile navigation"
+            initial={{ opacity: 0, y: -12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -12 }}
+            transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
+            onClick={beginMenuClose}
+            className="fixed inset-0 z-[110] bg-black/80 px-3 pb-4 pt-20 lg:hidden"
+          >
+            <div className="absolute inset-x-4 top-24 h-40 rounded-full bg-brand-primary/10 blur-[90px]" />
+            
+            <div onClick={(event) => event.stopPropagation()} className="glass relative z-10 mx-auto flex max-h-[calc(100dvh-6rem)] w-full max-w-md flex-col overflow-y-auto overscroll-contain rounded-[2rem] border border-white/10 bg-brand-dark/90 p-4 shadow-[0_30px_90px_rgba(0,0,0,0.55)]">
+              <div className="mb-4 flex items-center justify-between border-b border-white/10 pb-4">
+                <Link to="/" onClick={(event) => closeThenNavigate(event, '/')} className="brand-logo">
+                  <span className="brand-mark">LB</span>
+                  <span className="brand-text">Developers</span>
+                </Link>
+                <button
+                  type="button"
+                  aria-label="Close navigation menu"
+                  onClick={beginMenuClose}
+                  className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-white/70 transition-colors hover:text-white"
+                >
+                  <X className="h-5 w-5" />
+                </button>
+              </div>
+
+              <div className="grid gap-2">
+                {navLinks.map((link, i) => (
+                  <motion.div
+                    key={link.name}
+                    initial={{ opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: i * 0.04 }}
+                  >
+                    <Link
+                      to={link.href}
+                      onClick={(event) => closeThenNavigate(event, link.href)}
+                      className={cn(
+                        'flex items-center justify-between rounded-2xl border px-4 py-3 text-sm font-black uppercase tracking-[0.16em] transition-all',
+                        isActiveLink(link.name, link.href)
+                          ? 'border-brand-primary/35 bg-brand-primary/15 text-white'
+                          : 'border-white/10 bg-white/[0.03] text-white/55 hover:border-white/20 hover:text-white'
+                      )}
+                    >
+                      <span>{link.name}</span>
+                      <ArrowRight className="h-3.5 w-3.5 text-brand-primary" />
+                    </Link>
+                  </motion.div>
+                ))}
+              </div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4 }}
+                className="mt-4"
+              >
+                <Link
+                  to="/contact"
+                  onClick={(event) => closeThenNavigate(event, '/contact')}
+                  className="flex w-full items-center justify-center gap-3 rounded-2xl bg-brand-primary px-4 py-4 text-center text-[10px] font-black uppercase tracking-[0.24em] text-white shadow-2xl shadow-brand-primary/30"
+                >
+                  Let's Talk
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+              </motion.div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </nav>
+  );
+}

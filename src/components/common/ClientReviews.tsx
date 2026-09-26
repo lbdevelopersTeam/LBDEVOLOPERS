@@ -1,0 +1,247 @@
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { ArrowRight, ChevronLeft, ChevronRight, RefreshCw, Quote } from 'lucide-react';
+import { motion } from 'motion/react';
+import { Link } from 'react-router-dom';
+import type { Testimonial } from '../../lib/content';
+
+interface TestimonialsResponse {
+  items: Array<Testimonial & {
+    featured?: boolean;
+    active?: boolean;
+    displayOrder?: number;
+  }>;
+}
+
+function ReviewerAvatar({ review }: { review: Testimonial }) {
+  const [imageFailed, setImageFailed] = useState(false);
+  const initials = review.author
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part.charAt(0).toUpperCase())
+    .join('') || 'LB';
+
+  if (!review.avatar || imageFailed) {
+    return (
+      <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/[0.06] text-xs font-black tracking-wider text-white" aria-hidden="true">
+        {initials}
+      </span>
+    );
+  }
+
+  return (
+    <img
+      src={review.avatar}
+      alt=""
+      loading="lazy"
+      decoding="async"
+      referrerPolicy="no-referrer"
+      onError={() => setImageFailed(true)}
+      className="h-12 w-12 shrink-0 rounded-full border border-white/10 bg-white/[0.06] object-cover"
+    />
+  );
+}
+
+function ReviewCard({ review, index }: { review: Testimonial; index: number }) {
+  const [expanded, setExpanded] = useState(false);
+  const isLong = review.quote.length > 260;
+  const byline = [review.role, review.company].filter(Boolean).join(', ');
+
+  return (
+    <motion.article
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.55, delay: Math.min(index * 0.08, 0.24) }}
+      aria-label={`Client review from ${review.author}`}
+      className="group relative flex min-w-[88%] snap-start flex-col overflow-hidden rounded-[1.5rem] border border-white/10 bg-black/30 p-6 shadow-[0_28px_80px_rgba(0,0,0,0.18)] transition-colors hover:border-brand-primary/35 sm:min-w-[420px] md:min-w-[calc(50%-0.75rem)] md:p-8 lg:min-w-[calc(33.333%-1rem)]"
+    >
+      <div className="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-brand-primary/60 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" aria-hidden="true" />
+      <div className="mb-8 flex items-center justify-between gap-4">
+        <Quote className="h-7 w-7 fill-brand-primary/20 text-brand-primary" aria-hidden="true" />
+        {review.project && (
+          <span className="max-w-[65%] truncate text-[9px] font-black uppercase tracking-[0.2em] text-white/30">
+            {review.project}
+          </span>
+        )}
+      </div>
+
+      <div className="flex-1">
+        <p className={`text-base font-light leading-7 text-white/75 ${!expanded && isLong ? 'line-clamp-6' : ''}`}>
+          “{review.quote}”
+        </p>
+        {isLong && (
+          <button
+            type="button"
+            onClick={() => setExpanded((current) => !current)}
+            className="mt-3 rounded text-xs font-bold text-white/45 underline decoration-white/20 underline-offset-4 transition hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary"
+            aria-expanded={expanded}
+          >
+            {expanded ? 'Show less' : 'Read more'}
+          </button>
+        )}
+      </div>
+
+      <div className="mt-9 flex items-center gap-3 border-t border-white/10 pt-5">
+        <ReviewerAvatar review={review} />
+        <div className="min-w-0">
+          <p className="truncate text-sm font-bold text-white">{review.author}</p>
+          {byline && <p className="mt-1 truncate text-[10px] font-black uppercase tracking-[0.16em] text-brand-primary">{byline}</p>}
+        </div>
+      </div>
+    </motion.article>
+  );
+}
+
+function ReviewsSkeleton() {
+  return (
+    <div className="flex gap-6 overflow-hidden" role="status" aria-label="Loading client reviews">
+      {[0, 1, 2].map((item) => (
+        <div key={item} className="min-h-72 min-w-[88%] animate-pulse rounded-[1.5rem] border border-white/5 bg-black/25 p-6 sm:min-w-[420px] md:min-w-[calc(50%-0.75rem)] lg:min-w-[calc(33.333%-1rem)]">
+          <div className="h-7 w-7 rounded bg-white/10" />
+          <div className="mt-8 h-3 w-full rounded bg-white/10" />
+          <div className="mt-3 h-3 w-11/12 rounded bg-white/10" />
+          <div className="mt-3 h-3 w-4/5 rounded bg-white/10" />
+          <div className="mt-20 h-12 w-12 rounded-full bg-white/10" />
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export default function ClientReviews() {
+  const [reviews, setReviews] = useState<Testimonial[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [hasPrevious, setHasPrevious] = useState(false);
+  const [hasNext, setHasNext] = useState(false);
+  const scrollerRef = useRef<HTMLDivElement>(null);
+
+  const loadReviews = useCallback(async () => {
+    setLoading(true);
+    setError(false);
+    const controller = new AbortController();
+    const timeout = window.setTimeout(() => controller.abort(), 8_000);
+    try {
+      const response = await fetch('/api/v2/testimonials', { credentials: 'include', signal: controller.signal });
+      if (!response.ok) throw new Error(`Reviews request failed with ${response.status}`);
+      const payload = await response.json() as TestimonialsResponse;
+      if (!Array.isArray(payload.items)) throw new Error('Reviews response was invalid');
+      setReviews(payload.items.filter((review) => review.active !== false && review.quote && review.author));
+    } catch {
+      setError(true);
+    } finally {
+      window.clearTimeout(timeout);
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    void loadReviews();
+  }, [loadReviews]);
+
+  const updateNavigation = useCallback(() => {
+    const scroller = scrollerRef.current;
+    const card = scroller?.querySelector<HTMLElement>('article');
+    if (!scroller || !card) return;
+    setHasPrevious(scroller.scrollLeft > 4);
+    setHasNext(scroller.scrollLeft + scroller.clientWidth < scroller.scrollWidth - 4);
+    setActiveIndex(Math.max(0, Math.min(reviews.length - 1, Math.round(scroller.scrollLeft / (card.offsetWidth + 24)))));
+  }, [reviews.length]);
+
+  useEffect(() => {
+    const frame = window.requestAnimationFrame(updateNavigation);
+    window.addEventListener('resize', updateNavigation);
+    return () => {
+      window.cancelAnimationFrame(frame);
+      window.removeEventListener('resize', updateNavigation);
+    };
+  }, [updateNavigation]);
+
+  const move = (direction: -1 | 1) => {
+    const scroller = scrollerRef.current;
+    if (!scroller) return;
+    const card = scroller.querySelector<HTMLElement>('article');
+    scroller.scrollBy({ left: direction * ((card?.offsetWidth || scroller.clientWidth) + 24), behavior: 'smooth' });
+  };
+
+  const onKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === 'ArrowRight') {
+      event.preventDefault();
+      move(1);
+    } else if (event.key === 'ArrowLeft') {
+      event.preventDefault();
+      move(-1);
+    }
+  };
+
+  return (
+    <section id="reviews" className="relative scroll-mt-24 overflow-hidden bg-brand-gray px-6 py-16 sm:px-8 md:px-12 md:py-24 lg:px-24" aria-labelledby="client-reviews-title">
+      <div className="absolute -left-48 top-16 h-96 w-96 rounded-full bg-brand-primary/10 blur-[120px]" aria-hidden="true" />
+      <div className="relative mx-auto max-w-7xl">
+        <div className="mb-10 flex flex-col justify-between gap-8 md:mb-14 md:flex-row md:items-end">
+          <div>
+            <div className="mb-5 flex items-center gap-3">
+              <span className="h-1.5 w-1.5 rounded-full bg-brand-primary shadow-[0_0_14px_rgba(61,90,254,0.7)]" aria-hidden="true" />
+              <span className="text-[10px] font-black uppercase tracking-[0.35em] text-brand-primary">Client perspective</span>
+            </div>
+            <h2 id="client-reviews-title" className="max-w-3xl font-display text-4xl font-black uppercase leading-[0.95] tracking-tighter text-white sm:text-5xl md:text-6xl">
+              Built together.<br /><span className="text-white/25 italic">Proven in practice.</span>
+            </h2>
+          </div>
+          {!loading && !error && reviews.length > 0 && (
+            <div className="border-l border-white/10 pl-5">
+              <strong className="font-display text-4xl font-black text-white">{String(reviews.length).padStart(2, '0')}</strong>
+              <p className="mt-1 text-xs uppercase tracking-[0.18em] text-white/35">Published client stories</p>
+            </div>
+          )}
+        </div>
+
+        <div aria-live="polite">
+          {loading && <ReviewsSkeleton />}
+          {!loading && error && (
+            <div className="rounded-[1.5rem] border border-white/10 bg-black/25 px-6 py-10 text-center md:px-10">
+              <p className="text-lg font-semibold text-white">Client reviews could not be loaded.</p>
+              <p className="mx-auto mt-2 max-w-lg text-sm leading-6 text-white/45">The content service may be momentarily unavailable. Try the request again.</p>
+              <button type="button" onClick={() => void loadReviews()} className="mt-6 inline-flex min-h-11 items-center gap-2 rounded-full border border-white/15 px-5 text-xs font-black uppercase tracking-widest text-white transition hover:border-white/35 hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary">
+                <RefreshCw className="h-4 w-4" aria-hidden="true" /> Retry
+              </button>
+            </div>
+          )}
+          {!loading && !error && reviews.length === 0 && (
+            <div className="rounded-[1.5rem] border border-white/10 bg-black/25 px-6 py-10 text-center md:px-10">
+              <p className="text-lg font-semibold text-white">Client stories are being prepared.</p>
+              <p className="mt-2 text-sm text-white/45">Explore our shipped work in the meantime.</p>
+              <Link to="/portfolio" className="mt-6 inline-flex min-h-11 items-center gap-2 rounded-full border border-white/15 px-5 text-xs font-black uppercase tracking-widest text-white transition hover:border-white/35 hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary">
+                View our work <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </Link>
+            </div>
+          )}
+          {!loading && !error && reviews.length > 0 && (
+            <div ref={scrollerRef} onScroll={updateNavigation} onKeyDown={onKeyDown} tabIndex={0} aria-label="Client reviews carousel. Use the left and right arrow keys to navigate." className="no-scrollbar flex snap-x snap-mandatory gap-6 overflow-x-auto pb-4 [scrollbar-width:none] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-4 focus-visible:ring-offset-brand-gray">
+              {reviews.map((review, index) => <ReviewCard key={review.id} review={review} index={index} />)}
+            </div>
+          )}
+        </div>
+
+        {!loading && !error && reviews.length > 0 && (
+          <div className="mt-8 flex flex-col justify-between gap-5 border-t border-white/10 pt-7 sm:flex-row sm:items-center">
+            <div className="flex items-center gap-3" aria-label={`Review ${activeIndex + 1} of ${reviews.length}`}>
+              <button type="button" onClick={() => move(-1)} disabled={!hasPrevious} className="flex h-11 w-11 items-center justify-center rounded-full border border-white/15 text-white transition hover:border-white/35 hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary disabled:cursor-not-allowed disabled:opacity-25" aria-label="Previous review">
+                <ChevronLeft className="h-5 w-5" aria-hidden="true" />
+              </button>
+              <button type="button" onClick={() => move(1)} disabled={!hasNext} className="flex h-11 w-11 items-center justify-center rounded-full border border-white/15 text-white transition hover:border-white/35 hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary disabled:cursor-not-allowed disabled:opacity-25" aria-label="Next review">
+                <ChevronRight className="h-5 w-5" aria-hidden="true" />
+              </button>
+              <span className="ml-2 text-xs font-bold tabular-nums text-white/35">{String(activeIndex + 1).padStart(2, '0')} / {String(reviews.length).padStart(2, '0')}</span>
+            </div>
+            <Link to="/contact" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-white px-6 text-xs font-black uppercase tracking-widest text-black transition hover:bg-white/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-4 focus-visible:ring-offset-brand-gray">
+              Start your project <ArrowRight className="h-4 w-4" aria-hidden="true" />
+            </Link>
+          </div>
+        )}
+      </div>
+    </section>
+  );
+}
