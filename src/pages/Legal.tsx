@@ -74,7 +74,7 @@ export default function Legal() {
           <section>
             <h3 className="text-xl md:text-2xl font-display font-bold text-white mb-5 md:mb-6">2. How We Use Information</h3>
             <p>
-              We use the information we collect to provide, maintain, and improve our services, to develop new ones, and to protect LB Developers and our users. We also use the information to communicate with you about products, services, and events.
+              We use the information we collect to provide, maintain, and improve our services, to develop new ones, and to protect LB CodeBase and our users. We also use the information to communicate with you about products, services, and events.
             </p>
           </section>
 
@@ -103,7 +103,7 @@ export default function Legal() {
             <section>
                <h3 className="text-xl md:text-2xl font-display font-bold text-white mb-5 md:mb-6">5. Limitation of Liability</h3>
                <p>
-                 In no event shall LB Developers be liable for any damages (including, without limitation, damages for loss of data or profit, or due to business interruption) arising out of the use or inability to use the materials on LB Developers' website.
+                 In no event shall LB CodeBase be liable for any damages (including, without limitation, damages for loss of data or profit, or due to business interruption) arising out of the use or inability to use the materials on LB CodeBase' website.
                </p>
             </section>
           )}

@@ -218,7 +218,7 @@ export default function MemberNavbar({ member }: { member: MemberProfile }) {
 
           {/* Right: Actions */}
           <div className="flex items-center gap-3">
-            {/* Back to LB Developers */}
+            {/* Back to LB CodeBase */}
             <Link
               to="/about#team-directory"
               className="hidden sm:flex items-center gap-2 text-[8px] font-black uppercase tracking-[0.16em] text-white/40 hover:text-white transition-colors"
@@ -396,7 +396,7 @@ export default function MemberNavbar({ member }: { member: MemberProfile }) {
                   className="flex w-full items-center justify-center gap-2 rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 text-[10px] font-black uppercase tracking-[0.2em] text-white/50"
                 >
                   <span className="brand-mark !text-[9px] !h-5 !w-5 !rounded-md">LB</span>
-                  Back to LB Developers
+                  Back to LB CodeBase
                 </Link>
               </div>
             </div>

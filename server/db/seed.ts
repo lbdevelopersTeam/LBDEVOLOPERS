@@ -139,9 +139,9 @@ async function main() {
     }
 
     const settings = [
-      { key: 'site.name', value: 'LB Developers', isPublic: true, description: 'Public site name.' },
+      { key: 'site.name', value: 'LB CodeBase', isPublic: true, description: 'Public site name.' },
       { key: 'site.contact_email', value: process.env.PUBLIC_CONTACT_EMAIL || 'lbdevelopers.agency@gmail.com', isPublic: true, description: 'Public contact email.' },
-      { key: 'site.default_meta_description', value: 'LB Developers builds high-performance digital products, commerce platforms, and brand experiences.', isPublic: true, description: 'Default SEO description.' },
+      { key: 'site.default_meta_description', value: 'LB CodeBase builds high-performance digital products, commerce platforms, and brand experiences.', isPublic: true, description: 'Default SEO description.' },
       { key: 'contact.retention_days', value: 365, isPublic: false, description: 'Retention policy for contact messages.' },
     ];
     for (const setting of settings) await db.insertInto('site_settings').values({ key: setting.key, value: json(setting.value), is_public: setting.isPublic, description: setting.description, updated_by: admin.id }).onConflict((conflict) => conflict.column('key').doUpdateSet({ value: json(setting.value), is_public: setting.isPublic, description: setting.description, updated_by: admin.id })).execute();

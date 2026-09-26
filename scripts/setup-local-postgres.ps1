@@ -109,7 +109,7 @@ try {
   if (Test-Path -LiteralPath $hbaPath) {
     $originalHba = [IO.File]::ReadAllText($hbaPath)
     $temporaryTrustEnabled = $true
-    $temporaryHba = "# Temporary local recovery rule created by LB Developers setup`r`nhost all postgres 127.0.0.1/32 trust`r`nhost all postgres ::1/128 trust`r`n$originalHba"
+    $temporaryHba = "# Temporary local recovery rule created by LB CodeBase setup`r`nhost all postgres 127.0.0.1/32 trust`r`nhost all postgres ::1/128 trust`r`n$originalHba"
     [IO.File]::WriteAllText($hbaPath, $temporaryHba, [Text.UTF8Encoding]::new($false))
     Restart-Service -Name 'postgresql-x64-18'
     Remove-Item Env:PGPASSWORD -ErrorAction SilentlyContinue

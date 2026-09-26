@@ -60,8 +60,8 @@ export default function ProjectDetail() {
   }, [activeGalleryIndex, project]);
 
   useSeo({
-    title: project?.metaTitle || (project ? `${project.title} | LB Developers` : loading ? 'Loading Project | LB Developers' : 'Project Not Found | LB Developers'),
-    description: project?.metaDescription || project?.shortDescription || project?.description || 'Explore a selected LB Developers project.',
+    title: project?.metaTitle || (project ? `${project.title} | LB CodeBase` : loading ? 'Loading Project | LB CodeBase' : 'Project Not Found | LB CodeBase'),
+    description: project?.metaDescription || project?.shortDescription || project?.description || 'Explore a selected LB CodeBase project.',
     image: project?.thumbnail || project?.image,
     canonicalPath: project ? `/portfolio/${project.slug}` : `/portfolio/${id}`,
   });

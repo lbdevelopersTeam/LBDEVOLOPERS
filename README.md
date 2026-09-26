@@ -1,4 +1,4 @@
-# LB Developers
+# LB CodeBase
 
 The React portfolio has two explicit backend contracts. The current `/api/v2` client remains backed by PostgreSQL for compatibility, while the production-oriented `/api/v3` is a separate MySQL 8.0.34+ API with signed cursor pagination, idempotent writes, optimistic concurrency, database sessions, audit history, and transactional outbox records.
 

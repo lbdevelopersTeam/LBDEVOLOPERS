@@ -7,8 +7,8 @@ import { useContactEmail } from '../lib/site-settings';
 export default function Contact() {
   const contactEmail = useContactEmail();
   const contactChannels = [
-    { icon: Mail, href: `mailto:${contactEmail}`, label: 'Email LB Developers' },
-    { icon: MessageSquare, href: 'https://wa.me/923489077329?text=Hello%2C%20I%20would%20like%20to%20discuss%20a%20project.', label: 'Chat with LB Developers on WhatsApp' },
+    { icon: Mail, href: `mailto:${contactEmail}`, label: 'Email LB CodeBase' },
+    { icon: MessageSquare, href: 'https://wa.me/923489077329?text=Hello%2C%20I%20would%20like%20to%20discuss%20a%20project.', label: 'Chat with LB CodeBase on WhatsApp' },
   ];
   return (
     <motion.div 

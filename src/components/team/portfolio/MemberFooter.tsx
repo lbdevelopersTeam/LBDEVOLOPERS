@@ -18,7 +18,7 @@ export default function MemberFooter({ memberName }: { memberName: string }) {
           <div>
             <p className="font-display text-sm font-black uppercase text-white">{memberName}</p>
             <p className="mt-0.5 text-[9px] font-bold uppercase tracking-[0.14em] text-white/40">
-              Personal Portfolio • LB Developers
+              Personal Portfolio • LB CodeBase
             </p>
           </div>
         </div>
@@ -37,7 +37,7 @@ export default function MemberFooter({ memberName }: { memberName: string }) {
             className="group inline-flex items-center gap-2 text-[9px] font-black uppercase tracking-[0.14em] text-white/50 transition-colors hover:text-white"
           >
             <ArrowLeft className="h-3.5 w-3.5 transition-transform group-hover:-translate-x-0.5" />
-            <span>LB Developers Agency</span>
+            <span>LB CodeBase Agency</span>
           </Link>
 
           <a
@@ -53,7 +53,7 @@ export default function MemberFooter({ memberName }: { memberName: string }) {
 
       <div className="mx-auto mt-8 flex max-w-[1500px] flex-col justify-between gap-3 border-t border-white/8 pt-6 text-[9px] font-bold uppercase tracking-wider text-white/30 sm:flex-row sm:items-center">
         <p>© {currentYear} {memberName}. All rights reserved.</p>
-        <p>Engineered & Powered by LB Developers</p>
+        <p>Engineered & Powered by LB CodeBase</p>
       </div>
     </footer>
   );

@@ -1,6 +1,6 @@
 openapi: 3.1.0
 info:
-  title: LB Developers Content API
+  title: LB CodeBase Content API
   version: 3.0.0
   description: >-
     MySQL-backed portfolio delivery API. Writes use idempotency keys or optimistic

@@ -148,7 +148,7 @@ export default function Navbar() {
             className="brand-logo"
           >
             <motion.div whileHover={{ scale: 1.02 }} className="brand-mark">LB</motion.div>
-            <span className="brand-text">Developers</span>
+            <span className="brand-text">CodeBase</span>
           </Link>
 
           {/* Desktop Nav */}
@@ -228,7 +228,7 @@ export default function Navbar() {
               <div className="mb-4 flex items-center justify-between border-b border-white/10 pb-4">
                 <Link to="/" onClick={(event) => closeThenNavigate(event, '/')} className="brand-logo">
                   <span className="brand-mark">LB</span>
-                  <span className="brand-text">Developers</span>
+                  <span className="brand-text">CodeBase</span>
                 </Link>
                 <button
                   type="button"

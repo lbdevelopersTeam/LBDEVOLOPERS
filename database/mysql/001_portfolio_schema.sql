@@ -1,4 +1,4 @@
--- LB Developers portfolio reference schema
+-- LB CodeBase portfolio reference schema
 -- Target: Oracle MySQL 8.0.16+ (the first 8.0 release that enforces CHECK constraints)
 -- Run this file against an empty, already-provisioned database.
 -- Application connections must set their session time zone to UTC.

@@ -65,7 +65,7 @@ export default function MemberHero({ member }: { member: MemberProfile }) {
 
             <span className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.04] px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-[0.12em] text-white/60">
               <Sparkles className="h-3 w-3 text-[var(--member-accent)]" />
-              LB Developers Team
+              LB CodeBase Team
             </span>
           </div>
 
@@ -285,7 +285,7 @@ export default function MemberHero({ member }: { member: MemberProfile }) {
               >
                 LB
               </dd>
-              <p className="mt-0.5 text-[8px] font-bold uppercase tracking-wider text-white/40">Developers</p>
+              <p className="mt-0.5 text-[8px] font-bold uppercase tracking-wider text-white/40">CodeBase</p>
             </div>
           </dl>
         </motion.div>

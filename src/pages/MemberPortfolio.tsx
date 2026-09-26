@@ -101,12 +101,12 @@ export default function MemberPortfolio() {
     address: member.location ? { '@type': 'PostalAddress', addressLocality: member.location } : undefined,
     sameAs: socialPlatforms.map(({ key }) => member.socialLinks[key]).filter(usableLink),
     url: `${window.location.origin}/team/${member.slug}`,
-    worksFor: { '@type': 'Organization', name: 'LB Developers', url: window.location.origin },
+    worksFor: { '@type': 'Organization', name: 'LB CodeBase', url: window.location.origin },
   } : undefined, [member]);
 
   useSeo({
-    title: member ? `${member.name} — ${member.role} | LB Developers` : 'Team Member | LB Developers',
-    description: member?.tagline || member?.bio || 'Professional profile at LB Developers.',
+    title: member ? `${member.name} — ${member.role} | LB CodeBase` : 'Team Member | LB CodeBase',
+    description: member?.tagline || member?.bio || 'Professional profile at LB CodeBase.',
     image: member?.avatar ? memberPortraitUrl(member.avatar) : undefined,
     canonicalPath: member ? `/team/${member.slug}` : `/team/${slug || ''}`,
     schema,

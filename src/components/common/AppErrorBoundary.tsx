@@ -16,7 +16,7 @@ export default class AppErrorBoundary extends Component<AppErrorBoundaryProps, A
   }
 
   componentDidCatch(error: Error, info: ErrorInfo) {
-    console.error('[LB Developers] React render failure', {
+    console.error('[LB CodeBase] React render failure', {
       message: error.message,
       stack: error.stack,
       componentStack: info.componentStack,

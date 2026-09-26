@@ -82,7 +82,7 @@ function strongDescription(project: LegacyProject) {
   const contributionSection = contributors.length
     ? `<h2>Team Contributions</h2><ul>${contributors.map((contributor) => {
         const memberId = safeString(contributor.memberId);
-        const name = contributorNames[memberId] || memberId || 'LB Developers';
+        const name = contributorNames[memberId] || memberId || 'LB CodeBase';
         return `<li><strong>${escapeHtml(name)}</strong> — ${escapeHtml(safeString(contributor.role) || 'Contributor')}</li>`;
       }).join('')}</ul>`
     : '';

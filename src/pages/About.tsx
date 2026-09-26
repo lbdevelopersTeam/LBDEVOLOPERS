@@ -24,11 +24,11 @@ export default function About() {
   const schema = useMemo(() => ({
     '@context': 'https://schema.org',
     '@type': 'AboutPage',
-    name: 'About LB Developers',
-    description: 'Learn about LB Developers and meet the specialists behind its digital work.',
+    name: 'About LB CodeBase',
+    description: 'Learn about LB CodeBase and meet the specialists behind its digital work.',
     mainEntity: {
       '@type': 'Organization',
-      name: 'LB Developers',
+      name: 'LB CodeBase',
       employee: teamMembers.map((member) => ({
         '@type': 'Person',
         name: member.name,
@@ -39,8 +39,8 @@ export default function About() {
   }), [teamMembers]);
 
   useSeo({
-    title: 'About & Team | LB Developers',
-    description: 'Learn about LB Developers and meet the engineering, design, automation, and strategy specialists behind the work.',
+    title: 'About & Team | LB CodeBase',
+    description: 'Learn about LB CodeBase and meet the engineering, design, automation, and strategy specialists behind the work.',
     canonicalPath: '/about',
     schema,
   });
@@ -82,7 +82,7 @@ export default function About() {
               </div>
 
               <TextReveal 
-                text="LB Developers is a high-fidelity digital engineering agency founded by Wajid Hussain. We define the intersection of cinematic design and absolute technical performance."
+                text="LB CodeBase is a high-fidelity digital engineering agency founded by Wajid Hussain. We define the intersection of cinematic design and absolute technical performance."
                 className="mb-16 max-w-full text-lg font-light leading-snug text-white/60 sm:text-xl md:max-w-3xl md:text-3xl md:leading-tight"
               />
               
@@ -110,7 +110,7 @@ export default function About() {
             className="absolute -bottom-12 -right-12 hidden w-64 h-64 border border-white/5 rounded-full items-center justify-center p-6 backdrop-blur-md bg-white/[0.01] z-20 pointer-events-none md:flex md:w-80 md:h-80 lg:w-96 lg:h-96 md:p-8"
           >
             <div className="text-[8px] sm:text-[9px] md:text-[10px] font-black uppercase tracking-[0.5em] text-white/10 text-center leading-relaxed">
-              PREMIUM • DIGITAL • ENGINEERING • BUREAU • LB • DEVELOPERS • 
+              PREMIUM • DIGITAL • ENGINEERING • BUREAU • LB • CODEBASE •
             </div>
           </motion.div>
         </section>

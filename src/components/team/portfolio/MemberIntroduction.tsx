@@ -22,7 +22,7 @@ export default function MemberIntroduction({ member }: { member: MemberProfile }
         <SectionHeading
           index="01"
           label="About"
-          description={`A strategic look into ${member.name}'s engineering and design philosophies, client accomplishments, and working standards at LB Developers.`}
+          description={`A strategic look into ${member.name}'s engineering and design philosophies, client accomplishments, and working standards at LB CodeBase.`}
         >
           A focused practice.<br />
           <span className="text-white/28">Built around real work.</span>
@@ -48,7 +48,7 @@ export default function MemberIntroduction({ member }: { member: MemberProfile }
             >
               <p>{member.fullBio || member.bio}</p>
               <p className="text-sm leading-relaxed text-white/45 md:text-base">
-                Every project published in this portfolio is an engineered solution delivered in collaboration with the LB Developers team. The credited roles and responsibilities showcase hands-on individual contribution to production architectures.
+                Every project published in this portfolio is an engineered solution delivered in collaboration with the LB CodeBase team. The credited roles and responsibilities showcase hands-on individual contribution to production architectures.
               </p>
             </motion.div>
 

@@ -20,7 +20,7 @@ const TerminalUI = () => {
           <div className="w-3 h-3 rounded-full bg-[#ffbd2e]" />
           <div className="w-3 h-3 rounded-full bg-[#27c93f]" />
         </div>
-        <div className="text-xs bg-white/5 px-3 py-1 rounded">~/projects/lb-developers/src/App.tsx</div>
+        <div className="text-xs bg-white/5 px-3 py-1 rounded">~/projects/lb-codebase/src/App.tsx</div>
       </div>
       <div className="space-y-4">
         <div className="flex gap-6">
@@ -62,7 +62,7 @@ const TerminalUI = () => {
       <div className="mt-20 border-t border-white/5 pt-6 bg-black/20 -mx-10 px-10">
         <div className="flex gap-3 text-sm">
           <span className="text-[#27c93f]">➜</span>
-          <span className="text-[#79c0ff]">lb-developers</span>
+          <span className="text-[#79c0ff]">lb-codebase</span>
           <span className="text-zinc-500">git:(</span><span className="text-[#ff7b72]">main</span><span className="text-zinc-500">)</span>
           <span className="text-white animate-pulse">_</span>
         </div>

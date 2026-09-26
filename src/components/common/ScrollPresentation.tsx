@@ -75,7 +75,7 @@ export default function ScrollPresentation() {
   return (
     <section
       className="relative py-24 md:py-32 bg-black text-white overflow-hidden border-t border-white/5"
-      aria-label="Workflow presentation of LB Developers process"
+      aria-label="Workflow presentation of LB CodeBase process"
     >
       {/* Background glow matching active slide */}
       <div

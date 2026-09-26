@@ -102,8 +102,8 @@ export default function MemberProjectDetail() {
   } : undefined, [data]);
 
   useSeo({
-    title: data?.project.metaTitle || (data ? `${data.project.title} — ${data.member.name} | LB Developers` : 'Project Case Study | LB Developers'),
-    description: data?.project.metaDescription || data?.project.shortDescription || 'Project case study by an LB Developers team member.',
+    title: data?.project.metaTitle || (data ? `${data.project.title} — ${data.member.name} | LB CodeBase` : 'Project Case Study | LB CodeBase'),
+    description: data?.project.metaDescription || data?.project.shortDescription || 'Project case study by an LB CodeBase team member.',
     image: data?.project.thumbnail,
     canonicalPath: data ? `/team/${data.member.slug}/projects/${data.project.slug}` : window.location.pathname,
     schema,
@@ -147,7 +147,7 @@ export default function MemberProjectDetail() {
 
   const overviewItems = ([
     ['Contribution', project.memberRole || member.role],
-    ['Project credit', 'LB Developers Collaboration'],
+    ['Project credit', 'LB CodeBase Collaboration'],
     ['Category', project.category],
     ['Client', project.client || ''],
     ['Industry', project.industry || ''],

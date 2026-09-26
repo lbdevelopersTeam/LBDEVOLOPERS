@@ -4,7 +4,7 @@ import { useSeo } from '../lib/seo';
 
 export default function NotFound() {
   useSeo({
-    title: 'Page Not Found | LB Developers',
+    title: 'Page Not Found | LB CodeBase',
     description: 'The requested page could not be found.',
     canonicalPath: window.location.pathname,
   });

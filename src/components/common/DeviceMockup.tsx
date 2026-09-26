@@ -25,7 +25,7 @@ const TerminalUI = () => (
         <div className="w-3 h-3 rounded-full bg-[#ffbd2e]" />
         <div className="w-3 h-3 rounded-full bg-[#27c93f]" />
       </div>
-      <div className="text-xs bg-white/5 px-3 py-1 rounded tracking-tight">lb-developers-studio</div>
+      <div className="text-xs bg-white/5 px-3 py-1 rounded tracking-tight">lb-codebase-studio</div>
     </div>
     <div className="space-y-4">
       <div className="flex gap-6"><span className="text-[#ff7b72]">import</span> <span className="text-[#79c0ff]">React</span> <span className="text-[#ff7b72]">from</span> <span className="text-[#a5d6ff]">'react'</span><span className="text-white">;</span></div>

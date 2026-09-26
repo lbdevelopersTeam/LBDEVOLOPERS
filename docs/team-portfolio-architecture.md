@@ -3,7 +3,7 @@
 ## Existing Application
 
 - Runtime: React 19, Vite 6, TypeScript, React Router, and an Express server.
-- Styling: Tailwind CSS v4 with shared LB Developers brand tokens and Motion animations.
+- Styling: Tailwind CSS v4 with shared LB CodeBase brand tokens and Motion animations.
 - Content: one server-side `db.json` store accessed only through Express APIs.
 - Admin: authenticated `/admin` SPA backed by httpOnly signed-cookie sessions.
 - Deployment: one Node process serves API routes and Vite middleware in development, then the compiled SPA in production.

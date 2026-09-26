@@ -6,8 +6,8 @@ import { motion } from 'motion/react';
 export default function Footer() {
   const contactEmail = useContactEmail();
   const contactChannels = [
-    { icon: Mail, href: `mailto:${contactEmail}`, label: 'Email LB Developers' },
-    { icon: MessageCircle, href: 'https://wa.me/923489077329?text=Hello%2C%20I%20would%20like%20to%20discuss%20a%20project.', label: 'Chat with LB Developers on WhatsApp' },
+    { icon: Mail, href: `mailto:${contactEmail}`, label: 'Email LB CodeBase' },
+    { icon: MessageCircle, href: 'https://wa.me/923489077329?text=Hello%2C%20I%20would%20like%20to%20discuss%20a%20project.', label: 'Chat with LB CodeBase on WhatsApp' },
   ];
   return (
     <footer className="bg-brand-dark pt-20 pb-10 px-6 border-t border-white/5 relative overflow-hidden md:pt-32 md:pb-12">
@@ -17,14 +17,14 @@ export default function Footer() {
       <div className="max-w-[1600px] mx-auto">
         {/* Large Cinematic Background Text */}
         <div className="absolute top-20 left-0 right-0 hidden pointer-events-none select-none overflow-hidden opacity-[0.02] whitespace-nowrap sm:block">
-          <span className="text-[7rem] md:text-[12rem] lg:text-[18rem] font-display font-black tracking-tighter uppercase leading-none">LB DEVELOPERS</span>
+          <span className="text-[7rem] md:text-[12rem] lg:text-[18rem] font-display font-black tracking-tighter uppercase leading-none">LB CODEBASE</span>
         </div>
 
         <div className="grid grid-cols-1 gap-12 md:grid-cols-2 md:gap-16 lg:grid-cols-12 lg:gap-20 mb-20 md:mb-32 relative z-10">
           <div className="lg:col-span-5">
             <Link to="/" className="brand-logo mb-10">
               <motion.div whileHover={{ scale: 1.02 }} className="brand-mark">LB</motion.div>
-              <span className="brand-text">Developers</span>
+              <span className="brand-text">CodeBase</span>
             </Link>
             <p className="text-white/40 text-base leading-relaxed mb-10 max-w-md font-light md:text-xl md:mb-12">
               Engineering high-fidelity digital ecosystems for visionary brands. We define the intersection of cinematic design and absolute technical performance.
@@ -129,7 +129,7 @@ export default function Footer() {
         </div>
 
         <div className="flex flex-col md:flex-row justify-between items-center gap-8 text-center md:text-left text-[10px] font-black uppercase tracking-[0.2em] sm:tracking-[0.4em] text-white/20 relative z-10">
-          <p>© {new Date().getFullYear()} LB DEVELOPERS. ALL RIGHTS RESERVED.</p>
+          <p>© {new Date().getFullYear()} LB CODEBASE. ALL RIGHTS RESERVED.</p>
           <div className="flex flex-wrap justify-center gap-4 sm:gap-8 lg:gap-10">
             <Link to="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
             <Link to="/terms" className="hover:text-white transition-colors">Terms of Service</Link>

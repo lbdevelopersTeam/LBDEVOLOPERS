@@ -61,7 +61,7 @@ export default function MemberContactSection({
               </div>
 
               <p className="mt-4 text-base leading-relaxed text-white/60">
-                Send a project brief directly for {member.name}. The LB Developers engineering and design lead team will review your specifications and follow up with a detailed proposal.
+                Send a project brief directly for {member.name}. The LB CodeBase engineering and design lead team will review your specifications and follow up with a detailed proposal.
               </p>
 
               {/* Direct email display & copy button */}

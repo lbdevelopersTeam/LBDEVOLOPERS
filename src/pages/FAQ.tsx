@@ -111,7 +111,7 @@ export default function FAQ() {
             </div>
 
             <TextReveal 
-              text="Everything you need to know about working with LB Developers. If you can't find your answer here, feel free to reach out to our engineering team."
+              text="Everything you need to know about working with LB CodeBase. If you can't find your answer here, feel free to reach out to our engineering team."
               className="text-white/40 text-xl md:text-2xl leading-relaxed font-light"
             />
           </div>

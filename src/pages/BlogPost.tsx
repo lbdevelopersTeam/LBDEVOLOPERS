@@ -42,8 +42,8 @@ export default function BlogPost() {
   }, [id]);
 
   useSeo({
-    title: post?.metaTitle || (post ? `${post.title} | LB Developers` : loading ? 'Loading Article | LB Developers' : 'Article Not Found | LB Developers'),
-    description: post?.metaDescription || post?.excerpt || 'Read engineering and product insights from LB Developers.',
+    title: post?.metaTitle || (post ? `${post.title} | LB CodeBase` : loading ? 'Loading Article | LB CodeBase' : 'Article Not Found | LB CodeBase'),
+    description: post?.metaDescription || post?.excerpt || 'Read engineering and product insights from LB CodeBase.',
     image: post?.image || post?.coverImage,
     canonicalPath: post ? `/blog/${post.slug}` : `/blog/${id}`,
   });

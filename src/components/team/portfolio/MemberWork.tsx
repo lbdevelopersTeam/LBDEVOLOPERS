@@ -19,7 +19,7 @@ export default function MemberWork({ member }: { member: MemberProfile }) {
         <SectionHeading
           index="03"
           label="Selected Work"
-          description="Production case studies engineered in collaboration with LB Developers. Each project highlights specific individual contributions."
+          description="Production case studies engineered in collaboration with LB CodeBase. Each project highlights specific individual contributions."
         >
           Projects with purpose.<br />
           <span className="text-white/28">Contribution in context.</span>

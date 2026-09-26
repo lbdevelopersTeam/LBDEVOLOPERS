@@ -127,14 +127,14 @@ const generateReplyBody = (message: ContactMessage, type: EmailTemplateOptions['
     return [
       `Hi ${firstName},`,
       '',
-      `Thank you for reaching out to LB Developers regarding "${message.subject}".`,
+      `Thank you for reaching out to LB CodeBase regarding "${message.subject}".`,
       '',
       'We would love to schedule a brief discovery call to discuss your project scope, goals, and technical requirements in detail.',
       '',
       'Please let us know which of the following times work best for you this week, or feel free to share your preferred availability.',
       '',
       'Best regards,',
-      'LB Developers Team',
+      'LB CodeBase Team',
       'https://lbdevelopers.com',
       '',
       '—',
@@ -147,7 +147,7 @@ const generateReplyBody = (message: ContactMessage, type: EmailTemplateOptions['
     return [
       `Hi ${firstName},`,
       '',
-      `Thank you for contacting LB Developers regarding "${message.subject}".`,
+      `Thank you for contacting LB CodeBase regarding "${message.subject}".`,
       '',
       'Our team has reviewed your inquiry and would be glad to prepare a preliminary proposal and project roadmap for you.',
       '',
@@ -159,7 +159,7 @@ const generateReplyBody = (message: ContactMessage, type: EmailTemplateOptions['
       'Looking forward to collaborating with you!',
       '',
       'Best regards,',
-      'LB Developers Team',
+      'LB CodeBase Team',
       'https://lbdevelopers.com',
       '',
       '—',
@@ -170,14 +170,14 @@ const generateReplyBody = (message: ContactMessage, type: EmailTemplateOptions['
   return [
     `Hi ${firstName},`,
     '',
-    `Thank you for contacting LB Developers regarding "${message.subject}".`,
+    `Thank you for contacting LB CodeBase regarding "${message.subject}".`,
     '',
     'We have received your message and are reviewing the details.',
     '',
     'One of our leads will follow up with you shortly.',
     '',
     'Best regards,',
-    'LB Developers Team',
+    'LB CodeBase Team',
     'https://lbdevelopers.com',
     '',
     '—',
@@ -1183,7 +1183,7 @@ export default function Admin() {
           <div className="mx-auto mb-8 flex h-16 w-16 items-center justify-center rounded-2xl border border-brand-primary/20 bg-brand-primary/10">
             <Lock className="h-8 w-8 text-brand-primary" />
           </div>
-          <p className="mb-3 text-center text-[10px] font-black uppercase tracking-[0.3em] text-brand-primary">LB Developers Workspace</p>
+          <p className="mb-3 text-center text-[10px] font-black uppercase tracking-[0.3em] text-brand-primary">LB CodeBase Workspace</p>
           <h1 className="mb-3 text-center font-display text-3xl font-black tracking-[-0.04em]">Welcome back</h1>
           <p className="mb-10 text-center text-sm leading-relaxed text-white/35">
             Sign in to manage publishing, projects, people, and client operations.
@@ -1228,7 +1228,7 @@ export default function Admin() {
       <header className="sticky top-0 z-40 border-b border-white/10 bg-[#08080b]/90 px-4 py-3 backdrop-blur-xl lg:hidden">
         <div className="flex items-center justify-between gap-3">
           <div className="min-w-0">
-            <div className="text-[9px] font-black uppercase tracking-[0.26em] text-brand-primary">LB Developers</div>
+            <div className="text-[9px] font-black uppercase tracking-[0.26em] text-brand-primary">LB CodeBase</div>
             <div className="truncate text-sm font-semibold text-white">{adminName}</div>
           </div>
           <AdminResponsiveMenu tabs={tabs} activeTab={activeTab} newMessageCount={newMessageCount} onSelect={changeTab} />
@@ -1241,7 +1241,7 @@ export default function Admin() {
               <Sparkles className="h-5 w-5" aria-hidden="true" />
             </span>
             <div>
-              <div className="text-[9px] font-black uppercase tracking-[0.25em] text-brand-primary">LB Developers</div>
+              <div className="text-[9px] font-black uppercase tracking-[0.25em] text-brand-primary">LB CodeBase</div>
               <div className="mt-1 text-sm font-semibold text-white">Control center</div>
             </div>
           </div>
@@ -1325,7 +1325,7 @@ export default function Admin() {
               <motion.div key="dashboard" initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} className="space-y-8">
                 <div className="grid gap-5 overflow-hidden rounded-3xl border border-brand-primary/15 bg-[linear-gradient(125deg,rgba(61,90,254,0.14),rgba(255,255,255,0.018)_44%,rgba(255,255,255,0.025))] p-6 sm:p-8 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center">
                   <div>
-                    <p className="text-[9px] font-black uppercase tracking-[0.28em] text-brand-primary">Today at LB Developers</p>
+                    <p className="text-[9px] font-black uppercase tracking-[0.28em] text-brand-primary">Today at LB CodeBase</p>
                     <h3 className="mt-3 font-display text-2xl font-black tracking-[-0.035em] text-white sm:text-3xl">Your publishing pipeline is ready.</h3>
                     <p className="mt-3 max-w-2xl text-sm leading-relaxed text-white/40">{draftCount > 0 ? `${draftCount} draft ${draftCount === 1 ? 'item needs' : 'items need'} review` : 'No draft content is waiting'} and {newMessageCount > 0 ? `${newMessageCount} new ${newMessageCount === 1 ? 'inquiry is' : 'inquiries are'} in the inbox.` : 'the client inbox is clear.'}</p>
                   </div>

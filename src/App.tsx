@@ -60,56 +60,56 @@ const NotFound = lazy(loadNotFound);
 
 const staticRouteSeo: Record<string, Omit<SeoOptions, 'canonicalPath'>> = {
   '/': {
-    title: 'LB Developers | Premium Digital Agency',
-    description: 'LB Developers designs and engineers high-performance websites, applications, e-commerce platforms, and digital products.',
+    title: 'LB CodeBase | Premium Digital Agency',
+    description: 'LB CodeBase designs and engineers high-performance websites, applications, e-commerce platforms, and digital products.',
   },
   '/about': {
-    title: 'About & Team | LB Developers',
-    description: 'Learn about LB Developers and meet the engineering, design, automation, and strategy specialists behind the work.',
+    title: 'About & Team | LB CodeBase',
+    description: 'Learn about LB CodeBase and meet the engineering, design, automation, and strategy specialists behind the work.',
   },
   '/services': {
-    title: 'Digital Engineering Services | LB Developers',
-    description: 'Explore web development, product design, e-commerce, application development, digital audits, and growth services from LB Developers.',
+    title: 'Digital Engineering Services | LB CodeBase',
+    description: 'Explore web development, product design, e-commerce, application development, digital audits, and growth services from LB CodeBase.',
   },
   '/portfolio': {
-    title: 'Selected Work | LB Developers',
-    description: 'Explore selected websites, commerce platforms, applications, and digital products engineered by LB Developers.',
+    title: 'Selected Work | LB CodeBase',
+    description: 'Explore selected websites, commerce platforms, applications, and digital products engineered by LB CodeBase.',
   },
   '/blog': {
-    title: 'Engineering Journal | LB Developers',
+    title: 'Engineering Journal | LB CodeBase',
     description: 'Read practical perspectives on product engineering, performance, design systems, commerce, and digital growth.',
   },
   '/contact': {
-    title: 'Contact LB Developers | Start a Project',
-    description: 'Tell LB Developers about your website, application, e-commerce, product design, or engineering project.',
+    title: 'Contact LB CodeBase | Start a Project',
+    description: 'Tell LB CodeBase about your website, application, e-commerce, product design, or engineering project.',
   },
   '/booking': {
-    title: 'Request a Strategy Call | LB Developers',
-    description: 'Request a focused strategy call with LB Developers to discuss your goals, constraints, and next steps.',
+    title: 'Request a Strategy Call | LB CodeBase',
+    description: 'Request a focused strategy call with LB CodeBase to discuss your goals, constraints, and next steps.',
   },
   '/planner': {
-    title: 'Project Planner | LB Developers',
+    title: 'Project Planner | LB CodeBase',
     description: 'Create a concise starting brief for your next website, application, e-commerce, or digital product project.',
   },
   '/tech': {
-    title: 'Technology Stack | LB Developers',
-    description: 'Review the technologies LB Developers uses to build reliable, secure, and high-performance digital products.',
+    title: 'Technology Stack | LB CodeBase',
+    description: 'Review the technologies LB CodeBase uses to build reliable, secure, and high-performance digital products.',
   },
   '/faq': {
-    title: 'Frequently Asked Questions | LB Developers',
-    description: 'Find answers about working with LB Developers, project delivery, technology choices, timelines, and support.',
+    title: 'Frequently Asked Questions | LB CodeBase',
+    description: 'Find answers about working with LB CodeBase, project delivery, technology choices, timelines, and support.',
   },
   '/careers': {
-    title: 'Careers | LB Developers',
-    description: 'Explore opportunities to join LB Developers and help build ambitious digital products.',
+    title: 'Careers | LB CodeBase',
+    description: 'Explore opportunities to join LB CodeBase and help build ambitious digital products.',
   },
   '/privacy': {
-    title: 'Privacy Policy | LB Developers',
-    description: 'Read how LB Developers handles personal information and website data.',
+    title: 'Privacy Policy | LB CodeBase',
+    description: 'Read how LB CodeBase handles personal information and website data.',
   },
   '/terms': {
-    title: 'Terms of Service | LB Developers',
-    description: 'Review the terms that apply when using the LB Developers website and services.',
+    title: 'Terms of Service | LB CodeBase',
+    description: 'Review the terms that apply when using the LB CodeBase website and services.',
   },
 };
 

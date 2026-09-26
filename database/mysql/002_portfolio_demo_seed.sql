@@ -228,7 +228,7 @@ INSERT INTO social_links (id, platform, url, icon, sort_order, is_active) VALUES
 -- site_settings (10 rows)
 -- ============================
 INSERT INTO site_settings (id, setting_key, setting_value, value_type, is_public, description) VALUES
-    (1, 'site_title', 'LB Developers', 'string', TRUE, 'Primary site and browser title.'),
+    (1, 'site_title', 'LB CodeBase', 'string', TRUE, 'Primary site and browser title.'),
     (2, 'tagline', 'Thoughtful software, built for real work.', 'string', TRUE, 'Homepage positioning statement.'),
     (3, 'resume_url', '/documents/portfolio-owner-resume.pdf', 'url', TRUE, 'Public résumé download.'),
     (4, 'contact_email', 'hello@example.com', 'string', TRUE, 'Public inquiries address.'),
