@@ -5,7 +5,6 @@ import express, { NextFunction, Request, Response } from "express";
 import fs from "fs/promises";
 import path from "path";
 import { fileURLToPath } from "url";
-import { createServer as createViteServer } from "vite";
 import { z } from "zod";
 import { sql } from "kysely";
 import { createDatabase, databaseConfigFromEnv } from "./server/db/client";
@@ -1268,6 +1267,7 @@ const generateVCard = (member: TeamMember, origin: string) => {
   });
 
   if (process.env.NODE_ENV !== "production" && process.env.SERVE_STATIC !== "true") {
+    const { createServer: createViteServer } = await import("vite");
     const vite = await createViteServer({
       configLoader: "runner",
       server: { middlewareMode: true },
@@ -1275,7 +1275,10 @@ const generateVCard = (member: TeamMember, origin: string) => {
     });
     app.use(vite.middlewares);
   } else {
-    const distPath = path.join(process.cwd(), "dist");
+    // The production bundle lives at dist/server.mjs and the Vite output at
+    // dist/public. Resolve relative to the bundle so Hostinger can start the
+    // application from either the repository root or its output directory.
+    const distPath = path.join(__dirname, "public");
     app.use(express.static(distPath, {
       setHeaders: (res, filePath) => {
         const normalizedPath = filePath.replace(/\\/g, "/");

@@ -276,7 +276,6 @@ CREATE TABLE app.blog_posts (
   author_team_member_id text REFERENCES app.team_members(id) ON DELETE SET NULL,
   status varchar(24) NOT NULL DEFAULT 'draft' CHECK (status IN ('draft', 'published', 'scheduled', 'archived')),
   published_at timestamptz,
-  live_url text NOT NULL DEFAULT '',
   reading_time integer NOT NULL DEFAULT 1 CHECK (reading_time > 0),
   meta_title varchar(240) NOT NULL DEFAULT '',
   meta_description varchar(500) NOT NULL DEFAULT '',

@@ -50,7 +50,7 @@ try {
 
   await migrationClient.connect();
   const migrations = await migrationClient.query<{ count: number }>('select count(*)::int as count from public._app_migrations');
-  assert.equal(Number(migrations.rows[0]?.count), 4);
+  assert.equal(Number(migrations.rows[0]?.count), 6);
 
   process.stdout.write(`${JSON.stringify({
     status: 'ok',

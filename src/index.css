@@ -819,22 +819,19 @@
   }
 
   .brand-logo-image-frame {
-    position: relative;
-    display: block;
+    display: inline-flex;
+    align-items: center;
     width: 9.5rem;
-    height: 2.5rem;
-    overflow: hidden;
+    min-height: 2.75rem;
     flex-shrink: 0;
   }
 
   .brand-logo-image {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    width: 165%;
-    max-width: none;
+    display: block;
+    width: 100%;
+    max-width: 100%;
     height: auto;
-    transform: translate(-50%, -50%);
+    object-fit: contain;
   }
 
   .brand-logo .brand-mark {
@@ -859,7 +856,6 @@
   @media (min-width: 640px) {
     .brand-logo-image-frame {
       width: 11rem;
-      height: 2.75rem;
     }
 
     .brand-logo .brand-mark {

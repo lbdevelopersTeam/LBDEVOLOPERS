@@ -148,8 +148,7 @@ export default function Navbar() {
             className="brand-logo-image-frame"
             aria-label="LB CodeBase home"
           >
-            <motion.img
-              whileHover={{ scale: 1.03 }}
+            <img
               src="/images/LB CodeBase Logo.png"
               alt="LB CodeBase"
               className="brand-logo-image"
