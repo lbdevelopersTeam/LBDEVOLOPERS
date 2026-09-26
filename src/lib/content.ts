@@ -1,7 +1,20 @@
-import DOMPurify from 'dompurify';
 import { fitImageWithin } from './image';
 
 export const AGENCY_EMAIL = 'lbdevelopers.agency@gmail.com';
+const API_BASE_URL = String(import.meta.env.VITE_API_BASE_URL || '').trim().replace(/\/+$/, '');
+
+/**
+ * Static Vite deployments have no same-origin API. Keeping the API opt-in in
+ * production prevents avoidable 404s while still allowing a separate backend.
+ */
+export const publicApiEnabled = import.meta.env.DEV
+  || import.meta.env.VITE_PUBLIC_API_ENABLED === 'true'
+  || Boolean(API_BASE_URL);
+
+export function apiRequestUrl(url: string) {
+  if (!API_BASE_URL || !url.startsWith('/api/')) return url;
+  return `${API_BASE_URL}${url}`;
+}
 
 export type ProjectStatus = 'draft' | 'published' | 'archived';
 export type BlogStatus = 'draft' | 'published' | 'scheduled';
@@ -1019,6 +1032,8 @@ export const fallbackTeam: TeamMember[] = [
   },
 ];
 
+export const fallbackTestimonials: Testimonial[] = fallbackTeam.flatMap((member) => member.testimonials || []);
+
 export function applyCuratedProfileFallback<T extends TeamMember>(member: T): T {
   if (member.slug !== 'ibad-ullah') return member;
 
@@ -1065,12 +1080,6 @@ export const fallbackBlogs: BlogPost[] = [
     date: 'April 18, 2026',
   },
 ];
-
-export const sanitizeHtml = (html = '') =>
-  DOMPurify.sanitize(html, {
-    USE_PROFILES: { html: true },
-    ADD_ATTR: ['target', 'rel'],
-  });
 
 export const slugify = (value: string) =>
   value
@@ -1129,9 +1138,14 @@ export async function fetchJson<T>(url: string, options?: RequestInit): Promise<
   if (adminCsrfToken && !['GET', 'HEAD', 'OPTIONS'].includes(method) && (url.startsWith('/api/v2/admin') || url === '/api/v2/auth/logout')) {
     headers.set('X-CSRF-Token', adminCsrfToken);
   }
+  if (url.startsWith('/api/') && !publicApiEnabled) {
+    throw new ApiRequestError(503, 'API_DISABLED', 'The content API is not enabled for this static deployment.');
+  }
+
+  const requestUrl = apiRequestUrl(url);
   let response: Response;
   try {
-    response = await fetch(url, { credentials: 'include', ...options, headers });
+    response = await fetch(requestUrl, { credentials: 'include', ...options, headers });
   } catch (caught) {
     if (import.meta.env.DEV) console.error('[api] network request failed', { method, url, error: caught instanceof Error ? caught.message : String(caught) });
     const timedOut = caught instanceof DOMException && caught.name === 'AbortError';
@@ -1177,6 +1191,8 @@ const PUBLIC_REQUEST_TIMEOUT_MS = 8_000;
 const PUBLIC_MEMORY_CACHE_MS = 30_000;
 
 export async function cachedFetch<T>(url: string, cacheKey: string, fallback: T): Promise<T> {
+  if (url.startsWith('/api/') && !publicApiEnabled) return fallback;
+
   const requestKey = `${url}::${cacheKey}`;
   const memoryEntry = publicMemoryCache.get(requestKey);
   if (memoryEntry && memoryEntry.expiresAt > Date.now()) return memoryEntry.value as T;

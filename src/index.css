@@ -1,4 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Sora:wght@300;400;500;600;700;800&display=swap');
 @import "tailwindcss";
 
 @theme {
@@ -614,7 +613,7 @@
     @apply bg-brand-dark text-white font-sans antialiased selection:bg-brand-primary selection:text-white overflow-x-hidden;
     min-height: 100svh;
     line-height: 1.15;
-    text-rendering: optimizeLegibility;
+    text-rendering: auto;
   }
 
   img,
@@ -914,16 +913,18 @@
     backdrop-filter: none;
   }
 
-  @media (hover: none), (max-width: 767px) {
+  @media (hover: none), (pointer: coarse), (max-width: 767px) {
     .project-3d-card {
       transform: translate3d(0, 0, 0);
     }
 
     .glass,
     .member-glass,
-    .premium-card {
-      -webkit-backdrop-filter: blur(8px) saturate(125%);
-      backdrop-filter: blur(8px) saturate(125%);
+    .member-glass-strong,
+    .premium-card,
+    [class*="backdrop-blur"] {
+      -webkit-backdrop-filter: none !important;
+      backdrop-filter: none !important;
     }
 
     .glass:hover,
@@ -944,5 +945,32 @@
 @supports (height: 100svh) {
   .min-h-screen {
     min-height: 100svh;
+  }
+}
+
+@supports (content-visibility: auto) {
+  #main-content > div > section:not(:first-child) {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 720px;
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .animate-pulse,
+  .animate-pulse-slow,
+  .animate-float,
+  .animate-shimmer,
+  .deck-ring-one,
+  .deck-ring-two,
+  .deck-ring-three {
+    animation: none !important;
+  }
+
+  .glass,
+  .premium-card,
+  .accent-border,
+  .project-3d-card,
+  img {
+    transition-duration: 120ms !important;
   }
 }

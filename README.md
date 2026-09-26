@@ -46,7 +46,9 @@ If hPanel shows a database host other than `localhost`, use the displayed host. 
 
 ### Database limitation of static Vite hosting
 
-Vite runs in the visitor's browser and cannot safely connect directly to MariaDB/phpMyAdmin. The existing Express API requires a Node.js runtime. On a static/PHP Hostinger website, forms and the admin panel require a PHP API connected to MariaDB; never put database credentials in `VITE_*` variables or frontend code.
+Vite runs in the visitor's browser and cannot safely connect directly to MariaDB/phpMyAdmin. The existing Express API requires a Node.js runtime. The static build uses bundled public content and opens contact submissions in the visitor's email app, so it does not make missing `/api/v2` requests. Database-backed form storage and the admin panel still require the Express API (or a compatible PHP API); never put database credentials in `VITE_*` variables or frontend code.
+
+Leave `VITE_PUBLIC_API_ENABLED=false` and `VITE_API_BASE_URL=` for the static Hostinger build. Set `VITE_PUBLIC_API_ENABLED=true` only when `/api/v2` is actually served, or set `VITE_API_BASE_URL` to the HTTPS origin of a separate compatible API.
 
 For a separate Node backend, run:
 

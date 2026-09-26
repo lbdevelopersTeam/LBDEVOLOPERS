@@ -178,7 +178,7 @@ export default function Home() {
               <div className="relative z-10">
                 <div className="mb-8 inline-flex items-center gap-3 rounded-full border border-brand-primary/20 bg-brand-primary/10 px-4 py-2">
                   <span className="h-1.5 w-1.5 rounded-full bg-brand-primary shadow-[0_0_18px_rgba(61,90,254,0.7)]" />
-                  <span className="text-[10px] font-black uppercase tracking-[0.35em] text-brand-primary">Capabilities</span>
+                  <span className="text-[10px] font-black uppercase tracking-[0.35em] text-blue-300">Capabilities</span>
                 </div>
 
                 <h2 className="max-w-3xl font-display text-3xl font-black uppercase leading-[0.95] tracking-tighter text-white sm:text-4xl md:text-5xl">
@@ -190,7 +190,7 @@ export default function Home() {
 
                 <div className="mt-8 flex flex-wrap gap-2">
                   {['Strategy', 'Design', 'Engineering', 'Growth'].map((item) => (
-                    <span key={item} className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-[9px] font-black uppercase tracking-[0.22em] text-white/45">
+                    <span key={item} className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-[9px] font-black uppercase tracking-[0.22em] text-white/70">
                       {item}
                     </span>
                   ))}
@@ -237,8 +237,8 @@ export default function Home() {
                   <div className="relative z-10 max-w-sm">
                     <div className="mb-4 h-px w-16 bg-brand-primary/60" />
                     <h3 className="font-display text-3xl font-black uppercase leading-none tracking-tighter text-white">{item.value}</h3>
-                    <div className="mt-2 text-[10px] font-black uppercase tracking-[0.28em] text-brand-primary">{item.label}</div>
-                    <p className="mt-5 text-sm font-light leading-6 text-white/45">{item.body}</p>
+                    <div className="mt-2 text-[10px] font-black uppercase tracking-[0.28em] text-blue-300">{item.label}</div>
+                    <p className="mt-5 text-sm font-light leading-6 text-white/70">{item.body}</p>
                   </div>
                 </div>
               ))}
@@ -292,10 +292,10 @@ export default function Home() {
                     <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.03] text-brand-primary transition-all duration-500 group-hover:bg-brand-primary group-hover:text-white">
                       <Icon className="h-5 w-5" />
                     </div>
-                    <span className="text-[10px] font-black uppercase tracking-[0.25em] text-white/20">0{index + 1}</span>
+                    <span className="text-[10px] font-black uppercase tracking-[0.25em] text-white/65">0{index + 1}</span>
                   </div>
-                  <h4 className="mb-3 font-display text-base font-black uppercase text-white">{item.title}</h4>
-                  <p className="text-sm font-light leading-6 text-white/40">{item.description}</p>
+                  <h3 className="mb-3 font-display text-base font-black uppercase text-white">{item.title}</h3>
+                  <p className="text-sm font-light leading-6 text-white/70">{item.description}</p>
                 </motion.div>
               );
             })}
@@ -324,7 +324,7 @@ export default function Home() {
                 </div>
                 <div>
                   <h3 className="text-3xl font-display font-black mb-4 uppercase tracking-tighter">Web Engineering</h3>
-                  <p className="text-white/40 text-lg font-light leading-relaxed mb-8">
+                  <p className="text-white/70 text-lg font-light leading-relaxed mb-8">
                     Production-grade React, Next.js, and Three.js ecosystems built for extreme scale and zero latency.
                   </p>
                   <Link to="/services" className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-brand-primary group">
@@ -341,7 +341,7 @@ export default function Home() {
               </div>
               <div>
                 <h3 className="text-xl font-display font-black uppercase tracking-tighter mb-2">Mobile Apps</h3>
-                <p className="text-white/40 text-sm font-light">iOS & Android experiences that redefine interaction.</p>
+                <p className="text-white/70 text-sm font-light">iOS & Android experiences that redefine interaction.</p>
               </div>
             </BentoCard>
 
@@ -359,7 +359,7 @@ export default function Home() {
               <div className="flex items-center justify-between">
                 <div>
                   <h3 className="text-xl font-display font-black uppercase tracking-tighter mb-2">Cloud Infrastructure</h3>
-                  <p className="text-white/40 text-sm font-light">Bullet-proof AWS & Vercel deployments.</p>
+                  <p className="text-white/70 text-sm font-light">Bullet-proof AWS & Vercel deployments.</p>
                 </div>
                 <Shield className="w-8 h-8 text-brand-primary/50" />
               </div>
@@ -395,8 +395,8 @@ export default function Home() {
                 ].map((v, i) => (
                   <div key={i}>
                     <div className="text-brand-primary mb-4">{v.icon}</div>
-                    <h4 className="text-sm font-black uppercase tracking-widest text-white mb-2">{v.title}</h4>
-                    <p className="text-white/30 font-light text-xs leading-relaxed">{v.desc}</p>
+                    <h3 className="text-sm font-black uppercase tracking-widest text-white mb-2">{v.title}</h3>
+                    <p className="text-white/70 font-light text-xs leading-relaxed">{v.desc}</p>
                   </div>
                 ))}
               </div>
@@ -455,7 +455,7 @@ export default function Home() {
           <div className="mb-14 flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
             <SectionHeader
               badge="Archive"
-              title={<>Defining the <br/> <span className="text-white/20 italic uppercase">Next Standard.</span></>}
+              title={<>Defining the <br/> <span className="text-white/65 italic uppercase">Next Standard.</span></>}
               description="A curated selection of our most impactful digital deployments."
               align="left"
               className="mb-0"
@@ -495,7 +495,7 @@ export default function Home() {
                 <div className="mb-5 flex flex-wrap items-center gap-3">
                   <span className="text-[10px] font-black uppercase tracking-[0.4em] text-brand-primary">{featuredProject.category}</span>
                   <span className="h-px w-10 bg-white/20" />
-                  <span className="text-[10px] font-black uppercase tracking-[0.3em] text-white/35">
+                  <span className="text-[10px] font-black uppercase tracking-[0.3em] text-white/65">
                     {featuredProject.completionDate || 'Live System'}
                   </span>
                 </div>
@@ -539,19 +539,19 @@ export default function Home() {
                   <div className="flex flex-col justify-between p-6">
                     <div>
                       <div className="mb-4 flex items-center justify-between gap-4">
-                        <span className="text-[10px] font-black uppercase tracking-[0.35em] text-brand-primary">{project.category}</span>
+                        <span className="text-[10px] font-black uppercase tracking-[0.35em] text-blue-300">{project.category}</span>
                         <ArrowRight className="h-4 w-4 text-white/20 transition-all duration-500 group-hover:translate-x-1 group-hover:text-brand-primary" />
                       </div>
-                      <h4 className="font-display text-2xl font-black uppercase leading-none text-white transition-colors duration-500 group-hover:text-brand-primary">
+                      <h3 className="font-display text-2xl font-black uppercase leading-none text-white transition-colors duration-500 group-hover:text-brand-primary">
                         {project.title}
-                      </h4>
-                      <p className="mt-4 line-clamp-2 text-sm font-light leading-relaxed text-white/40">
+                      </h3>
+                      <p className="mt-4 line-clamp-2 text-sm font-light leading-relaxed text-white/70">
                         {project.shortDescription || project.description}
                       </p>
                     </div>
                     <div className="mt-6 flex flex-wrap gap-2">
                       {project.technologies?.slice(0, 2).map((technology) => (
-                        <span key={technology} className="text-[10px] font-black uppercase tracking-[0.25em] text-white/25">
+                        <span key={technology} className="text-[10px] font-black uppercase tracking-[0.25em] text-white/65">
                           {technology}
                         </span>
                       ))}
@@ -570,9 +570,9 @@ export default function Home() {
                 </div>
                 <div>
                   <div className="mb-3 text-[10px] font-black uppercase tracking-[0.35em] text-brand-primary">Explore Archive</div>
-                  <h4 className="font-display text-2xl font-black uppercase leading-none text-white">
+                  <h3 className="font-display text-2xl font-black uppercase leading-none text-white">
                     See the complete portfolio system.
-                  </h4>
+                  </h3>
                 </div>
               </Link>
             </div>
@@ -585,7 +585,7 @@ export default function Home() {
               { label: 'Archive status', value: 'Live' },
             ].map((item) => (
               <div key={item.label} className="min-w-0 rounded-2xl border border-white/10 bg-white/[0.025] p-4">
-                <div className="text-[9px] font-black uppercase tracking-[0.24em] text-white/25 sm:text-[10px]">{item.label}</div>
+                <div className="text-[9px] font-black uppercase tracking-[0.24em] text-white/65 sm:text-[10px]">{item.label}</div>
                 <div className="mt-3 break-words font-display text-lg font-black uppercase leading-tight text-white sm:text-xl">
                   {item.value}
                 </div>
@@ -600,7 +600,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto">
           <SectionHeader 
             badge="Workflow"
-            title={<>THE ANATOMY OF <br /> <span className="text-white/20 italic uppercase">EXCELLENCE.</span></>}
+            title={<>THE ANATOMY OF <br /> <span className="text-white/65 italic uppercase">EXCELLENCE.</span></>}
             description="Our battle-tested workflow is designed for speed, quality, and extreme scalability."
             align="left"
             className="mb-16"
@@ -646,10 +646,10 @@ export default function Home() {
                       <div className="w-1.5 h-1.5 rounded-full bg-brand-primary group-hover:bg-white animate-pulse" />
                     </div>
                   </div>
-                  <h4 className="text-xl font-display font-black mb-4 tracking-tighter uppercase group-hover:text-brand-primary transition-colors">
+                  <h3 className="text-xl font-display font-black mb-4 tracking-tighter uppercase group-hover:text-brand-primary transition-colors">
                     {p.title}
-                  </h4>
-                  <p className="text-white/30 text-sm font-light leading-relaxed">
+                  </h3>
+                  <p className="text-white/70 text-sm font-light leading-relaxed">
                     {p.desc}
                   </p>
                 </div>
@@ -714,8 +714,8 @@ export default function Home() {
                     />
                   </div>
                   <div>
-                    <h4 className="text-base md:text-lg font-display font-black text-white group-hover:text-brand-primary transition-colors leading-tight uppercase mb-2">{post.title}</h4>
-                    <div className="text-[10px] text-white/20 font-black uppercase tracking-widest">{post.time || post.readingTime}</div>
+                    <h3 className="text-base md:text-lg font-display font-black text-white group-hover:text-brand-primary transition-colors leading-tight uppercase mb-2">{post.title}</h3>
+                    <div className="text-[10px] text-white/65 font-black uppercase tracking-widest">{post.time || post.readingTime}</div>
                   </div>
                 </div>
               ))}
@@ -740,7 +740,7 @@ export default function Home() {
                 { label: 'Engineering Hub', val: 'Mingora, Swat, Pakistan' }
               ].map((item, i) => (
                 <div key={i}>
-                  <div className="text-[10px] uppercase font-black tracking-[0.4em] text-brand-primary mb-2">{item.label}</div>
+                  <div className="text-[10px] uppercase font-black tracking-[0.4em] text-blue-300 mb-2">{item.label}</div>
                   <div className="text-sm sm:text-base md:text-xl lg:text-2xl font-display font-black tracking-tighter uppercase break-all">{item.val}</div>
                 </div>
               ))}

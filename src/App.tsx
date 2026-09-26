@@ -3,22 +3,22 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { lazy, Suspense, useEffect } from 'react';
+import { lazy, Suspense, useSyncExternalStore } from 'react';
 import { BrowserRouter as Router, Navigate, Routes, Route, useLocation, useParams } from 'react-router-dom';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 import WhatsAppButton from './components/common/WhatsAppButton';
 import { MotionConfig } from 'motion/react';
-import { FloatingShapes, CustomCursor, SectionTransitionEffects, SmoothScroll } from './components/common/Animations';
+import { FloatingShapes } from './components/common/Animations';
 import ScrollToTop from './components/common/ScrollToTop';
 import { useSeo, type SeoOptions } from './lib/seo';
 import Home from './pages/Home';
-import About from './pages/About';
-import Services from './pages/Services';
-import Portfolio from './pages/Portfolio';
-import Contact from './pages/Contact';
-import TechStack from './pages/TechStack';
 
+const About = lazy(() => import('./pages/About'));
+const Services = lazy(() => import('./pages/Services'));
+const Portfolio = lazy(() => import('./pages/Portfolio'));
+const Contact = lazy(() => import('./pages/Contact'));
+const TechStack = lazy(() => import('./pages/TechStack'));
 const loadProjectDetail = () => import('./pages/ProjectDetail');
 const loadBlog = () => import('./pages/Blog');
 const loadBlogPost = () => import('./pages/BlogPost');
@@ -30,20 +30,6 @@ const loadLegal = () => import('./pages/Legal');
 const loadMemberPortfolio = () => import('./pages/MemberPortfolio');
 const loadMemberProjectDetail = () => import('./pages/MemberProjectDetail');
 const loadNotFound = () => import('./pages/NotFound');
-
-const publicRouteLoaders = [
-  loadProjectDetail,
-  loadBlog,
-  loadBlogPost,
-  loadBooking,
-  loadProjectPlanner,
-  loadFAQ,
-  loadCareers,
-  loadLegal,
-  loadMemberPortfolio,
-  loadMemberProjectDetail,
-  loadNotFound,
-];
 
 const ProjectDetail = lazy(loadProjectDetail);
 const Blog = lazy(loadBlog);
@@ -57,6 +43,26 @@ const Legal = lazy(loadLegal);
 const MemberPortfolio = lazy(loadMemberPortfolio);
 const MemberProjectDetail = lazy(loadMemberProjectDetail);
 const NotFound = lazy(loadNotFound);
+
+const constrainedDeviceQuery = '(hover: none), (pointer: coarse), (prefers-reduced-motion: reduce)';
+
+function subscribeToConstrainedDevice(onStoreChange: () => void) {
+  const media = window.matchMedia(constrainedDeviceQuery);
+  if (typeof media.addEventListener === 'function') {
+    media.addEventListener('change', onStoreChange);
+    return () => media.removeEventListener('change', onStoreChange);
+  }
+  media.addListener(onStoreChange);
+  return () => media.removeListener(onStoreChange);
+}
+
+function useConstrainedDevice() {
+  return useSyncExternalStore(
+    subscribeToConstrainedDevice,
+    () => window.matchMedia(constrainedDeviceQuery).matches,
+    () => true,
+  );
+}
 
 const staticRouteSeo: Record<string, Omit<SeoOptions, 'canonicalPath'>> = {
   '/': {
@@ -184,8 +190,10 @@ function AnimatedRoutes() {
 }
 
 export default function App() {
+  const constrainedDevice = useConstrainedDevice();
+
   return (
-    <MotionConfig reducedMotion="user">
+    <MotionConfig reducedMotion={constrainedDevice ? 'always' : 'user'}>
       <Router useTransitions={false}>
         <AppShell />
       </Router>
@@ -197,31 +205,10 @@ function AppShell() {
   const location = useLocation();
   const isAdmin = location.pathname.startsWith('/admin');
 
-  useEffect(() => {
-    if (isAdmin) return undefined;
-
-    const connection = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
-    if (connection?.saveData) return undefined;
-
-    const preloadRoutes = () => {
-      void Promise.allSettled(publicRouteLoaders.map((loadRoute) => loadRoute()));
-    };
-
-    if (typeof window.requestIdleCallback === 'function') {
-      const idleId = window.requestIdleCallback(preloadRoutes, { timeout: 2_000 });
-      return () => window.cancelIdleCallback(idleId);
-    }
-
-    const timeoutId = window.setTimeout(preloadRoutes, 1_000);
-    return () => window.clearTimeout(timeoutId);
-  }, [isAdmin]);
-
   return (
     <>
       <ScrollToTop />
       <StaticRouteSeo />
-      <SmoothScroll />
-      <SectionTransitionEffects />
       <a
         href="#main-content"
         className="fixed left-4 top-4 z-[200] -translate-y-24 rounded-full bg-white px-5 py-3 text-xs font-black uppercase tracking-widest text-black transition-transform focus:translate-y-0"
@@ -229,7 +216,6 @@ function AppShell() {
         Skip to content
       </a>
       <div id="top" className="flex min-h-screen flex-col">
-        {!isAdmin && <CustomCursor />}
         {!isAdmin && <FloatingShapes />}
         {!isAdmin && <Navbar />}
         <main id="main-content" tabIndex={-1} className="flex-grow outline-none">

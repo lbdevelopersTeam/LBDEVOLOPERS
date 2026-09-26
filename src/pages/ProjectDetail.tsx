@@ -4,7 +4,8 @@ import { motion } from 'motion/react';
 import { ArrowLeft, CheckCircle2, ChevronLeft, ChevronRight, Expand, ExternalLink, Github, Loader2, X } from 'lucide-react';
 import { Button } from '../components/common/UI';
 import { HeroBackground, LetterReveal, TextReveal } from '../components/common/Animations';
-import { fallbackProjects, fetchJson, Project, sanitizeHtml } from '../lib/content';
+import { fallbackProjects, fetchJson, Project } from '../lib/content';
+import { sanitizeHtml } from '../lib/sanitize';
 import { useSeo } from '../lib/seo';
 
 export default function ProjectDetail() {

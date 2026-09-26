@@ -2,6 +2,8 @@ import React, { useEffect, useId, useRef, useState } from 'react';
 import { motion } from 'motion/react';
 import { Button } from './UI';
 import { Send, CheckCircle2 } from 'lucide-react';
+import { apiRequestUrl, publicApiEnabled } from '../../lib/content';
+import { useContactEmail } from '../../lib/site-settings';
 
 interface ContactFormProps {
   memberId?: string;
@@ -11,6 +13,7 @@ interface ContactFormProps {
 
 export default function ContactForm({ memberId, memberName, variant = 'panel' }: ContactFormProps = {}) {
   const fieldId = useId();
+  const contactEmail = useContactEmail();
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
   const [formData, setFormData] = useState({
     name: '',
@@ -26,12 +29,21 @@ export default function ContactForm({ memberId, memberName, variant = 'panel' }:
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus('submitting');
+
+    if (!publicApiEnabled) {
+      const recipient = memberName ? `${memberName} at LB CodeBase` : 'LB CodeBase';
+      const body = [`Hello ${recipient},`, '', formData.message, '', `From: ${formData.name}`, `Reply to: ${formData.email}`].join('\n');
+      window.location.href = `mailto:${contactEmail}?subject=${encodeURIComponent(formData.subject)}&body=${encodeURIComponent(body)}`;
+      setStatus('success');
+      return;
+    }
+
     submissionController.current?.abort();
     const controller = new AbortController();
     submissionController.current = controller;
     
     try {
-      const res = await fetch('/api/v2/messages', {
+      const res = await fetch(apiRequestUrl('/api/v2/messages'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...formData, memberId }),
@@ -61,16 +73,20 @@ export default function ContactForm({ memberId, memberName, variant = 'panel' }:
       >
         <CheckCircle2 className={`mb-6 h-12 w-12 ${variant === 'editorial' ? 'text-[var(--member-accent)]' : 'mx-auto text-brand-primary'}`} />
         <h3 className="mb-4 font-display text-2xl font-black uppercase tracking-normal">Message received</h3>
-        <p className="text-white/60 mb-8">Your message has been sent{memberName ? ` to ${memberName}` : ''}. The team will follow up using the email you provided.</p>
+        <p className="text-white/70 mb-8">
+          {publicApiEnabled
+            ? `Your message has been sent${memberName ? ` to ${memberName}` : ''}. The team will follow up using the email you provided.`
+            : `Your email app has been opened with the message ready for ${memberName || 'LB CodeBase'}. Send it there to complete your inquiry.`}
+        </p>
         <Button onClick={() => setStatus('idle')} variant="outline">Send Another Message</Button>
       </motion.div>
     );
   }
 
   const labelClass = variant === 'editorial'
-    ? 'text-[9px] font-black uppercase tracking-[0.15em] text-white/35'
+    ? 'text-[9px] font-black uppercase tracking-[0.15em] text-white/70'
     : variant === 'cinematic'
-      ? 'px-2 text-[10px] font-black uppercase tracking-[0.22em] text-white/20 sm:tracking-[0.4em]'
+      ? 'px-2 text-[10px] font-black uppercase tracking-[0.22em] text-white/70 sm:tracking-[0.4em]'
       : 'text-sm font-medium text-white/60';
   const fieldClass = variant === 'editorial'
     ? 'w-full rounded-none border-0 border-b border-white/14 bg-transparent px-0 py-4 text-white outline-none transition-colors placeholder:text-white/18 focus:border-[var(--member-accent)]'

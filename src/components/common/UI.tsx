@@ -73,7 +73,7 @@ export function SectionHeader({
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="inline-flex max-w-full items-center gap-2 rounded-full border border-brand-primary/10 bg-brand-primary/5 px-4 py-1.5 text-[10px] font-bold uppercase tracking-[0.22em] text-brand-primary sm:tracking-[0.4em] mb-8"
+          className="inline-flex max-w-full items-center gap-2 rounded-full border border-brand-primary/20 bg-brand-primary/10 px-4 py-1.5 text-[10px] font-bold uppercase tracking-[0.22em] text-blue-300 sm:tracking-[0.4em] mb-8"
         >
           <span className="w-1.5 h-1.5 rounded-full bg-brand-primary animate-pulse" />
           {badge}
@@ -94,7 +94,7 @@ export function SectionHeader({
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 1, delay: 0.4 }}
-          className="text-white/40 text-base md:text-xl leading-relaxed font-light max-w-2xl"
+          className="text-white/70 text-base md:text-xl leading-relaxed font-light max-w-2xl"
           style={{ margin: align === 'center' ? '0 auto' : '0' }}
         >
           {description}

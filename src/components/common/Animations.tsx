@@ -16,8 +16,12 @@ const getDesktopMotionMedia = () => {
 
 const subscribeToDesktopMotion = (onStoreChange: () => void) => {
   const media = getDesktopMotionMedia();
-  media.addEventListener('change', onStoreChange);
-  return () => media.removeEventListener('change', onStoreChange);
+  if (typeof media.addEventListener === 'function') {
+    media.addEventListener('change', onStoreChange);
+    return () => media.removeEventListener('change', onStoreChange);
+  }
+  media.addListener(onStoreChange);
+  return () => media.removeListener(onStoreChange);
 };
 
 const useDesktopMotion = () => {
@@ -238,17 +242,17 @@ export const FloatingShapes = () => {
  * Endless marquee for logos/partners
  */
 export const Marquee = ({ children, speed = 20, reverse = false }: { children: React.ReactNode, speed?: number, reverse?: boolean }) => {
-  const shouldReduceMotion = useReducedMotion();
+  const motionEnabled = useDesktopMotion();
 
   return (
-    <div className="flex overflow-hidden group select-none">
+    <div className={`flex group select-none ${motionEnabled ? 'overflow-hidden' : 'overflow-x-auto'}`}>
       <motion.div
-        animate={shouldReduceMotion ? undefined : { x: reverse ? ["0%", "50%"] : ["0%", "-50%"] }}
+        animate={motionEnabled ? { x: reverse ? ["0%", "50%"] : ["0%", "-50%"] } : undefined}
         transition={{ duration: speed, repeat: Infinity, ease: "linear" }}
         className="flex shrink-0 items-center gap-12"
       >
         {children}
-        {children}
+        {motionEnabled && children}
       </motion.div>
     </div>
   );
@@ -262,8 +266,9 @@ export const HeroBackground = ({ videoSrc, poster }: { videoSrc?: string, poster
   const [videoFailed, setVideoFailed] = useState(false);
   const [videoReady, setVideoReady] = useState(() => Boolean(videoSrc && readyVideoSources.has(videoSrc)));
   const shouldReduceMotion = useReducedMotion();
-  const showVideo = Boolean(videoSrc) && !videoFailed && !shouldReduceMotion;
-  const showPoster = !videoSrc || videoFailed || shouldReduceMotion;
+  const motionEnabled = useDesktopMotion();
+  const showVideo = Boolean(videoSrc) && !videoFailed && !shouldReduceMotion && motionEnabled;
+  const showPoster = !videoSrc || videoFailed || shouldReduceMotion || !motionEnabled;
 
   useEffect(() => {
     setVideoFailed(false);
@@ -292,7 +297,7 @@ export const HeroBackground = ({ videoSrc, poster }: { videoSrc?: string, poster
               muted 
               loop 
               playsInline 
-              preload="auto"
+              preload="metadata"
               disablePictureInPicture
               tabIndex={-1}
               onLoadedData={(event) => markVideoReady(event.currentTarget)}
@@ -318,8 +323,10 @@ export const DeferredVideo = ({ src, className, poster }: { src: string; classNa
   const videoRef = useRef<HTMLVideoElement>(null);
   const [shouldLoad, setShouldLoad] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  const motionEnabled = useDesktopMotion();
 
   useEffect(() => {
+    if (!motionEnabled) return undefined;
     const video = videoRef.current;
     if (!video) return undefined;
 
@@ -329,7 +336,7 @@ export const DeferredVideo = ({ src, className, poster }: { src: string; classNa
     }, { rootMargin: '0px', threshold: 0.01 });
     observer.observe(video);
     return () => observer.disconnect();
-  }, []);
+  }, [motionEnabled]);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -346,10 +353,14 @@ export const DeferredVideo = ({ src, className, poster }: { src: string; classNa
 
   useEffect(() => {
     const video = videoRef.current;
-    if (!video || !shouldLoad) return;
+    if (!video || !shouldLoad || !motionEnabled) return;
     if (isVisible) void video.play().catch(() => undefined);
     else video.pause();
-  }, [isVisible, shouldLoad]);
+  }, [isVisible, motionEnabled, shouldLoad]);
+
+  if (!motionEnabled) {
+    return poster ? <img src={poster} alt="" decoding="async" className={className} aria-hidden="true" /> : null;
+  }
 
   return (
     <video

@@ -4,7 +4,8 @@ import { SectionHeader, Button } from '../components/common/UI';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, Calendar, Clock, Share2, Twitter, Linkedin, Loader2 } from 'lucide-react';
 import { LetterReveal, TextReveal, HeroBackground } from '../components/common/Animations';
-import { BlogPost as BlogPostType, fallbackBlogs, fetchJson, sanitizeHtml } from '../lib/content';
+import { BlogPost as BlogPostType, fallbackBlogs, fetchJson } from '../lib/content';
+import { sanitizeHtml } from '../lib/sanitize';
 import { useSeo } from '../lib/seo';
 
 export default function BlogPost() {

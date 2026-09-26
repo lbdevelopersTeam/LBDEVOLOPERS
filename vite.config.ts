@@ -49,14 +49,25 @@ export default defineConfig(() => {
         output: {
           manualChunks(id) {
             if (!id.includes('node_modules')) return undefined;
-            if (id.includes('@tiptap')) return 'editor-vendor';
+            const normalizedId = id.replace(/\\/g, '/');
+            if (
+              id.includes('@tiptap')
+              || id.includes('prosemirror-')
+              || id.includes('orderedmap')
+              || id.includes('rope-sequence')
+              || id.includes('w3c-keyname')
+              || id.includes('/crelt/')
+            ) return 'editor-vendor';
+            if (id.includes('dompurify')) return 'sanitizer-vendor';
             if (id.includes('@splinetool')) return 'spline-vendor';
             if (id.includes('@react-three/fiber')) return 'r3f-vendor';
             if (id.includes('@react-three/drei') || id.includes('three-stdlib')) return 'drei-vendor';
             if (id.includes('/three/') || id.includes('\\three\\')) return 'three-core';
             if (id.includes('gsap') || id.includes('lenis') || id.includes('motion')) return 'animation-vendor';
             if (id.includes('@tanstack')) return 'table-vendor';
-            if (id.includes('react') || id.includes('scheduler')) return 'react-vendor';
+            if (id.includes('react-router') || normalizedId.includes('/router/')) return 'router-vendor';
+            if (id.includes('lucide-react')) return 'icons-vendor';
+            if (/\/node_modules\/(react|react-dom|scheduler)\//.test(normalizedId)) return 'react-vendor';
             return 'vendor';
           },
         },

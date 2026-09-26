@@ -5,7 +5,8 @@ import { Link, useParams } from 'react-router-dom';
 import { HeroBackground } from '../components/common/Animations';
 import MemberNotFound from '../components/team/MemberNotFound';
 import { usableLink } from '../components/team/portfolio/shared';
-import { fallbackTeam, mergeCuratedMemberProjects, Project, sanitizeHtml, TeamMember } from '../lib/content';
+import { fallbackTeam, mergeCuratedMemberProjects, Project, TeamMember } from '../lib/content';
+import { sanitizeHtml } from '../lib/sanitize';
 import { useSeo } from '../lib/seo';
 
 interface CaseStudyResponse {
