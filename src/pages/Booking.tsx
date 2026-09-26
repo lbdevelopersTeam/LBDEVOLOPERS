@@ -189,7 +189,7 @@ export default function Booking() {
             )}
 
             {step === 3 && (
-              <motion.form initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} onSubmit={submitRequest}>
+              <motion.form initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} onSubmit={submitRequest} autoComplete="off">
                 <h2 className="mb-3 flex items-center gap-3 text-base font-bold uppercase tracking-widest md:text-lg">
                   <span className="flex h-8 w-8 items-center justify-center rounded-full bg-brand-primary text-xs text-white">3</span>
                   Your details
@@ -200,15 +200,15 @@ export default function Booking() {
                 <div className="space-y-5">
                   <label className="block space-y-2">
                     <span className="text-[10px] font-black uppercase tracking-widest text-white/45">Full name</span>
-                    <input required minLength={2} maxLength={120} autoComplete="name" value={details.name} onChange={(event) => setDetails({ ...details, name: event.target.value })} className={fieldClass} />
+                    <input required minLength={2} maxLength={120} autoComplete="off" value={details.name} onChange={(event) => setDetails({ ...details, name: event.target.value })} className={fieldClass} />
                   </label>
                   <label className="block space-y-2">
                     <span className="text-[10px] font-black uppercase tracking-widest text-white/45">Email address</span>
-                    <input required type="email" maxLength={254} autoComplete="email" value={details.email} onChange={(event) => setDetails({ ...details, email: event.target.value })} className={fieldClass} />
+                    <input required type="email" maxLength={254} autoComplete="off" value={details.email} onChange={(event) => setDetails({ ...details, email: event.target.value })} className={fieldClass} />
                   </label>
                   <label className="block space-y-2">
                     <span className="text-[10px] font-black uppercase tracking-widest text-white/45">What should we prepare for?</span>
-                    <textarea required minLength={10} maxLength={3000} rows={4} value={details.notes} onChange={(event) => setDetails({ ...details, notes: event.target.value })} className={fieldClass} placeholder="Briefly describe your product, current challenge, and target outcome." />
+                    <textarea required minLength={10} maxLength={3000} rows={4} autoComplete="off" value={details.notes} onChange={(event) => setDetails({ ...details, notes: event.target.value })} className={fieldClass} />
                   </label>
                   <div className="hidden" aria-hidden="true">
                     <label>

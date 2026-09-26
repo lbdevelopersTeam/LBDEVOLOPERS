@@ -18,7 +18,7 @@ export default function ContactForm({ memberId, memberName, variant = 'panel' }:
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    subject: 'High-Performance Web Ecosystem',
+    subject: '',
     message: '',
     website: '',
   });
@@ -53,7 +53,7 @@ export default function ContactForm({ memberId, memberName, variant = 'panel' }:
       
       if (res.ok) {
         setStatus('success');
-        setFormData({ name: '', email: '', subject: 'High-Performance Web Ecosystem', message: '', website: '' });
+        setFormData({ name: '', email: '', subject: '', message: '', website: '' });
       } else {
         setStatus('error');
       }
@@ -95,7 +95,7 @@ export default function ContactForm({ memberId, memberName, variant = 'panel' }:
       : 'w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand-primary transition-colors glass';
 
   return (
-    <form className="space-y-6" onSubmit={handleSubmit}>
+    <form className="space-y-6" onSubmit={handleSubmit} autoComplete="off">
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         <div className="space-y-2">
           <label htmlFor={`${fieldId}-name`} className={labelClass}>Full Name</label>
@@ -105,10 +105,10 @@ export default function ContactForm({ memberId, memberName, variant = 'panel' }:
             required
             minLength={2}
             maxLength={120}
+            autoComplete="off"
             value={formData.name}
             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
             className={fieldClass}
-            placeholder="John Doe"
           />
         </div>
         <div className="space-y-2">
@@ -118,10 +118,10 @@ export default function ContactForm({ memberId, memberName, variant = 'panel' }:
             id={`${fieldId}-email`}
             required
             maxLength={254}
+            autoComplete="off"
             value={formData.email}
             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
             className={fieldClass}
-            placeholder="john@example.com"
           />
         </div>
       </div>
@@ -130,10 +130,12 @@ export default function ContactForm({ memberId, memberName, variant = 'panel' }:
         <label htmlFor={`${fieldId}-subject`} className={labelClass}>Subject</label>
         <select
           id={`${fieldId}-subject`}
+          required
           value={formData.subject}
           onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
           className={`${fieldClass} appearance-none`}
         >
+          <option className="bg-brand-dark" value="" aria-label="No service selected" />
           <option className="bg-brand-dark" value="High-Performance Web Ecosystem">Web Development</option>
           <option className="bg-brand-dark" value="Brand Authority Definition">UI/UX Design</option>
           <option className="bg-brand-dark" value="Next-Gen Mobile Architecture">Mobile App</option>
@@ -149,10 +151,10 @@ export default function ContactForm({ memberId, memberName, variant = 'panel' }:
           required
           minLength={10}
           maxLength={5000}
+          autoComplete="off"
           value={formData.message}
           onChange={(e) => setFormData({ ...formData, message: e.target.value })}
           className={`${fieldClass} resize-none`}
-          placeholder="Tell us about your project..."
         />
       </div>
 
