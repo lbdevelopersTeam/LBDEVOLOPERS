@@ -266,9 +266,7 @@ export const HeroBackground = ({ videoSrc, poster }: { videoSrc?: string, poster
   const [videoFailed, setVideoFailed] = useState(false);
   const [videoReady, setVideoReady] = useState(() => Boolean(videoSrc && readyVideoSources.has(videoSrc)));
   const shouldReduceMotion = useReducedMotion();
-  const motionEnabled = useDesktopMotion();
-  const showVideo = Boolean(videoSrc) && !videoFailed && !shouldReduceMotion && motionEnabled;
-  const showPoster = !videoSrc || videoFailed || shouldReduceMotion || !motionEnabled;
+  const showVideo = Boolean(videoSrc) && !videoFailed && !shouldReduceMotion;
 
   useEffect(() => {
     setVideoFailed(false);
@@ -276,6 +274,10 @@ export const HeroBackground = ({ videoSrc, poster }: { videoSrc?: string, poster
   }, [videoSrc]);
 
   const markVideoReady = (video: HTMLVideoElement) => {
+    // WebKit requires the media element itself to be muted before play() is
+    // requested, even when the corresponding React prop is already present.
+    video.defaultMuted = true;
+    video.muted = true;
     if (videoSrc) readyVideoSources.add(videoSrc);
     setVideoReady(true);
     void video.play().catch(() => undefined);
@@ -285,12 +287,12 @@ export const HeroBackground = ({ videoSrc, poster }: { videoSrc?: string, poster
     <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden bg-brand-dark" aria-hidden="true">
       <div className="absolute inset-0 bg-brand-dark/20 z-10" />
       <div className="absolute inset-0 bg-gradient-to-b from-brand-dark/0 via-transparent to-brand-dark z-10" />
-          {showPoster && <img
+          <img
             src={fallbackPoster}
             alt=""
             decoding="async"
             className="absolute inset-0 h-full w-full object-cover"
-          />}
+          />
           {showVideo && (
             <video 
               autoPlay 
@@ -323,12 +325,18 @@ export const DeferredVideo = ({ src, className, poster }: { src: string; classNa
   const videoRef = useRef<HTMLVideoElement>(null);
   const [shouldLoad, setShouldLoad] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
-  const motionEnabled = useDesktopMotion();
+  const shouldReduceMotion = useReducedMotion();
 
   useEffect(() => {
-    if (!motionEnabled) return undefined;
+    if (shouldReduceMotion) return undefined;
     const video = videoRef.current;
     if (!video) return undefined;
+
+    if (!('IntersectionObserver' in window)) {
+      setShouldLoad(true);
+      setIsVisible(true);
+      return undefined;
+    }
 
     const observer = new IntersectionObserver(([entry]) => {
       setIsVisible(entry.isIntersecting);
@@ -336,11 +344,13 @@ export const DeferredVideo = ({ src, className, poster }: { src: string; classNa
     }, { rootMargin: '0px', threshold: 0.01 });
     observer.observe(video);
     return () => observer.disconnect();
-  }, [motionEnabled]);
+  }, [shouldReduceMotion]);
 
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return undefined;
+    video.defaultMuted = true;
+    video.muted = true;
     if (!shouldLoad) {
       video.pause();
       video.load();
@@ -353,12 +363,12 @@ export const DeferredVideo = ({ src, className, poster }: { src: string; classNa
 
   useEffect(() => {
     const video = videoRef.current;
-    if (!video || !shouldLoad || !motionEnabled) return;
+    if (!video || !shouldLoad || shouldReduceMotion) return;
     if (isVisible) void video.play().catch(() => undefined);
     else video.pause();
-  }, [isVisible, motionEnabled, shouldLoad]);
+  }, [isVisible, shouldReduceMotion, shouldLoad]);
 
-  if (!motionEnabled) {
+  if (shouldReduceMotion) {
     return poster ? <img src={poster} alt="" decoding="async" className={className} aria-hidden="true" /> : null;
   }
 
