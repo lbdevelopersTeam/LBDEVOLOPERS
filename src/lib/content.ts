@@ -499,7 +499,7 @@ export const fallbackTeam: TeamMember[] = [
     id: 'team-wajid',
     slug: 'wajid-hussain',
     name: 'Wajid Hussain',
-    role: 'Automation Expert & Technical Consultant',
+    role: 'CEO, LB Developers',
     tagline: 'Architecting high-concurrency workflows, commerce automation, and robust cloud systems that scale without friction.',
     bio: 'Automation expert and technical consultant shaping efficient digital systems, enterprise commerce integrations, and high-velocity cloud delivery.',
     fullBio: 'With over 7 years of engineering and technical consulting experience, Wajid specializes in architecting enterprise-grade automation workflows, robust cloud infrastructures, and high-performance headless commerce platforms. He bridges strategic business objectives and high-throughput technical delivery, ensuring systems operate reliably under massive peak loads.',
@@ -533,7 +533,7 @@ export const fallbackTeam: TeamMember[] = [
       {
         id: 'wajid-exp-1',
         company: 'LB Developers',
-        position: 'Lead Technical Consultant & Automation Architect',
+        position: 'Chief Executive Officer',
         startDate: '2022',
         current: true,
         description: 'Leading technical strategy, cloud infrastructure design, and commerce automation systems across flagship client builds.',
