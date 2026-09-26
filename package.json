@@ -3,18 +3,16 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "main": "dist/server.mjs",
   "engines": {
     "node": ">=22 <25"
   },
   "scripts": {
     "dev": "tsx server.ts",
-    "start": "node dist/server.mjs",
-    "staging": "npm run build && npm start",
     "prebuild": "npm run clean",
-    "build": "vite build --configLoader runner --outDir dist/public && npm run build:server",
+    "build": "vite build --configLoader runner --outDir dist",
+    "build:node": "vite build --configLoader runner --outDir dist/public && npm run build:server",
     "build:server": "node scripts/build-server.mjs",
-    "preview": "vite preview --configLoader runner --outDir dist/public",
+    "preview": "vite preview --configLoader runner --outDir dist",
     "clean": "node -e \"require('fs').rmSync('dist',{recursive:true,force:true})\"",
     "lint": "tsc --noEmit",
     "test": "vitest run --config vitest.config.ts --configLoader runner",
@@ -26,7 +24,7 @@
     "db:verify:curated-projects": "tsx server/db/verify-curated-projects.ts",
     "db:setup": "npm run db:migrate && npm run db:seed",
     "db:verify": "tsx server/db/verify.ts",
-    "hostinger:deploy": "npm run db:setup && npm run db:verify && npm run build",
+    "hostinger:deploy": "npm run build",
     "verify:auth": "node scripts/verify-auth.mjs",
     "db:backup": "node scripts/backup-db.mjs"
   },
