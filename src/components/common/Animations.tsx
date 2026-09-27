@@ -283,9 +283,9 @@ export const HeroBackground = ({ videoSrc, poster }: { videoSrc?: string, poster
   };
 
   return (
-    <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden bg-brand-dark" aria-hidden="true">
-      <div className="absolute inset-0 bg-brand-dark/20 z-10" />
-      <div className="absolute inset-0 bg-gradient-to-b from-brand-dark/0 via-transparent to-brand-dark z-10" />
+    <div className="hero-background-media pointer-events-none absolute inset-0 z-0 overflow-hidden bg-brand-dark" aria-hidden="true">
+      <div className="absolute inset-0 z-10 bg-brand-dark/20" />
+      <div className="hero-background-vignette absolute inset-0 z-10" />
       {showPoster && (
         <img
           src={fallbackPoster}
@@ -309,7 +309,7 @@ export const HeroBackground = ({ videoSrc, poster }: { videoSrc?: string, poster
             setVideoReady(false);
             setVideoFailed(true);
           }}
-          className={`absolute inset-0 h-full w-full transform-gpu object-cover will-change-[opacity] transition-opacity duration-700 ease-out ${videoReady ? 'opacity-100' : 'opacity-0'}`}
+          className={`hero-background-video absolute inset-0 h-full w-full transform-gpu object-cover will-change-[opacity] transition-opacity duration-1000 ease-out ${videoReady ? 'opacity-100' : 'opacity-0'}`}
         >
           <source src={videoSrc} type="video/mp4" />
         </video>
@@ -326,6 +326,7 @@ export const DeferredVideo = ({ src, className, poster }: { src: string; classNa
   const videoRef = useRef<HTMLVideoElement>(null);
   const [shouldLoad, setShouldLoad] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  const [videoReady, setVideoReady] = useState(false);
   const shouldReduceMotion = useReducedMotion();
 
   useEffect(() => {
@@ -364,6 +365,7 @@ export const DeferredVideo = ({ src, className, poster }: { src: string; classNa
       video.pause();
       return undefined;
     }
+    setVideoReady(false);
     video.load();
     return () => video.pause();
   }, [shouldLoad, src, shouldReduceMotion]);
@@ -391,7 +393,11 @@ export const DeferredVideo = ({ src, className, poster }: { src: string; classNa
       poster={poster}
       disablePictureInPicture
       aria-hidden="true"
-      className={className}
+      className={cn('transition-opacity duration-1000 ease-out', className)}
+      style={videoReady ? undefined : { opacity: 0 }}
+      onLoadedData={() => setVideoReady(true)}
+      onCanPlay={() => setVideoReady(true)}
+      onError={() => setVideoReady(Boolean(poster))}
       src={shouldLoad ? src : undefined}
     />
   );

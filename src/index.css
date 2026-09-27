@@ -682,6 +682,61 @@
 }
 
 @layer components {
+  .hero-background-vignette {
+    background:
+      linear-gradient(to bottom, rgba(0, 0, 0, 0.28) 0%, transparent 30%, transparent 56%, #000 100%),
+      linear-gradient(to right, rgba(0, 0, 0, 0.46) 0%, transparent 34%, transparent 76%, rgba(0, 0, 0, 0.24) 100%);
+  }
+
+  .hero-background-video,
+  .home-hero-video,
+  .section-background-video {
+    backface-visibility: hidden;
+  }
+
+  .home-hero-video {
+    transform: scale(1.015);
+  }
+
+  .home-hero-video-frame::after {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    content: '';
+    background:
+      linear-gradient(to bottom, rgba(0, 0, 0, 0.08) 0%, transparent 48%, rgba(0, 0, 0, 0.88) 100%),
+      radial-gradient(ellipse at center, transparent 48%, rgba(0, 0, 0, 0.52) 100%);
+  }
+
+  .section-background-video {
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 16%, black 78%, transparent 100%);
+    mask-image: linear-gradient(to bottom, transparent 0%, black 16%, black 78%, transparent 100%);
+  }
+
+  @media (max-width: 767px) {
+    .hero-background-vignette {
+      background:
+        linear-gradient(to bottom, rgba(0, 0, 0, 0.34) 0%, transparent 24%, transparent 46%, rgba(0, 0, 0, 0.58) 72%, #000 100%),
+        linear-gradient(to right, rgba(0, 0, 0, 0.5) 0%, transparent 48%, rgba(0, 0, 0, 0.18) 100%);
+    }
+
+    .hero-background-video {
+      -webkit-mask-image: linear-gradient(to bottom, black 0%, black 64%, transparent 100%);
+      mask-image: linear-gradient(to bottom, black 0%, black 64%, transparent 100%);
+    }
+
+    .home-hero-video-frame::after {
+      background:
+        linear-gradient(to bottom, rgba(0, 0, 0, 0.06) 0%, transparent 38%, rgba(0, 0, 0, 0.48) 70%, #000 100%),
+        radial-gradient(ellipse at center, transparent 42%, rgba(0, 0, 0, 0.62) 100%);
+    }
+
+    .section-background-video {
+      -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 22%, black 68%, transparent 100%);
+      mask-image: linear-gradient(to bottom, transparent 0%, black 22%, black 68%, transparent 100%);
+    }
+  }
+
   .glass {
     @apply bg-white/[0.03] backdrop-blur-[16px] backdrop-saturate-[160%] border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.4)];
     transition: background-color 300ms ease, border-color 300ms ease, box-shadow 300ms ease, transform 300ms ease;

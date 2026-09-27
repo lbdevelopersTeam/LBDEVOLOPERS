@@ -141,11 +141,11 @@ export default function Home() {
             
             {/* Side Video */}
             <div className="lg:col-span-5 relative">
-              <div className="relative aspect-[4/3] overflow-hidden rounded-2xl sm:aspect-[16/10] md:rounded-3xl lg:aspect-[4/5]">
+              <div className="home-hero-video-frame relative aspect-[4/3] overflow-hidden rounded-2xl bg-black sm:aspect-[16/10] md:rounded-3xl lg:aspect-[4/5]">
                 <DeferredVideo
                   src="/videos/home-hero-side.mp4"
                   poster="/images/home-hero-side-poster.webp"
-                  className="h-full w-full object-cover mix-blend-screen"
+                  className="home-hero-video h-full w-full object-cover mix-blend-screen"
                 />
               </div>
             </div>
@@ -157,7 +157,7 @@ export default function Home() {
 
       {/* Capabilities - Brand-Led Systems */}
       <section className="relative overflow-hidden border-y border-white/5 bg-brand-gray px-6 py-16 sm:px-8 md:px-12 md:py-20 lg:px-24">
-        <DeferredVideo src="/videos/important-sections-bg.mp4" className="absolute inset-0 h-full w-full object-cover opacity-35" />
+        <DeferredVideo src="/videos/important-sections-bg.mp4" className="section-background-video absolute inset-0 h-full w-full object-cover opacity-35" />
         <div className="absolute inset-0 bg-gradient-to-b from-brand-dark via-brand-dark/75 to-brand-dark" />
         <div className="absolute inset-0 opacity-[0.06] bg-[linear-gradient(90deg,rgba(255,255,255,0.16)_1px,transparent_1px),linear-gradient(rgba(255,255,255,0.16)_1px,transparent_1px)] bg-[size:88px_88px]" />
 
