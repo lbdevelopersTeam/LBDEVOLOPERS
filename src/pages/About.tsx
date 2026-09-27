@@ -88,7 +88,7 @@ export default function About() {
               
               <div className="grid grid-cols-2 gap-x-4 gap-y-8 border-t border-white/5 pt-10 sm:flex sm:flex-wrap sm:gap-12 sm:pt-12">
                 <div>
-                  <div className="mb-2 font-display text-3xl font-black uppercase tracking-tighter text-white sm:text-4xl">2020</div>
+                  <div className="mb-2 font-display text-3xl font-black uppercase tracking-tighter text-white sm:text-4xl">2022</div>
                   <div className="text-[9px] text-white/40 uppercase font-black tracking-[0.3em]">Foundation</div>
                 </div>
                 <div>
