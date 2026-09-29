@@ -29,6 +29,10 @@ const creditsWajidHussain = (project?: string) => {
   return wajidProjectAliases.has(normalizedProject);
 };
 
+const applyWajidCredit = (review: Testimonial): Testimonial => creditsWajidHussain(review.project)
+  ? { ...review, quote: review.quote.replace(/\b(?:Ibad|Mohsin)\b/gi, 'Wajid') }
+  : review;
+
 function ReviewerAvatar({ review }: { review: Testimonial }) {
   const [imageFailed, setImageFailed] = useState(false);
   const initials = review.author
@@ -107,7 +111,7 @@ function ReviewCard({ review }: { review: Testimonial }) {
 }
 
 export default function ClientReviews() {
-  const [reviews, setReviews] = useState<Testimonial[]>(fallbackTestimonials);
+  const [reviews, setReviews] = useState<Testimonial[]>(() => fallbackTestimonials.map(applyWajidCredit));
   const [activeIndex, setActiveIndex] = useState(0);
   const [hasPrevious, setHasPrevious] = useState(false);
   const [hasNext, setHasNext] = useState(false);
@@ -118,8 +122,10 @@ export default function ClientReviews() {
     void cachedFetch<TestimonialsResponse>('/api/v2/testimonials', 'public.testimonials.v2', { items: fallbackTestimonials })
       .then((payload) => {
         if (!active || !Array.isArray(payload.items)) return;
-        const nextReviews = payload.items.filter((review) => review.active !== false && review.quote && review.author);
-        setReviews(nextReviews.length ? nextReviews : fallbackTestimonials);
+        const nextReviews = payload.items
+          .filter((review) => review.active !== false && review.quote && review.author)
+          .map(applyWajidCredit);
+        setReviews(nextReviews.length ? nextReviews : fallbackTestimonials.map(applyWajidCredit));
       });
     return () => { active = false; };
   }, []);
