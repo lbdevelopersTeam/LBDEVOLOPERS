@@ -242,7 +242,8 @@ export const FloatingShapes = () => {
  * Endless marquee for logos/partners - Hardware accelerated on all devices
  */
 export const Marquee = ({ children, speed = 25, reverse = false }: { children: React.ReactNode, speed?: number, reverse?: boolean }) => {
-  const motionEnabled = useDesktopMotion();
+  const shouldReduceMotion = useReducedMotion();
+  const motionEnabled = !shouldReduceMotion;
 
   return (
     <div className={`flex select-none ${motionEnabled ? 'overflow-hidden' : 'no-scrollbar overflow-x-auto'}`}>
