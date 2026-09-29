@@ -1,25 +1,30 @@
 import type { ImgHTMLAttributes } from 'react';
 
-const optimizedPortraits: Record<string, string> = {
-  '/lbt/Wajid Hussain.png': '/lbt/Wajid-Hussain',
-  '/lbt/Mohsin.png': '/lbt/Mohsin',
-  '/lbt/Laiba.png': '/lbt/Laiba',
-  '/lbt/Ibdullah.png': '/lbt/Ibdullah',
+const optimizedPortraits: Record<string, { base: string; version?: string }> = {
+  '/lbt/Wajid Hussain.png': { base: '/lbt/Wajid-Hussain', version: '20260929' },
+  '/lbt/Mohsin.png': { base: '/lbt/Mohsin' },
+  '/lbt/Laiba.png': { base: '/lbt/Laiba' },
+  '/lbt/Ibdullah.png': { base: '/lbt/Ibdullah' },
 };
 
+function optimizedPortraitUrl(src: string, width: 440 | 800) {
+  const portrait = optimizedPortraits[src];
+  if (!portrait) return src;
+  const version = portrait.version ? `?v=${portrait.version}` : '';
+  return `${portrait.base}-${width}.webp${version}`;
+}
+
 export function memberPortraitUrl(src: string, width: 440 | 800 = 800) {
-  const base = optimizedPortraits[src];
-  return base ? `${base}-${width}.webp` : src;
+  return optimizedPortraitUrl(src, width);
 }
 
 export default function MemberPortrait({ src, sizes, ...props }: ImgHTMLAttributes<HTMLImageElement> & { src: string }) {
-  const base = optimizedPortraits[src];
-  if (!base) return <img src={src} sizes={sizes} {...props} />;
+  if (!optimizedPortraits[src]) return <img src={src} sizes={sizes} {...props} />;
 
   return (
     <img
-      src={`${base}-800.webp`}
-      srcSet={`${base}-440.webp 440w, ${base}-800.webp 800w`}
+      src={optimizedPortraitUrl(src, 800)}
+      srcSet={`${optimizedPortraitUrl(src, 440)} 440w, ${optimizedPortraitUrl(src, 800)} 800w`}
       sizes={sizes || '(min-width: 768px) 220px, 55vw'}
       {...props}
     />
