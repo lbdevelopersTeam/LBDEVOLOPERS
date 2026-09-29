@@ -1,4 +1,4 @@
-const CACHE_NAME = 'lb-codebase-media-v6';
+const CACHE_NAME = 'lb-codebase-media-v7';
 const MEDIA_MATCH = /\.(?:png|jpg|jpeg|webp|avif|gif|svg|mp4|woff2?)$/i;
 
 self.addEventListener('install', (event) => {
@@ -20,21 +20,20 @@ self.addEventListener('fetch', (event) => {
   const url = new URL(request.url);
   if (url.origin !== self.location.origin || !MEDIA_MATCH.test(url.pathname) || request.headers.has('range')) return;
 
-  const cachePromise = caches.open(CACHE_NAME).catch(() => null);
-  const cachedPromise = cachePromise.then((cache) => cache?.match(request));
-  const fetchPromise = fetch(request);
-  const networkPromise = fetchPromise.catch(async () => (
-    (await cachedPromise) || new Response('Offline', { status: 503, statusText: 'Offline' })
-  ));
-  const cacheUpdatePromise = Promise.all([cachePromise, fetchPromise])
-    .then(([cache, response]) => {
-      // Browsers reject partial (206) responses in Cache Storage. Videos are
-      // commonly fetched with byte ranges, so only persist complete responses.
-      if (!cache || !response.ok || response.status === 206) return undefined;
-      return cache.put(request, response.clone()).catch(() => undefined);
-    })
-    .catch(() => undefined);
-
-  event.waitUntil(cacheUpdatePromise);
-  event.respondWith(cachedPromise.then((cached) => cached || networkPromise));
+  event.respondWith((async () => {
+    const cache = await caches.open(CACHE_NAME).catch(() => null);
+    const cached = await cache?.match(request);
+    if (cached) return cached;
+    try {
+      const response = await fetch(request);
+      // Never persist partial video responses; Cache Storage rejects 206s and
+      // range requests must retain normal browser semantics.
+      if (cache && response.ok && response.status !== 206) {
+        event.waitUntil(cache.put(request, response.clone()).catch(() => undefined));
+      }
+      return response;
+    } catch {
+      return new Response('Offline', { status: 503, statusText: 'Offline' });
+    }
+  })());
 });

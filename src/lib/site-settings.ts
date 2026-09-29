@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { AGENCY_EMAIL, cachedFetch } from './content';
+import { AGENCY_EMAIL, cachedPublicFetch } from './public-api';
 
 interface PublicSettings {
   'site.contact_email'?: unknown;
@@ -10,7 +10,7 @@ export function useContactEmail() {
 
   useEffect(() => {
     let active = true;
-    void cachedFetch<PublicSettings>('/api/v2/settings', 'public.settings.v2', { 'site.contact_email': AGENCY_EMAIL }).then((settings) => {
+    void cachedPublicFetch<PublicSettings>('/api/v2/settings', 'public.settings.v2', { 'site.contact_email': AGENCY_EMAIL }).then((settings) => {
       const configured = settings['site.contact_email'];
       if (active && typeof configured === 'string' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(configured)) setEmail(configured);
     });

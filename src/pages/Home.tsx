@@ -1,14 +1,13 @@
 import { motion } from 'motion/react';
 import { Button, SectionHeader, BentoCard } from '../components/common/UI';
-import { useEffect, useState } from 'react';
-import ContactForm from '../components/common/ContactForm';
-import ClientReviews from '../components/common/ClientReviews';
-import PartnerShowcase from '../components/common/PartnerShowcase';
+import { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import { ArrowRight, Code, Palette, Zap, Globe, Cpu, Smartphone, BarChart as ChartBar, Send, Shield, Activity, Rocket } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { cn } from '../lib/utils';
 import { DeferredVideo, Magnetic, TextReveal, LetterReveal } from '../components/common/Animations';
-import { BlogPost, cachedFetch, fallbackBlogs, fallbackProjects, mergeCuratedProjects, Paginated, Project } from '../lib/content';
+import type { BlogPost, Paginated, Project } from '../lib/content';
+import { cachedPublicFetch } from '../lib/public-api';
+import { homeFallbackBlogs, homeFallbackProjects } from '../lib/home-content';
 import { useContactEmail } from '../lib/site-settings';
 
 // HeroScene3D removed to use a solid black hero background per request
@@ -54,34 +53,65 @@ const operatingModel = [
   },
 ];
 
-const featuredFallbackProjects = fallbackProjects.slice(0, 4);
+const ContactForm = lazy(() => import('../components/common/ContactForm'));
+const ClientReviews = lazy(() => import('../components/common/ClientReviews'));
+const PartnerShowcase = lazy(() => import('../components/common/PartnerShowcase'));
+
+function DeferredMount({ children, minHeight = 320 }: { children: React.ReactNode; minHeight?: number }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [active, setActive] = useState(false);
+  useEffect(() => {
+    if (active || !ref.current) return undefined;
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setActive(true);
+        observer.disconnect();
+      }
+    }, { rootMargin: '400px 0px' });
+    observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, [active]);
+  return <div ref={ref} style={active ? undefined : { minHeight }}>{active ? <Suspense fallback={null}>{children}</Suspense> : null}</div>;
+}
+
+const featuredFallbackProjects = homeFallbackProjects;
+const responsiveProjectImages = new Set([
+  '/images/voguedecor.com.webp',
+  '/images/americandreamautoprotect.com.webp',
+  '/images/pedroclavero.com.webp',
+  '/images/Riaz Crockery.webp',
+]);
+
+const projectImageSrcSet = (src: string) => responsiveProjectImages.has(src)
+  ? `${src.replace('.webp', '-480.webp')} 480w, ${src.replace('.webp', '-800.webp')} 800w, ${src} 1460w`
+  : undefined;
 
 export default function Home() {
   const navigate = useNavigate();
   const contactEmail = useContactEmail();
   const [projects, setProjects] = useState<Project[]>(featuredFallbackProjects);
-  const [latestBlogs, setLatestBlogs] = useState<BlogPost[]>(fallbackBlogs);
+  const [latestBlogs, setLatestBlogs] = useState<BlogPost[]>(homeFallbackBlogs);
 
   useEffect(() => {
     let active = true;
-    cachedFetch<Paginated<Project>>('/api/v2/projects?limit=8', 'public.projects.featured.v2', {
+    cachedPublicFetch<Paginated<Project>>('/api/v2/projects?limit=8', 'public.projects.featured.v2', {
       items: featuredFallbackProjects,
       nextCursor: null,
       total: featuredFallbackProjects.length,
     }).then((data) => {
-      if (active) setProjects(mergeCuratedProjects(data.items.length ? data.items : featuredFallbackProjects));
+      if (active) setProjects(data.items.length ? data.items : featuredFallbackProjects);
     });
-    cachedFetch<Paginated<BlogPost>>('/api/v2/blog?limit=3', 'public.blog.latest.v2', {
-      items: fallbackBlogs,
+    cachedPublicFetch<Paginated<BlogPost>>('/api/v2/blog?limit=3', 'public.blog.latest.v2', {
+      items: homeFallbackBlogs,
       nextCursor: null,
-      total: fallbackBlogs.length,
+      total: homeFallbackBlogs.length,
     }).then((data) => {
-      if (active) setLatestBlogs(data.items.length ? data.items : fallbackBlogs);
+      if (active) setLatestBlogs(data.items.length ? data.items : homeFallbackBlogs);
     });
     return () => { active = false; };
   }, []);
 
-  const featuredProject = projects[0] || fallbackProjects[0];
+  const featuredProject = projects[0] || homeFallbackProjects[0];
   const supportingProjects = projects.slice(1, 4);
   const portfolioCategories = Array.from(new Set(projects.map((project) => project.category))).slice(0, 3);
 
@@ -302,7 +332,7 @@ export default function Home() {
       </section>
 
       {/* Partners - Infinite Marquee */}
-      <PartnerShowcase />
+      <DeferredMount minHeight={240}><PartnerShowcase /></DeferredMount>
 
       {/* Services - The Bento Grid */}
       <section className="py-16 px-6 sm:px-8 md:px-12 lg:px-24 md:py-20 bg-brand-dark">
@@ -404,9 +434,10 @@ export default function Home() {
               <div className="absolute -inset-10 bg-brand-primary/5 blur-[100px]" />
               <img 
                 src="/images/sectionimage1.webp"
+                srcSet="/images/sectionimage1-480.webp 480w, /images/sectionimage1-800.webp 800w, /images/sectionimage1.webp 1264w"
+                sizes="(max-width: 1023px) calc(100vw - 48px), 50vw"
                 alt="DNA" 
-                loading="eager"
-                fetchPriority="low"
+                loading="lazy"
                 decoding="async"
                 width={1264}
                 height={844}
@@ -477,9 +508,10 @@ export default function Home() {
             >
               <img
                 src={featuredProject.image || featuredProject.thumbnail}
+                srcSet={projectImageSrcSet(featuredProject.image || featuredProject.thumbnail)}
+                sizes="(max-width: 1023px) calc(100vw - 48px), 58vw"
                 alt={featuredProject.title}
-                loading="eager"
-                fetchPriority="low"
+                loading="lazy"
                 decoding="async"
                 className="absolute inset-0 h-full w-full object-cover transition-transform duration-1000 group-hover:scale-105"
                 referrerPolicy="no-referrer"
@@ -530,9 +562,10 @@ export default function Home() {
                   <div className="relative min-h-[180px] overflow-hidden">
                     <img
                       src={project.image || project.thumbnail}
+                      srcSet={projectImageSrcSet(project.image || project.thumbnail)}
+                      sizes="(max-width: 767px) calc(100vw - 48px), 180px"
                       alt={project.title}
-                      loading="eager"
-                      fetchPriority="low"
+                      loading="lazy"
                       decoding="async"
                       className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                       referrerPolicy="no-referrer"
@@ -662,7 +695,7 @@ export default function Home() {
         </div>
       </section>
 
-      <ClientReviews />
+      <DeferredMount minHeight={520}><ClientReviews /></DeferredMount>
 
       {/* Latest Blog - Compact Engineering Lab */}
       <section className="py-16 px-6 sm:px-8 md:px-12 lg:px-24 md:py-20 bg-brand-dark overflow-hidden relative">
@@ -701,7 +734,7 @@ export default function Home() {
             </motion.div>
 
             <div className="lg:col-span-4 flex flex-col gap-6">
-              {(latestBlogs.length > 1 ? latestBlogs.slice(1, 3) : fallbackBlogs.slice(0, 2)).map((post, i) => (
+              {(latestBlogs.length > 1 ? latestBlogs.slice(1, 3) : homeFallbackBlogs.slice(0, 2)).map((post, i) => (
                 <div
                   key={post.id || i}
                   className="group flex gap-4 sm:gap-6 items-center p-4 sm:p-6 bg-white/[0.02] rounded-[1rem] md:rounded-[2rem] border border-white/5 hover:border-brand-primary/30 transition-all cursor-pointer glass"
@@ -751,7 +784,7 @@ export default function Home() {
           </div>
           
           <div className="p-5 sm:p-8 md:p-10 bg-brand-dark/40 rounded-[1.25rem] md:rounded-[3rem] border border-white/10 shadow-3xl relative glass">
-            <ContactForm />
+            <DeferredMount minHeight={520}><ContactForm /></DeferredMount>
           </div>
         </div>
       </section>

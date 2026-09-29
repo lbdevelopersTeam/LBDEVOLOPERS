@@ -3,6 +3,7 @@ build/
 dist/
 coverage/
 backups/
+artifacts/
 public/uploads/
 .DS_Store
 *.log

@@ -10,6 +10,7 @@ if (!fs.existsSync(backupDir)) {
 }
 
 const files = fs.readdirSync(imagesDir);
+const responsiveWidths = [480, 800, 1200];
 
 let totalOriginal = 0;
 let totalOptimized = 0;
@@ -81,6 +82,20 @@ for (const file of files) {
       fs.writeFileSync(webpPath, webpBuffer);
       console.log(`  + WebP: ${baseName}.webp (${(webpBuffer.length / 1024).toFixed(0)}KB)`);
     }
+
+    // Keep archival originals and generate card-friendly WebP widths alongside
+    // the canonical asset. Existing variants are replaced deterministically.
+    if (metadata.width && metadata.width > responsiveWidths[0]) {
+      const baseName = path.basename(file, ext);
+      for (const width of responsiveWidths.filter((candidate) => candidate < metadata.width)) {
+        const responsivePath = path.join(imagesDir, `${baseName}-${width}.webp`);
+        await sharp(backupPath)
+          .resize({ width, withoutEnlargement: true })
+          .webp({ quality: 78, effort: 6 })
+          .toFile(responsivePath);
+        console.log(`  + Responsive: ${baseName}-${width}.webp`);
+      }
+    }
   } catch (err) {
     console.error(`Error processing ${file}:`, err.message);
     totalOptimized += stat.size;
@@ -92,3 +107,17 @@ console.log(`Total Original: ${(totalOriginal / 1024 / 1024).toFixed(2)} MB`);
 console.log(`Total Optimized: ${(totalOptimized / 1024 / 1024).toFixed(2)} MB`);
 console.log(`Saved: ${((totalOriginal - totalOptimized) / 1024 / 1024).toFixed(2)} MB (-${Math.round((1 - totalOptimized / totalOriginal) * 100)}%)`);
 console.log('=============================================');
+
+const recordFiles = ['db.json', 'src/lib/content.ts'];
+const inefficientReferences = [];
+for (const recordFile of recordFiles) {
+  if (!fs.existsSync(recordFile)) continue;
+  const contents = fs.readFileSync(recordFile, 'utf8');
+  for (const match of contents.matchAll(/(?:\/images\/|\/lbt\/)[^'"\s]+\.(?:png|jpe?g)/gi)) {
+    inefficientReferences.push(`${recordFile}: ${match[0]}`);
+  }
+}
+if (inefficientReferences.length) {
+  console.log('\nSource records still referencing PNG/JPEG:');
+  for (const reference of inefficientReferences) console.log(`  - ${reference}`);
+}

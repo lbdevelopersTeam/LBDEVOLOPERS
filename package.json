@@ -25,6 +25,7 @@
     "db:setup": "npm run db:migrate && npm run db:seed",
     "db:verify": "tsx server/db/verify.ts",
     "hostinger:deploy": "npm run build",
+    "verify:performance": "node scripts/check-performance-budget.mjs",
     "verify:auth": "node scripts/verify-auth.mjs",
     "db:backup": "node scripts/backup-db.mjs",
     "optimize:images": "node scripts/optimize-images.mjs"

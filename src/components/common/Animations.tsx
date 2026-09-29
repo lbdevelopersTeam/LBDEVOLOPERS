@@ -8,6 +8,27 @@ const revealTransition = { duration: 0.45, ease: [0.22, 1, 0.36, 1] as const };
 const revealViewport = { once: true };
 const readyVideoSources = new Set<string>();
 let desktopMotionMedia: MediaQueryList | undefined;
+const constrainedMediaQuery = '(hover: none), (pointer: coarse), (prefers-reduced-motion: reduce)';
+
+const isConstrainedConnection = () => {
+  const connection = (navigator as Navigator & { connection?: { saveData?: boolean; effectiveType?: string } }).connection;
+  return Boolean(connection?.saveData || connection?.effectiveType === 'slow-2g' || connection?.effectiveType === '2g');
+};
+
+const useConstrainedMedia = () => useSyncExternalStore(
+  (onStoreChange) => {
+    const media = window.matchMedia(constrainedMediaQuery);
+    media.addEventListener?.('change', onStoreChange);
+    const connection = (navigator as Navigator & { connection?: EventTarget }).connection;
+    connection?.addEventListener?.('change', onStoreChange);
+    return () => {
+      media.removeEventListener?.('change', onStoreChange);
+      connection?.removeEventListener?.('change', onStoreChange);
+    };
+  },
+  () => window.matchMedia(constrainedMediaQuery).matches || isConstrainedConnection(),
+  () => true,
+);
 
 const getDesktopMotionMedia = () => {
   desktopMotionMedia ??= window.matchMedia(desktopMotionQuery);
@@ -329,9 +350,11 @@ export const DeferredVideo = ({ src, className, poster }: { src: string; classNa
   const [isVisible, setIsVisible] = useState(false);
   const [videoReady, setVideoReady] = useState(false);
   const shouldReduceMotion = useReducedMotion();
+  const constrainedMedia = useConstrainedMedia();
+  const shouldSkipVideo = shouldReduceMotion || constrainedMedia;
 
   useEffect(() => {
-    if (shouldReduceMotion) return undefined;
+    if (shouldSkipVideo) return undefined;
     const video = videoRef.current;
     if (!video) return undefined;
 
@@ -354,10 +377,10 @@ export const DeferredVideo = ({ src, className, poster }: { src: string; classNa
       preloadObserver.disconnect();
       visibilityObserver.disconnect();
     };
-  }, [shouldReduceMotion]);
+  }, [shouldSkipVideo]);
 
   useEffect(() => {
-    if (shouldReduceMotion) return undefined;
+    if (shouldSkipVideo) return undefined;
     const video = videoRef.current;
     if (!video) return undefined;
     video.defaultMuted = true;
@@ -369,18 +392,18 @@ export const DeferredVideo = ({ src, className, poster }: { src: string; classNa
     setVideoReady(false);
     video.load();
     return () => video.pause();
-  }, [shouldLoad, src, shouldReduceMotion]);
+  }, [shouldLoad, src, shouldSkipVideo]);
 
   useEffect(() => {
     const video = videoRef.current;
-    if (!video || !shouldLoad || shouldReduceMotion) return;
+    if (!video || !shouldLoad || shouldSkipVideo) return;
     if (isVisible) void video.play().catch(() => undefined);
     else video.pause();
-  }, [isVisible, shouldReduceMotion, shouldLoad]);
+  }, [isVisible, shouldLoad, shouldSkipVideo]);
 
-  if (shouldReduceMotion) {
+  if (shouldSkipVideo) {
     return poster ? (
-      <img src={poster} alt="" loading="lazy" decoding="async" className={className} aria-hidden="true" />
+      <img src={poster} alt="" width={720} height={900} decoding="async" className={className} aria-hidden="true" />
     ) : null;
   }
 
@@ -390,7 +413,7 @@ export const DeferredVideo = ({ src, className, poster }: { src: string; classNa
       muted
       loop
       playsInline
-      preload="auto"
+      preload="none"
       poster={poster}
       disablePictureInPicture
       aria-hidden="true"
