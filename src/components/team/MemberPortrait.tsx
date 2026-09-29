@@ -4,7 +4,7 @@ const optimizedPortraits: Record<string, { base: string; version?: string }> = {
   '/lbt/Wajid Hussain.png': { base: '/lbt/Wajid-Hussain', version: '20260929' },
   '/lbt/Mohsin.png': { base: '/lbt/Mohsin' },
   '/lbt/Laiba.png': { base: '/lbt/Laiba' },
-  '/lbt/Ibdullah.png': { base: '/lbt/Ibdullah' },
+  '/lbt/Ibdullah.png': { base: '/lbt/Ibdullah', version: '20260929' },
 };
 
 function optimizedPortraitUrl(src: string, width: 440 | 800) {
