@@ -454,19 +454,19 @@
 }
 
 .member-section-title {
-  font-size: 2.25rem;
+  font-size: 2rem;
 }
 
 .member-intro-copy {
-  font-size: 1.75rem;
+  font-size: 1.5rem;
 }
 
 .member-project-title {
-  font-size: 2.25rem;
+  font-size: 2rem;
 }
 
 .member-case-title {
-  font-size: 3.5rem;
+  font-size: 2.75rem;
 }
 
 .member-hero-name,
@@ -513,25 +513,25 @@
 @media (min-width: 640px) {
   .member-hero-name { font-size: 4.75rem; }
   .member-hero-watermark { font-size: 10rem; }
+  .member-section-title { font-size: 2.5rem; }
+  .member-intro-copy { font-size: 1.875rem; }
+  .member-project-title { font-size: 2.5rem; }
+  .member-case-title { font-size: 3.75rem; }
+}
+
+@media (min-width: 1024px) {
+  .member-hero-name { font-size: 6.5rem; }
+  .member-hero-watermark { font-size: 15rem; }
   .member-section-title { font-size: 3rem; }
   .member-intro-copy { font-size: 2.25rem; }
   .member-project-title { font-size: 3rem; }
   .member-case-title { font-size: 5rem; }
 }
 
-@media (min-width: 1024px) {
-  .member-hero-name { font-size: 6.5rem; }
-  .member-hero-watermark { font-size: 15rem; }
-  .member-section-title { font-size: 4rem; }
-  .member-intro-copy { font-size: 3.125rem; }
-  .member-project-title { font-size: 4rem; }
-  .member-case-title { font-size: 7rem; }
-}
-
 @media (min-width: 1280px) {
   .member-hero-name { font-size: 8.25rem; }
   .member-hero-watermark { font-size: 19rem; }
-  .member-case-title { font-size: 8.5rem; }
+  .member-case-title { font-size: 6rem; }
 }
 
 @media (max-width: 639px) {
