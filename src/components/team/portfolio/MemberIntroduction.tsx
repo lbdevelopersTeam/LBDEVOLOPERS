@@ -1,5 +1,5 @@
 import { motion, useReducedMotion } from 'motion/react';
-import { Award, CheckCircle2, Globe, MapPin, Sparkles, UserCheck, Zap } from 'lucide-react';
+import { Award, BriefcaseBusiness, CheckCircle2, Globe, MapPin, TrendingUp, UserCheck, Zap } from 'lucide-react';
 import { MemberProfile, SectionHeading } from './shared';
 
 export default function MemberIntroduction({ member }: { member: MemberProfile }) {
@@ -8,7 +8,7 @@ export default function MemberIntroduction({ member }: { member: MemberProfile }
 
   const facts = [
     { label: 'Practice', value: member.role, icon: UserCheck },
-    { label: 'Specialization', value: member.specialization, icon: Sparkles },
+    { label: 'Specialization', value: member.specialization, icon: BriefcaseBusiness },
     { label: 'Track Record', value: member.yearsExperience, icon: Award },
     { label: 'Location', value: member.location, icon: MapPin },
     { label: 'Availability', value: member.availability, icon: Zap },
@@ -66,7 +66,7 @@ export default function MemberIntroduction({ member }: { member: MemberProfile }
 
               <div className="member-glass rounded-xl p-5">
                 <div className="flex items-center gap-3 text-[var(--member-accent)]">
-                  <Sparkles className="h-5 w-5" />
+                  <TrendingUp className="h-5 w-5" />
                   <span className="font-display text-sm font-black uppercase text-white">Conversion-Focused</span>
                 </div>
                 <p className="mt-2 text-xs leading-relaxed text-white/50">

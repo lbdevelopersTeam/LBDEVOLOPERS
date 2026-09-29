@@ -1,5 +1,5 @@
 import { motion, useReducedMotion } from 'motion/react';
-import { Quote, Sparkles } from 'lucide-react';
+import { MessageSquareText, Quote } from 'lucide-react';
 import { MemberProfile, SectionHeading } from './shared';
 
 export default function MemberTestimonials({
@@ -38,7 +38,7 @@ export default function MemberTestimonials({
             >
               <div className="mb-6 flex items-center justify-between border-b border-white/10 pb-5">
                 <div className="flex items-center gap-2">
-                  <Sparkles className="h-4 w-4 text-[var(--member-accent)]" />
+                  <MessageSquareText className="h-4 w-4 text-[var(--member-accent)]" />
                   <span className="text-[10px] font-black uppercase tracking-[0.16em] text-white/50">Client Feedback</span>
                 </div>
                 {item.project && (

@@ -40,7 +40,7 @@ export default function MemberHero({ member }: { member: MemberProfile }) {
 
   return (
     <section id="member-home" className="member-grid-surface member-hero relative min-h-[92svh] overflow-hidden border-b border-white/10 px-5 pb-12 pt-28 sm:pt-32 md:px-8 md:pb-16 lg:pt-36">
-      <HeroBackground videoSrc="/videos/other-pages-hero.mp4" poster="/images/thesearchforabsolutesection.jpg" />
+      <HeroBackground poster="/images/thesearchforabsolutesection.jpg" />
       <div className="member-hero-light pointer-events-none absolute inset-0" aria-hidden="true" />
       <div className="pointer-events-none absolute inset-x-0 top-24 overflow-hidden text-center" aria-hidden="true">
         <span className="member-hero-watermark font-display font-black uppercase text-white/[0.02]">{firstName}</span>
