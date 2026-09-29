@@ -40,7 +40,7 @@ export default function MemberContactSection({
   };
 
   return (
-    <section id="contact" className="scroll-mt-28 px-5 py-20 md:px-8 md:py-28 lg:py-36">
+    <section id="contact" className="scroll-mt-28 px-5 py-14 sm:py-16 md:px-8 md:py-20 lg:py-24">
       <div className="mx-auto max-w-[1500px]">
         <SectionHeading
           index={sectionIndex}
@@ -51,7 +51,7 @@ export default function MemberContactSection({
           <span className="text-white/28">Start the conversation.</span>
         </SectionHeading>
 
-        <div className="mt-14 grid gap-12 md:mt-20 lg:grid-cols-12 lg:gap-10">
+        <div className="mt-10 grid gap-8 md:mt-14 lg:grid-cols-12 lg:gap-10">
           {/* Left Direct Channels Card */}
           <div className="member-glass flex flex-col justify-between rounded-xl p-6 sm:p-8 md:p-10 lg:col-span-5">
             <div>

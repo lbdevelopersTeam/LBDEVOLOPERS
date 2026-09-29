@@ -11,7 +11,7 @@ export default function MemberCareer({ member }: { member: MemberProfile }) {
   if (!hasExperience && !hasEducation && !hasCertifications) return null;
 
   return (
-    <section id="experience" className="scroll-mt-28 border-b border-white/10 bg-[#080808] px-5 py-20 md:px-8 md:py-28 lg:py-36">
+    <section id="experience" className="scroll-mt-28 border-b border-white/10 bg-[#080808] px-5 py-14 sm:py-16 md:px-8 md:py-20 lg:py-24">
       <div className="mx-auto max-w-[1500px]">
         <SectionHeading
           index="04"
@@ -24,7 +24,7 @@ export default function MemberCareer({ member }: { member: MemberProfile }) {
 
         {/* Experience Timeline */}
         {hasExperience && (
-          <div className="mt-14 space-y-6 md:mt-20">
+          <div className="mt-10 space-y-6 md:mt-14">
             <div className="flex items-center gap-2 text-xs font-black uppercase tracking-[0.18em] text-white/50">
               <Briefcase className="h-4 w-4 text-[var(--member-accent)]" />
               <span>Experience & Leadership</span>
@@ -138,7 +138,7 @@ export default function MemberCareer({ member }: { member: MemberProfile }) {
 
         {/* Education & Certifications Side-by-Side */}
         {(hasEducation || hasCertifications) && (
-          <div className="mt-16 grid gap-8 lg:grid-cols-2 lg:gap-12">
+          <div className="mt-12 grid gap-8 md:mt-14 lg:grid-cols-2 lg:gap-12">
             {/* Education Card */}
             {hasEducation && (
               <div>

@@ -15,7 +15,7 @@ export default function MemberTestimonials({
   if (!testimonials.length) return null;
 
   return (
-    <section id="testimonials" className="scroll-mt-28 border-b border-white/10 bg-[#060606] px-5 py-20 md:px-8 md:py-28 lg:py-36">
+    <section id="testimonials" className="scroll-mt-28 border-b border-white/10 bg-[#060606] px-5 py-14 sm:py-16 md:px-8 md:py-20 lg:py-24">
       <div className="mx-auto max-w-[1500px]">
         <SectionHeading
           index={sectionIndex}
@@ -26,7 +26,7 @@ export default function MemberTestimonials({
           <span className="text-white/28">Proven in production.</span>
         </SectionHeading>
 
-        <div className="mt-14 grid gap-6 md:mt-20 md:grid-cols-2 lg:gap-8">
+        <div className="mt-10 grid gap-6 md:mt-14 md:grid-cols-2 lg:gap-8">
           {testimonials.map((item, index) => (
             <motion.article
               key={item.id || index}

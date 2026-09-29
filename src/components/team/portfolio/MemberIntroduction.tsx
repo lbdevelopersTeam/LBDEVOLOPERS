@@ -17,7 +17,7 @@ export default function MemberIntroduction({ member }: { member: MemberProfile }
   ].filter((item) => Boolean(item.value));
 
   return (
-    <section id="about" className="scroll-mt-28 border-b border-white/10 px-5 py-20 md:px-8 md:py-28 lg:py-36">
+    <section id="about" className="scroll-mt-28 border-b border-white/10 px-5 py-14 sm:py-16 md:px-8 md:py-20 lg:py-24">
       <div className="mx-auto max-w-[1500px]">
         <SectionHeading
           index="01"
@@ -28,7 +28,7 @@ export default function MemberIntroduction({ member }: { member: MemberProfile }
           <span className="text-white/28">Built around real work.</span>
         </SectionHeading>
 
-        <div className="mt-14 grid gap-12 md:mt-20 lg:grid-cols-12 lg:gap-8">
+        <div className="mt-10 grid gap-8 md:mt-14 lg:grid-cols-12 lg:gap-8">
           <div className="lg:col-span-7">
             <motion.p
               initial={reducedMotion ? false : { opacity: 0, y: 18 }}

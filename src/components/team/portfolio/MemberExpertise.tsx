@@ -34,7 +34,7 @@ export default function MemberExpertise({ member }: { member: MemberProfile }) {
   const projectRoles = Array.from(new Set(member.projects.map((project) => project.memberRole).filter(Boolean))) as string[];
 
   return (
-    <section id="skills" className="scroll-mt-28 border-b border-white/10 bg-[#080808] px-5 py-20 md:px-8 md:py-28 lg:py-36">
+    <section id="skills" className="scroll-mt-28 border-b border-white/10 bg-[#080808] px-5 py-14 sm:py-16 md:px-8 md:py-20 lg:py-24">
       <div className="mx-auto max-w-[1500px]">
         <SectionHeading
           index="02"
@@ -45,7 +45,7 @@ export default function MemberExpertise({ member }: { member: MemberProfile }) {
           <span className="text-white/28">The thinking comes first.</span>
         </SectionHeading>
 
-        <div className="mt-14 space-y-4 md:mt-20">
+        <div className="mt-10 space-y-4 md:mt-14">
           {groups.map((group, groupIndex) => {
             const Icon = categoryIcons[group.category] || Layers;
             return (

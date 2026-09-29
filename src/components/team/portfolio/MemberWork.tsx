@@ -14,7 +14,7 @@ export default function MemberWork({ member }: { member: MemberProfile }) {
   );
 
   return (
-    <section id="projects" className="scroll-mt-28 border-b border-white/10 px-5 py-20 md:px-8 md:py-28 lg:py-36">
+    <section id="projects" className="scroll-mt-28 border-b border-white/10 px-5 py-14 sm:py-16 md:px-8 md:py-20 lg:py-24">
       <div className="mx-auto max-w-[1500px]">
         <SectionHeading
           index="03"
@@ -29,7 +29,7 @@ export default function MemberWork({ member }: { member: MemberProfile }) {
           <>
             {categories.length > 2 && (
               <div
-                className="mt-12 flex gap-1.5 overflow-x-auto border-b border-white/10 pb-3 no-scrollbar [scrollbar-width:none] md:mt-16"
+                className="mt-10 flex gap-1.5 overflow-x-auto border-b border-white/10 pb-3 no-scrollbar [scrollbar-width:none] md:mt-12"
                 role="tablist"
                 aria-label="Filter selected projects"
               >
@@ -59,7 +59,7 @@ export default function MemberWork({ member }: { member: MemberProfile }) {
               </div>
             )}
 
-            <motion.div layout className="mt-10 space-y-16 md:mt-16 md:space-y-24">
+            <motion.div layout className="mt-8 space-y-12 md:mt-12 md:space-y-16">
               <AnimatePresence mode="popLayout">
                 {projects.map((project, index) => {
                   const reverse = index % 2 === 1;
@@ -202,7 +202,7 @@ export default function MemberWork({ member }: { member: MemberProfile }) {
             </motion.div>
           </>
         ) : (
-          <div className="mt-14 flex flex-col justify-between gap-6 rounded-xl border border-white/10 bg-white/[0.02] p-8 md:flex-row md:items-center">
+          <div className="mt-10 flex flex-col justify-between gap-6 rounded-xl border border-white/10 bg-white/[0.02] p-8 md:mt-12 md:flex-row md:items-center">
             <p className="max-w-xl text-base leading-relaxed text-white/50">
               No individual case studies are currently published for this profile.
             </p>
