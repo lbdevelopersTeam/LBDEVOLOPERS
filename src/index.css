@@ -458,7 +458,7 @@
 }
 
 .member-intro-copy {
-  font-size: 1.5rem;
+  font-size: 1.375rem;
 }
 
 .member-project-title {
@@ -514,7 +514,7 @@
   .member-hero-name { font-size: 4.75rem; }
   .member-hero-watermark { font-size: 10rem; }
   .member-section-title { font-size: 2.5rem; }
-  .member-intro-copy { font-size: 1.875rem; }
+  .member-intro-copy { font-size: 1.625rem; }
   .member-project-title { font-size: 2.5rem; }
   .member-case-title { font-size: 3.75rem; }
 }
@@ -523,7 +523,7 @@
   .member-hero-name { font-size: 6.5rem; }
   .member-hero-watermark { font-size: 15rem; }
   .member-section-title { font-size: 3rem; }
-  .member-intro-copy { font-size: 2.25rem; }
+  .member-intro-copy { font-size: 2rem; }
   .member-project-title { font-size: 3rem; }
   .member-case-title { font-size: 5rem; }
 }
