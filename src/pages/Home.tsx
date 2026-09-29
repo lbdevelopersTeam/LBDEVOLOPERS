@@ -454,8 +454,8 @@ export default function Home() {
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 text-center md:text-left">
             {[
-              { value: '22', label: 'Successful Launches' },
-              { value: '16', label: 'Global Clients' },
+              { value: '30+', label: 'Successful Launches' },
+              { value: '31+', label: 'Global Clients' },
               { value: '40%+', label: 'Conversion Lift' },
               { value: '99.9%', label: 'Uptime Reliability' }
             ].map((stat, i) => (
