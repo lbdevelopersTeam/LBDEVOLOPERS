@@ -11,6 +11,24 @@ interface TestimonialsResponse {
   }>;
 }
 
+const wajidProjectAliases = new Set([
+  'zeroma',
+  'zeromapk',
+  'zaroofragrances',
+  'zaroofragrancescom',
+  'zaroofragrancespk',
+  'noorgems',
+  'noorgemstone',
+  'noorgemstonecom',
+  'premiumwildmorels',
+  'premiumwildmorelscom',
+]);
+
+const creditsWajidHussain = (project?: string) => {
+  const normalizedProject = project?.toLowerCase().replace(/[^a-z0-9]/g, '') || '';
+  return wajidProjectAliases.has(normalizedProject);
+};
+
 function ReviewerAvatar({ review }: { review: Testimonial }) {
   const [imageFailed, setImageFailed] = useState(false);
   const initials = review.author
@@ -41,6 +59,7 @@ function ReviewCard({ review }: { review: Testimonial }) {
   const [expanded, setExpanded] = useState(false);
   const isLong = review.quote.length > 260;
   const byline = [review.role, review.company].filter(Boolean).join(', ');
+  const showWajidCredit = creditsWajidHussain(review.project);
 
   return (
     <article
@@ -72,6 +91,15 @@ function ReviewCard({ review }: { review: Testimonial }) {
         <div className="min-w-0">
           <p className="truncate text-sm font-bold text-white">{review.author}</p>
           {byline && <p className="mt-1 truncate text-[10px] font-black uppercase tracking-[0.16em] text-blue-300">{byline}</p>}
+          {showWajidCredit && (
+            <Link
+              to="/team/wajid-hussain"
+              className="mt-2 inline-flex text-[9px] font-black uppercase tracking-[0.16em] text-white/65 transition-colors hover:text-brand-primary focus-visible:rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary"
+              aria-label={`View Wajid Hussain's profile for the ${review.project} project`}
+            >
+              Project credit · Wajid Hussain
+            </Link>
+          )}
         </div>
       </div>
     </article>
