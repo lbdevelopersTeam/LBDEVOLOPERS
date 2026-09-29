@@ -4,6 +4,36 @@
                  ],
     "projects":  [
                      {
+                         "id":  "project-riaz-crockery",
+                         "title":  "Riaz Crockery",
+                         "slug":  "riaz-crockery",
+                         "shortDescription":  "A premium Shopify storefront for crockery, household goods, home decor, electronics, fragrances, and lifestyle essentials.",
+                         "fullDescription":  "\u003cp\u003eRiaz Crockery needed a digital storefront capable of translating its broad retail collection into a clear online shopping experience. Customers needed direct access to crockery, household goods, home decor, electronics, watches, perfumes, and bags without losing the premium character of the brand.\u003c/p\u003e\u003cp\u003eWe organized the Shopify experience around category-led discovery, prominent search and account tools, campaign merchandising, and responsive purchase journeys. The visual hierarchy gives collection imagery room to lead while keeping navigation, wishlist, cart, and support actions easy to reach.\u003c/p\u003e\u003cp\u003eThe result connects the scale of the physical retail experience with convenient online product discovery.\u003c/p\u003e",
+                         "thumbnail":  "/images/Riaz Crockery.webp",
+                         "gallery":  [],
+                         "category":  "E-commerce",
+                         "technologies":  ["Shopify", "Liquid", "E-commerce UX", "Responsive Design"],
+                         "liveUrl":  "https://riazcrockery.pk/",
+                         "githubUrl":  "",
+                         "featured":  true,
+                         "status":  "published",
+                         "completionDate":  "",
+                         "metaTitle":  "Riaz Crockery Shopify case study",
+                         "metaDescription":  "Premium crockery and homeware Shopify storefront by LB CodeBase.",
+                         "sortOrder":  0,
+                         "contributors":  [{"memberId": "team-wajid", "role": "Commerce Strategy \u0026 Technical Consulting"}, {"memberId": "team-laiba", "role": "Storefront Development \u0026 Responsive Implementation"}, {"memberId": "team-mohsin", "role": "Retail Presentation \u0026 Visual Direction"}, {"memberId": "team-ibad", "role": "E-commerce UX \u0026 Product Discovery"}],
+                         "client":  "Riaz Crockery",
+                         "industry":  "Crockery, Homeware and Lifestyle Retail",
+                         "problem":  "A broad retail assortment needed an online storefront that made many product categories easy to discover while maintaining a premium brand presentation.",
+                         "challenge":  "The experience had to balance extensive category navigation, strong campaign imagery, search and wishlist tools, and convenient mobile shopping.",
+                         "solution":  "A category-led Shopify storefront with prominent discovery tools, clear merchandising, accessible customer actions, and responsive purchasing paths.",
+                         "process":  ["Mapped the primary shopping journeys across crockery, household, decor, electronics, and lifestyle categories.", "Structured category navigation and site-wide product search.", "Developed campaign-led merchandising for featured collections.", "Optimized wishlist, account, cart, and support access across devices.", "Refined responsive product discovery and conversion paths."],
+                         "results":  ["Unified a broad retail catalog within a clear digital storefront.", "Improved access to priority categories and customer shopping tools.", "Delivered a responsive Shopify experience aligned with the premium retail brand."],
+                         "achievements":  ["Scalable category navigation for a diverse catalog.", "Premium campaign merchandising and collection discovery.", "Responsive Shopify shopping experience."],
+                         "createdAt":  "2026-09-29T00:00:00.000Z",
+                         "updatedAt":  "2026-09-29T00:00:00.000Z"
+                     },
+                     {
                          "id":  "project-airox-pakistan",
                          "title":  "Airox Pakistan",
                          "slug":  "airox-pakistan",
@@ -12,7 +42,7 @@
                          "thumbnail":  "/images/Airox.webp",
                          "gallery":  [],
                          "category":  "E-commerce",
-                         "technologies":  ["Shopify", "E-commerce UX", "Product Catalog", "Responsive Design"],
+                         "technologies":  ["Shopify", "Liquid", "E-commerce UX", "Responsive Design"],
                          "liveUrl":  "https://www.airox.pk/",
                          "githubUrl":  "",
                          "featured":  true,
@@ -42,7 +72,7 @@
                          "thumbnail":  "/images/Premium Growth Advisor.webp",
                          "gallery":  [],
                          "category":  "Web",
-                         "technologies":  ["WordPress", "Service Architecture", "Lead Generation", "Responsive Design"],
+                         "technologies":  ["WordPress", "Custom Theme", "PHP", "Responsive Design"],
                          "liveUrl":  "https://premiumgrowthadvisor.com/",
                          "githubUrl":  "",
                          "featured":  true,
@@ -72,7 +102,7 @@
                          "thumbnail":  "/images/albawabaa.shop.png",
                          "gallery":  [],
                          "category":  "E-commerce",
-                         "technologies":  ["Shopify", "RTL Commerce", "Localization", "Product Catalog"],
+                         "technologies":  ["Shopify", "Liquid", "RTL Commerce", "Localization"],
                          "liveUrl":  "https://albawabaa.shop/",
                          "githubUrl":  "",
                          "featured":  true,
@@ -102,7 +132,7 @@
                          "thumbnail":  "/images/voguedecor.com.png",
                          "gallery":  ["/images/voguemockup.jpeg"],
                          "category":  "E-commerce",
-                         "technologies":  ["Shopify", "E-commerce UX", "Product Catalog", "Responsive Design"],
+                         "technologies":  ["React", "Shopify", "Headless Commerce", "Storefront API"],
                          "liveUrl":  "https://www.voguedecor.com/",
                          "githubUrl":  "",
                          "featured":  true,
@@ -132,7 +162,7 @@
                          "thumbnail":  "/images/americandreamautoprotect.com.png",
                          "gallery":  [],
                          "category":  "Web",
-                         "technologies":  ["Lead Generation", "Quote Funnel", "Responsive Design", "Conversion Optimization"],
+                         "technologies":  ["WordPress", "Lead Generation", "Quote Funnel", "Responsive Design"],
                          "liveUrl":  "https://americandreamautoprotect.com/",
                          "githubUrl":  "",
                          "featured":  true,
@@ -162,7 +192,7 @@
                          "thumbnail":  "/images/pedroclavero.com.png",
                          "gallery":  ["/images/pedroclaveromockup.jpeg"],
                          "category":  "Web",
-                         "technologies":  ["Luxury Branding", "Editorial UI", "Event Portfolio", "Responsive Design"],
+                         "technologies":  ["Framer", "CMS", "Responsive Design", "Motion Design"],
                          "liveUrl":  "https://pedroclavero.com/",
                          "githubUrl":  "",
                          "featured":  true,
@@ -188,17 +218,17 @@
                          "title":  "zeroma.pk",
                          "slug":  "zeroma-pk",
                          "shortDescription":  "A high-performance marketplace redefining the shopping experience.",
-                         "fullDescription":  "\u003cp\u003eZeroma required a high-performance marketplace that would redefine the shopping experience while keeping vendor operations simple and fast.\u003c/p\u003e\u003cp\u003eWe engineered a headless commerce frontend with careful caching, conversion-focused interaction design, and a scalable content model.\u003c/p\u003e",
+                         "fullDescription":  "\u003cp\u003eZeroma required a high-performance Shopify marketplace that would redefine the shopping experience while keeping product operations simple and fast.\u003c/p\u003e\u003cp\u003eWe configured a responsive Shopify storefront with clear catalog structure, conversion-focused interaction design, and scalable merchandising.\u003c/p\u003e",
                          "thumbnail":  "/images/Zeroma.pk.png",
                          "gallery":  [
                                          "/images/zeromamockup.jpeg"
                                      ],
                          "category":  "E-commerce",
                          "technologies":  [
-                                              "React",
                                               "Shopify",
-                                              "Tailwind CSS",
-                                              "Node.js"
+                                              "Liquid",
+                                              "E-commerce UX",
+                                              "Responsive Design"
                                           ],
                          "liveUrl":  "https://zeroma.pk",
                          "githubUrl":  "",
@@ -206,7 +236,7 @@
                          "status":  "published",
                          "completionDate":  "2024-10-15",
                          "metaTitle":  "zeroma.pk case study",
-                         "metaDescription":  "Headless commerce and marketplace engineering case study.",
+                         "metaDescription":  "Shopify marketplace and e-commerce case study.",
                          "sortOrder":  5,
                          "deletedAt":  null,
                          "createdAt":  "2026-04-22T00:00:00.000Z",
@@ -235,7 +265,7 @@
                          "industry":  "Marketplace and E-commerce",
                          "problem":  "Zeroma needed a high-performance marketplace that would improve the shopping experience while keeping vendor operations simple and efficient.",
                          "challenge":  "The platform needed to balance marketplace complexity, fast product discovery, responsive customer journeys, and a content structure that could scale.",
-                         "solution":  "LB CodeBase delivered a headless commerce frontend with considered caching, conversion-focused interaction design, and a scalable content model.",
+                         "solution":  "LB CodeBase delivered a responsive Shopify storefront with conversion-focused interaction design, clear product discovery, and scalable merchandising.",
                          "process":  [
                                          "Mapped the customer and vendor journeys around the core marketplace flows.",
                                          "Defined the commerce architecture and scalable content structure.",
@@ -261,10 +291,10 @@
                                      ],
                          "category":  "E-commerce",
                          "technologies":  [
-                                              "React",
-                                              "Express",
-                                              "Tailwind CSS",
-                                              "Analytics"
+                                              "Shopify",
+                                              "Liquid",
+                                              "E-commerce UX",
+                                              "Responsive Design"
                                           ],
                          "liveUrl":  "https://mobixa.pk",
                          "githubUrl":  "",
@@ -327,9 +357,10 @@
                                      ],
                          "category":  "Custom",
                          "technologies":  [
-                                              "Brand Systems",
-                                              "React",
-                                              "Motion"
+                                              "WordPress",
+                                              "CMS",
+                                              "Responsive Design",
+                                              "SEO"
                                           ],
                          "liveUrl":  "https://jugo.pk",
                          "githubUrl":  "",
@@ -392,9 +423,9 @@
                                      ],
                          "category":  "Web",
                          "technologies":  [
+                                              "Next.js",
                                               "React",
-                                              "GSAP",
-                                              "Three.js",
+                                              "TypeScript",
                                               "SEO"
                                           ],
                          "liveUrl":  "https://sparkalads.com",
@@ -436,7 +467,7 @@
                          "process":  [
                                          "Defined the visual direction and information hierarchy.",
                                          "Designed content structures around authority and proof.",
-                                         "Developed responsive animated interfaces with React and GSAP.",
+                                         "Developed responsive interfaces with Next.js and React.",
                                          "Optimized presentation, performance, and search foundations."
                                      ],
                          "results":  [
@@ -459,9 +490,9 @@
                          "category":  "E-commerce",
                          "technologies":  [
                                               "Shopify",
+                                              "Liquid",
                                               "Product Storytelling",
-                                              "SEO",
-                                              "Performance"
+                                              "SEO"
                                           ],
                          "liveUrl":  "https://noorgemstone.com",
                          "githubUrl":  "",
@@ -525,9 +556,9 @@
                          "category":  "E-commerce",
                          "technologies":  [
                                               "Shopify",
+                                              "Liquid",
                                               "Fragrance Merchandising",
-                                              "Analytics",
-                                              "Tailwind CSS"
+                                              "Analytics"
                                           ],
                          "liveUrl":  "https://zaroofragrances.pk",
                          "githubUrl":  "",
@@ -590,10 +621,10 @@
                                      ],
                          "category":  "E-commerce",
                          "technologies":  [
+                                              "WordPress",
+                                              "CMS",
                                               "Catalog UX",
-                                              "Content Strategy",
-                                              "SEO",
-                                              "Performance"
+                                              "SEO"
                                           ],
                          "liveUrl":  "https://premiumwildmorels.com",
                          "githubUrl":  "",
@@ -656,10 +687,10 @@
                                      ],
                          "category":  "Web",
                          "technologies":  [
-                                              "Legal Website",
-                                              "Lead Generation",
-                                              "SEO",
-                                              "Performance"
+                                              "Next.js",
+                                              "React",
+                                              "TypeScript",
+                                              "SEO"
                                           ],
                          "liveUrl":  "https://gulflegalconsultant.com",
                          "githubUrl":  "",
@@ -784,7 +815,7 @@
                                             "current":  true,
                                             "description":  "Leading technical strategy, cloud infrastructure design, and commerce automation systems across flagship client builds.",
                                             "responsibilities":  [
-                                                                     "Designed headless architecture for zeroma.pk and mobixa.pk, achieving sub-100ms API response times.",
+                                                                     "Designed scalable Shopify storefront architecture for zeroma.pk and mobixa.pk with fast, reliable shopping flows.",
                                                                      "Automated vendor onboarding and inventory synchronization across multi-channel retail systems.",
                                                                      "Implemented CI/CD pipelines reducing deployment friction by 75%."
                                                                  ],
