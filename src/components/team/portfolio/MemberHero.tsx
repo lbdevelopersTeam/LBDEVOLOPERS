@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
-import { ArrowDownRight, ArrowUpRight, Check, Copy, Download, Mail, MessageCircle, Phone, Sparkles } from 'lucide-react';
+import { ArrowDownRight, ArrowUpRight, Check, Copy, Download, Mail, MessageCircle, Phone } from 'lucide-react';
 import { HeroBackground } from '../../common/Animations';
 import { MemberProfile, initials, socialPlatforms, usableLink, whatsAppNumber } from './shared';
 import MemberPortrait from '../MemberPortrait';
@@ -64,7 +64,6 @@ export default function MemberHero({ member }: { member: MemberProfile }) {
             </span>
 
             <span className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.04] px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-[0.12em] text-white/60">
-              <Sparkles className="h-3 w-3 text-[var(--member-accent)]" />
               LB CodeBase Team
             </span>
           </div>
