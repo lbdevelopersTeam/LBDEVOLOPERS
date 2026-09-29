@@ -3,7 +3,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { ArrowLeft, CheckCircle2, ChevronLeft, ChevronRight, Expand, ExternalLink, Github, Loader2, X } from 'lucide-react';
 import { Button } from '../components/common/UI';
-import { HeroBackground, LetterReveal, TextReveal } from '../components/common/Animations';
+import { LetterReveal, TextReveal } from '../components/common/Animations';
 import { fallbackProjects, fetchJson, Project } from '../lib/content';
 import { sanitizeHtml } from '../lib/sanitize';
 import { useSeo } from '../lib/seo';
@@ -90,10 +90,7 @@ export default function ProjectDetail() {
   return (
     <motion.div initial={false} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="px-6 sm:px-8 pt-24 pb-16 md:px-12 lg:px-20">
       <div className="mx-auto max-w-[1600px]">
-        <section className="relative flex min-h-screen flex-col justify-center overflow-hidden pt-32 pb-12">
-          <HeroBackground
-            poster={project.thumbnail || project.image || '/images/thesearchforabsolutesection.jpg'}
-          />
+        <section className="relative flex min-h-screen flex-col justify-center overflow-hidden bg-brand-dark pt-32 pb-12">
           <Link to="/portfolio" className="z-10 mb-12 inline-flex w-fit items-center gap-2 text-white/40 transition-colors hover:text-brand-primary">
             <ArrowLeft className="h-4 w-4" />
             Back to portfolio

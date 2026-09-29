@@ -2,7 +2,6 @@ import { motion, useReducedMotion } from 'motion/react';
 import { ArrowLeft, ArrowRight, ArrowUpRight, CheckCircle2, ExternalLink, Github, Layers, Sparkles, UserCheck } from 'lucide-react';
 import { CSSProperties, useEffect, useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { HeroBackground } from '../components/common/Animations';
 import MemberNotFound from '../components/team/MemberNotFound';
 import { usableLink } from '../components/team/portfolio/shared';
 import { fallbackTeam, mergeCuratedMemberProjects, Project, TeamMember } from '../lib/content';
@@ -167,7 +166,6 @@ export default function MemberProjectDetail() {
       className="member-portfolio min-h-screen overflow-clip bg-brand-dark text-white"
     >
       <header className="member-grid-surface relative px-5 pb-12 pt-28 sm:pt-32 md:px-8 md:pb-16 lg:pt-36">
-        <HeroBackground poster={project.thumbnail} />
         <div className="member-hero-light pointer-events-none absolute inset-0" aria-hidden="true" />
         <div className="pointer-events-none absolute right-0 top-12 font-display text-[7rem] font-black uppercase leading-none text-white/[0.02] md:text-[14rem]" aria-hidden="true">
           Case
