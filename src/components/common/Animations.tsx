@@ -261,8 +261,8 @@ export const Marquee = ({ children, speed = 25, reverse = false }: { children: R
 /**
  * Hero Background Media Container
  */
-export const HeroBackground = ({ videoSrc, poster }: { videoSrc?: string, poster?: string }) => {
-  const fallbackPoster = poster || '/images/thesearchforabsolutesection.jpg';
+export const HeroBackground = ({ videoSrc, poster }: { videoSrc?: string, poster?: string | null }) => {
+  const fallbackPoster = poster === undefined ? '/images/thesearchforabsolutesection.jpg' : poster;
   const [videoFailed, setVideoFailed] = useState(false);
   const [videoReady, setVideoReady] = useState(() => Boolean(videoSrc && readyVideoSources.has(videoSrc)));
   const shouldReduceMotion = useReducedMotion();
@@ -286,7 +286,7 @@ export const HeroBackground = ({ videoSrc, poster }: { videoSrc?: string, poster
     <div className="hero-background-media pointer-events-none absolute inset-0 z-0 overflow-hidden bg-brand-dark" aria-hidden="true">
       <div className="absolute inset-0 z-10 bg-brand-dark/20" />
       <div className="hero-background-vignette absolute inset-0 z-10" />
-      {showPoster && (
+      {showPoster && fallbackPoster && (
         <img
           src={fallbackPoster}
           alt=""
