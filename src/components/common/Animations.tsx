@@ -8,16 +8,16 @@ const revealTransition = { duration: 0.45, ease: [0.22, 1, 0.36, 1] as const };
 const revealViewport = { once: true };
 const readyVideoSources = new Set<string>();
 let desktopMotionMedia: MediaQueryList | undefined;
-const constrainedMediaQuery = '(hover: none), (pointer: coarse), (prefers-reduced-motion: reduce)';
+const coarsePointerQuery = '(hover: none), (pointer: coarse)';
 
 const isConstrainedConnection = () => {
   const connection = (navigator as Navigator & { connection?: { saveData?: boolean; effectiveType?: string } }).connection;
   return Boolean(connection?.saveData || connection?.effectiveType === 'slow-2g' || connection?.effectiveType === '2g');
 };
 
-const useConstrainedMedia = () => useSyncExternalStore(
+const useConstrainedMedia = (allowCoarsePointer = false) => useSyncExternalStore(
   (onStoreChange) => {
-    const media = window.matchMedia(constrainedMediaQuery);
+    const media = window.matchMedia(coarsePointerQuery);
     media.addEventListener?.('change', onStoreChange);
     const connection = (navigator as Navigator & { connection?: EventTarget }).connection;
     connection?.addEventListener?.('change', onStoreChange);
@@ -26,7 +26,7 @@ const useConstrainedMedia = () => useSyncExternalStore(
       connection?.removeEventListener?.('change', onStoreChange);
     };
   },
-  () => window.matchMedia(constrainedMediaQuery).matches || isConstrainedConnection(),
+  () => (!allowCoarsePointer && window.matchMedia(coarsePointerQuery).matches) || isConstrainedConnection(),
   () => true,
 );
 
@@ -344,13 +344,23 @@ export const HeroBackground = ({ videoSrc, poster }: { videoSrc?: string, poster
  * Defers decorative video transfer and decoding until the media enters the viewport,
  * then pauses it again when it leaves.
  */
-export const DeferredVideo = ({ src, className, poster }: { src: string; className?: string; poster?: string }) => {
+export const DeferredVideo = ({
+  src,
+  className,
+  poster,
+  allowCoarsePointer = false,
+}: {
+  src: string;
+  className?: string;
+  poster?: string;
+  allowCoarsePointer?: boolean;
+}) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [shouldLoad, setShouldLoad] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [videoReady, setVideoReady] = useState(false);
   const shouldReduceMotion = useReducedMotion();
-  const constrainedMedia = useConstrainedMedia();
+  const constrainedMedia = useConstrainedMedia(allowCoarsePointer);
   const shouldSkipVideo = shouldReduceMotion || constrainedMedia;
 
   useEffect(() => {

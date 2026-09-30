@@ -175,6 +175,7 @@ export default function Home() {
                 <DeferredVideo
                   src="/videos/home-hero-side.mp4"
                   poster="/images/home-hero-side-poster.webp"
+                  allowCoarsePointer
                   className="home-hero-video h-full w-full object-cover mix-blend-screen"
                 />
               </div>
