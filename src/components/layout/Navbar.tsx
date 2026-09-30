@@ -1,7 +1,7 @@
 import { useState, useEffect, useLayoutEffect, useRef, type MouseEvent } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
-import { Menu, X, ArrowRight } from 'lucide-react';
+import { Menu, X, ArrowRight, Download } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import { Magnetic } from '../common/Animations';
 
@@ -183,6 +183,16 @@ export default function Navbar() {
           </div>
 
           <div className="flex items-center gap-4">
+            <a
+              href="/documents/LB-CodeBase-Company-Profile.pdf"
+              download="LB-CodeBase-Company-Profile.pdf"
+              className="hidden lg:flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-5 py-2.5 text-[9px] font-black uppercase tracking-[0.2em] text-white/70 transition-all hover:border-brand-primary/40 hover:bg-brand-primary/10 hover:text-white"
+              aria-label="Download the LB CodeBase company profile PDF"
+            >
+              <Download className="h-3 w-3" />
+              Company Profile
+            </a>
+
             <Magnetic strength={0.1}>
               <Link
                 to="/contact"
@@ -277,6 +287,16 @@ export default function Navbar() {
                 transition={{ delay: 0.4 }}
                 className="mt-4"
               >
+                <a
+                  href="/documents/LB-CodeBase-Company-Profile.pdf"
+                  download="LB-CodeBase-Company-Profile.pdf"
+                  onClick={beginMenuClose}
+                  className="mb-2 flex w-full items-center justify-center gap-3 rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3.5 text-center text-[10px] font-black uppercase tracking-[0.2em] text-white/75 transition-colors hover:border-brand-primary/40 hover:text-white"
+                  aria-label="Download the LB CodeBase company profile PDF"
+                >
+                  <Download className="h-4 w-4 text-brand-primary" />
+                  Download Company Profile
+                </a>
                 <Link
                   to="/contact"
                   onClick={(event) => closeThenNavigate(event, '/contact')}
