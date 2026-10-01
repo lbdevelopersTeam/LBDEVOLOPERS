@@ -188,7 +188,11 @@ export default function Home() {
 
       {/* Capabilities - Brand-Led Systems */}
       <section className="relative overflow-hidden border-y border-white/5 bg-brand-gray px-6 py-16 sm:px-8 md:px-12 md:py-20 lg:px-24">
-        <DeferredVideo src="/videos/important-sections-bg.mp4" className="section-background-video absolute inset-0 h-full w-full object-cover opacity-35" />
+        <DeferredVideo
+          src="/videos/important-sections-bg.mp4"
+          allowCoarsePointer
+          className="section-background-video absolute inset-0 h-full w-full object-cover opacity-35"
+        />
         <div className="absolute inset-0 bg-gradient-to-b from-brand-dark via-brand-dark/75 to-brand-dark" />
         <div className="absolute inset-0 opacity-[0.06] bg-[linear-gradient(90deg,rgba(255,255,255,0.16)_1px,transparent_1px),linear-gradient(rgba(255,255,255,0.16)_1px,transparent_1px)] bg-[size:88px_88px]" />
 

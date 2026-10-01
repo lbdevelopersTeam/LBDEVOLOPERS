@@ -289,7 +289,7 @@ export const HeroBackground = ({ videoSrc, poster }: { videoSrc?: string, poster
   const [videoReady, setVideoReady] = useState(() => Boolean(videoSrc && readyVideoSources.has(videoSrc)));
   const shouldReduceMotion = useReducedMotion();
   const canPlayVideo = Boolean(videoSrc) && !videoFailed && !shouldReduceMotion;
-  const showPoster = !videoSrc || videoFailed || shouldReduceMotion;
+  const showPoster = !videoSrc || videoFailed || shouldReduceMotion || !videoReady;
 
   useEffect(() => {
     setVideoFailed(false);
@@ -322,7 +322,7 @@ export const HeroBackground = ({ videoSrc, poster }: { videoSrc?: string, poster
           muted
           loop
           playsInline
-          preload="metadata"
+          preload="auto"
           disablePictureInPicture
           tabIndex={-1}
           onLoadedData={(event) => markVideoReady(event.currentTarget)}
