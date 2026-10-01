@@ -15,7 +15,7 @@ const partners = [
 
 export default function PartnerShowcase() {
   return (
-    <section className="py-6 border-t border-b border-white/5 bg-black/40 backdrop-blur-md relative z-20 flex items-center overflow-hidden">
+    <section id="technology-partners" aria-label="Technology partners" className="py-6 border-t border-b border-white/5 bg-black/40 backdrop-blur-md relative z-20 flex items-center overflow-hidden">
       <div className="flex-shrink-0 px-10 border-r border-white/10 hidden lg:block">
          <div className="text-[9px] font-black uppercase tracking-[0.3em] text-blue-300 mb-1">Strategic Infrastructure</div>
          <h3 className="text-sm font-display font-black tracking-tight uppercase text-white/90">POWERING ELITE ECOSYSTEMS.</h3>

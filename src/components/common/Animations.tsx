@@ -268,14 +268,16 @@ export const Marquee = ({ children, speed = 25, reverse = false }: { children: R
 
   return (
     <div className={`flex select-none ${motionEnabled ? 'overflow-hidden' : 'no-scrollbar overflow-x-auto'}`}>
-      <motion.div
-        animate={motionEnabled ? { x: reverse ? ["0%", "50%"] : ["0%", "-50%"] } : undefined}
-        transition={motionEnabled ? { duration: speed, repeat: Infinity, ease: "linear" } : undefined}
-        className={`flex shrink-0 items-center gap-12 ${motionEnabled ? 'will-change-transform' : ''}`}
+      <div
+        style={motionEnabled ? {
+          animationDuration: `${speed}s`,
+          animationDirection: reverse ? 'reverse' : 'normal',
+        } : undefined}
+        className={`flex shrink-0 items-center gap-12 ${motionEnabled ? 'home-marquee-track will-change-transform' : ''}`}
       >
         {children}
         {motionEnabled && children}
-      </motion.div>
+      </div>
     </div>
   );
 };

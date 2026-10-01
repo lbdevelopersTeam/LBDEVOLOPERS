@@ -596,6 +596,17 @@
   to { transform: rotate(-360deg); }
 }
 
+@keyframes homeMarquee {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}
+
+.home-marquee-track {
+  animation-name: homeMarquee;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto !important;
