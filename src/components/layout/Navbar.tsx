@@ -8,10 +8,10 @@ import { Magnetic } from '../common/Animations';
 const navLinks = [
   { name: 'Home', href: '/' },
   { name: 'About', href: '/about' },
-  { name: 'Work', href: '/portfolio' },
+  { name: 'Portfolio', href: '/portfolio' },
   { name: 'Services', href: '/services' },
   { name: 'Tech', href: '/tech' },
-  { name: 'Contact', href: '/contact' },
+  { name: 'Consultancy', href: '/contact' },
 ];
 
 export default function Navbar() {
@@ -21,28 +21,6 @@ export default function Navbar() {
   const location = useLocation();
   const navigate = useNavigate();
   const pendingNavigation = useRef<string | null>(null);
-  const menuRef = useRef<HTMLDivElement>(null);
-  const toggleRef = useRef<HTMLButtonElement>(null);
-
-  useEffect(() => {
-    if (!isOpen) return;
-    const previousFocus = document.activeElement as HTMLElement | null;
-    const frame = requestAnimationFrame(() => menuRef.current?.querySelector<HTMLElement>('button')?.focus());
-    const trapFocus = (event: KeyboardEvent) => {
-      if (event.key !== 'Tab') return;
-      const nodes = menuRef.current?.querySelectorAll<HTMLElement>('a[href], button:not([disabled])');
-      if (!nodes?.length) return;
-      const first = nodes[0];
-      const last = nodes[nodes.length - 1];
-      if (event.shiftKey && (document.activeElement === first || !menuRef.current?.contains(document.activeElement))) {
-        event.preventDefault(); last.focus();
-      } else if (!event.shiftKey && (document.activeElement === last || !menuRef.current?.contains(document.activeElement))) {
-        event.preventDefault(); first.focus();
-      }
-    };
-    document.addEventListener('keydown', trapFocus);
-    return () => { cancelAnimationFrame(frame); document.removeEventListener('keydown', trapFocus); (previousFocus || toggleRef.current)?.focus(); };
-  }, [isOpen]);
 
   useEffect(() => {
     let frame = 0;
@@ -145,7 +123,6 @@ export default function Navbar() {
     pendingNavigation.current = null;
     setIsMenuExiting(false);
     if (href) navigate(href);
-    else toggleRef.current?.focus();
   };
 
   return (
@@ -156,18 +133,18 @@ export default function Navbar() {
         scrolled ? 'pt-3 sm:pt-4' : 'pt-4 sm:pt-8'
       )}
     >
-      <motion.div
-        initial={false}
+      <motion.div 
+        initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
         className={cn(
           "max-w-[1400px] mx-auto rounded-[2rem] transition-[background-color,border-color,box-shadow,padding] duration-300 border border-transparent",
           scrolled ? "bg-brand-dark/40 backdrop-blur-2xl border-white/10 px-4 py-3 shadow-[0_20px_50px_rgba(0,0,0,0.5)] sm:px-8" : "px-3 py-3 sm:px-4 sm:py-4"
         )}
       >
         <div className="flex items-center justify-between">
-          <Link
-            to="/"
+          <Link 
+            to="/" 
             className="brand-logo-image-frame"
             aria-label="LB CodeBase home"
           >
@@ -187,15 +164,14 @@ export default function Navbar() {
               <Link
                 key={link.name}
                 to={link.href}
-                aria-current={isActiveLink(link.name, link.href) ? 'page' : undefined}
                 className={cn(
-                  'text-sm font-medium transition-colors duration-200 px-3 xl:px-4 py-3 rounded-full relative group overflow-hidden',
-                  isActiveLink(link.name, link.href) ? 'text-white font-semibold' : 'text-white/75 hover:text-white'
+                  'text-[9px] font-black uppercase tracking-[0.2em] transition-all duration-500 px-6 py-2.5 rounded-full relative group overflow-hidden',
+                  isActiveLink(link.name, link.href) ? 'text-white' : 'text-white/40 hover:text-white'
                 )}
               >
                 <span className="relative z-10">{link.name}</span>
                 {isActiveLink(link.name, link.href) && (
-                  <motion.div
+                  <motion.div 
                     layoutId="nav-pill"
                     className="absolute inset-0 bg-brand-primary/20 border border-brand-primary/30 rounded-full"
                     transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
@@ -210,33 +186,31 @@ export default function Navbar() {
             <a
               href="/documents/LB-CodeBase-Company-Profile.pdf"
               download="LB-CodeBase-Company-Profile.pdf"
-              className="hidden xl:flex min-h-11 items-center gap-2 rounded-full border border-white/20 bg-white/[0.04] px-4 py-2.5 text-sm font-medium text-white/80 transition-colors hover:border-brand-primary/40 hover:bg-brand-primary/10 hover:text-white"
+              className="hidden lg:flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-5 py-2.5 text-[9px] font-black uppercase tracking-[0.2em] text-white/70 transition-all hover:border-brand-primary/40 hover:bg-brand-primary/10 hover:text-white"
               aria-label="Download the LB CodeBase company profile PDF"
             >
               <Download className="h-3 w-3" />
-              Company profile
+              Company Profile
             </a>
 
             <Magnetic strength={0.1}>
               <Link
                 to="/contact"
-                className="hidden lg:flex min-h-11 px-5 py-3 bg-brand-primary text-white rounded-full text-sm font-medium transition-colors items-center gap-3 group"
+                className="hidden xl:flex px-8 py-2.5 bg-brand-primary text-white rounded-full text-[9px] font-black uppercase tracking-[0.2em] hover:shadow-[0_0_30px_rgba(61,90,254,0.5)] hover:scale-105 transition-all items-center gap-3 group"
               >
-                Start a project
+                Inquiry
                 <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
               </Link>
             </Magnetic>
 
             <button
-              ref={toggleRef}
               type="button"
               aria-label={isOpen ? 'Close navigation menu' : 'Open navigation menu'}
               aria-expanded={isOpen}
               aria-controls="mobile-navigation"
-              aria-disabled={isMenuExiting}
+              disabled={isMenuExiting}
               className="lg:hidden w-11 h-11 flex-shrink-0 flex items-center justify-center bg-white/5 rounded-xl border border-white/10 text-white relative z-[120]"
               onClick={() => {
-                if (isMenuExiting) return;
                 if (isOpen) beginMenuClose();
                 else {
                   pendingNavigation.current = null;
@@ -254,7 +228,6 @@ export default function Navbar() {
       <AnimatePresence initial={false} onExitComplete={finishMenuClose}>
         {isOpen && (
           <motion.div
-            ref={menuRef}
             id="mobile-navigation"
             role="dialog"
             aria-modal="true"
@@ -267,7 +240,7 @@ export default function Navbar() {
             className="fixed inset-0 z-[110] bg-black/80 px-3 pb-4 pt-20 lg:hidden"
           >
             <div className="absolute inset-x-4 top-24 h-40 rounded-full bg-brand-primary/10 blur-[90px]" />
-
+            
             <div onClick={(event) => event.stopPropagation()} className="glass relative z-10 mx-auto flex max-h-[calc(100dvh-6rem)] w-full max-w-md flex-col overflow-y-auto overscroll-contain rounded-[2rem] border border-white/10 bg-brand-dark/90 p-4 shadow-[0_30px_90px_rgba(0,0,0,0.55)]">
               <div className="mb-4 flex items-center justify-between border-b border-white/10 pb-4">
                 <Link to="/" onClick={(event) => closeThenNavigate(event, '/')} className="brand-logo-image-frame" aria-label="LB CodeBase home">
@@ -292,14 +265,13 @@ export default function Navbar() {
                     transition={{ delay: i * 0.04 }}
                   >
                     <Link
-                      aria-current={isActiveLink(link.name, link.href) ? 'page' : undefined}
                       to={link.href}
                       onClick={(event) => closeThenNavigate(event, link.href)}
                       className={cn(
-                        'flex items-center justify-between rounded-2xl border px-4 py-3 text-sm font-black normal-case tracking-[0.1em] transition-all',
+                        'flex items-center justify-between rounded-2xl border px-4 py-3 text-sm font-black uppercase tracking-[0.16em] transition-all',
                         isActiveLink(link.name, link.href)
                           ? 'border-brand-primary/35 bg-brand-primary/15 text-white'
-                          : 'border-white/10 bg-white/[0.03] text-white/75 hover:border-white/20 hover:text-white'
+                          : 'border-white/10 bg-white/[0.03] text-white/55 hover:border-white/20 hover:text-white'
                       )}
                     >
                       <span>{link.name}</span>
@@ -310,7 +282,7 @@ export default function Navbar() {
               </div>
 
               <motion.div
-                initial={false}
+                initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 }}
                 className="mt-4"
@@ -319,18 +291,18 @@ export default function Navbar() {
                   href="/documents/LB-CodeBase-Company-Profile.pdf"
                   download="LB-CodeBase-Company-Profile.pdf"
                   onClick={beginMenuClose}
-                  className="mb-2 flex w-full items-center justify-center gap-3 rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3.5 text-center text-sm font-medium normal-case tracking-[0.1em] text-white/75 transition-colors hover:border-brand-primary/40 hover:text-white"
+                  className="mb-2 flex w-full items-center justify-center gap-3 rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3.5 text-center text-[10px] font-black uppercase tracking-[0.2em] text-white/75 transition-colors hover:border-brand-primary/40 hover:text-white"
                   aria-label="Download the LB CodeBase company profile PDF"
                 >
                   <Download className="h-4 w-4 text-brand-primary" />
-                  Company profile
+                  Download Company Profile
                 </a>
                 <Link
                   to="/contact"
                   onClick={(event) => closeThenNavigate(event, '/contact')}
-                  className="flex w-full items-center justify-center gap-3 rounded-2xl bg-brand-primary px-4 py-4 text-center text-xs font-black normal-case tracking-[0.1em] text-white shadow-2xl shadow-brand-primary/30"
+                  className="flex w-full items-center justify-center gap-3 rounded-2xl bg-brand-primary px-4 py-4 text-center text-[10px] font-black uppercase tracking-[0.24em] text-white shadow-2xl shadow-brand-primary/30"
                 >
-                  Start a project
+                  Let's Talk
                   <ArrowRight className="h-4 w-4" />
                 </Link>
               </motion.div>

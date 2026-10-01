@@ -1,10 +1,58 @@
+import { motion } from 'motion/react';
+import { Button, SectionHeader, BentoCard } from '../components/common/UI';
 import { lazy, Suspense, useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { ArrowUpRight, Layers, ShoppingBag, RefreshCw } from 'lucide-react';
-import { DeferredVideo } from '../components/common/Animations';
+import { ArrowRight, Code, Palette, Zap, Globe, Cpu, Smartphone, BarChart as ChartBar, Send, Shield, Activity, Rocket } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
+import { cn } from '../lib/utils';
+import { DeferredVideo, Magnetic, TextReveal, LetterReveal } from '../components/common/Animations';
 import type { BlogPost, Paginated, Project } from '../lib/content';
 import { cachedPublicFetch } from '../lib/public-api';
 import { homeFallbackBlogs, homeFallbackProjects } from '../lib/home-content';
+import { useContactEmail } from '../lib/site-settings';
+
+// HeroScene3D removed to use a solid black hero background per request
+
+const capabilityTracks = [
+  {
+    icon: Palette,
+    title: 'Brand Platforms',
+    description: 'Cohesive digital platforms focused on conversion and storytelling.',
+  },
+  {
+    icon: Zap,
+    title: 'Product Experiences',
+    description: 'E-commerce and product systems optimized for trust and velocity.',
+  },
+  {
+    icon: Cpu,
+    title: 'Interactive Media',
+    description: 'Immersive 3D, animation, and motion that elevate brand perception.',
+  },
+];
+
+const operatingModel = [
+  {
+    icon: Code,
+    title: 'Approach',
+    description: 'We combine human-centered strategy with deterministic engineering to ship experiences that scale.',
+  },
+  {
+    icon: ChartBar,
+    title: 'Outcomes',
+    description: 'Faster load times, higher conversions, and infrastructure ready for global distribution.',
+  },
+  {
+    icon: Globe,
+    title: 'Tooling',
+    description: 'Vercel, Netlify, AWS, Cloudflare, Shopify Plus, OpenAI integrations.',
+  },
+  {
+    icon: Shield,
+    title: 'Support',
+    description: 'Maintenance, monitoring, and iterative growth after launch.',
+  },
+];
+
 const ContactForm = lazy(() => import('../components/common/ContactForm'));
 const ClientReviews = lazy(() => import('../components/common/ClientReviews'));
 const PartnerShowcase = lazy(() => import('../components/common/PartnerShowcase'));
@@ -13,107 +61,763 @@ function DeferredMount({ children, minHeight = 320 }: { children: React.ReactNod
   const ref = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(false);
   useEffect(() => {
-    if (active || !ref.current) return;
-    if (!('IntersectionObserver' in window)) { setActive(true); return; }
+    if (active || !ref.current) return undefined;
     const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) { setActive(true); observer.disconnect(); }
-    }, { rootMargin: '400px' });
+      if (entry.isIntersecting) {
+        setActive(true);
+        observer.disconnect();
+      }
+    }, { rootMargin: '400px 0px' });
     observer.observe(ref.current);
     return () => observer.disconnect();
   }, [active]);
-  return <div ref={ref} style={active ? undefined : { minHeight }}>{active ? <Suspense fallback={<p className="reading-copy" role="status">Loading…</p>}>{children}</Suspense> : null}</div>;
+  return <div ref={ref} style={active ? undefined : { minHeight }}>{active ? <Suspense fallback={null}>{children}</Suspense> : null}</div>;
 }
 
-const capabilities = [
-  ['Strategy', 'Find the clearest opportunity.'],
-  ['Design', 'Make the product easy to understand and want.'],
-  ['Engineering', 'Build it to load, scale, and stay maintainable.'],
-  ['Growth', 'Improve what happens after launch.'],
-];
-const problems = [
-  { icon: Layers, title: 'Launching a new brand', body: 'Bring your identity, message, and website together into a clear first experience.', detail: 'Identity · content direction · website · launch' },
-  { icon: RefreshCw, title: 'Replacing an outdated site', body: 'Remove the friction while keeping useful content and planning your migration carefully.', detail: 'UX audit · redesign · migration · SEO' },
-  { icon: ShoppingBag, title: 'Growing commerce', body: 'Help customers find the right product and move through checkout with confidence.', detail: 'Discovery · storefront · integrations · analytics' },
-];
-const process = [
-  ['Understand', 'Goals, audience, constraints, and the information you already have.'],
-  ['Shape', 'Sitemap, content direction, wireframes, and a visual route to review together.'],
-  ['Build', 'Components, integrations, content editing, analytics, and quality checks.'],
-  ['Launch and learn', 'Deployment, documentation, handover, and a plan for the next improvements.'],
-];
+const featuredFallbackProjects = homeFallbackProjects;
+const responsiveProjectImages = new Set([
+  '/images/voguedecor.com.webp',
+  '/images/americandreamautoprotect.com.webp',
+  '/images/pedroclavero.com.webp',
+  '/images/Riaz Crockery.webp',
+]);
+
+const projectImageSrcSet = (src: string) => responsiveProjectImages.has(src)
+  ? `${src.replace('.webp', '-480.webp')} 480w, ${src.replace('.webp', '-800.webp')} 800w, ${src} 1460w`
+  : undefined;
 
 export default function Home() {
-  const [projects, setProjects] = useState<Project[]>(homeFallbackProjects);
-  const [blogs, setBlogs] = useState<BlogPost[]>(homeFallbackBlogs);
+  const navigate = useNavigate();
+  const contactEmail = useContactEmail();
+  const [projects, setProjects] = useState<Project[]>(featuredFallbackProjects);
+  const [latestBlogs, setLatestBlogs] = useState<BlogPost[]>(homeFallbackBlogs);
+
   useEffect(() => {
     let active = true;
-    cachedPublicFetch<Paginated<Project>>('/api/v2/projects?limit=8', 'public.projects.featured.v2', { items: homeFallbackProjects, nextCursor: null, total: homeFallbackProjects.length })
-      .then((data) => { if (active && data.items.length) setProjects(data.items); });
-    cachedPublicFetch<Paginated<BlogPost>>('/api/v2/blog?limit=3', 'public.blog.latest.v2', { items: homeFallbackBlogs, nextCursor: null, total: homeFallbackBlogs.length })
-      .then((data) => { if (active && data.items.length) setBlogs(data.items); });
+    cachedPublicFetch<Paginated<Project>>('/api/v2/projects?limit=8', 'public.projects.featured.v2', {
+      items: featuredFallbackProjects,
+      nextCursor: null,
+      total: featuredFallbackProjects.length,
+    }).then((data) => {
+      if (active) setProjects(data.items.length ? data.items : featuredFallbackProjects);
+    });
+    cachedPublicFetch<Paginated<BlogPost>>('/api/v2/blog?limit=3', 'public.blog.latest.v2', {
+      items: homeFallbackBlogs,
+      nextCursor: null,
+      total: homeFallbackBlogs.length,
+    }).then((data) => {
+      if (active) setLatestBlogs(data.items.length ? data.items : homeFallbackBlogs);
+    });
     return () => { active = false; };
   }, []);
-  const note = blogs[0];
-  return <div className="studio-page">
-    <section id="home-hero" className="studio-container home-opening">
-      <div>
-        <p className="eyebrow">Design & development · LB CodeBase</p>
-        <h1 className="display-heading">Digital products.<br /><span className="accent-text">Built with care.</span></h1>
-        <p className="reading-copy">We design and build fast, thoughtful digital products for brands that are ready to grow.</p>
-        <p className="hero-proof">Based in Swat, working with teams across commerce, services, and technology.</p>
-        <div className="flex flex-wrap gap-4 mt-8">
-          <Link to="/portfolio" className="studio-button">See our work <ArrowUpRight size={18} aria-hidden="true" /></Link>
-          <Link to="/contact" className="studio-button studio-button-secondary">Talk about your project</Link>
+
+  const featuredProject = projects[0] || homeFallbackProjects[0];
+  const supportingProjects = projects.slice(1, 4);
+  const portfolioCategories = Array.from(new Set(projects.map((project) => project.category))).slice(0, 3);
+
+  return (
+    <div className="overflow-hidden relative bg-brand-dark">
+      {/* Hero Section */}
+      <section id="home-hero" className="section-transition relative min-h-screen flex items-center pt-24 sm:pt-28 md:pt-32 pb-12 overflow-hidden bg-black">
+        <div className="absolute inset-0 z-0 bg-black" />
+        <motion.div className="max-w-[1600px] mx-auto w-full px-4 sm:px-6 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            <div className="lg:col-span-7">
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+                className="inline-flex items-center gap-3 px-5 py-2 bg-white/[0.03] rounded-full border border-white/10 mb-10 backdrop-blur-xl"
+              >
+                <span className="flex h-2 w-2 rounded-full bg-brand-primary animate-pulse shadow-[0_0_15px_rgba(61,90,254,0.8)]" />
+                <LetterReveal text="NEXT-GEN DIGITAL BUREAU" className="text-[10px] font-black uppercase tracking-[0.5em] text-white/60" />
+              </motion.div>
+              
+              <div className="overflow-hidden mb-12">
+                <motion.h1
+                  initial={{ y: "100%" }}
+                  animate={{ y: 0 }}
+                  transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
+                  className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-black leading-[0.95] tracking-tighter uppercase"
+                >
+                  ENGINEERING <br />
+                  <span className="text-brand-primary italic">ABSOLUTE.</span>
+                </motion.h1>
+              </div>
+              
+              <TextReveal 
+                text="We architect high-fidelity digital ecosystems for visionary brands. Defining the intersection of cinematic design and absolute technical performance."
+                className="text-white/60 text-lg md:text-2xl max-w-2xl leading-tight font-light mb-16"
+              />
+              
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 1 }}
+                className="flex flex-col sm:flex-row gap-4 sm:gap-6"
+              >
+                <Magnetic strength={0.2}>
+                  <Button size="lg" className="w-full sm:w-auto" onClick={() => navigate('/contact')}>
+                    Initiate Mission
+                  </Button>
+                </Magnetic>
+                <Magnetic strength={0.1}>
+                  <Button variant="outline" size="lg" className="w-full border-white/10 sm:w-auto" onClick={() => navigate('/portfolio')}>
+                    Explore Archive
+                  </Button>
+                </Magnetic>
+              </motion.div>
+            </div>
+            
+            {/* Side Video */}
+            <div className="lg:col-span-5 relative">
+              <div className="home-hero-video-frame relative aspect-[4/3] overflow-hidden rounded-2xl bg-black sm:aspect-[16/10] md:rounded-3xl lg:aspect-[4/5]">
+                <DeferredVideo
+                  src="/videos/home-hero-side.mp4"
+                  poster="/images/home-hero-side-poster.webp"
+                  allowCoarsePointer
+                  className="home-hero-video h-full w-full object-cover mix-blend-screen"
+                />
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* System status removed site-wide */}
+      </section>
+
+      {/* Capabilities - Brand-Led Systems */}
+      <section className="relative overflow-hidden border-y border-white/5 bg-brand-gray px-6 py-16 sm:px-8 md:px-12 md:py-20 lg:px-24">
+        <DeferredVideo src="/videos/important-sections-bg.mp4" className="section-background-video absolute inset-0 h-full w-full object-cover opacity-35" />
+        <div className="absolute inset-0 bg-gradient-to-b from-brand-dark via-brand-dark/75 to-brand-dark" />
+        <div className="absolute inset-0 opacity-[0.06] bg-[linear-gradient(90deg,rgba(255,255,255,0.16)_1px,transparent_1px),linear-gradient(rgba(255,255,255,0.16)_1px,transparent_1px)] bg-[size:88px_88px]" />
+
+        <div className="relative z-10 mx-auto max-w-[1600px]">
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-[0.92fr_1.08fr]">
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+              className="glass relative flex min-h-[360px] flex-col justify-between overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.025] p-6 shadow-[0_30px_120px_rgba(0,0,0,0.35)] md:min-h-[430px] md:rounded-[4rem] md:p-10"
+            >
+              <div className="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-brand-primary/70 to-transparent" />
+              <div className="absolute -bottom-24 -right-24 h-72 w-72 rounded-full bg-brand-primary/15 blur-3xl" />
+
+              <div className="relative z-10">
+                <div className="mb-8 inline-flex items-center gap-3 rounded-full border border-brand-primary/20 bg-brand-primary/10 px-4 py-2">
+                  <span className="h-1.5 w-1.5 rounded-full bg-brand-primary shadow-[0_0_18px_rgba(61,90,254,0.7)]" />
+                  <span className="text-[10px] font-black uppercase tracking-[0.35em] text-blue-300">Capabilities</span>
+                </div>
+
+                <h2 className="max-w-3xl font-display text-3xl font-black uppercase leading-[0.95] tracking-tighter text-white sm:text-4xl md:text-5xl">
+                  Brand systems that move with precision.
+                </h2>
+                <p className="mt-6 max-w-2xl text-sm font-light leading-7 text-white/55 md:text-base">
+                  Strategy, design, engineering, and growth shaped into one fast, conversion-ready product system.
+                </p>
+
+                <div className="mt-8 flex flex-wrap gap-2">
+                  {['Strategy', 'Design', 'Engineering', 'Growth'].map((item) => (
+                    <span key={item} className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-[9px] font-black uppercase tracking-[0.22em] text-white/70">
+                      {item}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <div className="relative z-10 mt-10 flex flex-col gap-3 sm:flex-row">
+                <Link
+                  to="/portfolio"
+                  className="inline-flex items-center justify-center gap-3 rounded-full border border-brand-primary/50 bg-brand-primary px-6 py-3.5 text-[10px] font-black uppercase tracking-[0.24em] text-white transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_0_40px_-10px_rgba(61,90,254,0.6)]"
+                >
+                  View Portfolio
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+                <Link
+                  to="/contact"
+                  className="inline-flex items-center justify-center gap-3 rounded-full border border-white/10 px-6 py-3.5 text-[10px] font-black uppercase tracking-[0.24em] text-white transition-all duration-500 hover:-translate-y-1 hover:border-white/20 hover:bg-white/5"
+                >
+                  Start a Project
+                  <Send className="h-4 w-4" />
+                </Link>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
+              className="grid grid-cols-1 gap-4 sm:grid-cols-3 lg:grid-cols-1"
+            >
+              {[
+                { value: 'Fast', label: 'Load experience', body: 'Lean frontends, smart media, and responsive delivery.' },
+                { value: 'Clear', label: 'User journeys', body: 'Simple paths from first impression to qualified action.' },
+                { value: 'Built', label: 'Scalable systems', body: 'Content, commerce, and infrastructure ready to grow.' },
+              ].map((item, index) => (
+                <div
+                  key={item.label}
+                  className="glass group relative overflow-hidden rounded-[1.5rem] border border-white/10 bg-black/35 p-5 transition-all duration-500 hover:-translate-y-1 hover:border-brand-primary/40 hover:bg-white/[0.045] md:rounded-[2.5rem] md:p-7"
+                >
+                  <div className="absolute right-5 top-5 font-display text-5xl font-black leading-none text-white/[0.04] group-hover:text-brand-primary/10">
+                    0{index + 1}
+                  </div>
+                  <div className="relative z-10 max-w-sm">
+                    <div className="mb-4 h-px w-16 bg-brand-primary/60" />
+                    <h3 className="font-display text-3xl font-black uppercase leading-none tracking-tighter text-white">{item.value}</h3>
+                    <div className="mt-2 text-[10px] font-black uppercase tracking-[0.28em] text-blue-300">{item.label}</div>
+                    <p className="mt-5 text-sm font-light leading-6 text-white/70">{item.body}</p>
+                  </div>
+                </div>
+              ))}
+            </motion.div>
+          </div>
+
+          <div className="mt-6 grid grid-cols-1 gap-5 md:grid-cols-3 md:mt-8">
+            {capabilityTracks.map((item, index) => {
+              const Icon = item.icon;
+
+              return (
+                <motion.div
+                  key={item.title}
+                  initial={{ opacity: 0, y: 28 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.75, delay: index * 0.08 }}
+                  className="glass group relative flex min-h-[270px] flex-col overflow-hidden rounded-[1.5rem] border border-white/10 bg-white/[0.025] p-6 transition-all duration-500 hover:-translate-y-2 hover:border-brand-primary/40 hover:bg-white/[0.045] md:min-h-[320px] md:rounded-[3rem] md:p-8"
+                >
+                  <div className="absolute -right-7 -top-7 font-display text-[6rem] font-black leading-none text-white/[0.035] transition-colors duration-500 group-hover:text-brand-primary/10 md:text-[7rem]">
+                    0{index + 1}
+                  </div>
+                  <div className="relative z-10 mb-10 flex h-12 w-12 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.04] text-brand-primary transition-all duration-500 group-hover:bg-brand-primary group-hover:text-white">
+                    <Icon className="h-5 w-5" />
+                  </div>
+                  <div className="relative z-10 mt-auto">
+                    <h3 className="mb-4 font-display text-2xl font-black uppercase leading-none tracking-tighter text-white transition-colors duration-500 group-hover:text-brand-primary">
+                      {item.title}
+                    </h3>
+                    <p className="text-sm font-light leading-6 text-white/50">{item.description}</p>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
+
+          <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+            {operatingModel.map((item, index) => {
+              const Icon = item.icon;
+
+              return (
+                <motion.div
+                  key={item.title}
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.7, delay: index * 0.06 }}
+                  className="glass group rounded-[1.5rem] border border-white/10 bg-white/[0.025] p-5 transition-all duration-500 hover:-translate-y-1 hover:border-brand-primary/30 md:rounded-[2rem]"
+                >
+                  <div className="mb-6 flex items-center justify-between gap-4">
+                    <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.03] text-brand-primary transition-all duration-500 group-hover:bg-brand-primary group-hover:text-white">
+                      <Icon className="h-5 w-5" />
+                    </div>
+                    <span className="text-[10px] font-black uppercase tracking-[0.25em] text-white/65">0{index + 1}</span>
+                  </div>
+                  <h3 className="mb-3 font-display text-base font-black uppercase text-white">{item.title}</h3>
+                  <p className="text-sm font-light leading-6 text-white/70">{item.description}</p>
+                </motion.div>
+              );
+            })}
+          </div>
         </div>
-      </div>
-      <figure className="home-film">
-        <DeferredVideo src="/videos/home-hero-side.mp4" poster="/images/home-hero-side-poster.webp" className="h-full w-full object-cover" />
-        <figcaption>Design, engineering, and the details in between.</figcaption>
-      </figure>
-    </section>
+      </section>
 
-    <section className="studio-section">
-      <div className="studio-container">
-        <p className="eyebrow">A connected approach</p>
-        <h2 className="section-heading max-w-3xl">From the first question<br />to a product people can use.</h2>
-        <div className="capability-strip">{capabilities.map(([title, body]) => <Link key={title} to="/services"><h3>{title} <ArrowUpRight size={16} className="inline accent-text" aria-hidden="true" /></h3><p>{body}</p></Link>)}</div>
-        <a href="#how-we-work" className="studio-text-link mt-6">How we work <ArrowUpRight size={16} aria-hidden="true" /></a>
-      </div>
-    </section>
+      {/* Partners - Infinite Marquee */}
+      <DeferredMount minHeight={240}><PartnerShowcase /></DeferredMount>
 
-    <section className="studio-section bg-brand-gray">
-      <div className="studio-container">
-        <p className="eyebrow">Start with the problem</p>
-        <h2 className="section-heading">What are you trying to improve?</h2>
-        <div className="problem-grid">{problems.map(({ icon: Icon, title, body, detail }) => <article key={title} className="problem-panel"><Icon size={28} className="accent-text" aria-hidden="true" /><h3>{title}</h3><p className="reading-copy">{body}</p><p className="project-meta">{detail}</p><Link to="/services" className="studio-text-link mt-4">Explore the services <ArrowUpRight size={16} aria-hidden="true" /></Link></article>)}</div>
-      </div>
-    </section>
+      {/* Services - The Bento Grid */}
+      <section className="py-16 px-6 sm:px-8 md:px-12 lg:px-24 md:py-20 bg-brand-dark">
+        <div className="max-w-[1600px] mx-auto">
+          <SectionHeader 
+            badge="Arsenal"
+            title={<>Precision-crafted <br/> digital solutions.</>}
+            description="We deploy high-end engineering and strategic design to solve complex business challenges."
+            align="left"
+          />
+          
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 md:min-h-[600px]">
+            <BentoCard span="col-span-1 md:col-span-2 md:row-span-2" className="bg-gradient-to-br from-brand-primary/10 to-transparent">
+              <div className="h-full flex flex-col justify-between">
+                <div className="p-4 bg-brand-primary/10 rounded-2xl w-fit mb-8">
+                  <Globe className="w-8 h-8 text-brand-primary" />
+                </div>
+                <div>
+                  <h3 className="text-3xl font-display font-black mb-4 uppercase tracking-tighter">Web Engineering</h3>
+                  <p className="text-white/70 text-lg font-light leading-relaxed mb-8">
+                    Production-grade React, Next.js, and Three.js ecosystems built for extreme scale and zero latency.
+                  </p>
+                  <Link to="/services" className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-brand-primary group">
+                    Full Stack Details
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-2 transition-transform" />
+                  </Link>
+                </div>
+              </div>
+            </BentoCard>
 
-    <section className="studio-section">
-      <div className="studio-container">
-        <div className="flex flex-wrap items-end justify-between gap-6"><div><p className="eyebrow">Selected work</p><h2 className="section-heading">Different businesses.<br />Specific problems to solve.</h2></div><Link to="/portfolio" className="studio-text-link">See all our work <ArrowUpRight size={18} aria-hidden="true" /></Link></div>
-        <div className="project-index">{projects.slice(0, 4).map((project) => <Link to={`/portfolio/${project.slug}`} key={project.id}><div className="project-image"><img src={project.image || project.thumbnail} alt={`${project.title} website preview`} loading="lazy" decoding="async" width={1460} height={913} /></div><h3>{project.title} <ArrowUpRight className="inline accent-text" size={20} aria-hidden="true" /></h3><p className="reading-copy">{project.shortDescription || project.description}</p>{project.results?.[0] && <p className="project-meta">Delivered: {project.results[0]}</p>}<p className="project-meta">{project.technologies.slice(0, 3).join(' · ')}</p></Link>)}</div>
-      </div>
-    </section>
+            <BentoCard span="col-span-1 md:col-span-2" className="flex-row items-center gap-8">
+              <div className="p-4 bg-brand-purple/10 rounded-2xl w-fit">
+                <Smartphone className="w-8 h-8 text-brand-purple" />
+              </div>
+              <div>
+                <h3 className="text-xl font-display font-black uppercase tracking-tighter mb-2">Mobile Apps</h3>
+                <p className="text-white/70 text-sm font-light">iOS & Android experiences that redefine interaction.</p>
+              </div>
+            </BentoCard>
 
-    <section className="studio-section bg-brand-gray">
-      <div className="studio-container"><p className="eyebrow">What we care about</p><h2 className="section-heading">Clear. Fast. Built to keep growing.</h2>
-        <div className="capability-strip lg:!grid-cols-3">
-          {[
-            ['Clarity', 'People should understand the offer and the next step. We review journeys and content with that in mind.'],
-            ['Performance', 'Pages should load quickly on real networks. We check media, loading behavior, and responsive delivery.'],
-            ['Care', 'Your team should be able to maintain the product. We plan access, documentation, and handover alongside the build.'],
-          ].map(([title, body]) => <div key={title} className="border-t-2 border-brand-primary pt-6"><h3 className="font-display text-2xl mb-4">{title}</h3><p className="reading-copy">{body}</p></div>)}
+            <BentoCard span="col-span-1" className="justify-center items-center text-center">
+              <Palette className="w-10 h-10 text-brand-accent mb-6" />
+              <h3 className="text-lg font-display font-black uppercase tracking-tighter">UI/UX Art</h3>
+            </BentoCard>
+
+            <BentoCard span="col-span-1" className="justify-center items-center text-center">
+              <Zap className="w-10 h-10 text-brand-primary mb-6" />
+              <h3 className="text-lg font-display font-black uppercase tracking-tighter">E-commerce</h3>
+            </BentoCard>
+
+            <BentoCard span="col-span-1 md:col-span-2" className="bg-brand-gray/50 border-brand-primary/10">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="text-xl font-display font-black uppercase tracking-tighter mb-2">Cloud Infrastructure</h3>
+                  <p className="text-white/70 text-sm font-light">Bullet-proof AWS & Vercel deployments.</p>
+                </div>
+                <Shield className="w-8 h-8 text-brand-primary/50" />
+              </div>
+            </BentoCard>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <section id="how-we-work" className="studio-section scroll-mt-28"><div className="studio-container"><p className="eyebrow">How we work</p><h2 className="section-heading">From first conversation to launch.</h2><ol className="process-list">{process.map(([title, body]) => <li key={title}><h3>{title}</h3><p className="reading-copy">{body}</p></li>)}</ol><Link to="/about#team-directory" className="studio-text-link mt-4">Meet the people behind the work <ArrowUpRight size={18} aria-hidden="true" /></Link></div></section>
+      {/* Manifesto Section - Optimized */}
+      <section className="py-16 px-6 sm:px-8 md:px-12 lg:px-24 md:py-20 bg-brand-gray relative overflow-hidden">
+        <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_80%_20%,rgba(61,90,254,0.1),transparent_50%)]" />
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <div>
+              <motion.div
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                className="text-[10px] font-black uppercase tracking-[0.5em] text-brand-primary mb-8"
+              >
+                OUR DNA
+              </motion.div>
+              <h2 className="text-4xl md:text-5xl font-display font-black leading-[0.95] tracking-tighter uppercase mb-8 gradient-text">
+                WE DON'T DO <br /> COMPROMISE.
+              </h2>
+              <p className="text-white/50 text-xl font-light leading-relaxed mb-12">
+                Every pixel is intentional. Every line of code is architectural. We build platforms that command authority.
+              </p>
+              
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                {[
+                  { title: 'AUTHORITY', desc: 'Platforms that command respect through elite design.', icon: <Shield className="w-5 h-5" /> },
+                  { title: 'CONVERSION', desc: 'Data-driven psychology for exponential growth.', icon: <Activity className="w-5 h-5" /> }
+                ].map((v, i) => (
+                  <div key={i}>
+                    <div className="text-brand-primary mb-4">{v.icon}</div>
+                    <h3 className="text-sm font-black uppercase tracking-widest text-white mb-2">{v.title}</h3>
+                    <p className="text-white/70 font-light text-xs leading-relaxed">{v.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+            
+            <div className="relative">
+              <div className="absolute -inset-10 bg-brand-primary/5 blur-[100px]" />
+              <img 
+                src="/images/sectionimage1.webp"
+                srcSet="/images/sectionimage1-480.webp 480w, /images/sectionimage1-800.webp 800w, /images/sectionimage1.webp 1264w"
+                sizes="(max-width: 1023px) calc(100vw - 48px), 50vw"
+                alt="DNA" 
+                loading="lazy"
+                decoding="async"
+                width={1264}
+                height={844}
+                className="relative z-10 w-full rounded-[1rem] md:rounded-[2rem] transition-all duration-1000 border border-white/10"
+                referrerPolicy="no-referrer"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
 
-    <section id="reviews" className="studio-section"><div className="studio-container"><DeferredMount minHeight={400}><ClientReviews /></DeferredMount><DeferredMount minHeight={180}><PartnerShowcase /></DeferredMount></div></section>
+      {/* Insights Section - Tiny Blog */}
+      <section className="py-16 px-6 sm:px-8 md:px-12 lg:px-24 md:py-20 border-t border-white/5 bg-brand-dark/80 relative z-10">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 text-center md:text-left">
+            {[
+              { value: '30+', label: 'Successful Launches' },
+              { value: '31+', label: 'Global Clients' },
+              { value: '40%+', label: 'Conversion Lift' },
+              { value: '99.9%', label: 'Uptime Reliability' }
+            ].map((stat, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+              >
+                <div className="text-4xl md:text-6xl font-display font-black text-white tracking-tighter leading-none mb-3">
+                  {stat.value}
+                </div>
+                <div className="text-[10px] font-black uppercase tracking-[0.4em] text-brand-primary">
+                  {stat.label}
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
 
-    {note && <section className="studio-section"><div className="studio-container grid gap-8 md:grid-cols-2"><div><p className="eyebrow">From the studio</p><h2 className="section-heading">A note on the work.</h2><p className="reading-copy mt-6">Decisions, lessons, and ideas from building digital products.</p></div><article className="editorial-callout"><p className="eyebrow">{note.category} · {note.time || note.readingTime}</p><h3 className="font-display text-2xl mb-4">{note.title}</h3><p className="reading-copy">{note.excerpt}</p><p className="project-meta">{note.author} · {note.date}</p><Link to={`/blog/${note.slug}`} className="studio-text-link mt-4">Read the note <ArrowUpRight size={18} aria-hidden="true" /></Link></article></div></section>}
+      {/* Featured Projects - Curated Archive */}
+      <section className="relative overflow-hidden border-t border-white/5 bg-brand-dark py-24 md:py-32">
+        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-primary/60 to-transparent" />
+        <div className="absolute inset-0 opacity-[0.05] bg-[linear-gradient(90deg,rgba(255,255,255,0.16)_1px,transparent_1px),linear-gradient(rgba(255,255,255,0.16)_1px,transparent_1px)] bg-[size:96px_96px]" />
 
-    <section className="studio-section"><div className="studio-container contact-layout"><div><p className="eyebrow">Start a conversation</p><h2 className="section-heading">Tell us what you’re<br /><span className="accent-text">trying to improve.</span></h2><p className="reading-copy mt-6">We usually reply within one business day with a clear next step.</p><ul className="reading-copy mt-6 space-y-3"><li>Share your goals, even if the scope is still taking shape.</li><li>We’ll review the brief and discuss what comes next.</li><li>Prefer a quick message? <a href="https://wa.me/923489077329" target="_blank" rel="noreferrer" className="studio-text-link">Talk on WhatsApp</a></li></ul></div><div className="contact-form-panel"><DeferredMount minHeight={560}><ContactForm /></DeferredMount></div></div></section>
-  </div>;
+        <div className="relative z-10 mx-auto max-w-[1600px] px-6 md:px-12 lg:px-24">
+          <div className="mb-14 flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+            <SectionHeader
+              badge="Archive"
+              title={<>Defining the <br/> <span className="text-white/65 italic uppercase">Next Standard.</span></>}
+              description="A curated selection of our most impactful digital deployments."
+              align="left"
+              className="mb-0"
+            />
+            <Link
+              to="/portfolio"
+              className="inline-flex w-fit items-center justify-center gap-3 rounded-full border border-white/10 px-8 py-4 text-xs font-black uppercase tracking-[0.3em] text-white transition-all duration-500 hover:-translate-y-1 hover:border-brand-primary/40 hover:bg-white/5"
+            >
+              Full Portfolio
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
+            <Link
+              to={`/portfolio/${featuredProject.slug}`}
+              className="project-3d-card group relative min-h-[480px] overflow-hidden rounded-[1.5rem] border border-white/10 bg-brand-gray lg:col-span-7 lg:min-h-[640px] md:rounded-[3rem]"
+            >
+              <img
+                src={featuredProject.image || featuredProject.thumbnail}
+                srcSet={projectImageSrcSet(featuredProject.image || featuredProject.thumbnail)}
+                sizes="(max-width: 1023px) calc(100vw - 48px), 58vw"
+                alt={featuredProject.title}
+                loading="lazy"
+                decoding="async"
+                className="absolute inset-0 h-full w-full object-cover transition-transform duration-1000 group-hover:scale-105"
+                referrerPolicy="no-referrer"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/45 to-transparent" />
+              <div className="absolute inset-x-0 top-0 flex items-center justify-between p-5 md:p-8">
+                <span className="rounded-full border border-white/10 bg-black/30 px-4 py-2 text-[10px] font-black uppercase tracking-[0.3em] text-brand-primary backdrop-blur-md">
+                  Featured Deployment
+                </span>
+                <div className="flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-white/10 backdrop-blur-md transition-all duration-500 group-hover:bg-brand-primary">
+                  <ArrowRight className="h-5 w-5 text-white transition-transform duration-500 group-hover:translate-x-1" />
+                </div>
+              </div>
+              <div className="absolute inset-x-0 bottom-0 p-6 md:p-10 lg:p-12">
+                <div className="mb-5 flex flex-wrap items-center gap-3">
+                  <span className="text-[10px] font-black uppercase tracking-[0.4em] text-brand-primary">{featuredProject.category}</span>
+                  <span className="h-px w-10 bg-white/20" />
+                  <span className="text-[10px] font-black uppercase tracking-[0.3em] text-white/65">
+                    {featuredProject.completionDate || 'Live System'}
+                  </span>
+                </div>
+                <h3 className="max-w-3xl font-display text-4xl font-black uppercase leading-none text-white md:text-6xl">
+                  {featuredProject.title}
+                </h3>
+                <p className="mt-6 max-w-2xl text-base font-light leading-relaxed text-white/55 md:text-lg">
+                  {featuredProject.shortDescription || featuredProject.description}
+                </p>
+                <div className="mt-8 flex flex-wrap gap-3">
+                  {featuredProject.technologies?.slice(0, 4).map((technology) => (
+                    <span key={technology} className="rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-[10px] font-black uppercase tracking-[0.25em] text-white/55">
+                      {technology}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </Link>
+
+            <div className="grid gap-6 lg:col-span-5">
+              {supportingProjects.map((project, index) => (
+                <Link
+                  key={project.id}
+                  to={`/portfolio/${project.slug}`}
+                  className={cn(
+                    'group grid min-h-[210px] overflow-hidden rounded-[1.5rem] border border-white/10 bg-white/[0.025] transition-all duration-500 hover:-translate-y-1 hover:border-brand-primary/30 hover:bg-white/[0.045] md:grid-cols-[180px_1fr] md:rounded-[2rem]',
+                    index === 0 && 'lg:min-h-[250px]',
+                  )}
+                >
+                  <div className="relative min-h-[180px] overflow-hidden">
+                    <img
+                      src={project.image || project.thumbnail}
+                      srcSet={projectImageSrcSet(project.image || project.thumbnail)}
+                      sizes="(max-width: 767px) calc(100vw - 48px), 180px"
+                      alt={project.title}
+                      loading="lazy"
+                      decoding="async"
+                      className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      referrerPolicy="no-referrer"
+                    />
+                    <div className="absolute inset-0 bg-black/20" />
+                  </div>
+                  <div className="flex flex-col justify-between p-6">
+                    <div>
+                      <div className="mb-4 flex items-center justify-between gap-4">
+                        <span className="text-[10px] font-black uppercase tracking-[0.35em] text-blue-300">{project.category}</span>
+                        <ArrowRight className="h-4 w-4 text-white/20 transition-all duration-500 group-hover:translate-x-1 group-hover:text-brand-primary" />
+                      </div>
+                      <h3 className="font-display text-2xl font-black uppercase leading-none text-white transition-colors duration-500 group-hover:text-brand-primary">
+                        {project.title}
+                      </h3>
+                      <p className="mt-4 line-clamp-2 text-sm font-light leading-relaxed text-white/70">
+                        {project.shortDescription || project.description}
+                      </p>
+                    </div>
+                    <div className="mt-6 flex flex-wrap gap-2">
+                      {project.technologies?.slice(0, 2).map((technology) => (
+                        <span key={technology} className="text-[10px] font-black uppercase tracking-[0.25em] text-white/65">
+                          {technology}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </Link>
+              ))}
+
+              <Link
+                to="/portfolio"
+                className="group flex min-h-[190px] flex-col justify-between rounded-[1.5rem] border border-brand-primary/20 bg-brand-primary/10 p-7 transition-all duration-500 hover:-translate-y-1 hover:border-brand-primary/50 hover:bg-brand-primary/15 md:rounded-[2rem]"
+              >
+                <div className="flex items-center justify-between">
+                  <Rocket className="h-6 w-6 text-brand-primary" />
+                  <ArrowRight className="h-5 w-5 text-brand-primary transition-transform duration-500 group-hover:translate-x-2" />
+                </div>
+                <div>
+                  <div className="mb-3 text-[10px] font-black uppercase tracking-[0.35em] text-brand-primary">Explore Archive</div>
+                  <h3 className="font-display text-2xl font-black uppercase leading-none text-white">
+                    See the complete portfolio system.
+                  </h3>
+                </div>
+              </Link>
+            </div>
+          </div>
+
+          <div className="mt-6 grid grid-cols-1 gap-3 border-y border-white/5 py-6 sm:grid-cols-3 sm:gap-4">
+            {[
+              { label: 'Featured systems', value: projects.length.toString().padStart(2, '0') },
+              { label: 'Primary categories', value: portfolioCategories.join(' / ') || 'Digital' },
+              { label: 'Archive status', value: 'Live' },
+            ].map((item) => (
+              <div key={item.label} className="min-w-0 rounded-2xl border border-white/10 bg-white/[0.025] p-4">
+                <div className="text-[9px] font-black uppercase tracking-[0.24em] text-white/65 sm:text-[10px]">{item.label}</div>
+                <div className="mt-3 break-words font-display text-lg font-black uppercase leading-tight text-white sm:text-xl">
+                  {item.value}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Process Section - Cinematic Flow */}
+      <section className="py-16 px-6 sm:px-8 md:px-12 lg:px-24 md:py-20 relative overflow-hidden bg-brand-dark">
+        <div className="max-w-7xl mx-auto">
+          <SectionHeader 
+            badge="Workflow"
+            title={<>THE ANATOMY OF <br /> <span className="text-white/65 italic uppercase">EXCELLENCE.</span></>}
+            description="Our battle-tested workflow is designed for speed, quality, and extreme scalability."
+            align="left"
+            className="mb-16"
+          />
+          
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 relative">
+            {[
+              { 
+                step: '01', 
+                title: 'DISCOVERY', 
+                desc: 'We tear down your objectives to build a data-driven roadmap. Analysis of market gaps forms our strategy.' 
+              },
+              { 
+                step: '02', 
+                title: 'ART DIRECTION', 
+                desc: 'Digital art directed by high-fidelity prototyping. We craft cinematic journeys that convert.' 
+              },
+              { 
+                step: '03', 
+                title: 'ARCHITECTURE', 
+                desc: 'Full-stack engineering without compromises. We build scalable, bullet-proof codebases.' 
+              },
+              { 
+                step: '04', 
+                title: 'DEPLOYMENT', 
+                desc: 'Zero-latency rollout with predictive monitoring. We optimize for global expansion.' 
+              },
+            ].map((p, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: i * 0.1 }}
+                className="group relative p-6 sm:p-8 md:p-10 bg-white/[0.02] border border-white/5 rounded-[1rem] md:rounded-[2.5rem] h-full flex flex-col justify-between hover:border-brand-primary/40 transition-all duration-500 glass"
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-12">
+                    <div className="text-4xl font-display font-black text-white/5 group-hover:text-brand-primary/20 transition-colors">
+                      {p.step}
+                    </div>
+                    <div className="w-10 h-10 rounded-full border border-white/5 flex items-center justify-center group-hover:bg-brand-primary transition-all duration-500">
+                      <div className="w-1.5 h-1.5 rounded-full bg-brand-primary group-hover:bg-white animate-pulse" />
+                    </div>
+                  </div>
+                  <h3 className="text-xl font-display font-black mb-4 tracking-tighter uppercase group-hover:text-brand-primary transition-colors">
+                    {p.title}
+                  </h3>
+                  <p className="text-white/70 text-sm font-light leading-relaxed">
+                    {p.desc}
+                  </p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <DeferredMount minHeight={520}><ClientReviews /></DeferredMount>
+
+      {/* Latest Blog - Compact Engineering Lab */}
+      <section className="py-16 px-6 sm:px-8 md:px-12 lg:px-24 md:py-20 bg-brand-dark overflow-hidden relative">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex flex-col md:flex-row justify-between items-center md:items-end mb-16 gap-8">
+            <SectionHeader 
+              badge="Journal"
+              title="From our Lab."
+              description="Latest trends in web engineering, 3D, and strategy."
+              className="mb-0"
+            />
+            <Button variant="outline" size="md" className="flex-shrink-0">Read All Posts</Button>
+          </div>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 lg:gap-8 px-4 sm:px-6 lg:px-0">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="lg:col-span-8 group cursor-pointer relative rounded-[1rem] md:rounded-[3rem] overflow-hidden border border-white/5 aspect-[16/9] lg:aspect-auto h-[200px] sm:h-[250px] md:h-[400px] w-full"
+            >
+              <img 
+                src={latestBlogs[0]?.image || latestBlogs[0]?.coverImage || '/images/webdevolopmentservice.webp'}
+                alt={latestBlogs[0]?.title || 'Main post'} 
+                loading="lazy"
+                decoding="async"
+                className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-105"
+                referrerPolicy="no-referrer"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-brand-dark via-brand-dark/40 to-transparent p-8 md:p-12 flex flex-col justify-center items-center text-center">
+                <h3 className="text-2xl md:text-4xl font-display font-black text-white mb-4 uppercase tracking-tighter max-w-xl text-center lg:text-left">{latestBlogs[0]?.title || 'THE ARCHITECTURE OF A $100M APP.'}</h3>
+                <div className="flex items-center justify-center gap-3 text-brand-primary text-[10px] font-black uppercase tracking-widest">
+                  Read Case Study <ArrowRight className="w-4 h-4" />
+                </div>
+              </div>
+            </motion.div>
+
+            <div className="lg:col-span-4 flex flex-col gap-6">
+              {(latestBlogs.length > 1 ? latestBlogs.slice(1, 3) : homeFallbackBlogs.slice(0, 2)).map((post, i) => (
+                <div
+                  key={post.id || i}
+                  className="group flex gap-4 sm:gap-6 items-center p-4 sm:p-6 bg-white/[0.02] rounded-[1rem] md:rounded-[2rem] border border-white/5 hover:border-brand-primary/30 transition-all cursor-pointer glass"
+                >
+                  <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-xl overflow-hidden flex-shrink-0">
+                    <img 
+                      src={post.image || post.coverImage || (i % 2 === 0 ? '/images/designwebsiteservice.webp' : '/images/digitalauditservice.webp')}
+                      alt={post.title || 'Side post'} 
+                      loading="lazy"
+                      decoding="async"
+                      className="w-full h-full object-cover transition-all duration-700" 
+                      referrerPolicy="no-referrer"
+                    />
+                  </div>
+                  <div>
+                    <h3 className="text-base md:text-lg font-display font-black text-white group-hover:text-brand-primary transition-colors leading-tight uppercase mb-2">{post.title}</h3>
+                    <div className="text-[10px] text-white/65 font-black uppercase tracking-widest">{post.time || post.readingTime}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Inquiry Form - Professional Glass */}
+      <section className="py-16 px-6 sm:px-8 md:px-12 lg:px-24 md:py-20 bg-brand-gray/50 border-y border-white/5 relative overflow-hidden">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          <div>
+            <SectionHeader 
+              badge="Inquiry"
+              title={<>Let's build <br/> something legacy.</>}
+              description="Ready to elevate your digital presence? Our team will get back to you within 24 hours."
+              className="mb-10"
+            />
+            <div className="space-y-8">
+              {[
+                { label: 'Direct Email', val: contactEmail },
+                { label: 'Engineering Hub', val: 'Mingora, Swat, Pakistan' }
+              ].map((item, i) => (
+                <div key={i}>
+                  <div className="text-[10px] uppercase font-black tracking-[0.4em] text-blue-300 mb-2">{item.label}</div>
+                  <div className="text-sm sm:text-base md:text-xl lg:text-2xl font-display font-black tracking-tighter uppercase break-all">{item.val}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+          
+          <div className="p-5 sm:p-8 md:p-10 bg-brand-dark/40 rounded-[1.25rem] md:rounded-[3rem] border border-white/10 shadow-3xl relative glass">
+            <DeferredMount minHeight={520}><ContactForm /></DeferredMount>
+          </div>
+        </div>
+      </section>
+
+      {/* Final CTA - Neon Impact */}
+      <section className="py-24 px-6 md:px-20">
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          className="max-w-6xl mx-auto rounded-[1rem] md:rounded-[4rem] bg-brand-primary overflow-hidden relative p-6 sm:p-8 md:p-20 lg:p-24 text-center shadow-[0_0_100px_-20px_rgba(61,90,254,0.4)]"
+        >
+          <div className="absolute inset-0 bg-gradient-to-br from-brand-primary to-brand-purple opacity-50" />
+          
+          <div className="relative z-10">
+            <h2 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-display font-black text-white mb-6 sm:mb-8 lg:mb-10 leading-[0.9] tracking-tighter uppercase">
+              Ready to create <br /> extraordinary?
+            </h2>
+            <p className="text-white/80 text-base sm:text-lg md:text-xl max-w-2xl mx-auto mb-8 sm:mb-10 lg:mb-12 font-light leading-relaxed">
+              Join the elite brands who trust us for their digital expansion. Let's build the future together.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <Button variant="secondary" size="lg" className="w-full sm:w-auto px-8 sm:px-16" onClick={() => navigate('/contact')}>
+                Consultancy
+              </Button>
+              <Button variant="ghost" size="lg" className="w-full sm:w-auto border border-white/30 px-8 sm:px-16" onClick={() => window.location.href=`mailto:${contactEmail}`}>
+                Email us
+              </Button>
+            </div>
+          </div>
+        </motion.div>
+      </section>
+    </div>
+  );
 }

@@ -8,7 +8,7 @@ export default function Legal() {
   const isPrivacy = location.pathname.includes('privacy');
 
   return (
-    <motion.div
+    <motion.div 
       initial={false}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -18,52 +18,52 @@ export default function Legal() {
         {/* Proper Legal Hero */}
         <section className="relative min-h-screen flex items-center pt-24 pb-12 overflow-hidden">
           <HeroBackground poster="/images/thesearchforabsolutesection.jpg" />
-
+          
           <div className="relative z-10 max-w-4xl w-full">
             <motion.div
-              initial={false}
+              initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               className="inline-flex items-center gap-2 px-3 py-1 bg-white/5 rounded-full border border-white/10 mb-8 overflow-hidden backdrop-blur-sm"
             >
               <span className="flex h-1.5 w-1.5 rounded-full bg-brand-primary animate-pulse" />
-              <LetterReveal
-                text="COMPLIANCE"
-                className="text-xs font-semibold normal-case tracking-[0.1em] text-white/75"
+              <LetterReveal 
+                text="COMPLIANCE" 
+                className="text-[10px] font-black uppercase tracking-[0.3em] text-white/60" 
               />
             </motion.div>
 
             <div className="overflow-hidden mb-10">
               <motion.h1
-                initial={false}
+                initial={{ y: "100%" }}
                 animate={{ y: 0 }}
-                transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
-                className="fluid-display font-display font-semibold normal-case leading-none"
+                transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
+                className="fluid-display font-display font-black uppercase leading-none"
               >
                 {isPrivacy ? "PRIVACY" : "TERMS"} <br />
-                <span className="text-white/75 normal-case italic tracking-tighter block mt-2">POLICIES.</span>
+                <span className="text-white/10 uppercase italic tracking-tighter block mt-2">POLICIES.</span>
               </motion.h1>
             </div>
 
-            <TextReveal
+            <TextReveal 
               text={`Last updated: April 20, 2026. Please read our ${isPrivacy ? "privacy" : "service"} terms carefully.`}
-              className="text-white/75 text-xl font-normal"
+              className="text-white/40 text-xl font-light"
             />
           </div>
 
           {/* Scroll Indicator */}
-          <motion.div
+          <motion.div 
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.2 }}
+            transition={{ repeat: Infinity, duration: 2, repeatType: "reverse" }}
             className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
           >
-            <span className="text-xs normal-case tracking-[0.1em] text-white/75">Security</span>
+            <span className="text-[9px] uppercase tracking-[0.4em] text-white/20">Security</span>
             <div className="w-[1px] h-12 bg-gradient-to-b from-brand-primary/40 to-transparent" />
           </motion.div>
         </section>
 
         <div className="max-w-4xl mt-8">
-          <div className="prose prose-invert prose-base md:prose-lg max-w-none space-y-10 md:space-y-12 text-white/75">
+          <div className="prose prose-invert prose-base md:prose-lg max-w-none space-y-10 md:space-y-12 text-white/60">
           <section>
             <h3 className="text-xl md:text-2xl font-display font-bold text-white mb-5 md:mb-6">1. Information We Collect</h3>
             <p>
