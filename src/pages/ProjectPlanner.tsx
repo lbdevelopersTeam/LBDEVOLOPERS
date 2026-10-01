@@ -1,156 +1,37 @@
-import { motion, AnimatePresence } from 'motion/react';
-import { useState } from 'react';
-import { SectionHeader, Button } from '../components/common/UI';
-import { ArrowRight, ArrowLeft, CheckCircle2, Layout, Monitor, Smartphone, Palette, Zap, Globe } from 'lucide-react';
+import { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Check, ArrowLeft, ArrowRight } from 'lucide-react';
+import { useContactEmail } from '../lib/site-settings';
 
 const steps = [
-  {
-    id: 'type',
-    question: "What type of product are we building?",
-    options: [
-      { id: 'new', label: 'New Website Design', icon: <Palette className="w-6 h-6" /> },
-      { id: 'redesign', label: 'Website Redesign', icon: <Zap className="w-6 h-6" /> },
-      { id: 'app', label: 'Mobile Application', icon: <Smartphone className="w-6 h-6" /> },
-      { id: 'ecommerce', label: 'E-commerce Platform', icon: <Layout className="w-6 h-6" /> },
-    ]
-  },
-  {
-    id: 'focus',
-    question: "What is your primary focus?",
-    options: [
-      { id: 'speed', label: 'Velocity & Performance', icon: <Zap className="w-6 h-6" /> },
-      { id: 'aesthetic', label: 'Visual Storytelling', icon: <Palette className="w-6 h-6" /> },
-      { id: 'conversion', label: 'Conversion & Growth', icon: <Monitor className="w-6 h-6" /> },
-      { id: 'architect', label: 'Technical Infrastructure', icon: <Globe className="w-6 h-6" /> },
-    ]
-  },
-  {
-    id: 'budget',
-    question: "What is your estimated investment tier?",
-    options: [
-      { id: 'essential', label: '$2.5k - $5k (Essential)', icon: null },
-      { id: 'premium', label: '$7.5k - $15k (Premium)', icon: null },
-      { id: 'elite', label: '$20k+ (Enterprise)', icon: null },
-      { id: 'discuss', label: 'Let\'s Discuss', icon: null },
-    ]
-  }
+  { id: 'type', label: 'Type', question: 'What are you planning?', help: 'Next, we’ll ask what you want the project to improve.', options: ['A new website', 'A website redesign', 'A mobile app', 'A commerce store', 'Not sure yet'] },
+  { id: 'goal', label: 'Goals', question: 'What matters most?', help: 'Next, review your answers and choose how to contact us.', options: ['More qualified leads', 'Better product discovery', 'A faster site', 'Launching something new', 'Internal efficiency', 'Not sure yet'] },
 ];
 
 export default function ProjectPlanner() {
-  const [currentStep, setCurrentStep] = useState(0);
+  const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
-  const [isFinished, setIsFinished] = useState(false);
-
-  const handleOptionSelect = (optionId: string) => {
-    setAnswers({ ...answers, [steps[currentStep].id]: optionId });
-    if (currentStep < steps.length - 1) {
-      setCurrentStep(currentStep + 1);
-    } else {
-      setIsFinished(true);
-    }
-  };
-
-  return (
-    <motion.div 
-      initial={false}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      className="min-h-screen pt-28 md:pt-32 pb-16 md:pb-20 px-6 sm:px-8 md:px-12 lg:px-24 bg-brand-dark"
-    >
-      <div className="max-w-4xl mx-auto">
-        <h1 className="sr-only">Project planner</h1>
-        {!isFinished ? (
-          <>
-            <div className="mb-10 md:mb-12 flex flex-col sm:flex-row sm:items-center justify-between gap-5">
-              <div className="flex gap-2">
-                {steps.map((_, i) => (
-                  <div 
-                    key={i} 
-                    className={`h-1 rounded-full transition-all duration-500 ${
-                      i <= currentStep ? 'w-12 bg-brand-primary' : 'w-4 bg-white/10'
-                    }`} 
-                  />
-                ))}
-              </div>
-              <span className="text-[10px] font-black tracking-widest text-white/40 uppercase">
-                Step {currentStep + 1} of {steps.length}
-              </span>
-            </div>
-
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={currentStep}
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-                className="space-y-10 md:space-y-12"
-              >
-                <header>
-                  <h2 className="text-3xl md:text-5xl font-display font-black uppercase tracking-tighter leading-none mb-6">
-                    {steps[currentStep].question}
-                  </h2>
-                  <p className="text-white/40 text-lg font-light">Choose the option that best reflects your vision.</p>
-                </header>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {steps[currentStep].options.map((option) => (
-                    <button
-                      key={option.id}
-                      onClick={() => handleOptionSelect(option.id)}
-                    className={`group p-5 sm:p-8 rounded-[1.5rem] md:rounded-[2rem] border text-left transition-all duration-500 hover:border-brand-primary/50 relative overflow-hidden ${
-                        answers[steps[currentStep].id] === option.id 
-                          ? 'border-brand-primary bg-brand-primary/10' 
-                          : 'border-white/5 bg-white/5'
-                      }`}
-                    >
-                      <div className="absolute -right-4 -bottom-4 w-24 h-24 bg-brand-primary/5 group-hover:bg-brand-primary/10 transition-colors rounded-full blur-2xl" />
-                      <div className="flex items-center justify-between gap-4 relative z-10">
-                        <div className="flex min-w-0 items-center gap-4">
-                          {option.icon && <div className="text-brand-primary">{option.icon}</div>}
-                          <span className="text-base sm:text-lg font-bold uppercase tracking-tight">{option.label}</span>
-                        </div>
-                        <ArrowRight className="w-5 h-5 text-brand-primary opacity-0 group-hover:opacity-100 group-hover:translate-x-2 transition-all" />
-                      </div>
-                    </button>
-                  ))}
-                </div>
-
-                {currentStep > 0 && (
-                  <button 
-                    onClick={() => setCurrentStep(currentStep - 1)}
-                    className="flex items-center gap-2 text-white/40 hover:text-white transition-colors text-xs font-black uppercase tracking-widest"
-                  >
-                    <ArrowLeft className="w-4 h-4" /> Go Back
-                  </button>
-                )}
-              </motion.div>
-            </AnimatePresence>
-          </>
-        ) : (
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.9 }} 
-            animate={{ opacity: 1, scale: 1 }}
-            className="text-center bg-[#0c0c0c] border border-white/5 p-6 sm:p-10 md:p-24 rounded-[1.5rem] md:rounded-[3rem]"
-          >
-            <div className="w-24 h-24 rounded-full bg-brand-primary/10 border border-brand-primary/20 flex items-center justify-center mx-auto mb-10">
-              <CheckCircle2 className="w-12 h-12 text-brand-primary" />
-            </div>
-            <h2 className="text-3xl md:text-6xl font-display font-black mb-6 uppercase tracking-tighter">Plan Complete.</h2>
-            <p className="text-white/60 text-base md:text-xl font-light mb-10 md:mb-12 max-w-xl mx-auto leading-relaxed">
-              We've analyzed your project parameters. Our strategy team is ready to review your vision.
-            </p>
-            <div className="flex flex-col md:flex-row gap-4 justify-center">
-              <Link to="/contact">
-                <Button size="lg" className="w-full md:w-auto">Submit Specification</Button>
-              </Link>
-              <Link to="/booking">
-                <Button size="lg" variant="outline" className="w-full md:w-auto">Book Strategy Session</Button>
-              </Link>
-            </div>
-          </motion.div>
-        )}
-      </div>
-    </motion.div>
-  );
+  const heading = useRef<HTMLHeadingElement>(null);
+  const email = useContactEmail();
+  const goTo = (next: number) => { setStep(next); requestAnimationFrame(() => heading.current?.focus()); };
+  const summary = `Project starting point\n\nType: ${answers.type || 'Not decided'}\nMain goal: ${answers.goal || 'Not decided'}\n\nCompany / business:\nExisting website and assets:\nPages or features needed:\nTarget launch:\nBudget range (if known):`;
+  return <div className="studio-page"><div className="studio-container compact-hero max-w-4xl">
+    <p className="eyebrow">Project starting-point planner</p>
+    <h1 className="display-heading">Let’s shape your brief.</h1>
+    <p className="reading-copy mb-10">You don’t need a technical specification. Start with the kind of work and the outcome you need.</p>
+    <ol className="planner-progress" aria-label="Planner progress">{['Type', 'Goals', 'Contact'].map((label, index) => <li key={label} aria-current={step === index ? 'step' : undefined}>{index + 1}. {label}{step > index && <Check size={16} className="inline ml-2" aria-label="Complete" />}</li>)}</ol>
+    {step < steps.length ? <section aria-label={steps[step].label}>
+      <h2 ref={heading} tabIndex={-1} className="section-heading mb-4">{steps[step].question}</h2>
+      <p className="reading-copy mb-8">{steps[step].help}</p>
+      <div className="grid gap-4 sm:grid-cols-2">{steps[step].options.map((option) => <button type="button" key={option} className="planner-choice" aria-pressed={answers[steps[step].id] === option} onClick={() => setAnswers((previous) => ({ ...previous, [steps[step].id]: option }))}><span className="flex-1">{option}</span>{answers[steps[step].id] === option && <Check size={20} className="accent-text" aria-hidden="true" />}</button>)}</div>
+      <div className="flex justify-between items-center gap-4 mt-8">{step > 0 ? <button type="button" className="studio-text-link" onClick={() => goTo(step - 1)}><ArrowLeft size={16} />Back</button> : <span />}<button type="button" className="studio-button disabled:opacity-50 disabled:cursor-not-allowed" disabled={!answers[steps[step].id]} onClick={() => goTo(step + 1)}>Continue <ArrowRight size={16} /></button></div>
+    </section> : <section className="editorial-callout">
+      <h2 ref={heading} tabIndex={-1} className="section-heading">Your starting point.</h2>
+      <dl className="mt-6 space-y-4"><div><dt className="eyebrow !mb-2">Type</dt><dd>{answers.type}</dd></div><div><dt className="eyebrow !mb-2">Main goal</dt><dd>{answers.goal}</dd></div></dl>
+      <p className="reading-copy">Nothing has been sent yet. Your answers will be included in the inquiry form, where you can add scope, budget, and timing.</p>
+      <div className="flex flex-wrap gap-4 mt-8"><Link to="/contact" state={{ projectBrief: summary }} className="studio-button">Continue to contact</Link><a href={`mailto:${email}?subject=Project%20starting%20point&body=${encodeURIComponent(summary)}`} className="studio-button studio-button-secondary">Email your brief</a></div>
+      <a href={`https://wa.me/923489077329?text=${encodeURIComponent(summary)}`} target="_blank" rel="noreferrer" className="studio-text-link mt-4">Send it on WhatsApp</a>
+      <div><button type="button" onClick={() => goTo(1)} className="studio-text-link mt-4"><ArrowLeft size={16} />Edit your answers</button></div>
+    </section>}
+  </div></div>;
 }

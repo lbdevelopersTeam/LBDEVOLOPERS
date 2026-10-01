@@ -42,7 +42,7 @@ export default function Blog() {
   }, []);
 
   return (
-    <motion.div 
+    <motion.div
       initial={false}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -51,59 +51,47 @@ export default function Blog() {
       {/* Proper Blog Hero */}
       <section className="relative min-h-screen flex items-center pt-32 pb-24 overflow-hidden">
         <HeroBackground videoSrc="/videos/other-pages-hero.mp4" />
-          
+
           <div className="max-w-[1600px] mx-auto w-full px-6 relative z-10">
             <div className="max-w-4xl">
               <motion.div
-                initial={{ opacity: 0, x: -20 }}
+                initial={false}
                 animate={{ opacity: 1, x: 0 }}
                 className="inline-flex items-center gap-2 px-3 py-1 bg-white/5 rounded-full border border-white/10 mb-8 overflow-hidden backdrop-blur-sm"
               >
                 <span className="flex h-1.5 w-1.5 rounded-full bg-brand-primary animate-pulse" />
-                <LetterReveal 
-                  text="INSIGHTS" 
-                  className="text-[10px] font-black uppercase tracking-[0.3em] text-white/60" 
+                <LetterReveal
+                  text="INSIGHTS"
+                  className="text-xs font-semibold normal-case tracking-[0.1em] text-white/75"
                 />
               </motion.div>
 
               <div className="overflow-hidden mb-12">
                 <motion.h1
-                  initial={{ y: "100%" }}
+                  initial={false}
                   animate={{ y: 0 }}
-                  transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
-                  className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-black uppercase tracking-tighter leading-[0.95]"
+                  transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
+                  className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-semibold normal-case tracking-tighter leading-[0.95]"
                 >
-                  THE DIGITAL <br />
-                  <span className="text-white/20 italic block uppercase">JOURNAL.</span>
+                  From the <br />
+                  <span className="text-white/75 italic block normal-case">studio.</span>
                 </motion.h1>
               </div>
 
-              <TextReveal 
-                text="Deep dives into high-performance engineering, cinematic design trends, and the future of digital commerce ecosystems."
-                className="text-white/60 text-xl md:text-3xl max-w-3xl leading-tight font-light"
+              <TextReveal
+                text="A small collection of notes on design decisions, engineering, and the lessons behind the work."
+                className="text-white/75 text-xl md:text-3xl max-w-3xl leading-tight font-normal"
               />
             </div>
           </div>
-
-          <div className="absolute bottom-12 right-12 z-20 hidden lg:block">
-             <div className="p-8 rounded-[3rem] glass border-white/5 relative overflow-hidden w-80">
-                <div className="text-[10px] font-black text-brand-primary uppercase tracking-[0.4em] mb-6">Trending Topics</div>
-                <div className="space-y-4">
-                   {['#NextJS15', '#AIAgentic', '#FramerMotion', '#WebArchitecture'].map((tag, i) => (
-                     <div key={i} className="text-lg font-display font-black text-white/40 hover:text-white transition-colors cursor-pointer uppercase">{tag}</div>
-                   ))}
-                </div>
-             </div>
-          </div>
-        
-          {/* Scroll Indicator */}
-          <motion.div 
+          {/* Studio notes */}
+          <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ repeat: Infinity, duration: 2, repeatType: "reverse" }}
+            transition={{ duration: 0.2 }}
             className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
           >
-            <span className="text-[9px] uppercase tracking-[0.4em] text-white/20">Read</span>
+            <span className="text-xs normal-case tracking-[0.1em] text-white/75">Read</span>
             <div className="w-[1px] h-12 bg-gradient-to-b from-brand-primary/40 to-transparent" />
           </motion.div>
         </section>
@@ -118,41 +106,42 @@ export default function Blog() {
           )}
           {loading && blogs.length === 0 ? (
              <div className="col-span-full py-32 flex flex-col items-center gap-4">
-                <Loader2 className="w-12 h-12 text-brand-primary animate-spin" />
-                <span className="text-[10px] uppercase font-black tracking-widest text-white/20">Syncing with Infrastructure...</span>
+                <Loader2 className="w-12 h-12 text-blue-300 animate-spin" />
+                <span className="text-xs normal-case font-semibold tracking-widest text-white/75">Loading studio notes…</span>
              </div>
           ) : blogs.length === 0 ? (
             <div className="col-span-full py-20 md:py-32 text-center border-2 border-dashed border-white/5 rounded-[1.5rem] md:rounded-[3rem] px-6">
-               <p className="text-white/20 uppercase font-black tracking-[0.2em] sm:tracking-[0.4em]">No logs deployed in current sector.</p>
+               <p className="text-white/75 normal-case font-semibold tracking-[0.1em]">New notes are on their way. Explore our work in the meantime.</p>
             </div>
           ) : (
-            blogs.map((post) => (
+            Array.from(new Map(blogs.map((post) => [post.slug, post])).values()).map((post) => (
               <motion.article
                 key={post.id}
-                initial={{ opacity: 0, y: 20 }}
+                initial={false}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 className="group flex flex-col h-full"
               >
                 <div className="aspect-[16/10] overflow-hidden rounded-lg md:rounded-2xl mb-8 border border-white/5 relative">
-                  <img 
-                    src={post.image || post.coverImage} 
-                    alt={post.title} 
+                  <img
+                    loading="lazy" decoding="async" width={800} height={500} src={post.image || post.coverImage}
+                    alt={post.title}
                     className="w-full h-full object-cover group-hover:scale-110 transition-all duration-700"
                     referrerPolicy="no-referrer"
                   />
-                  <div className="absolute top-4 left-4 px-3 py-1 bg-brand-dark/80 backdrop-blur-md rounded-full text-[9px] font-black uppercase tracking-widest text-brand-primary border border-white/10">
+                  <div className="absolute top-4 left-4 px-3 py-1 bg-brand-dark/80 backdrop-blur-md rounded-full text-xs font-semibold normal-case tracking-widest text-blue-300 border border-white/10">
                     {post.category}
                   </div>
                 </div>
-                <div className="flex flex-wrap items-center gap-3 sm:gap-6 text-[10px] uppercase tracking-widest text-white/40 font-bold mb-4">
+                <div className="flex flex-wrap items-center gap-3 sm:gap-6 text-xs normal-case tracking-widest text-white/75 font-bold mb-4">
                   <span className="flex items-center gap-1.5"><Calendar className="w-3 h-3" /> {post.date}</span>
+                  <span className="flex items-center gap-1.5"><User className="w-3 h-3" /> {post.author}</span>
                   <span className="flex items-center gap-1.5"><Clock className="w-3 h-3" /> {post.time || post.readingTime}</span>
                 </div>
-                <h3 className="text-2xl font-display font-black mb-4 flex-grow group-hover:text-brand-primary transition-colors leading-tight uppercase">
+                <h2 className="text-2xl font-display font-semibold mb-4 flex-grow group-hover:text-blue-300 transition-colors leading-tight normal-case">
                   {post.title}
-                </h3>
-                <p className="text-white/50 text-base mb-8 leading-relaxed font-light line-clamp-3">
+                </h2>
+                <p className="text-white/75 text-base mb-8 leading-relaxed font-normal line-clamp-3">
                   {post.excerpt}
                 </p>
                 <Link to={`/blog/${post.slug}`} className="text-sm font-bold flex items-center gap-2 group/link border-b border-brand-primary/20 pb-2 w-fit mt-auto">
@@ -163,12 +152,6 @@ export default function Blog() {
             ))
           )}
         </div>
-
-        {blogs.length > 6 && (
-          <div className="mt-20 text-center">
-            <Button variant="outline" size="lg">Load more articles</Button>
-          </div>
-        )}
       </div>
     </motion.div>
   );

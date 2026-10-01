@@ -65,15 +65,15 @@ function useConstrainedDevice() {
 
 const staticRouteSeo: Record<string, Omit<SeoOptions, 'canonicalPath'>> = {
   '/': {
-    title: 'LB CodeBase | Premium Digital Agency',
-    description: 'LB CodeBase designs and engineers high-performance websites, applications, e-commerce platforms, and digital products.',
+    title: 'LB CodeBase | Design & Development',
+    description: 'LB CodeBase designs, builds, improves, and supports websites, commerce stores, and digital products. Based in Swat, Pakistan.',
   },
   '/about': {
     title: 'About & Team | LB CodeBase',
     description: 'Learn about LB CodeBase and meet the engineering, design, automation, and strategy specialists behind the work.',
   },
   '/services': {
-    title: 'Digital Engineering Services | LB CodeBase',
+    title: 'Design & Development Services | LB CodeBase',
     description: 'Explore web development, product design, e-commerce, application development, digital audits, and growth services from LB CodeBase.',
   },
   '/portfolio': {
@@ -81,7 +81,7 @@ const staticRouteSeo: Record<string, Omit<SeoOptions, 'canonicalPath'>> = {
     description: 'Explore selected websites, commerce platforms, applications, and digital products engineered by LB CodeBase.',
   },
   '/blog': {
-    title: 'Engineering Journal | LB CodeBase',
+    title: 'Studio Notes | LB CodeBase',
     description: 'Read practical perspectives on product engineering, performance, design systems, commerce, and digital growth.',
   },
   '/contact': {
@@ -97,7 +97,7 @@ const staticRouteSeo: Record<string, Omit<SeoOptions, 'canonicalPath'>> = {
     description: 'Create a concise starting brief for your next website, application, e-commerce, or digital product project.',
   },
   '/tech': {
-    title: 'Technology Stack | LB CodeBase',
+    title: 'Technology That Fits the Job | LB CodeBase',
     description: 'Review the technologies LB CodeBase uses to build reliable, secure, and high-performance digital products.',
   },
   '/faq': {
@@ -119,7 +119,7 @@ const staticRouteSeo: Record<string, Omit<SeoOptions, 'canonicalPath'>> = {
 };
 
 function SeoRoute({ options, canonicalPath }: { options: Omit<SeoOptions, 'canonicalPath'>; canonicalPath: string }) {
-  useSeo({ ...options, canonicalPath });
+  useSeo({ ...options, image: options.image || '/images/home-hero-side-poster.webp', canonicalPath });
   return null;
 }
 
@@ -211,14 +211,14 @@ function AppShell() {
       <StaticRouteSeo />
       <a
         href="#main-content"
-        className="fixed left-4 top-4 z-[200] hidden -translate-y-24 rounded-full bg-white px-5 py-3 text-xs font-black uppercase tracking-widest text-black transition-transform focus:translate-y-0 lg:block"
+        className="fixed left-4 top-4 z-[200] -translate-y-24 rounded-full bg-white px-5 py-3 text-sm font-medium text-black transition-transform focus:translate-y-0"
       >
         Skip to content
       </a>
       <div id="top" className="flex min-h-screen flex-col">
         {!isAdmin && !isHome && <FloatingShapes />}
         {!isAdmin && <Navbar />}
-        <main id="main-content" tabIndex={-1} className="flex-grow outline-none">
+        <main id="main-content" tabIndex={-1} className={`flex-grow outline-none ${isAdmin ? '' : 'marketing-surface'}`}>
           <AnimatedRoutes />
         </main>
         {!isAdmin && <WhatsAppButton />}

@@ -76,7 +76,7 @@ export const Magnetic = ({ children, strength = 0.5 }: { children: React.ReactNo
     const centerY = top + height / 2;
     const distanceX = clientX - centerX;
     const distanceY = clientY - centerY;
-    
+
     x.set(distanceX * strength);
     y.set(distanceY * strength);
   };
@@ -107,7 +107,7 @@ export const TextReveal = ({ text, className }: { text: string, className?: stri
   return (
     <motion.div
       className={className}
-      initial={motionEnabled ? { opacity: 0, y: 15 } : false}
+      initial={false}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={revealViewport}
       transition={revealTransition}
@@ -126,7 +126,7 @@ export const LetterReveal = ({ text, className }: { text: string, className?: st
   return (
     <motion.div
       className={className}
-      initial={motionEnabled ? { opacity: 0, y: 10 } : false}
+      initial={false}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={revealViewport}
       transition={revealTransition}
@@ -155,7 +155,7 @@ export const SplitTextReveal = ({
     <Component className={className}>
       <motion.span
         className="inline-block"
-        initial={shouldReduceMotion ? false : { opacity: 0, y: 15 }}
+        initial={false}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={revealViewport}
         transition={revealTransition}
@@ -249,7 +249,7 @@ export const FloatingShapes = () => {
           key={i}
           className={cn(
             "absolute w-[500px] h-[500px] rounded-full blur-[150px] opacity-[0.08]",
-            i === 0 ? "bg-brand-primary top-[-10%] left-[-10%]" : 
+            i === 0 ? "bg-brand-primary top-[-10%] left-[-10%]" :
             i === 1 ? "bg-blue-500 bottom-[-10%] right-[-10%]" :
             "bg-purple-500 top-[40%] left-[40%]"
           )}
@@ -306,7 +306,7 @@ export const HeroBackground = ({ videoSrc, poster }: { videoSrc?: string, poster
 
   return (
     <div className="hero-background-media pointer-events-none absolute inset-0 z-0 overflow-hidden bg-brand-dark" aria-hidden="true">
-      <div className="absolute inset-0 z-10 bg-brand-dark/20" />
+      <div className="absolute inset-0 z-10 bg-brand-dark/75" />
       <div className="hero-background-vignette absolute inset-0 z-10" />
       {showPoster && fallbackPoster && (
         <img

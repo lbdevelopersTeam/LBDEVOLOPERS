@@ -43,7 +43,7 @@ function ReviewerAvatar({ review }: { review: Testimonial }) {
     .join('') || 'LB';
 
   if (!review.avatar || imageFailed) {
-    return <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/[0.06] text-xs font-black tracking-wider text-white" aria-hidden="true">{initials}</span>;
+    return <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/[0.06] text-xs font-semibold tracking-wider text-white" aria-hidden="true">{initials}</span>;
   }
 
   return (
@@ -73,11 +73,11 @@ function ReviewCard({ review }: { review: Testimonial }) {
       <div className="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-brand-primary/60 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" aria-hidden="true" />
       <div className="mb-8 flex items-center justify-between gap-4">
         <Quote className="h-7 w-7 fill-brand-primary/20 text-blue-300" aria-hidden="true" />
-        {review.project && <span className="max-w-[65%] truncate text-[9px] font-black uppercase tracking-[0.2em] text-white/65">{review.project}</span>}
+        {review.project && <span className="max-w-[65%] truncate text-xs font-black normal-case tracking-[0.08em] text-white/65">{review.project}</span>}
       </div>
 
       <div className="flex-1">
-        <p className={`text-base font-light leading-7 text-white/80 ${!expanded && isLong ? 'line-clamp-6' : ''}`}>&ldquo;{review.quote}&rdquo;</p>
+        <p className={`text-base font-normal leading-7 text-white/80 ${!expanded && isLong ? 'line-clamp-6' : ''}`}>&ldquo;{review.quote}&rdquo;</p>
         {isLong && (
           <button
             type="button"
@@ -94,11 +94,11 @@ function ReviewCard({ review }: { review: Testimonial }) {
         <ReviewerAvatar review={review} />
         <div className="min-w-0">
           <p className="truncate text-sm font-bold text-white">{review.author}</p>
-          {byline && <p className="mt-1 truncate text-[10px] font-black uppercase tracking-[0.16em] text-blue-300">{byline}</p>}
+          {byline && <p className="mt-1 truncate text-xs font-black normal-case tracking-[0.08em] text-blue-300">{byline}</p>}
           {showWajidCredit && (
             <Link
               to="/team/wajid-hussain"
-              className="mt-2 inline-flex text-[9px] font-black uppercase tracking-[0.16em] text-white/65 transition-colors hover:text-brand-primary focus-visible:rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary"
+              className="mt-2 inline-flex text-xs font-black normal-case tracking-[0.08em] text-white/65 transition-colors hover:text-brand-primary focus-visible:rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary"
               aria-label={`View Wajid Hussain's profile for the ${review.project} project`}
             >
               Project credit · Wajid Hussain
@@ -173,16 +173,16 @@ export default function ClientReviews() {
           <div>
             <div className="mb-5 flex items-center gap-3">
               <span className="h-1.5 w-1.5 rounded-full bg-brand-primary" aria-hidden="true" />
-              <span className="text-[10px] font-black uppercase tracking-[0.35em] text-blue-300">Client perspective</span>
+              <span className="text-xs font-black normal-case tracking-[0.08em] text-blue-300">Client perspective</span>
             </div>
-            <h2 id="client-reviews-title" className="max-w-3xl font-display text-4xl font-black uppercase leading-[0.95] tracking-tighter text-white sm:text-5xl md:text-6xl">
+            <h2 id="client-reviews-title" className="max-w-3xl font-display text-4xl font-black normal-case leading-[0.95] tracking-tighter text-white sm:text-5xl md:text-6xl">
               Built together.<br /><span className="text-white/65 italic">Proven in practice.</span>
             </h2>
           </div>
           {reviews.length > 0 && (
             <div className="border-l border-white/10 pl-5">
               <strong className="font-display text-4xl font-black text-white">{String(reviews.length).padStart(2, '0')}</strong>
-              <p className="mt-1 text-xs uppercase tracking-[0.18em] text-white/65">Published client stories</p>
+              <p className="mt-1 text-xs normal-case tracking-[0.18em] text-white/65">Published client stories</p>
             </div>
           )}
         </div>
@@ -192,7 +192,7 @@ export default function ClientReviews() {
             <div className="rounded-[1.5rem] border border-white/10 bg-black/25 px-6 py-10 text-center md:px-10">
               <p className="text-lg font-semibold text-white">Client stories are being prepared.</p>
               <p className="mt-2 text-sm text-white/70">Explore our shipped work in the meantime.</p>
-              <Link to="/portfolio" className="mt-6 inline-flex min-h-11 items-center gap-2 rounded-full border border-white/15 px-5 text-xs font-black uppercase tracking-widest text-white transition hover:border-white/35 hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary">
+              <Link to="/portfolio" className="mt-6 inline-flex min-h-11 items-center gap-2 rounded-full border border-white/15 px-5 text-xs font-black normal-case tracking-widest text-white transition hover:border-white/35 hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary">
                 View our work <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </Link>
             </div>
@@ -214,7 +214,7 @@ export default function ClientReviews() {
               </button>
               <span className="ml-2 text-xs font-bold tabular-nums text-white/65">{String(activeIndex + 1).padStart(2, '0')} / {String(reviews.length).padStart(2, '0')}</span>
             </div>
-            <Link to="/contact" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-white px-6 text-xs font-black uppercase tracking-widest text-black transition hover:bg-white/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-4 focus-visible:ring-offset-brand-gray">
+            <Link to="/contact" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-white px-6 text-xs font-black normal-case tracking-widest text-black transition hover:bg-white/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-4 focus-visible:ring-offset-brand-gray">
               Start your project <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </Link>
           </div>

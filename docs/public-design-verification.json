@@ -1,0 +1,556 @@
+{
+  "routes": [
+    {
+      "route": "/",
+      "width": 1440,
+      "body": 2440,
+      "canonical": "http://127.0.0.1:4173/",
+      "description": true,
+      "h1": [
+        "Digital products.Built with care."
+      ],
+      "overflow": false,
+      "overlay": false,
+      "title": "LB CodeBase | Design & Development"
+    },
+    {
+      "route": "/about",
+      "width": 1440,
+      "body": 2355,
+      "canonical": "http://127.0.0.1:4173/about",
+      "description": true,
+      "h1": [
+        "A team behind every detail."
+      ],
+      "overflow": false,
+      "overlay": false,
+      "title": "About & Team | LB CodeBase"
+    },
+    {
+      "route": "/portfolio",
+      "width": 1440,
+      "body": 4437,
+      "canonical": "http://127.0.0.1:4173/portfolio",
+      "description": true,
+      "h1": [
+        "Work that had a job to do."
+      ],
+      "overflow": false,
+      "overlay": false,
+      "title": "Selected Work | LB CodeBase"
+    },
+    {
+      "route": "/services",
+      "width": 1440,
+      "body": 4603,
+      "canonical": "http://127.0.0.1:4173/services",
+      "description": true,
+      "h1": [
+        "Design, build, and improve."
+      ],
+      "overflow": false,
+      "overlay": false,
+      "title": "Design & Development Services | LB CodeBase"
+    },
+    {
+      "route": "/tech",
+      "width": 1440,
+      "body": 2964,
+      "canonical": "http://127.0.0.1:4173/tech",
+      "description": true,
+      "h1": [
+        "Technology thatfits the job."
+      ],
+      "overflow": false,
+      "overlay": false,
+      "title": "Technology That Fits the Job | LB CodeBase"
+    },
+    {
+      "route": "/contact",
+      "width": 1440,
+      "body": 1240,
+      "canonical": "http://127.0.0.1:4173/contact",
+      "description": true,
+      "h1": [
+        "Tell us whatyou’re building."
+      ],
+      "overflow": false,
+      "overlay": false,
+      "title": "Contact LB CodeBase | Start a Project"
+    },
+    {
+      "route": "/planner",
+      "width": 1440,
+      "body": 839,
+      "canonical": "http://127.0.0.1:4173/planner",
+      "description": true,
+      "h1": [
+        "Let’s shape your brief."
+      ],
+      "overflow": false,
+      "overlay": false,
+      "title": "Project Planner | LB CodeBase"
+    },
+    {
+      "route": "/blog",
+      "width": 1440,
+      "body": 845,
+      "canonical": "http://127.0.0.1:4173/blog",
+      "description": true,
+      "h1": [
+        "From the studio."
+      ],
+      "overflow": false,
+      "overlay": false,
+      "title": "Studio Notes | LB CodeBase"
+    },
+    {
+      "route": "/faq",
+      "width": 1440,
+      "body": 1356,
+      "canonical": "http://127.0.0.1:4173/faq",
+      "description": true,
+      "h1": [
+        "A little clarity,before we begin."
+      ],
+      "overflow": false,
+      "overlay": false,
+      "title": "Frequently Asked Questions | LB CodeBase"
+    },
+    {
+      "route": "/careers",
+      "width": 1440,
+      "body": 1566,
+      "canonical": "http://127.0.0.1:4173/careers",
+      "description": true,
+      "h1": [
+        "Make useful things together."
+      ],
+      "overflow": false,
+      "overlay": false,
+      "title": "Careers | LB CodeBase"
+    },
+    {
+      "route": "/booking",
+      "width": 1440,
+      "body": 958,
+      "canonical": "http://127.0.0.1:4173/booking",
+      "description": true,
+      "h1": [
+        "Request a strategy call"
+      ],
+      "overflow": false,
+      "overlay": false,
+      "title": "Request a Strategy Call | LB CodeBase"
+    },
+    {
+      "route": "/privacy",
+      "width": 1440,
+      "body": 1960,
+      "canonical": "http://127.0.0.1:4173/privacy",
+      "description": true,
+      "h1": [
+        "PRIVACY POLICIES."
+      ],
+      "overflow": false,
+      "overlay": false,
+      "title": "Privacy Policy | LB CodeBase"
+    },
+    {
+      "route": "/terms",
+      "width": 1440,
+      "body": 1996,
+      "canonical": "http://127.0.0.1:4173/terms",
+      "description": true,
+      "h1": [
+        "TERMS POLICIES."
+      ],
+      "overflow": false,
+      "overlay": false,
+      "title": "Terms of Service | LB CodeBase"
+    },
+    {
+      "route": "/portfolio/vogue-decor",
+      "width": 1440,
+      "body": 4161,
+      "canonical": "http://127.0.0.1:4173/portfolio/vogue-decor",
+      "description": true,
+      "h1": [
+        "Vogue Decor"
+      ],
+      "overflow": false,
+      "overlay": false,
+      "title": "Vogue Decor case study"
+    },
+    {
+      "route": "/",
+      "width": 768,
+      "body": 3815,
+      "canonical": "http://127.0.0.1:4173/",
+      "description": true,
+      "h1": [
+        "Digital products.Built with care."
+      ],
+      "overflow": false,
+      "overlay": false,
+      "title": "LB CodeBase | Design & Development"
+    },
+    {
+      "route": "/about",
+      "width": 768,
+      "body": 2368,
+      "canonical": "http://127.0.0.1:4173/about",
+      "description": true,
+      "h1": [
+        "A team behind every detail."
+      ],
+      "overflow": false,
+      "overlay": false,
+      "title": "About & Team | LB CodeBase"
+    },
+    {
+      "route": "/portfolio",
+      "width": 768,
+      "body": 4367,
+      "canonical": "http://127.0.0.1:4173/portfolio",
+      "description": true,
+      "h1": [
+        "Work that had a job to do."
+      ],
+      "overflow": false,
+      "overlay": false,
+      "title": "Selected Work | LB CodeBase"
+    },
+    {
+      "route": "/services",
+      "width": 768,
+      "body": 4469,
+      "canonical": "http://127.0.0.1:4173/services",
+      "description": true,
+      "h1": [
+        "Design, build, and improve."
+      ],
+      "overflow": false,
+      "overlay": false,
+      "title": "Design & Development Services | LB CodeBase"
+    },
+    {
+      "route": "/tech",
+      "width": 768,
+      "body": 2894,
+      "canonical": "http://127.0.0.1:4173/tech",
+      "description": true,
+      "h1": [
+        "Technology thatfits the job."
+      ],
+      "overflow": false,
+      "overlay": false,
+      "title": "Technology That Fits the Job | LB CodeBase"
+    },
+    {
+      "route": "/contact",
+      "width": 768,
+      "body": 1170,
+      "canonical": "http://127.0.0.1:4173/contact",
+      "description": true,
+      "h1": [
+        "Tell us whatyou’re building."
+      ],
+      "overflow": false,
+      "overlay": false,
+      "title": "Contact LB CodeBase | Start a Project"
+    },
+    {
+      "route": "/planner",
+      "width": 768,
+      "body": 769,
+      "canonical": "http://127.0.0.1:4173/planner",
+      "description": true,
+      "h1": [
+        "Let’s shape your brief."
+      ],
+      "overflow": false,
+      "overlay": false,
+      "title": "Project Planner | LB CodeBase"
+    },
+    {
+      "route": "/blog",
+      "width": 768,
+      "body": 775,
+      "canonical": "http://127.0.0.1:4173/blog",
+      "description": true,
+      "h1": [
+        "From the studio."
+      ],
+      "overflow": false,
+      "overlay": false,
+      "title": "Studio Notes | LB CodeBase"
+    },
+    {
+      "route": "/faq",
+      "width": 768,
+      "body": 1286,
+      "canonical": "http://127.0.0.1:4173/faq",
+      "description": true,
+      "h1": [
+        "A little clarity,before we begin."
+      ],
+      "overflow": false,
+      "overlay": false,
+      "title": "Frequently Asked Questions | LB CodeBase"
+    },
+    {
+      "route": "/careers",
+      "width": 768,
+      "body": 1496,
+      "canonical": "http://127.0.0.1:4173/careers",
+      "description": true,
+      "h1": [
+        "Make useful things together."
+      ],
+      "overflow": false,
+      "overlay": false,
+      "title": "Careers | LB CodeBase"
+    },
+    {
+      "route": "/booking",
+      "width": 768,
+      "body": 888,
+      "canonical": "http://127.0.0.1:4173/booking",
+      "description": true,
+      "h1": [
+        "Request a strategy call"
+      ],
+      "overflow": false,
+      "overlay": false,
+      "title": "Request a Strategy Call | LB CodeBase"
+    },
+    {
+      "route": "/privacy",
+      "width": 768,
+      "body": 1890,
+      "canonical": "http://127.0.0.1:4173/privacy",
+      "description": true,
+      "h1": [
+        "PRIVACY POLICIES."
+      ],
+      "overflow": false,
+      "overlay": false,
+      "title": "Privacy Policy | LB CodeBase"
+    },
+    {
+      "route": "/terms",
+      "width": 768,
+      "body": 1926,
+      "canonical": "http://127.0.0.1:4173/terms",
+      "description": true,
+      "h1": [
+        "TERMS POLICIES."
+      ],
+      "overflow": false,
+      "overlay": false,
+      "title": "Terms of Service | LB CodeBase"
+    },
+    {
+      "route": "/portfolio/vogue-decor",
+      "width": 768,
+      "body": 4091,
+      "canonical": "http://127.0.0.1:4173/portfolio/vogue-decor",
+      "description": true,
+      "h1": [
+        "Vogue Decor"
+      ],
+      "overflow": false,
+      "overlay": false,
+      "title": "Vogue Decor case study"
+    },
+    {
+      "route": "/",
+      "width": 390,
+      "body": 3815,
+      "canonical": "http://127.0.0.1:4173/",
+      "description": true,
+      "h1": [
+        "Digital products.Built with care."
+      ],
+      "overflow": false,
+      "overlay": false,
+      "title": "LB CodeBase | Design & Development"
+    },
+    {
+      "route": "/about",
+      "width": 390,
+      "body": 2368,
+      "canonical": "http://127.0.0.1:4173/about",
+      "description": true,
+      "h1": [
+        "A team behind every detail."
+      ],
+      "overflow": false,
+      "overlay": false,
+      "title": "About & Team | LB CodeBase"
+    },
+    {
+      "route": "/portfolio",
+      "width": 390,
+      "body": 4367,
+      "canonical": "http://127.0.0.1:4173/portfolio",
+      "description": true,
+      "h1": [
+        "Work that had a job to do."
+      ],
+      "overflow": false,
+      "overlay": false,
+      "title": "Selected Work | LB CodeBase"
+    },
+    {
+      "route": "/services",
+      "width": 390,
+      "body": 4469,
+      "canonical": "http://127.0.0.1:4173/services",
+      "description": true,
+      "h1": [
+        "Design, build, and improve."
+      ],
+      "overflow": false,
+      "overlay": false,
+      "title": "Design & Development Services | LB CodeBase"
+    },
+    {
+      "route": "/tech",
+      "width": 390,
+      "body": 2894,
+      "canonical": "http://127.0.0.1:4173/tech",
+      "description": true,
+      "h1": [
+        "Technology thatfits the job."
+      ],
+      "overflow": false,
+      "overlay": false,
+      "title": "Technology That Fits the Job | LB CodeBase"
+    },
+    {
+      "route": "/contact",
+      "width": 390,
+      "body": 1170,
+      "canonical": "http://127.0.0.1:4173/contact",
+      "description": true,
+      "h1": [
+        "Tell us whatyou’re building."
+      ],
+      "overflow": false,
+      "overlay": false,
+      "title": "Contact LB CodeBase | Start a Project"
+    },
+    {
+      "route": "/planner",
+      "width": 390,
+      "body": 769,
+      "canonical": "http://127.0.0.1:4173/planner",
+      "description": true,
+      "h1": [
+        "Let’s shape your brief."
+      ],
+      "overflow": false,
+      "overlay": false,
+      "title": "Project Planner | LB CodeBase"
+    },
+    {
+      "route": "/blog",
+      "width": 390,
+      "body": 775,
+      "canonical": "http://127.0.0.1:4173/blog",
+      "description": true,
+      "h1": [
+        "From the studio."
+      ],
+      "overflow": false,
+      "overlay": false,
+      "title": "Studio Notes | LB CodeBase"
+    },
+    {
+      "route": "/faq",
+      "width": 390,
+      "body": 1286,
+      "canonical": "http://127.0.0.1:4173/faq",
+      "description": true,
+      "h1": [
+        "A little clarity,before we begin."
+      ],
+      "overflow": false,
+      "overlay": false,
+      "title": "Frequently Asked Questions | LB CodeBase"
+    },
+    {
+      "route": "/careers",
+      "width": 390,
+      "body": 1496,
+      "canonical": "http://127.0.0.1:4173/careers",
+      "description": true,
+      "h1": [
+        "Make useful things together."
+      ],
+      "overflow": false,
+      "overlay": false,
+      "title": "Careers | LB CodeBase"
+    },
+    {
+      "route": "/booking",
+      "width": 390,
+      "body": 888,
+      "canonical": "http://127.0.0.1:4173/booking",
+      "description": true,
+      "h1": [
+        "Request a strategy call"
+      ],
+      "overflow": false,
+      "overlay": false,
+      "title": "Request a Strategy Call | LB CodeBase"
+    },
+    {
+      "route": "/privacy",
+      "width": 390,
+      "body": 1890,
+      "canonical": "http://127.0.0.1:4173/privacy",
+      "description": true,
+      "h1": [
+        "PRIVACY POLICIES."
+      ],
+      "overflow": false,
+      "overlay": false,
+      "title": "Privacy Policy | LB CodeBase"
+    },
+    {
+      "route": "/terms",
+      "width": 390,
+      "body": 1926,
+      "canonical": "http://127.0.0.1:4173/terms",
+      "description": true,
+      "h1": [
+        "TERMS POLICIES."
+      ],
+      "overflow": false,
+      "overlay": false,
+      "title": "Terms of Service | LB CodeBase"
+    },
+    {
+      "route": "/portfolio/vogue-decor",
+      "width": 390,
+      "body": 4091,
+      "canonical": "http://127.0.0.1:4173/portfolio/vogue-decor",
+      "description": true,
+      "h1": [
+        "Vogue Decor"
+      ],
+      "overflow": false,
+      "overlay": false,
+      "title": "Vogue Decor case study"
+    }
+  ],
+  "flows": [
+    "planner-contact",
+    "faq-keyboard",
+    "mobile-menu",
+    "reduced-motion"
+  ]
+}

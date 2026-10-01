@@ -17,10 +17,10 @@ const project = (
 // Exactly the records rendered by the existing curated merge on the homepage,
 // without shipping full case studies, team biographies, and galleries at startup.
 export const homeFallbackProjects: Project[] = [
-  project('project-vogue-decor', 'Vogue Decor', 'vogue-decor', 'Commercial furniture storefront with premium collection discovery and responsive shopping.', '/images/voguedecor.com.webp', 'E-commerce', ['React', 'Shopify', 'Headless Commerce', 'Storefront API']),
+  project('project-vogue-decor', 'Vogue Decor', 'vogue-decor', 'A furniture storefront connecting collection discovery with responsive shopping through Shopify and a custom interface.', '/images/voguedecor.com.webp', 'E-commerce', ['React', 'Shopify', 'Headless Commerce', 'Storefront API']),
   project('project-american-dream-auto-protect', 'American Dream Auto Protect', 'american-dream-auto-protect', 'Vehicle protection website focused on credibility, plan clarity, and qualified quote requests.', '/images/americandreamautoprotect.com.webp', 'Web', ['WordPress', 'Lead Generation', 'Quote Funnel', 'Responsive Design']),
-  project('project-pedro-clavero', 'Pedro Clavero', 'pedro-clavero', 'A conversion-led professional platform built around authority, education, and qualified inquiries.', '/images/pedroclavero.com.webp', 'Web', ['WordPress', 'Custom Theme', 'Responsive Design', 'SEO']),
-  project('project-riaz-crockery', 'Riaz Crockery', 'riaz-crockery', 'Premium crockery and lifestyle storefront with category-led shopping and responsive product discovery.', '/images/Riaz Crockery.webp', 'E-commerce', ['Shopify', 'Liquid', 'E-commerce UX', 'Responsive Design']),
+  project('project-pedro-clavero', 'Pedro Clavero', 'pedro-clavero', 'A professional website that brings services, educational content, and inquiries into a clear WordPress experience.', '/images/pedroclavero.com.webp', 'Web', ['WordPress', 'Custom Theme', 'Responsive Design', 'SEO']),
+  project('project-riaz-crockery', 'Riaz Crockery', 'riaz-crockery', 'A crockery storefront built around category-led shopping and responsive product discovery.', '/images/Riaz Crockery.webp', 'E-commerce', ['Shopify', 'Liquid', 'E-commerce UX', 'Responsive Design']),
 ];
 
 export const homeFallbackBlogs: BlogPost[] = [{

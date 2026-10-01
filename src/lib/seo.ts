@@ -39,6 +39,8 @@ export function useSeo({ title, description, image, canonicalPath, schema }: Seo
       document.head.appendChild(canonical);
     }
     canonical.href = new URL(canonicalPath || window.location.pathname, window.location.origin).href;
+    upsertMeta('meta[property="og:url"]', 'property', 'og:url', canonical.href);
+    upsertMeta('meta[name="twitter:card"]', 'name', 'twitter:card', image ? 'summary_large_image' : 'summary');
 
     const existingSchema = document.head.querySelector<HTMLScriptElement>('script[data-lb-schema]');
     existingSchema?.remove();

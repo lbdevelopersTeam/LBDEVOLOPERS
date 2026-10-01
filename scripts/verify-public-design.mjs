@@ -1,0 +1,65 @@
+﻿import { execFileSync } from 'node:child_process';
+import fs from 'node:fs';
+const binary = process.argv[2];
+if (!binary) throw new Error('Pass the installed agent-browser executable as the first argument.');
+const base = process.argv[3] || 'http://127.0.0.1:4173';
+const command = (...args) => {
+  const raw = execFileSync(binary, [...args, '--json'], { encoding: 'utf8', timeout: 45000 });
+  const result = JSON.parse(raw);
+  if (!result.success) throw new Error(result.error || raw);
+  return result.data;
+};
+const evaluate = (expression) => command('eval', expression).result;
+const assert = (condition, message) => { if (!condition) throw new Error(message); };
+const inspect = `(() => ({title:document.title,h1:[...document.querySelectorAll('main h1')].map(h=>h.textContent.trim()),overflow:document.documentElement.scrollWidth>innerWidth+1,overlay:!!document.querySelector('vite-error-overlay'),canonical:document.querySelector('link[rel=canonical]')?.href,description:!!document.querySelector('meta[name=description]')?.content,body:document.body.innerText.length}))()`;
+const routes = ['/', '/about', '/portfolio', '/services', '/tech', '/contact', '/planner', '/blog', '/faq', '/careers', '/booking', '/privacy', '/terms', '/portfolio/vogue-decor'];
+const report = [];
+for (const [width,height] of [[1440,900], [768,1024], [390,844]]) {
+  command('set','viewport',String(width),String(height));
+  for (const route of routes) {
+    command('open', base+route);
+    command('wait', 'main h1');
+    const page = evaluate(inspect);
+    assert(page.h1.length === 1, `${route}: expected exactly one H1`);
+    assert(!page.overflow && !page.overlay && page.body > 150, `${route} at ${width}: page overflow, error overlay, or empty content`);
+    assert(page.description && page.canonical, `${route}: missing metadata`);
+    report.push({route,width,...page});
+  }
+  console.log(`${width}px: ${routes.length} public routes passed`);
+}
+fs.writeFileSync('docs/public-design-verification.json',JSON.stringify({routes:report},null,2));
+command('open',base+'/planner');
+command('wait','.planner-choice');
+command('find','role','button','click','--name','A website redesign','--exact');
+command('find','role','button','click','--name','Continue','--exact');
+command('find','role','button','click','--name','More qualified leads','--exact');
+command('find','role','button','click','--name','Continue','--exact');
+assert(evaluate("document.body.innerText.includes('A website redesign') && document.body.innerText.includes('More qualified leads')"), 'Planner summary lost answers');
+command('find','role','link','click','--name','Continue to contact','--exact');
+command('wait','textarea');
+assert(evaluate("document.querySelector('textarea').value.includes('A website redesign') && document.querySelector('textarea').value.includes('More qualified leads')"), 'Contact handoff lost planner answers');
+console.log('Planner → contact: answers preserved');
+command('open',base+'/faq');
+command('wait','.faq-trigger');
+command('find','role','button','click','--name','How long does a project take?','--exact');
+assert(evaluate("[...document.querySelectorAll('.faq-trigger')].find(b=>b.textContent.includes('How long')).getAttribute('aria-expanded') === 'true'"), 'FAQ failed to expand');
+command('press','ArrowDown');
+assert(evaluate("document.activeElement.textContent.includes('feedback')"), 'FAQ arrow-key navigation failed');
+command('press','End');
+assert(evaluate("document.activeElement.textContent.includes('after launch')"), 'FAQ End-key navigation failed');
+console.log('FAQ: expansion, arrow navigation, and End key passed');
+command('find','role','button','click','--name','Open navigation menu','--exact');
+command('wait','#mobile-navigation');
+command('press','Tab');
+assert(evaluate("document.querySelector('#mobile-navigation').contains(document.activeElement)"), 'Menu focus escaped');
+command('press','Escape');
+assert(evaluate("!document.querySelector('#mobile-navigation') || document.querySelector('#mobile-navigation').getAttribute('aria-modal') === 'true'"), 'Menu close failed');
+console.log('Mobile menu: focus stays in dialog; Escape closes it');
+command('wait', '--fn', "!document.querySelector('#mobile-navigation')");
+assert(evaluate("document.activeElement.getAttribute('aria-controls') === 'mobile-navigation'"), 'Menu did not restore focus');
+command('set','media','dark','reduced-motion');
+command('open',base+'/');
+assert(evaluate("matchMedia('(prefers-reduced-motion: reduce)').matches && getComputedStyle(document.querySelector('h1')).opacity === '1'"), 'Reduced-motion heading hidden');
+console.log('Reduced motion: static visible headline');
+fs.writeFileSync('docs/public-design-verification.json',JSON.stringify({routes:report,flows:['planner-contact','faq-keyboard','mobile-menu','reduced-motion']},null,2));
+console.log('Saved docs/public-design-verification.json');

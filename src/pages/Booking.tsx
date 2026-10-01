@@ -33,7 +33,7 @@ const buildAvailableDates = (): AvailableDate[] => {
   return options;
 };
 
-const fieldClass = 'w-full rounded-xl border border-white/10 bg-white/[0.035] px-4 py-3 text-white outline-none transition placeholder:text-white/25 focus:border-brand-primary focus:ring-4 focus:ring-brand-primary/10';
+const fieldClass = 'w-full rounded-xl border border-white/10 bg-white/[0.035] px-4 py-3 text-white outline-none transition placeholder:text-white/75 focus:border-brand-primary focus:ring-4 focus:ring-brand-primary/10';
 
 export default function Booking() {
   const navigate = useNavigate();
@@ -103,19 +103,19 @@ export default function Booking() {
         <div className="mt-10 grid min-h-[600px] grid-cols-1 overflow-hidden rounded-[1.5rem] border border-white/5 bg-[#0c0c0c] md:mt-16 md:grid-cols-12 md:rounded-[2.5rem]">
           <div className="border-b border-white/5 bg-brand-gray p-6 md:col-span-4 md:border-b-0 md:border-r md:p-10">
             <div className="mb-8 flex h-16 w-16 items-center justify-center rounded-full border border-brand-primary/20 bg-brand-primary/10">
-              <Globe aria-hidden="true" className="w-8 h-8 text-brand-primary animate-spin-slow" />
+              <Globe aria-hidden="true" className="w-8 h-8 text-blue-300 animate-spin-slow" />
             </div>
-            <h2 className="mb-4 font-display text-xl font-black uppercase tracking-tight">Strategy Audit</h2>
-            <div className="space-y-6 text-sm text-white/60">
+            <h2 className="mb-4 font-display text-xl font-semibold normal-case tracking-tight">Strategy Audit</h2>
+            <div className="space-y-6 text-sm text-white/75">
               <div className="flex items-center gap-3">
-                <Clock aria-hidden="true" className="w-4 h-4 text-brand-primary" />
+                <Clock aria-hidden="true" className="w-4 h-4 text-blue-300" />
                 <span>15 minutes</span>
               </div>
               <div className="flex items-center gap-3">
-                <Calendar aria-hidden="true" className="w-4 h-4 text-brand-primary" />
+                <Calendar aria-hidden="true" className="w-4 h-4 text-blue-300" />
                 <span>Video call after confirmation</span>
               </div>
-              <p className="border-t border-white/5 pt-6 font-light leading-relaxed">
+              <p className="border-t border-white/5 pt-6 font-normal leading-relaxed">
                 We will discuss your goals, review the current experience, and identify the clearest next step. Times are shown in Pakistan Standard Time (UTC+5).
               </p>
             </div>
@@ -124,7 +124,7 @@ export default function Booking() {
           <div className="p-6 sm:p-8 md:col-span-8 md:p-16">
             {step === 1 && (
               <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }}>
-                <h2 className="mb-8 flex items-center gap-3 text-base font-bold uppercase tracking-widest md:mb-10 md:text-lg">
+                <h2 className="mb-8 flex items-center gap-3 text-base font-bold normal-case tracking-widest md:mb-10 md:text-lg">
                   <span className="flex h-8 w-8 items-center justify-center rounded-full bg-brand-primary text-xs text-white">1</span>
                   Select a preferred date
                 </h2>
@@ -142,12 +142,12 @@ export default function Booking() {
                           : 'border-white/5 bg-white/5 hover:border-white/20'
                       }`}
                     >
-                      <span className="mb-2 text-[10px] text-white/40">{option.day}</span>
+                      <span className="mb-2 text-xs text-white/75">{option.day}</span>
                       <span className="text-lg font-bold">{option.date}</span>
                     </button>
                   ))}
                 </div>
-                {selectedDateOption && <p className="mt-5 text-sm text-white/50">Selected: {selectedDateOption.label}</p>}
+                {selectedDateOption && <p className="mt-5 text-sm text-white/75">Selected: {selectedDateOption.label}</p>}
                 <div className="mt-10 flex justify-end md:mt-12">
                   <Button disabled={!selectedDate} onClick={() => setStep(2)} className="px-10">
                     Choose a time <ArrowRight aria-hidden="true" className="w-4 h-4 ml-2" />
@@ -158,7 +158,7 @@ export default function Booking() {
 
             {step === 2 && (
               <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }}>
-                <h2 className="mb-8 flex items-center gap-3 text-base font-bold uppercase tracking-widest md:mb-10 md:text-lg">
+                <h2 className="mb-8 flex items-center gap-3 text-base font-bold normal-case tracking-widest md:mb-10 md:text-lg">
                   <span className="flex h-8 w-8 items-center justify-center rounded-full bg-brand-primary text-xs text-white">2</span>
                   Select a preferred time
                 </h2>
@@ -190,24 +190,24 @@ export default function Booking() {
 
             {step === 3 && (
               <motion.form initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} onSubmit={submitRequest} autoComplete="off">
-                <h2 className="mb-3 flex items-center gap-3 text-base font-bold uppercase tracking-widest md:text-lg">
+                <h2 className="mb-3 flex items-center gap-3 text-base font-bold normal-case tracking-widest md:text-lg">
                   <span className="flex h-8 w-8 items-center justify-center rounded-full bg-brand-primary text-xs text-white">3</span>
                   Your details
                 </h2>
-                <p className="mb-8 text-sm leading-relaxed text-white/50">
+                <p className="mb-8 text-sm leading-relaxed text-white/75">
                   Requesting {selectedDateOption?.label} at {selectedTime} Pakistan Standard Time.
                 </p>
                 <div className="space-y-5">
                   <label className="block space-y-2">
-                    <span className="text-[10px] font-black uppercase tracking-widest text-white/45">Full name</span>
+                    <span className="text-xs font-semibold normal-case tracking-widest text-white/75">Full name</span>
                     <input required minLength={2} maxLength={120} autoComplete="off" value={details.name} onChange={(event) => setDetails({ ...details, name: event.target.value })} className={fieldClass} />
                   </label>
                   <label className="block space-y-2">
-                    <span className="text-[10px] font-black uppercase tracking-widest text-white/45">Email address</span>
+                    <span className="text-xs font-semibold normal-case tracking-widest text-white/75">Email address</span>
                     <input required type="email" maxLength={254} autoComplete="off" value={details.email} onChange={(event) => setDetails({ ...details, email: event.target.value })} className={fieldClass} />
                   </label>
                   <label className="block space-y-2">
-                    <span className="text-[10px] font-black uppercase tracking-widest text-white/45">What should we prepare for?</span>
+                    <span className="text-xs font-semibold normal-case tracking-widest text-white/75">What should we prepare for?</span>
                     <textarea required minLength={10} maxLength={3000} rows={4} autoComplete="off" value={details.notes} onChange={(event) => setDetails({ ...details, notes: event.target.value })} className={fieldClass} />
                   </label>
                   <div className="hidden" aria-hidden="true">
@@ -232,8 +232,8 @@ export default function Booking() {
                 <div className="mx-auto mb-8 flex h-20 w-20 items-center justify-center rounded-full border border-green-500/20 bg-green-500/10">
                   <CheckCircle2 aria-hidden="true" className="w-10 h-10 text-green-500" />
                 </div>
-                <h2 className="mb-4 font-display text-3xl font-black uppercase">Request received</h2>
-                <p className="mx-auto mb-10 max-w-md leading-relaxed text-white/60">
+                <h2 className="mb-4 font-display text-3xl font-semibold normal-case">Request received</h2>
+                <p className="mx-auto mb-10 max-w-md leading-relaxed text-white/75">
                   We received your request for <span className="font-bold text-white">{selectedDateOption?.label}</span> at <span className="font-bold text-white">{selectedTime}</span>. We will email you to confirm availability and meeting details.
                 </p>
                 <Button onClick={() => navigate('/')}>Return Home</Button>
