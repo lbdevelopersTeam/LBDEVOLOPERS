@@ -13,6 +13,7 @@ import {
   Globe,
   GraduationCap,
   Languages,
+  Layers3,
   Mail,
   MapPin,
   Phone,
@@ -80,6 +81,29 @@ export default function MemberCvView({ member, isModal = false, onClose }: Membe
   const hasTestimonials = Boolean(member.testimonials?.length);
   const hasLanguages = Boolean(member.languages?.length);
 
+  const cvHighlights = [
+    {
+      label: 'Professional experience',
+      value: member.yearsExperience || `${member.experience?.length || 0}+ years`,
+      detail: 'Delivery, collaboration, and specialist practice',
+    },
+    {
+      label: 'Selected projects',
+      value: String(member.stats?.projectsCount || member.projects?.length || 0).padStart(2, '0'),
+      detail: 'Commercial and portfolio engagements',
+    },
+    {
+      label: 'Core capabilities',
+      value: String(member.stats?.skillsCount || member.skills?.length || 0).padStart(2, '0'),
+      detail: 'Tools, methods, and professional competencies',
+    },
+    {
+      label: 'Credentials',
+      value: String(member.stats?.certificationsCount || member.certifications?.length || 0).padStart(2, '0'),
+      detail: 'Education and verified certifications',
+    },
+  ];
+
   const primaryAccent = 'var(--member-accent, #3D5AFE)';
 
   return (
@@ -96,8 +120,9 @@ export default function MemberCvView({ member, isModal = false, onClose }: Membe
             margin: 12mm;
             size: A4 portrait;
           }
+          html,
           body {
-            background-color: #ffffff !important;
+            background-color: #eef3f9 !important;
             color: #0f172a !important;
             font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
             -webkit-print-color-adjust: exact !important;
@@ -106,7 +131,7 @@ export default function MemberCvView({ member, isModal = false, onClose }: Membe
           /* Hide Web UI overlays, headers, floating buttons */
           .print\\:hidden,
           nav,
-          footer,
+          footer:not(.cv-document-footer),
           .whatsapp-button,
           .floating-shapes,
           header.print\\:hidden,
@@ -118,7 +143,7 @@ export default function MemberCvView({ member, isModal = false, onClose }: Membe
             padding: 0 !important;
             margin: 0 !important;
             box-shadow: none !important;
-            background: transparent !important;
+            background: #eef3f9 !important;
             color: #0f172a !important;
           }
           .cv-paper-surface {
@@ -127,6 +152,22 @@ export default function MemberCvView({ member, isModal = false, onClose }: Membe
             box-shadow: none !important;
             color: #0f172a !important;
             padding: 0 !important;
+          }
+          .cv-print-page-accent {
+            display: block !important;
+            background: #1d4ed8 !important;
+          }
+          .cv-document-pattern {
+            display: none !important;
+          }
+          .cv-section-heading {
+            color: #334155 !important;
+            border-bottom: 1px solid #dbe4ef !important;
+            padding-bottom: 7px !important;
+          }
+          .cv-highlight-card {
+            background: #f8fafc !important;
+            border-color: #dbe4ef !important;
           }
           .cv-text-muted {
             color: #475569 !important;
@@ -165,11 +206,16 @@ export default function MemberCvView({ member, isModal = false, onClose }: Membe
             break-inside: avoid;
             page-break-inside: avoid;
           }
+          .cv-project-result {
+            background: #eff6ff !important;
+            border-color: #bfdbfe !important;
+            color: #334155 !important;
+          }
         }
       `}</style>
 
       {/* Control Action Toolbar (Hidden in print) */}
-      <div className="print:hidden mb-6 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-white/10 bg-white/[0.04] p-4 backdrop-blur-xl">
+      <div className="cv-toolbar print:hidden mb-6 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-white/10 p-4 backdrop-blur-xl">
         <div className="flex items-center gap-2">
           <FileText className="h-5 w-5" style={{ color: primaryAccent }} />
           <div>
@@ -257,17 +303,18 @@ export default function MemberCvView({ member, isModal = false, onClose }: Membe
       </div>
 
       {/* MAIN CV PAPER SURFACE */}
-      <div className="cv-paper-surface member-glass relative rounded-3xl border border-white/10 bg-[#0c0c0e]/95 p-6 sm:p-10 md:p-12 shadow-2xl backdrop-blur-2xl">
+      <div className="cv-paper-surface relative overflow-hidden rounded-3xl border border-white/10 bg-[#0b1220] p-6 shadow-2xl sm:p-10 md:p-12">
+        <div className="cv-document-pattern pointer-events-none absolute inset-0" aria-hidden="true" />
         {/* Decorative Top Accent Bar */}
         <div
-          className="absolute inset-x-0 top-0 h-2.5 rounded-t-3xl"
+          className="cv-print-page-accent absolute inset-x-0 top-0 h-2 rounded-t-3xl"
           style={{
             background: `linear-gradient(90deg, ${primaryAccent} 0%, color-mix(in srgb, ${primaryAccent} 40%, #000) 100%)`,
           }}
         />
 
         {/* HEADER SECTION */}
-        <header className="border-b border-white/10 pb-8 pt-2">
+        <header className="relative border-b border-white/10 pb-8 pt-2">
           <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
             {/* Left: Avatar + Title block */}
             <div className="flex flex-col sm:flex-row items-start gap-5">
@@ -432,11 +479,40 @@ export default function MemberCvView({ member, isModal = false, onClose }: Membe
           )}
         </header>
 
+        {/* Professional record at a glance */}
+        <section className="relative mt-7 cv-print-break-avoid" aria-labelledby={`cv-highlights-${member.id}`}>
+          <h2
+            id={`cv-highlights-${member.id}`}
+            className="cv-section-heading cv-text-heading mb-3 flex items-center gap-2 text-xs font-black uppercase tracking-[0.2em] text-white/45"
+          >
+            <Layers3 className="h-3.5 w-3.5" style={{ color: primaryAccent }} />
+            Professional record at a glance
+          </h2>
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            {cvHighlights.map((highlight) => (
+              <div
+                key={highlight.label}
+                className="cv-highlight-card cv-glass-card rounded-xl border border-white/10 bg-white/[0.035] p-4"
+              >
+                <strong className="cv-text-heading block font-display text-xl font-black text-white">
+                  {highlight.value}
+                </strong>
+                <span className="cv-text-heading mt-1 block text-[9px] font-black uppercase tracking-[0.14em] text-white/75">
+                  {highlight.label}
+                </span>
+                <span className="cv-text-subtle mt-1.5 block text-[9px] leading-relaxed text-white/40">
+                  {highlight.detail}
+                </span>
+              </div>
+            ))}
+          </div>
+        </section>
+
         {/* BODY CONTENT SECTIONS */}
-        <div className="mt-8 space-y-10">
+        <div className="relative mt-9 space-y-10">
           {/* Executive Summary / Full Bio */}
           <section className="cv-print-break-avoid">
-            <h2 className="cv-text-heading mb-3 flex items-center gap-2 text-xs font-black uppercase tracking-[0.2em] text-white/40">
+            <h2 className="cv-section-heading cv-text-heading mb-3 flex items-center gap-2 text-xs font-black uppercase tracking-[0.2em] text-white/40">
               <Sparkles className="h-3.5 w-3.5" style={{ color: primaryAccent }} />
               Executive Profile Summary
             </h2>
@@ -466,7 +542,7 @@ export default function MemberCvView({ member, isModal = false, onClose }: Membe
 
           {/* Technical Skills & Competencies */}
           <section className="cv-print-break-avoid">
-            <h2 className="cv-text-heading mb-3 flex items-center gap-2 text-xs font-black uppercase tracking-[0.2em] text-white/40">
+            <h2 className="cv-section-heading cv-text-heading mb-3 flex items-center gap-2 text-xs font-black uppercase tracking-[0.2em] text-white/40">
               <Award className="h-3.5 w-3.5" style={{ color: primaryAccent }} />
               Technical Capabilities & Expertise
             </h2>
@@ -518,7 +594,7 @@ export default function MemberCvView({ member, isModal = false, onClose }: Membe
           {/* Professional Work Experience */}
           {hasExperience && (
             <section>
-              <h2 className="cv-text-heading mb-5 flex items-center gap-2 text-xs font-black uppercase tracking-[0.2em] text-white/40">
+              <h2 className="cv-section-heading cv-text-heading mb-5 flex items-center gap-2 text-xs font-black uppercase tracking-[0.2em] text-white/40">
                 <Briefcase className="h-3.5 w-3.5" style={{ color: primaryAccent }} />
                 Professional Work Experience
               </h2>
@@ -635,13 +711,13 @@ export default function MemberCvView({ member, isModal = false, onClose }: Membe
           {/* Key Contributed Projects / Portfolio Highlights */}
           {hasProjects && (
             <section className="cv-print-break-avoid">
-              <h2 className="cv-text-heading mb-4 flex items-center gap-2 text-xs font-black uppercase tracking-[0.2em] text-white/40">
+              <h2 className="cv-section-heading cv-text-heading mb-4 flex items-center gap-2 text-xs font-black uppercase tracking-[0.2em] text-white/40">
                 <Building2 className="h-3.5 w-3.5" style={{ color: primaryAccent }} />
                 Featured Project Contributions
               </h2>
 
               <div className="grid gap-4 sm:grid-cols-2">
-                {member.projects.slice(0, 4).map((project) => (
+                {member.projects.slice(0, 6).map((project) => (
                   <div
                     key={project.id}
                     className="cv-glass-card flex flex-col justify-between rounded-2xl border border-white/10 bg-white/[0.02] p-5"
@@ -656,9 +732,46 @@ export default function MemberCvView({ member, isModal = false, onClose }: Membe
                         </span>
                       </div>
 
-                      <p className="cv-text-muted mt-2 text-xs leading-relaxed text-white/60 line-clamp-2">
+                      <p className="cv-text-muted mt-2 text-xs leading-relaxed text-white/60">
                         {project.shortDescription}
                       </p>
+
+                      {(project.memberRole || project.client || project.industry || project.completionDate) && (
+                        <dl className="mt-3 grid grid-cols-2 gap-x-3 gap-y-2 border-t border-white/8 pt-3">
+                          {project.memberRole && (
+                            <div>
+                              <dt className="cv-text-subtle text-[8px] font-black uppercase tracking-wider text-white/35">Contribution</dt>
+                              <dd className="cv-text-muted mt-0.5 text-[10px] font-semibold text-white/70">{project.memberRole}</dd>
+                            </div>
+                          )}
+                          {(project.client || project.industry) && (
+                            <div>
+                              <dt className="cv-text-subtle text-[8px] font-black uppercase tracking-wider text-white/35">Context</dt>
+                              <dd className="cv-text-muted mt-0.5 text-[10px] font-semibold text-white/70">{project.client || project.industry}</dd>
+                            </div>
+                          )}
+                          {project.completionDate && (
+                            <div>
+                              <dt className="cv-text-subtle text-[8px] font-black uppercase tracking-wider text-white/35">Delivered</dt>
+                              <dd className="cv-text-muted mt-0.5 text-[10px] font-semibold text-white/70">{project.completionDate}</dd>
+                            </div>
+                          )}
+                        </dl>
+                      )}
+
+                      {Boolean(project.results?.length) && (
+                        <ul className="mt-3 space-y-1.5">
+                          {project.results!.slice(0, 2).map((result) => (
+                            <li
+                              key={result}
+                              className="cv-project-result flex items-start gap-2 rounded-lg border border-white/8 bg-white/[0.025] px-2.5 py-2 text-[10px] leading-relaxed text-white/65"
+                            >
+                              <CheckCircle2 className="mt-0.5 h-3 w-3 shrink-0" style={{ color: primaryAccent }} />
+                              <span>{result}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
 
                       {Boolean(project.technologies?.length) && (
                         <div className="mt-3 flex flex-wrap gap-1">
@@ -700,7 +813,7 @@ export default function MemberCvView({ member, isModal = false, onClose }: Membe
               {/* Education */}
               {hasEducation && (
                 <section className="cv-print-break-avoid">
-                  <h2 className="cv-text-heading mb-4 flex items-center gap-2 text-xs font-black uppercase tracking-[0.2em] text-white/40">
+                  <h2 className="cv-section-heading cv-text-heading mb-4 flex items-center gap-2 text-xs font-black uppercase tracking-[0.2em] text-white/40">
                     <GraduationCap className="h-3.5 w-3.5" style={{ color: primaryAccent }} />
                     Academic Background
                   </h2>
@@ -734,7 +847,7 @@ export default function MemberCvView({ member, isModal = false, onClose }: Membe
               {/* Certifications */}
               {hasCertifications && (
                 <section className="cv-print-break-avoid">
-                  <h2 className="cv-text-heading mb-4 flex items-center gap-2 text-xs font-black uppercase tracking-[0.2em] text-white/40">
+                  <h2 className="cv-section-heading cv-text-heading mb-4 flex items-center gap-2 text-xs font-black uppercase tracking-[0.2em] text-white/40">
                     <Award className="h-3.5 w-3.5" style={{ color: primaryAccent }} />
                     Verified Certifications
                   </h2>
@@ -793,7 +906,7 @@ export default function MemberCvView({ member, isModal = false, onClose }: Membe
           {/* Languages & Methodologies */}
           {hasLanguages && (
             <section className="cv-print-break-avoid">
-              <h2 className="cv-text-heading mb-3 flex items-center gap-2 text-xs font-black uppercase tracking-[0.2em] text-white/40">
+              <h2 className="cv-section-heading cv-text-heading mb-3 flex items-center gap-2 text-xs font-black uppercase tracking-[0.2em] text-white/40">
                 <Languages className="h-3.5 w-3.5" style={{ color: primaryAccent }} />
                 Languages & Communication
               </h2>
@@ -815,7 +928,7 @@ export default function MemberCvView({ member, isModal = false, onClose }: Membe
           {/* Testimonials / Endorsements */}
           {hasTestimonials && (
             <section className="cv-print-break-avoid">
-              <h2 className="cv-text-heading mb-4 flex items-center gap-2 text-xs font-black uppercase tracking-[0.2em] text-white/40">
+              <h2 className="cv-section-heading cv-text-heading mb-4 flex items-center gap-2 text-xs font-black uppercase tracking-[0.2em] text-white/40">
                 <Quote className="h-3.5 w-3.5" style={{ color: primaryAccent }} />
                 Professional Endorsements
               </h2>
@@ -845,7 +958,7 @@ export default function MemberCvView({ member, isModal = false, onClose }: Membe
         </div>
 
         {/* FOOTER VERIFICATION BAR */}
-        <footer className="mt-12 border-t border-white/10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-[9px] font-bold uppercase tracking-widest text-white/35">
+        <footer className="cv-document-footer mt-12 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-6 text-[9px] font-bold uppercase tracking-widest text-white/35 sm:flex-row">
           <div className="flex items-center gap-2">
             <span className="brand-mark !text-[9px] !h-5 !w-5 !rounded-md">LB</span>
             <span>LB CodeBase Verified Portfolio Document</span>

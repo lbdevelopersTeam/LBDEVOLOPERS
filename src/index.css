@@ -424,6 +424,83 @@
   background-size: 64px 64px;
 }
 
+/* Shared professional CV system */
+.cv-page-backdrop {
+  background-color: #07101f;
+  background-image:
+    radial-gradient(circle at 12% 4%, rgba(61, 90, 254, 0.18), transparent 28rem),
+    radial-gradient(circle at 88% 32%, rgba(14, 165, 233, 0.1), transparent 30rem),
+    linear-gradient(180deg, #08111f 0%, #07101b 48%, #050b14 100%);
+}
+
+.cv-page-backdrop::before {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  content: '';
+  opacity: 0.24;
+  background-image:
+    linear-gradient(rgba(148, 163, 184, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(148, 163, 184, 0.08) 1px, transparent 1px);
+  background-size: 56px 56px;
+  -webkit-mask-image: linear-gradient(to bottom, black, transparent 76%);
+  mask-image: linear-gradient(to bottom, black, transparent 76%);
+}
+
+.cv-page-header {
+  background: rgba(7, 16, 31, 0.82);
+  box-shadow: 0 12px 40px rgba(2, 8, 23, 0.22);
+}
+
+.cv-toolbar {
+  background: linear-gradient(135deg, rgba(15, 29, 52, 0.92), rgba(10, 20, 36, 0.84));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 18px 45px rgba(2, 8, 23, 0.28);
+}
+
+.cv-paper-surface {
+  background-image: linear-gradient(145deg, rgba(19, 35, 60, 0.98), rgba(8, 18, 33, 0.99));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 35px 100px rgba(2, 8, 23, 0.54),
+    0 0 0 1px rgba(61, 90, 254, 0.06);
+}
+
+.cv-document-pattern {
+  opacity: 0.42;
+  background:
+    radial-gradient(circle at 100% 0, rgba(61, 90, 254, 0.2), transparent 24rem),
+    linear-gradient(rgba(148, 163, 184, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(148, 163, 184, 0.025) 1px, transparent 1px);
+  background-size: auto, 44px 44px, 44px 44px;
+}
+
+.cv-section-heading {
+  min-height: 1.7rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.075);
+  padding-bottom: 0.55rem;
+}
+
+.cv-glass-card,
+.cv-highlight-card {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.035);
+}
+
+@media (max-width: 639px) {
+  .cv-page-backdrop::before {
+    background-size: 36px 36px;
+  }
+}
+
+@media print {
+  .cv-page-backdrop {
+    background: #eef3f9 !important;
+  }
+
+  .cv-page-backdrop::before {
+    content: none !important;
+  }
+}
+
 .member-glass {
   border: 1px solid var(--member-border);
   background: linear-gradient(135deg, color-mix(in srgb, var(--member-accent) 5.5%, transparent), rgba(255, 255, 255, 0.025));

@@ -60,7 +60,7 @@ export default function MemberCvModal({ member, isOpen, onClose }: MemberCvModal
               exit={{ opacity: 0, scale: 0.96, y: 16 }}
               transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
               style={memberPortfolioTheme}
-              className={`${memberPortfolioClassName} relative z-10 w-full max-w-5xl rounded-3xl print:p-0 print:bg-transparent`}
+              className={`${memberPortfolioClassName} cv-page-backdrop relative z-10 w-full max-w-5xl rounded-3xl print:p-0 print:bg-transparent`}
               onClick={(e) => e.stopPropagation()}
             >
               <MemberCvView member={member} isModal onClose={onClose} />
