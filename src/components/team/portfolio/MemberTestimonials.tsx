@@ -4,7 +4,7 @@ import { MemberProfile, SectionHeading } from './shared';
 
 export default function MemberTestimonials({
   member,
-  sectionIndex = '05',
+  sectionIndex,
 }: {
   member: MemberProfile;
   sectionIndex?: string;
@@ -18,7 +18,7 @@ export default function MemberTestimonials({
     <section id="testimonials" className="scroll-mt-28 border-b border-white/10 bg-[#060606] px-5 py-14 sm:py-16 md:px-8 md:py-20 lg:py-24">
       <div className="mx-auto max-w-[1500px]">
         <SectionHeading
-          index={sectionIndex}
+          index={sectionIndex || '04'}
           label="Endorsements"
           description={`Direct feedback from clients and leadership on high-impact projects delivered by ${member.name}.`}
         >

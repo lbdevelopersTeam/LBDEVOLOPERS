@@ -403,11 +403,14 @@
 /* Personal portfolio system */
 .member-portfolio {
   --member-accent: #3d5afe;
+  --member-background: #000;
+  --member-surface: #080808;
+  --member-border: rgba(255, 255, 255, 0.1);
   scroll-behavior: smooth;
-  background-color: #000;
+  background-color: var(--member-background);
   background-image:
-    radial-gradient(circle at 12% 8%, rgba(61, 90, 254, 0.13), transparent 28rem),
-    radial-gradient(circle at 88% 34%, rgba(124, 77, 255, 0.09), transparent 32rem);
+    radial-gradient(circle at 12% 8%, color-mix(in srgb, var(--member-accent) 13%, transparent), transparent 28rem),
+    radial-gradient(circle at 88% 34%, color-mix(in srgb, var(--member-accent) 9%, transparent), transparent 32rem);
 }
 
 .member-portfolio * {
@@ -422,8 +425,8 @@
 }
 
 .member-glass {
-  border: 1px solid rgba(255, 255, 255, 0.11);
-  background: linear-gradient(135deg, rgba(61, 90, 254, 0.055), rgba(255, 255, 255, 0.025));
+  border: 1px solid var(--member-border);
+  background: linear-gradient(135deg, color-mix(in srgb, var(--member-accent) 5.5%, transparent), rgba(255, 255, 255, 0.025));
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.08),
     0 22px 60px rgba(0, 0, 0, 0.3);
@@ -445,8 +448,8 @@
 
 .member-hero-light {
   background:
-    radial-gradient(circle at 78% 48%, rgba(61, 90, 254, 0.2), transparent 29%),
-    radial-gradient(circle at 26% 22%, rgba(124, 77, 255, 0.12), transparent 25%);
+    radial-gradient(circle at 78% 48%, color-mix(in srgb, var(--member-accent) 20%, transparent), transparent 29%),
+    radial-gradient(circle at 26% 22%, color-mix(in srgb, var(--member-accent) 12%, transparent), transparent 25%);
 }
 
 .member-portrait-card::before {

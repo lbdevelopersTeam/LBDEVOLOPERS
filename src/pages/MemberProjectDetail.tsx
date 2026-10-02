@@ -1,9 +1,9 @@
 import { motion, useReducedMotion } from 'motion/react';
 import { ArrowLeft, ArrowRight, ArrowUpRight, CheckCircle2, ExternalLink, Github, Layers, Sparkles, UserCheck } from 'lucide-react';
-import { CSSProperties, useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import MemberNotFound from '../components/team/MemberNotFound';
-import { usableLink } from '../components/team/portfolio/shared';
+import { memberPortfolioClassName, memberPortfolioTheme, usableLink } from '../components/team/portfolio/shared';
 import { fallbackTeam, mergeCuratedMemberProjects, Project, TeamMember } from '../lib/content';
 import { sanitizeHtml } from '../lib/sanitize';
 import { useSeo } from '../lib/seo';
@@ -111,13 +111,12 @@ export default function MemberProjectDetail() {
 
   if (loading) {
     if (fallbackMember) {
-      const fallbackStyle = { '--member-accent': '#3D5AFE' } as CSSProperties;
       return (
         <motion.article
           initial={false}
           animate={{ opacity: 1 }}
-          style={fallbackStyle}
-          className="member-portfolio min-h-screen overflow-clip bg-brand-dark text-white"
+          style={memberPortfolioTheme}
+          className={memberPortfolioClassName}
         >
           <main className="member-grid-surface min-h-[70svh] px-5 pb-16 pt-32 md:px-8 lg:pt-36" role="status" aria-label="Loading project case study">
             <div className="mx-auto max-w-[1500px] animate-pulse">
@@ -154,16 +153,14 @@ export default function MemberProjectDetail() {
     ['Completed', completedYear],
   ] as Array<[string, string]>).filter(([, value]) => Boolean(value));
 
-  const style = { '--member-accent': '#3D5AFE' } as CSSProperties;
-
   return (
     <motion.article
       initial={false}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.35 }}
-      style={style}
-      className="member-portfolio min-h-screen overflow-clip bg-brand-dark text-white"
+      style={memberPortfolioTheme}
+      className={memberPortfolioClassName}
     >
       <header className="member-grid-surface relative px-5 pb-12 pt-28 sm:pt-32 md:px-8 md:pb-16 lg:pt-36">
         <div className="member-hero-light pointer-events-none absolute inset-0" aria-hidden="true" />

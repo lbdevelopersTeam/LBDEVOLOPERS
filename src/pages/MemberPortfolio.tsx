@@ -1,5 +1,5 @@
 import { motion } from 'motion/react';
-import { CSSProperties, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import MemberNotFound from '../components/team/MemberNotFound';
 import MemberHero from '../components/team/portfolio/MemberHero';
@@ -9,7 +9,14 @@ import MemberWork from '../components/team/portfolio/MemberWork';
 import MemberCareer from '../components/team/portfolio/MemberCareer';
 import MemberTestimonials from '../components/team/portfolio/MemberTestimonials';
 import MemberContactSection from '../components/team/portfolio/MemberContactSection';
-import { MemberProfile, socialPlatforms, usableLink } from '../components/team/portfolio/shared';
+import {
+  MemberProfile,
+  memberPortfolioClassName,
+  memberPortfolioTheme,
+  memberSectionIndices,
+  socialPlatforms,
+  usableLink,
+} from '../components/team/portfolio/shared';
 import { memberPortraitUrl } from '../components/team/MemberPortrait';
 import { applyCuratedProfileFallback, fallbackTeam, mergeCuratedMemberProjects, Project } from '../lib/content';
 import { useSeo } from '../lib/seo';
@@ -114,8 +121,8 @@ export default function MemberPortfolio() {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-black" role="status" aria-label="Loading member portfolio">
-        <div className="h-10 w-10 animate-spin rounded-full border border-white/10 border-t-brand-primary" />
+      <div style={memberPortfolioTheme} className={`${memberPortfolioClassName} member-grid-surface flex items-center justify-center`} role="status" aria-label="Loading member portfolio">
+        <div className="h-10 w-10 animate-spin rounded-full border border-white/10 border-t-[var(--member-accent)]" />
       </div>
     );
   }
@@ -124,13 +131,7 @@ export default function MemberPortfolio() {
   const hasCareer = Boolean(member.experience?.length || member.education?.length || member.certifications?.length);
   const hasTestimonials = Boolean(member.testimonials?.length);
 
-  let currentSectionCount = 3;
-  if (hasCareer) currentSectionCount++;
-  const testimonialsIndex = String(currentSectionCount).padStart(2, '0');
-  if (hasTestimonials) currentSectionCount++;
-  const contactIndex = String(currentSectionCount).padStart(2, '0');
-
-  const style = { '--member-accent': '#3D5AFE' } as CSSProperties;
+  const sectionIndices = memberSectionIndices({ hasCareer, hasTestimonials });
 
   return (
     <motion.div
@@ -138,17 +139,17 @@ export default function MemberPortfolio() {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.35 }}
-      style={style}
-      className="member-portfolio min-h-screen overflow-clip bg-brand-dark text-white"
+      style={memberPortfolioTheme}
+      className={memberPortfolioClassName}
     >
       <MemberHero member={member} />
       <div>
         <MemberIntroduction member={member} />
         <MemberExpertise member={member} />
         <MemberWork member={member} />
-        <MemberCareer member={member} />
-        <MemberTestimonials member={member} sectionIndex={testimonialsIndex} />
-        <MemberContactSection member={member} sectionIndex={contactIndex} />
+        <MemberCareer member={member} sectionIndex={sectionIndices.career} />
+        <MemberTestimonials member={member} sectionIndex={sectionIndices.testimonials} />
+        <MemberContactSection member={member} sectionIndex={sectionIndices.contact} />
       </div>
     </motion.div>
   );

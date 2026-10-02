@@ -2,7 +2,7 @@ import { motion, useReducedMotion } from 'motion/react';
 import { Award, Briefcase, CheckCircle2, ExternalLink, GraduationCap } from 'lucide-react';
 import { MemberProfile, SectionHeading, usableLink } from './shared';
 
-export default function MemberCareer({ member }: { member: MemberProfile }) {
+export default function MemberCareer({ member, sectionIndex = '04' }: { member: MemberProfile; sectionIndex?: string }) {
   const reducedMotion = useReducedMotion();
   const hasExperience = Boolean(member.experience?.length);
   const hasEducation = Boolean(member.education?.length);
@@ -14,7 +14,7 @@ export default function MemberCareer({ member }: { member: MemberProfile }) {
     <section id="experience" className="scroll-mt-28 border-b border-white/10 bg-[#080808] px-5 py-14 sm:py-16 md:px-8 md:py-20 lg:py-24">
       <div className="mx-auto max-w-[1500px]">
         <SectionHeading
-          index="04"
+          index={sectionIndex}
           label="Career & Credentials"
           description="A chronological account of leadership roles, engineering milestones, verified certifications, and academic foundations."
         >
