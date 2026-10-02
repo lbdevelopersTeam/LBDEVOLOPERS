@@ -1,8 +1,16 @@
 import { motion, useReducedMotion } from 'motion/react';
-import { Award, Briefcase, CheckCircle2, ExternalLink, GraduationCap } from 'lucide-react';
+import { Award, Briefcase, CheckCircle2, ExternalLink, FileText, GraduationCap } from 'lucide-react';
 import { MemberProfile, SectionHeading, usableLink } from './shared';
 
-export default function MemberCareer({ member, sectionIndex = '04' }: { member: MemberProfile; sectionIndex?: string }) {
+export default function MemberCareer({
+  member,
+  sectionIndex = '04',
+  onOpenCv,
+}: {
+  member: MemberProfile;
+  sectionIndex?: string;
+  onOpenCv?: () => void;
+}) {
   const reducedMotion = useReducedMotion();
   const hasExperience = Boolean(member.experience?.length);
   const hasEducation = Boolean(member.education?.length);
@@ -22,12 +30,33 @@ export default function MemberCareer({ member, sectionIndex = '04' }: { member: 
           <span className="text-white/28">Roles and milestones.</span>
         </SectionHeading>
 
-        {/* Experience Timeline */}
+        {/* Experience Timeline Header & CV Action */}
         {hasExperience && (
           <div className="mt-10 space-y-6 md:mt-14">
-            <div className="flex items-center gap-2 text-xs font-black uppercase tracking-[0.18em] text-white/50">
-              <Briefcase className="h-4 w-4 text-[var(--member-accent)]" />
-              <span>Experience & Leadership</span>
+            <div className="flex flex-wrap items-center justify-between gap-4">
+              <div className="flex items-center gap-2 text-xs font-black uppercase tracking-[0.18em] text-white/50">
+                <Briefcase className="h-4 w-4 text-[var(--member-accent)]" />
+                <span>Experience & Leadership</span>
+              </div>
+
+              {onOpenCv ? (
+                <button
+                  type="button"
+                  onClick={onOpenCv}
+                  className="member-glass inline-flex items-center gap-2 rounded-lg px-4 py-2 text-[10px] font-black uppercase tracking-wider text-white hover:border-[var(--member-accent)]/50 transition-all"
+                >
+                  <FileText className="h-3.5 w-3.5 text-[var(--member-accent)]" />
+                  <span>Open Full CV</span>
+                </button>
+              ) : (
+                <a
+                  href={`/team/${member.slug}/cv`}
+                  className="member-glass inline-flex items-center gap-2 rounded-lg px-4 py-2 text-[10px] font-black uppercase tracking-wider text-white hover:border-[var(--member-accent)]/50 transition-all"
+                >
+                  <FileText className="h-3.5 w-3.5 text-[var(--member-accent)]" />
+                  <span>Open Full CV</span>
+                </a>
+              )}
             </div>
 
             {member.experience!.map((item, index) => (

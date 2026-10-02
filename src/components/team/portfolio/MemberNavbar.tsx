@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState, type MouseEvent } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
-import { ArrowRight, Download, Menu, X } from 'lucide-react';
+import { ArrowRight, Download, FileText, Menu, X } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import { MemberProfile, initials } from './shared';
 import MemberPortrait from '../MemberPortrait';
@@ -227,6 +227,15 @@ export default function MemberNavbar({ member }: { member: MemberProfile }) {
               <span className="hidden xl:inline">Team</span>
             </Link>
 
+            {/* Curriculum Vitae Link */}
+            <a
+              href="#cv"
+              className="hidden lg:flex px-4 py-2.5 rounded-full text-[9px] font-black uppercase tracking-[0.16em] items-center gap-2 border border-white/10 bg-white/[0.03] text-white/80 hover:text-white hover:border-[var(--member-accent)]/50 transition-all"
+            >
+              <FileText className="w-3 h-3 text-[var(--member-accent)]" />
+              CV
+            </a>
+
             {/* vCard download */}
             <a
               href={`/api/v2/team/${member.slug}/vcard`}
@@ -362,6 +371,15 @@ export default function MemberNavbar({ member }: { member: MemberProfile }) {
 
               {/* Footer Actions */}
               <div className="mt-4 grid gap-2">
+                <a
+                  href="#cv"
+                  onClick={(event) => closeThenScroll(event, '#cv')}
+                  className="flex w-full items-center justify-center gap-2 rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 text-[10px] font-black uppercase tracking-[0.2em] text-white/80 hover:border-[var(--member-accent)]/50"
+                >
+                  <FileText className="h-3.5 w-3.5" style={{ color: 'var(--member-accent)' }} />
+                  Curriculum Vitae
+                </a>
+
                 <a
                   href={`/api/v2/team/${member.slug}/vcard`}
                   download={`${member.slug}.vcf`}

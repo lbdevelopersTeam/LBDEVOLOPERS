@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
-import { ArrowDownRight, ArrowUpRight, Check, Copy, Download, Mail, MessageCircle, Phone } from 'lucide-react';
+import { ArrowDownRight, ArrowUpRight, Check, Copy, Download, FileText, Mail, MessageCircle, Phone } from 'lucide-react';
 import { HeroBackground } from '../../common/Animations';
 import { MemberProfile, initials, socialPlatforms, usableLink, whatsAppNumber } from './shared';
 import MemberPortrait from '../MemberPortrait';
 
-export default function MemberHero({ member }: { member: MemberProfile }) {
+export default function MemberHero({ member, onOpenCv }: { member: MemberProfile; onOpenCv?: () => void }) {
   const [copiedEmail, setCopiedEmail] = useState(false);
   const copyResetTimer = useRef<number | null>(null);
   const mounted = useRef(false);
@@ -175,6 +175,28 @@ export default function MemberHero({ member }: { member: MemberProfile }) {
                   </>
                 )}
               </button>
+            )}
+
+            {/* Curriculum Vitae Action */}
+            {onOpenCv ? (
+              <button
+                type="button"
+                onClick={onOpenCv}
+                className="member-glass group inline-flex min-h-12 items-center gap-2.5 rounded-md px-4 text-[10px] font-bold uppercase tracking-wider text-white hover:border-[var(--member-accent)] hover:bg-white/[0.06] shadow-lg"
+                title="View Full Curriculum Vitae"
+              >
+                <FileText className="h-4 w-4 text-[var(--member-accent)] transition-transform group-hover:scale-110" />
+                <span>Curriculum Vitae</span>
+              </button>
+            ) : (
+              <a
+                href={`/team/${member.slug}/cv`}
+                className="member-glass group inline-flex min-h-12 items-center gap-2.5 rounded-md px-4 text-[10px] font-bold uppercase tracking-wider text-white hover:border-[var(--member-accent)] hover:bg-white/[0.06] shadow-lg"
+                title="View Full Curriculum Vitae"
+              >
+                <FileText className="h-4 w-4 text-[var(--member-accent)] transition-transform group-hover:scale-110" />
+                <span>Curriculum Vitae</span>
+              </a>
             )}
 
             <a

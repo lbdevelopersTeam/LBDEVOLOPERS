@@ -9,6 +9,7 @@ import MemberWork from '../components/team/portfolio/MemberWork';
 import MemberCareer from '../components/team/portfolio/MemberCareer';
 import MemberTestimonials from '../components/team/portfolio/MemberTestimonials';
 import MemberContactSection from '../components/team/portfolio/MemberContactSection';
+import MemberCvModal from '../components/team/portfolio/MemberCvModal';
 import {
   MemberProfile,
   memberPortfolioClassName,
@@ -34,6 +35,13 @@ export default function MemberPortfolio() {
   const [member, setMember] = useState<MemberProfile | null>(() => fallbackMemberFor(slug));
   const [loading, setLoading] = useState(() => !fallbackMemberFor(slug));
   const [notFound, setNotFound] = useState(false);
+  const [cvModalOpen, setCvModalOpen] = useState(false);
+
+  useEffect(() => {
+    if (hash === '#cv') {
+      setCvModalOpen(true);
+    }
+  }, [hash]);
 
   useEffect(() => {
     let cancelled = false;
@@ -142,15 +150,22 @@ export default function MemberPortfolio() {
       style={memberPortfolioTheme}
       className={memberPortfolioClassName}
     >
-      <MemberHero member={member} />
+      <MemberHero member={member} onOpenCv={() => setCvModalOpen(true)} />
       <div>
         <MemberIntroduction member={member} />
         <MemberExpertise member={member} />
         <MemberWork member={member} />
-        <MemberCareer member={member} sectionIndex={sectionIndices.career} />
+        <MemberCareer member={member} sectionIndex={sectionIndices.career} onOpenCv={() => setCvModalOpen(true)} />
         <MemberTestimonials member={member} sectionIndex={sectionIndices.testimonials} />
         <MemberContactSection member={member} sectionIndex={sectionIndices.contact} />
       </div>
+
+      {/* Interactive CV Modal */}
+      <MemberCvModal
+        member={member}
+        isOpen={cvModalOpen}
+        onClose={() => setCvModalOpen(false)}
+      />
     </motion.div>
   );
 }

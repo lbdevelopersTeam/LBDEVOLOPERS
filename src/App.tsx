@@ -28,6 +28,7 @@ const loadCareers = () => import('./pages/Careers');
 const loadLegal = () => import('./pages/Legal');
 const loadMemberPortfolio = () => import('./pages/MemberPortfolio');
 const loadMemberProjectDetail = () => import('./pages/MemberProjectDetail');
+const loadMemberCv = () => import('./pages/MemberCvPage');
 const loadNotFound = () => import('./pages/NotFound');
 
 const ProjectDetail = lazy(loadProjectDetail);
@@ -41,6 +42,7 @@ const Careers = lazy(loadCareers);
 const Legal = lazy(loadLegal);
 const MemberPortfolio = lazy(loadMemberPortfolio);
 const MemberProjectDetail = lazy(loadMemberProjectDetail);
+const MemberCvPage = lazy(loadMemberCv);
 const NotFound = lazy(loadNotFound);
 
 const constrainedDeviceQuery = '(hover: none), (pointer: coarse), (prefers-reduced-motion: reduce)';
@@ -158,6 +160,11 @@ function MemberProjectDetailRoute() {
   return <MemberProjectDetail key={`${slug}/${projectSlug}`} />;
 }
 
+function MemberCvPageRoute() {
+  const { slug = '' } = useParams();
+  return <MemberCvPage key={slug} />;
+}
+
 function AnimatedRoutes() {
   return (
     <Suspense fallback={<RouteLoader />}>
@@ -166,6 +173,7 @@ function AnimatedRoutes() {
         <Route path="/about" element={<About />} />
         <Route path="/team" element={<Navigate to="/about#team-directory" replace />} />
         <Route path="/team/:slug/projects/:projectSlug" element={<MemberProjectDetailRoute />} />
+        <Route path="/team/:slug/cv" element={<MemberCvPageRoute />} />
         <Route path="/team/:slug" element={<MemberPortfolioRoute />} />
         <Route path="/services" element={<Services />} />
         <Route path="/services/:id" element={<Services />} />
