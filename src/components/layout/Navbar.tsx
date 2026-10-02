@@ -1,7 +1,7 @@
 import { useState, useEffect, useLayoutEffect, useRef, type MouseEvent } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
-import { Menu, X, ArrowRight, Download } from 'lucide-react';
+import { Menu, X, ArrowRight, Download, FileText } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import { Magnetic } from '../common/Animations';
 
@@ -291,11 +291,23 @@ export default function Navbar() {
                   href="/documents/LB-CodeBase-Company-Profile.pdf"
                   download="LB-CodeBase-Company-Profile.pdf"
                   onClick={beginMenuClose}
-                  className="mb-2 flex w-full items-center justify-center gap-3 rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3.5 text-center text-[10px] font-black uppercase tracking-[0.2em] text-white/75 transition-colors hover:border-brand-primary/40 hover:text-white"
+                  className="group mb-2 flex min-h-16 w-full items-center gap-3 rounded-2xl border border-white/10 bg-gradient-to-r from-white/[0.075] to-white/[0.025] p-2.5 pr-3 text-left transition-all hover:border-brand-primary/40 hover:from-brand-primary/15 hover:to-white/[0.035] active:scale-[0.99]"
                   aria-label="Download the LB CodeBase company profile PDF"
                 >
-                  <Download className="h-4 w-4 text-brand-primary" />
-                  Download Company Profile
+                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-brand-primary/25 bg-brand-primary/15 text-brand-primary shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]">
+                    <FileText className="h-5 w-5" aria-hidden="true" />
+                  </span>
+                  <span className="min-w-0 flex-1">
+                    <span className="block text-[11px] font-black uppercase tracking-[0.16em] text-white">
+                      Company Profile
+                    </span>
+                    <span className="mt-1 block text-[9px] font-bold uppercase tracking-[0.12em] text-white/40">
+                      PDF document · Download
+                    </span>
+                  </span>
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/[0.06] text-white/65 transition-all group-hover:border-brand-primary/30 group-hover:bg-brand-primary group-hover:text-white">
+                    <Download className="h-4 w-4 transition-transform group-hover:translate-y-0.5" aria-hidden="true" />
+                  </span>
                 </a>
                 <Link
                   to="/contact"
