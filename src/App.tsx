@@ -76,7 +76,7 @@ const staticRouteSeo: Record<string, Omit<SeoOptions, 'canonicalPath'>> = {
   },
   '/services': {
     title: 'Digital Engineering Services | LB CodeBase',
-    description: 'Explore web development, product design, e-commerce, application development, digital audits, and growth services from LB CodeBase.',
+    description: 'Explore web development, Framer websites, n8n automation, custom chat and voice agents, e-commerce, application development, and growth services from LB CodeBase.',
   },
   '/portfolio': {
     title: 'Selected Work | LB CodeBase',

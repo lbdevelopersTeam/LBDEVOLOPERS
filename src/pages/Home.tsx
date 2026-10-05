@@ -1,7 +1,7 @@
 import { motion } from 'motion/react';
 import { Button, SectionHeader, BentoCard } from '../components/common/UI';
 import { lazy, Suspense, useEffect, useRef, useState } from 'react';
-import { ArrowRight, Code, Palette, Zap, Globe, Cpu, Smartphone, BarChart as ChartBar, Send, Shield, Activity, Rocket } from 'lucide-react';
+import { ArrowRight, Code, Palette, Zap, Globe, Cpu, Smartphone, BarChart as ChartBar, Send, Shield, Activity, Rocket, Bot } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { cn } from '../lib/utils';
 import { DeferredVideo, Magnetic, TextReveal, LetterReveal } from '../components/common/Animations';
@@ -342,7 +342,7 @@ export default function Home() {
           <SectionHeader 
             badge="Services"
             title={<>Focused digital work, <br/> built end to end.</>}
-            description="Design and engineering support for websites, stores, applications, and the infrastructure behind them."
+            description="Design and engineering support for websites, stores, applications, automation, and AI agents."
             align="left"
           />
           
@@ -392,6 +392,22 @@ export default function Home() {
                   <p className="text-white/60 text-sm font-normal">Practical AWS and Vercel deployments with monitoring and room to grow.</p>
                 </div>
                 <Shield className="w-8 h-8 text-brand-primary/50" />
+              </div>
+            </BentoCard>
+
+            <BentoCard span="col-span-1 md:col-span-2" className="border-brand-primary/20 bg-brand-primary/[0.04]">
+              <div className="flex h-full flex-col justify-between gap-7">
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-brand-primary/25 bg-brand-primary/10 text-brand-primary">
+                  <Bot className="h-6 w-6" aria-hidden="true" />
+                </div>
+                <div>
+                  <h3 className="mb-2 font-display text-xl font-black uppercase tracking-tighter text-white">Automation & AI agents</h3>
+                  <p className="max-w-lg text-sm font-normal leading-6 text-white/60">n8n workflows, practical AI integrations, and custom chat or voice agents connected to your business systems.</p>
+                  <Link to="/services#automation-ai" className="group mt-5 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-brand-primary">
+                    Explore automation services
+                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+                  </Link>
+                </div>
               </div>
             </BentoCard>
           </div>

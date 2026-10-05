@@ -1,9 +1,9 @@
 import { motion } from 'motion/react';
 import { SectionHeader, Button } from '../components/common/UI';
-import { Layout, Smartphone, Search, Database, BarChart, HardDrive, Shield, Layers, Palette, Code, Cpu, ArrowRight, Zap } from 'lucide-react';
+import { Layout, Smartphone, Search, Database, BarChart, HardDrive, Shield, Layers, Palette, Code, Cpu, ArrowRight, Zap, Bot, Workflow, Mic2, Cable, PanelsTopLeft, Sparkles } from 'lucide-react';
 import { TextReveal, LetterReveal, Magnetic, ImageReveal, ParallaxSection, HeroBackground } from '../components/common/Animations';
 import ProjectCalculator from '../components/common/ProjectCalculator';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { cn } from '../lib/utils';
 import { useEffect, useState } from 'react';
 import { cachedFetch } from '../lib/content';
@@ -60,9 +60,57 @@ const fallbackServiceList = [
   }
 ];
 
+const automationServices = [
+  {
+    icon: PanelsTopLeft,
+    title: 'Framer websites',
+    description: 'Fast, expressive marketing sites with a content system your team can update without rebuilding the experience.',
+    examples: ['Campaign landing pages', 'CMS-driven portfolios', 'Responsive interactions'],
+  },
+  {
+    icon: Workflow,
+    title: 'n8n workflow automation',
+    description: 'Connected workflows that move information between the tools your team already uses, with clear failure handling.',
+    examples: ['Lead routing into a CRM', 'Client onboarding flows', 'Order and status updates'],
+  },
+  {
+    icon: Sparkles,
+    title: 'AI process automation',
+    description: 'Practical AI steps inside existing operations, with human review where accuracy and judgment matter.',
+    examples: ['Document intake', 'Support ticket triage', 'Content classification'],
+  },
+  {
+    icon: Bot,
+    title: 'Custom chat agents',
+    description: 'Website and internal chat assistants grounded in your approved content, with a clear path to a person.',
+    examples: ['Knowledge-base answers', 'Lead qualification', 'Support handoff'],
+  },
+  {
+    icon: Mic2,
+    title: 'Custom voice agents',
+    description: 'Voice experiences for repeatable conversations, designed around your call flows and escalation rules.',
+    examples: ['Call intake', 'Appointment requests', 'Conversation summaries'],
+  },
+  {
+    icon: Cable,
+    title: 'Systems & API integrations',
+    description: 'Reliable connections between websites, stores, CRMs, and internal tools so data reaches the right place.',
+    examples: ['Custom webhooks', 'Commerce and CRM sync', 'Reporting pipelines'],
+  },
+];
+
 export default function Services() {
   const navigate = useNavigate();
+  const { hash } = useLocation();
   const [serviceList, setServiceList] = useState(fallbackServiceList);
+
+  useEffect(() => {
+    if (hash !== '#automation-ai') return;
+    const frame = window.requestAnimationFrame(() => {
+      document.getElementById('automation-ai')?.scrollIntoView({ block: 'start' });
+    });
+    return () => window.cancelAnimationFrame(frame);
+  }, [hash]);
 
   useEffect(() => {
     let active = true;
@@ -123,7 +171,7 @@ export default function Services() {
               </div>
 
               <TextReveal 
-                text="A multidisciplinary team for websites, stores, applications, and the systems that keep them useful after launch."
+                text="A multidisciplinary team for websites, stores, applications, automation, and AI-powered experiences that stay useful after launch."
                 className="max-w-3xl text-xl font-normal leading-8 text-white/58 md:text-2xl md:leading-9"
               />
             </div>
@@ -199,12 +247,55 @@ export default function Services() {
           ))}
         </div>
 
+        {/* Automation and AI services remain available alongside CMS-managed services. */}
+        <section id="automation-ai" className="scroll-mt-28 border-t border-white/10 py-20 md:py-28">
+          <SectionHeader
+            badge="Automation & AI"
+            title={<>Make the work flow. <br /><span className="text-white/45">Keep people in control.</span></>}
+            description="From a Framer launch to n8n workflows and custom agents, we design each system around the people, data, and decisions it needs to support."
+            className="mb-10 md:mb-14"
+          />
+
+          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+            {automationServices.map(({ icon: Icon, title, description, examples }) => (
+              <article
+                key={title}
+                className="group flex h-full min-w-0 flex-col rounded-lg border border-white/10 bg-white/[0.025] p-6 transition-[border-color,background-color,transform] duration-300 hover:-translate-y-1 hover:border-brand-primary/40 hover:bg-white/[0.045] sm:p-7"
+              >
+                <div className="mb-7 flex h-11 w-11 items-center justify-center rounded-lg border border-brand-primary/25 bg-brand-primary/10 text-brand-primary transition-colors group-hover:border-brand-primary/45 group-hover:bg-brand-primary/15">
+                  <Icon className="h-5 w-5" aria-hidden="true" />
+                </div>
+                <h3 className="font-display text-xl font-bold leading-tight text-white sm:text-2xl">{title}</h3>
+                <p className="mt-3 text-sm leading-6 text-white/60">{description}</p>
+                <div className="mt-7 border-t border-white/10 pt-5">
+                  <p className="text-[10px] font-black uppercase tracking-[0.2em] text-brand-primary">Example use cases</p>
+                  <ul className="mt-3 space-y-2.5">
+                    {examples.map((example) => (
+                      <li key={example} className="flex items-start gap-2.5 text-sm leading-5 text-white/70">
+                        <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-brand-primary" aria-hidden="true" />
+                        <span>{example}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </article>
+            ))}
+          </div>
+
+          <div className="mt-9 flex flex-col gap-5 border-t border-white/10 pt-7 sm:flex-row sm:items-center sm:justify-between">
+            <p className="max-w-2xl text-sm leading-6 text-white/50">Have a workflow or customer conversation in mind? We can map the scope, integrations, and handoff points together.</p>
+            <Link to="/contact" className="group inline-flex min-h-11 shrink-0 items-center justify-center gap-3 rounded-md bg-brand-primary px-6 text-[10px] font-black uppercase tracking-[0.16em] text-white transition-colors hover:bg-[#526bff]">
+              Discuss automation <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+            </Link>
+          </div>
+        </section>
+
         {/* Pricing tiers */}
         <section className="py-20 md:py-32 border-t border-white/5">
           <SectionHeader 
             badge="Investment"
             title={<>Starting points <br /> <span className="text-white/45">for common scopes.</span></>}
-            description="Indicative packages for early planning. Final scope depends on content, integrations, and delivery requirements."
+            description="Indicative starting points for common website scopes. Automation, integrations, and custom agents receive a tailored quote after discovery."
             align="left"
             className="mb-24"
           />
@@ -285,7 +376,7 @@ export default function Services() {
           <SectionHeader 
              badge="Project Estimator"
              title={<>Plan an initial <br /><span className="text-white/45">project range.</span></>}
-             description="Choose the type of work and core requirements to create a useful starting brief."
+             description="Estimate a common web, mobile, or commerce build. For Framer, automation, or custom agents, share your workflow for a tailored scope."
              align="center"
           />
           <div className="mt-12 md:mt-24 w-full">
