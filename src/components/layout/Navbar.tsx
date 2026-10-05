@@ -138,8 +138,8 @@ export default function Navbar() {
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
         className={cn(
-          "mx-auto max-w-[1400px] rounded-xl border border-transparent transition-[background-color,border-color,padding] duration-300",
-          scrolled ? "border-white/10 bg-black/82 px-4 py-3 backdrop-blur-xl sm:px-6" : "px-3 py-3 sm:px-4 sm:py-4"
+          "mx-auto max-w-[1400px] rounded-[2rem] border border-transparent transition-[background-color,border-color,box-shadow,padding] duration-300",
+          scrolled ? "border-white/10 bg-brand-dark/40 px-4 py-3 shadow-[0_20px_50px_rgba(0,0,0,0.5)] backdrop-blur-2xl sm:px-8" : "px-3 py-3 sm:px-4 sm:py-4"
         )}
       >
         <div className="flex items-center justify-between">
@@ -159,17 +159,25 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop Nav */}
-          <div className="hidden items-center gap-1 lg:flex">
+          <div className="hidden items-center rounded-full border border-white/5 bg-white/[0.03] px-2 py-1 backdrop-blur-sm lg:flex">
             {navLinks.map((link) => (
               <Link
                 key={link.name}
                 to={link.href}
                 className={cn(
-                  'group relative border-b px-4 py-2.5 text-[9px] font-black uppercase tracking-[0.18em] transition-colors duration-300',
-                  isActiveLink(link.name, link.href) ? 'border-brand-primary text-white' : 'border-transparent text-white/45 hover:border-white/20 hover:text-white'
+                  'group relative overflow-hidden rounded-full px-5 py-2.5 text-[9px] font-black uppercase tracking-[0.18em] transition-colors duration-300',
+                  isActiveLink(link.name, link.href) ? 'text-white' : 'text-white/45 hover:text-white'
                 )}
               >
                 <span className="relative z-10">{link.name}</span>
+                {isActiveLink(link.name, link.href) && (
+                  <motion.div
+                    layoutId="nav-pill"
+                    className="absolute inset-0 rounded-full border border-brand-primary/30 bg-brand-primary/20"
+                    transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }}
+                  />
+                )}
+                <div className="absolute inset-0 translate-y-full bg-white/5 transition-transform duration-300 group-hover:translate-y-0" />
               </Link>
             ))}
           </div>
@@ -231,7 +239,7 @@ export default function Navbar() {
             onClick={beginMenuClose}
             className="fixed inset-0 z-[110] bg-black/80 px-3 pb-4 pt-20 lg:hidden"
           >
-            <div onClick={(event) => event.stopPropagation()} className="relative z-10 mx-auto flex max-h-[calc(100dvh-6rem)] w-full max-w-md flex-col overflow-y-auto overscroll-contain rounded-xl border border-white/10 bg-[#080808] p-4">
+            <div onClick={(event) => event.stopPropagation()} className="glass relative z-10 mx-auto flex max-h-[calc(100dvh-6rem)] w-full max-w-md flex-col overflow-y-auto overscroll-contain rounded-[2rem] border border-white/10 bg-brand-dark/90 p-4 shadow-[0_30px_90px_rgba(0,0,0,0.55)]">
               <div className="mb-4 flex items-center justify-between border-b border-white/10 pb-4">
                 <Link to="/" onClick={(event) => closeThenNavigate(event, '/')} className="brand-logo-image-frame" aria-label="LB CodeBase home">
                   <img src="/images/LB CodeBase Logo.webp" alt="LB CodeBase" width="144" height="32" decoding="async" className="brand-logo-image" />
