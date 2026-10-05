@@ -1,6 +1,6 @@
 import { motion } from 'motion/react';
 import { Button } from '../components/common/UI';
-import { Target, Users } from 'lucide-react';
+import { Users } from 'lucide-react';
 import { ParallaxSection, ImageReveal, TextReveal, LetterReveal, HeroBackground } from '../components/common/Animations';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useMemo, useState } from 'react';
@@ -115,39 +115,36 @@ export default function About() {
           </motion.div>
         </section>
 
-        {/* Cinematic Narrative */}
-        <section className="py-20">
+        {/* Studio practice */}
+        <section className="py-16 md:py-24">
           <div className="max-w-[1600px] mx-auto px-6 sm:px-8 md:px-12 lg:px-24">
-            <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] gap-12 lg:gap-24 items-center">
+            <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-[minmax(0,6fr)_minmax(0,6fr)] lg:gap-20">
               <div className="relative min-w-0">
-                <ParallaxSection offset={50}>
+                <ParallaxSection offset={20}>
                   <ImageReveal 
                     src="/images/thesearchforabsolutesection1.webp"
-                    alt="Our Vision" 
-                    className="aspect-[4/3] rounded-[1.5rem] border border-white/5 object-cover shadow-2xl md:rounded-[3.5rem] lg:aspect-[4/5]"
+                    alt="LB CodeBase studio work and creative direction"
+                    className="aspect-[4/3] rounded-lg border border-white/10 object-cover lg:aspect-[4/5]"
                   />
                 </ParallaxSection>
-                <div className="absolute -bottom-6 -right-4 p-6 bg-brand-primary rounded-[1.5rem] text-white shadow-2xl z-20 md:-bottom-10 md:-right-10 md:p-12 md:rounded-[3rem]">
-                  <Target className="w-8 h-8 md:w-12 md:h-12" />
-                </div>
+                <p className="mt-3 border-t border-white/10 pt-3 text-[10px] font-bold uppercase tracking-[0.18em] text-white/45">Design and engineering / LB CodeBase</p>
               </div>
               
-              <div className="min-w-0 space-y-10 md:space-y-16">
-                <div className="text-[10px] font-black uppercase tracking-[0.25em] sm:tracking-[0.5em] text-brand-primary">OUR PHILOSOPHY</div>
-                <h2 className="text-4xl md:text-5xl font-display font-black tracking-tighter uppercase leading-[0.95]">THE SEARCH <br /><span className="text-white/20 uppercase italic">FOR ABSOLUTE.</span></h2>
-                <p className="text-white/40 text-xl md:text-2xl leading-relaxed font-light">
-                  We don't believe in "good enough." We believe in surgical precision, cinematic art direction, and code that performs at elite levels. Every project is a testament to our pursuit of digital perfection.
+              <div className="min-w-0">
+                <div className="text-[10px] font-black uppercase tracking-[0.25em] text-brand-primary">OUR PRACTICE</div>
+                <h2 className="mt-5 font-display text-3xl font-black uppercase leading-[1.02] tracking-tighter sm:text-4xl md:text-5xl">Clear thinking.<br /><span className="text-white/40">Careful delivery.</span></h2>
+                <p className="mt-6 max-w-xl text-base leading-7 text-white/60 md:text-lg md:leading-8">
+                  We work across product strategy, interface design, and engineering. That means the people shaping the experience stay close to the people building it.
                 </p>
                 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 pt-4 md:pt-8">
+                <div className="mt-8 divide-y divide-white/10 border-y border-white/10">
                   {[
-                    { title: "Technical Absolute", desc: "Surgical code architecture designed for extreme velocity and zero latency." },
-                    { title: "Artistic Intent", desc: "Cinematic visual systems that command attention and define authority." }
+                    { title: "Understand the brief", desc: "We establish who the product serves and what the next action should be." },
+                    { title: "Make the work usable", desc: "We test structure, content, interaction, and implementation together." }
                   ].map((item, i) => (
-                    <div key={i} className="space-y-6 group">
-                      <div className="h-px w-12 bg-brand-primary transition-[width] duration-500 group-hover:w-full" />
-                      <h4 className="text-xl font-display font-black uppercase tracking-tight">{item.title}</h4>
-                      <p className="text-white/30 text-sm font-light leading-relaxed">{item.desc}</p>
+                    <div key={i} className="grid gap-2 py-5 sm:grid-cols-[160px_minmax(0,1fr)] sm:gap-6">
+                      <h3 className="font-display text-sm font-black uppercase text-white">{item.title}</h3>
+                      <p className="text-sm leading-6 text-white/55">{item.desc}</p>
                     </div>
                   ))}
                 </div>
@@ -163,7 +160,7 @@ export default function About() {
                 <div className="mb-7 inline-flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.24em] text-brand-primary">
                   <Users className="h-4 w-4" /> The people behind the work
                 </div>
-                <h2 className="max-w-5xl font-display text-4xl font-black uppercase leading-[0.94] tracking-normal sm:text-5xl md:text-6xl lg:text-7xl">
+                <h2 className="max-w-5xl font-display text-4xl font-black uppercase leading-[1.02] tracking-normal sm:text-5xl lg:text-[3.5rem]">
                   Meet the <span className="text-white/25">team.</span>
                 </h2>
                 <p className="mt-7 max-w-2xl text-base leading-relaxed text-white/50 md:text-xl">
@@ -201,13 +198,11 @@ export default function About() {
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
-              className="p-8 sm:p-12 md:p-16 lg:p-32 rounded-[2rem] md:rounded-[5rem] bg-brand-primary overflow-hidden relative shadow-[0_0_100px_rgba(61,90,254,0.3)] text-center"
+              className="relative overflow-hidden rounded-lg border border-brand-primary/40 bg-[#111633] p-8 text-center sm:p-12 md:p-16 lg:p-20"
             >
-            <div className="absolute inset-0 bg-gradient-to-br from-brand-primary via-brand-primary to-brand-purple opacity-90" />
-            
             <div className="relative z-10 max-w-4xl mx-auto">
-              <div className="text-[10px] font-black uppercase tracking-[0.24em] sm:tracking-[0.5em] text-white/40 mb-8 sm:mb-10 lg:mb-12">READY TO LEAD?</div>
-              <h2 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-display font-black text-white tracking-tighter uppercase mb-8 sm:mb-10 lg:mb-12 leading-[0.9]">LET'S DEFINE <br /> YOUR LEGACY.</h2>
+              <div className="mb-6 text-[10px] font-black uppercase tracking-[0.24em] text-brand-primary">Start a conversation</div>
+              <h2 className="mb-8 font-display text-3xl font-black uppercase leading-[1.02] tracking-tighter text-white sm:text-4xl md:text-5xl">Tell us what you need to build.</h2>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-8">
                 <Button variant="secondary" size="lg" className="w-full sm:w-auto hover:bg-white" onClick={() => navigate('/contact')}>
                   Initiate Project

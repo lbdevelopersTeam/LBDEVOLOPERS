@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { ArrowUpRight, Check, Clock, Copy, Download, Mail, MessageSquare, Phone } from 'lucide-react';
+import { ArrowUpRight, Check, Copy, Download, MessageSquare, Phone } from 'lucide-react';
 import ContactForm from '../../common/ContactForm';
 import { MemberProfile, SectionHeading, socialPlatforms, usableLink, whatsAppNumber } from './shared';
 
@@ -45,7 +45,7 @@ export default function MemberContactSection({
         <SectionHeading
           index={sectionIndex}
           label="Direct Contact"
-          description={`Get in touch with ${member.name} for technical consulting, project scoping, design systems, or bespoke full-stack delivery.`}
+          description={`Contact ${member.name} about work related to ${member.specialization || member.role}.`}
         >
           Have a project in mind?<br />
           <span className="text-white/28">Start the conversation.</span>
@@ -61,7 +61,7 @@ export default function MemberContactSection({
               </div>
 
               <p className="mt-4 text-base leading-relaxed text-white/60">
-                Send a project brief directly for {member.name}. The LB CodeBase engineering and design lead team will review your specifications and follow up with a detailed proposal.
+                Share the work you have in mind, who it is for, and what you need help deciding. Your inquiry is directed to {member.name} through LB CodeBase.
               </p>
 
               {/* Direct email display & copy button */}
@@ -112,12 +112,6 @@ export default function MemberContactSection({
                   </div>
                 </div>
               )}
-
-              {/* Response SLA Note */}
-              <div className="mt-6 flex items-center gap-2.5 rounded-lg border border-white/8 bg-white/[0.02] p-3 text-xs text-white/50">
-                <Clock className="h-4 w-4 text-[var(--member-accent)] shrink-0" />
-                <span>Typical response time is within 24 hours on business days.</span>
-              </div>
 
               {/* vCard Download */}
               <div className="mt-6">

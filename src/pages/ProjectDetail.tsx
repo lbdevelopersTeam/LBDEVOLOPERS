@@ -157,7 +157,7 @@ export default function ProjectDetail() {
                   viewport={{ once: true, amount: 0.15 }}
                   transition={{ duration: 0.6, delay: index * 0.06 }}
                   onClick={() => setActiveGalleryIndex(index)}
-                  className="group relative overflow-hidden rounded-lg border border-white/10 bg-brand-gray text-left outline-none transition-colors hover:border-brand-primary/40 focus-visible:ring-2 focus-visible:ring-brand-primary"
+                  className={`group relative overflow-hidden rounded-lg border border-white/10 bg-brand-gray text-left outline-none transition-colors hover:border-brand-primary/40 focus-visible:ring-2 focus-visible:ring-brand-primary ${index === 0 && project.gallery.length > 1 ? 'md:col-span-2' : ''}`}
                   aria-label={`Open ${project.title} gallery image ${index + 1} of ${project.gallery.length}`}
                 >
                   <img
@@ -165,7 +165,7 @@ export default function ProjectDetail() {
                     alt={`${project.title} website mockup ${index + 1}`}
                     loading="lazy"
                     decoding="async"
-                    className="aspect-[16/10] w-full object-cover object-center transition duration-700 group-hover:scale-[1.02]"
+                    className={`w-full object-cover object-top transition duration-700 group-hover:scale-[1.02] ${index === 0 && project.gallery.length > 1 ? 'aspect-[16/9] md:aspect-[21/9]' : 'aspect-[16/10]'}`}
                   />
                   <span className="absolute bottom-4 right-4 inline-flex h-11 w-11 items-center justify-center rounded-md border border-white/15 bg-black/70 text-white transition group-hover:border-brand-primary/50 group-hover:bg-brand-primary" aria-hidden="true">
                     <Expand className="h-4 w-4" />

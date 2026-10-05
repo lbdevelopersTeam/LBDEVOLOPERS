@@ -6,6 +6,7 @@ import MemberHero from '../components/team/portfolio/MemberHero';
 import MemberIntroduction from '../components/team/portfolio/MemberIntroduction';
 import MemberExpertise from '../components/team/portfolio/MemberExpertise';
 import MemberWork from '../components/team/portfolio/MemberWork';
+import MemberProcess from '../components/team/portfolio/MemberProcess';
 import MemberCareer from '../components/team/portfolio/MemberCareer';
 import MemberTestimonials from '../components/team/portfolio/MemberTestimonials';
 import MemberContactSection from '../components/team/portfolio/MemberContactSection';
@@ -137,9 +138,10 @@ export default function MemberPortfolio() {
   if (notFound || !member) return <MemberNotFound />;
 
   const hasCareer = Boolean(member.experience?.length || member.education?.length || member.certifications?.length);
+  const hasProcess = member.projects.some((project) => Boolean(project.process?.length));
   const hasTestimonials = Boolean(member.testimonials?.length);
 
-  const sectionIndices = memberSectionIndices({ hasCareer, hasTestimonials });
+  const sectionIndices = memberSectionIndices({ hasProcess, hasCareer, hasTestimonials });
 
   return (
     <motion.div
@@ -155,6 +157,7 @@ export default function MemberPortfolio() {
         <MemberIntroduction member={member} />
         <MemberExpertise member={member} />
         <MemberWork member={member} />
+        <MemberProcess member={member} sectionIndex={sectionIndices.process} />
         <MemberCareer member={member} sectionIndex={sectionIndices.career} onOpenCv={() => setCvModalOpen(true)} />
         <MemberTestimonials member={member} sectionIndex={sectionIndices.testimonials} />
         <MemberContactSection member={member} sectionIndex={sectionIndices.contact} />

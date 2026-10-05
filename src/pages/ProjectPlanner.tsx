@@ -87,10 +87,10 @@ export default function ProjectPlanner() {
                 className="space-y-10 md:space-y-12"
               >
                 <header>
-                  <h2 className="text-3xl md:text-5xl font-display font-black uppercase tracking-tighter leading-none mb-6">
+                  <h2 className="text-2xl md:text-4xl font-display font-bold tracking-tight leading-tight mb-4">
                     {steps[currentStep].question}
                   </h2>
-                  <p className="text-white/40 text-lg font-light">Choose the option that best reflects your vision.</p>
+                  <p className="text-white/60 text-base">Choose the option that best reflects your project.</p>
                 </header>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -98,13 +98,12 @@ export default function ProjectPlanner() {
                     <button
                       key={option.id}
                       onClick={() => handleOptionSelect(option.id)}
-                    className={`group p-5 sm:p-8 rounded-[1.5rem] md:rounded-[2rem] border text-left transition-all duration-500 hover:border-brand-primary/50 relative overflow-hidden ${
+                    className={`group p-5 sm:p-7 border text-left transition-colors duration-300 hover:border-brand-primary/50 relative overflow-hidden ${
                         answers[steps[currentStep].id] === option.id 
                           ? 'border-brand-primary bg-brand-primary/10' 
                           : 'border-white/5 bg-white/5'
                       }`}
                     >
-                      <div className="absolute -right-4 -bottom-4 w-24 h-24 bg-brand-primary/5 group-hover:bg-brand-primary/10 transition-colors rounded-full blur-2xl" />
                       <div className="flex items-center justify-between gap-4 relative z-10">
                         <div className="flex min-w-0 items-center gap-4">
                           {option.icon && <div className="text-brand-primary">{option.icon}</div>}
@@ -131,14 +130,14 @@ export default function ProjectPlanner() {
           <motion.div 
             initial={{ opacity: 0, scale: 0.9 }} 
             animate={{ opacity: 1, scale: 1 }}
-            className="text-center bg-[#0c0c0c] border border-white/5 p-6 sm:p-10 md:p-24 rounded-[1.5rem] md:rounded-[3rem]"
+            className="text-center bg-[#0c0c0c] border border-white/10 p-6 sm:p-10 md:p-16"
           >
             <div className="w-24 h-24 rounded-full bg-brand-primary/10 border border-brand-primary/20 flex items-center justify-center mx-auto mb-10">
               <CheckCircle2 className="w-12 h-12 text-brand-primary" />
             </div>
-            <h2 className="text-3xl md:text-6xl font-display font-black mb-6 uppercase tracking-tighter">Plan Complete.</h2>
+            <h2 className="text-3xl md:text-5xl font-display font-bold mb-5 tracking-tight">Plan complete.</h2>
             <p className="text-white/60 text-base md:text-xl font-light mb-10 md:mb-12 max-w-xl mx-auto leading-relaxed">
-              We've analyzed your project parameters. Our strategy team is ready to review your vision.
+              Your project outline is ready. Share it with us or book a call to discuss the next step.
             </p>
             <div className="flex flex-col md:flex-row gap-4 justify-center">
               <Link to="/contact">

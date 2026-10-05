@@ -16,6 +16,7 @@ export default function MemberNavbar({ member }: { member: MemberProfile }) {
   const pendingTarget = useRef<{ type: 'anchor' | 'route'; href: string } | null>(null);
 
   const hasCareer = Boolean(member.experience?.length || member.education?.length || member.certifications?.length);
+  const hasProcess = member.projects.some((project) => Boolean(project.process?.length));
   const hasTestimonials = Boolean(member.testimonials?.length);
 
   const navLinks = [
@@ -23,6 +24,7 @@ export default function MemberNavbar({ member }: { member: MemberProfile }) {
     { href: '#about', label: 'About' },
     { href: '#skills', label: 'Expertise' },
     { href: '#projects', label: 'Work' },
+    ...(hasProcess ? [{ href: '#process', label: 'Process' }] : []),
     ...(hasCareer ? [{ href: '#experience', label: 'Career' }] : []),
     ...(hasTestimonials ? [{ href: '#testimonials', label: 'Endorsements' }] : []),
     { href: '#contact', label: 'Contact' },
@@ -136,7 +138,7 @@ export default function MemberNavbar({ member }: { member: MemberProfile }) {
       window.removeEventListener('resize', scheduleUpdate);
       if (frame) window.cancelAnimationFrame(frame);
     };
-  }, [hasCareer, hasTestimonials]);
+  }, [hasCareer, hasProcess, hasTestimonials]);
 
   return (
     <nav

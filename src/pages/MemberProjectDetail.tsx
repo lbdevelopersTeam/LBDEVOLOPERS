@@ -239,13 +239,13 @@ export default function MemberProjectDetail() {
         transition={{ duration: 0.75, delay: reducedMotion ? 0 : 0.08 }}
         className="mx-auto max-w-[1760px] px-3 md:px-6"
       >
-        <div className="member-glass member-glass-strong rounded-xl p-2.5 md:p-4">
+        <div className="rounded-lg border border-white/10 bg-white/[0.025] p-2 md:p-3">
           <img
             src={project.thumbnail}
             alt={`${project.title} case study hero`}
             fetchPriority="high"
             decoding="async"
-            className="aspect-[16/10] max-h-[850px] w-full rounded-lg object-cover object-top"
+            className="aspect-[16/10] max-h-[850px] w-full rounded-md object-cover object-top"
           />
         </div>
       </motion.figure>
@@ -264,7 +264,7 @@ export default function MemberProjectDetail() {
             />
           </div>
 
-          <dl className="member-glass h-fit rounded-xl p-6 lg:col-span-5">
+          <dl className="h-fit border-t border-white/15 py-5 lg:col-span-5">
             <div className="mb-4 border-b border-white/10 pb-3">
               <span className="text-[10px] font-black uppercase tracking-[0.16em] text-white/40">Specifications</span>
             </div>
@@ -278,7 +278,7 @@ export default function MemberProjectDetail() {
         </section>
 
         {/* Individual Contribution Highlight Callout */}
-        <aside className="member-glass member-glass-strong mb-14 rounded-xl p-6 sm:p-8 md:mb-20">
+        <aside className="mb-14 border-l-2 border-[var(--member-accent)] pl-5 md:mb-20 md:pl-7">
           <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.18em] text-white/40">
             <UserCheck className="h-4 w-4 text-[var(--member-accent)]" />
             <span>Individual Role & Impact</span>
@@ -304,7 +304,7 @@ export default function MemberProjectDetail() {
                 <span className="text-[10px] font-black text-[var(--member-accent)]">04</span>
                 <p className="mt-3 text-[9px] font-black uppercase tracking-[0.16em] text-white/35">Implementation Process</p>
               </div>
-              <ol className="member-glass divide-y divide-white/8 rounded-xl px-6 sm:px-8">
+              <ol className="divide-y divide-white/10 border-y border-white/10">
                 {project.process!.map((step, index) => (
                   <li key={`${step}-${index}`} className="grid grid-cols-[44px_minmax(0,1fr)] gap-4 py-5 md:grid-cols-[56px_minmax(0,1fr)] md:py-6">
                     <span className="font-display text-xl font-black text-[var(--member-accent)]">
@@ -326,7 +326,7 @@ export default function MemberProjectDetail() {
                 <span className="text-[10px] font-black text-[var(--member-accent)]">05</span>
                 <p className="mt-3 text-[9px] font-black uppercase tracking-[0.16em] text-white/35">Business Outcomes</p>
               </div>
-              <div className="member-glass grid rounded-xl p-6 sm:p-8 md:grid-cols-2 md:gap-6">
+              <div className="grid border-t border-white/10 md:grid-cols-2 md:gap-6">
                 {[...(project.results || []), ...(project.achievements || [])].map((result, index) => (
                   <div key={`${result}-${index}`} className="border-t border-white/10 py-5 first:border-0 md:border-t-0 md:pr-4">
                     <div className="flex items-center gap-2 text-[var(--member-accent)]">
@@ -348,7 +348,7 @@ export default function MemberProjectDetail() {
               <span className="text-[10px] font-black text-[var(--member-accent)]">TX</span>
               <p className="mt-3 text-[9px] font-black uppercase tracking-[0.16em] text-white/35">Tech Stack</p>
             </div>
-            <ul className="member-glass grid rounded-xl p-6 sm:grid-cols-2 sm:p-8">
+            <ul className="grid border-t border-white/10 sm:grid-cols-2 sm:gap-x-8">
               {project.technologies.map((technology) => (
                 <li
                   key={technology}
@@ -371,13 +371,13 @@ export default function MemberProjectDetail() {
         <section className="border-y border-white/10 bg-[#080808] px-4 py-14 md:px-8 md:py-20">
           <div className="mx-auto grid max-w-[1600px] gap-6 md:grid-cols-2">
             {project.gallery.map((image, index) => (
-              <div key={`${image}-${index}`} className="member-glass overflow-hidden rounded-xl p-2.5">
+              <div key={`${image}-${index}`} className={`overflow-hidden rounded-lg border border-white/10 bg-white/[0.025] p-2 ${index === 0 && project.gallery.length > 1 ? 'md:col-span-2' : ''}`}>
                 <img
                   src={image}
                   alt={`${project.title} screenshot ${index + 1}`}
                   loading="lazy"
                   decoding="async"
-                  className="aspect-[16/10] w-full rounded-lg object-cover object-top"
+                  className={`w-full rounded-md object-cover object-top ${index === 0 && project.gallery.length > 1 ? 'aspect-[16/9] md:aspect-[21/9]' : 'aspect-[16/10]'}`}
                 />
               </div>
             ))}

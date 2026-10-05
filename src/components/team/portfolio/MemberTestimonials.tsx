@@ -20,13 +20,13 @@ export default function MemberTestimonials({
         <SectionHeading
           index={sectionIndex || '04'}
           label="Endorsements"
-          description={`Direct feedback from clients and leadership on high-impact projects delivered by ${member.name}.`}
+          description={`Published feedback connected to ${member.name}'s work.`}
         >
-          Trusted by founders.<br />
-          <span className="text-white/28">Proven in production.</span>
+          Feedback on the work.<br />
+          <span className="text-white/28">In clients' words.</span>
         </SectionHeading>
 
-        <div className="mt-9 grid gap-6 md:mt-12 md:grid-cols-2 lg:gap-8">
+        <div className="mt-9 grid gap-x-10 gap-y-6 md:mt-12 md:grid-cols-2">
           {testimonials.map((item, index) => (
             <motion.article
               key={item.id || index}
@@ -34,7 +34,7 @@ export default function MemberTestimonials({
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: reducedMotion ? 0 : index * 0.1, duration: 0.5 }}
-              className="member-glass relative flex flex-col justify-between rounded-xl p-6 sm:p-8"
+              className={`relative flex flex-col justify-between border-t border-white/10 py-6 sm:py-8 ${index === 0 && testimonials.length > 1 ? 'md:col-span-2 md:max-w-4xl' : ''}`}
             >
               <div className="mb-6 flex items-center justify-between border-b border-white/10 pb-5">
                 <div className="flex items-center gap-2">

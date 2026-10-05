@@ -3,6 +3,7 @@ import { motion } from 'motion/react';
 import { Link } from 'react-router-dom';
 import { TeamMember } from '../../lib/content';
 import MemberPortrait from './MemberPortrait';
+import { cn } from '../../lib/utils';
 
 const validLink = (value?: string) => Boolean(value && value !== '#');
 
@@ -13,12 +14,12 @@ export default function TeamMemberCard({ member, index = 0 }: { member: TeamMemb
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-60px' }}
       transition={{ delay: index * 0.06, duration: 0.65 }}
-      className="group border-t border-white/10 py-8 md:py-10"
+      className={cn('group border-t py-8 md:py-10', index === 0 ? 'border-brand-primary/45' : 'border-white/10')}
     >
-      <div className="grid items-center gap-7 md:grid-cols-[180px_minmax(0,1fr)_auto] lg:gap-12">
+      <div className={cn('grid items-center gap-7 lg:gap-12', index === 0 ? 'md:grid-cols-[260px_minmax(0,1fr)] lg:grid-cols-[320px_minmax(0,1fr)_auto]' : 'md:grid-cols-[180px_minmax(0,1fr)_auto]')}>
         <Link
           to={`/team/${member.slug}`}
-          className="relative block aspect-[4/5] w-full max-w-[220px] overflow-hidden rounded-lg bg-white/[0.04] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary"
+          className={cn('relative block aspect-[4/5] w-full overflow-hidden rounded-lg bg-white/[0.04] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary', index === 0 ? 'max-w-[360px]' : 'max-w-[220px]')}
           aria-label={`View ${member.name}'s portfolio`}
         >
           {member.avatar ? (
@@ -38,15 +39,16 @@ export default function TeamMemberCard({ member, index = 0 }: { member: TeamMemb
 
         <div>
           <p className="mb-3 text-[10px] font-black uppercase tracking-[0.24em] text-brand-primary">{member.role}</p>
-          <h2 className="mb-4 font-display text-3xl font-black uppercase tracking-normal text-white md:text-4xl">{member.name}</h2>
+          <h3 className={cn('mb-4 font-display font-black uppercase tracking-normal text-white', index === 0 ? 'text-3xl md:text-5xl' : 'text-3xl md:text-4xl')}>{member.name}</h3>
           <p className="max-w-2xl text-base leading-relaxed text-white/50">{member.specialization || member.bio}</p>
           {member.skills.length > 0 && (
             <ul className="mt-6 flex flex-wrap gap-2" aria-label={`${member.name}'s skills`}>
-              {member.skills.map((skill) => (
+              {member.skills.slice(0, 4).map((skill) => (
                 <li key={skill} className="rounded-md border border-white/10 bg-white/[0.03] px-3 py-2 text-[10px] font-bold uppercase tracking-[0.12em] text-white/55">
                   {skill}
                 </li>
               ))}
+              {member.skills.length > 4 && <li className="self-center text-[10px] font-bold uppercase tracking-wider text-white/40">+{member.skills.length - 4} more on profile</li>}
             </ul>
           )}
         </div>

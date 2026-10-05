@@ -23,11 +23,11 @@ function FloatingProjectCard({ project, index, featured }: { project: Project; i
       className={cn('group block h-full', featured && 'lg:col-span-2')}
     >
       <Link to={`/portfolio/${project.slug}`} className="block h-full">
-        <article className="project-card relative h-full">
+        <article className={cn('project-card relative h-full', featured && 'lg:grid lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)] lg:items-center lg:gap-10')}>
           <div
             className={cn(
               'relative overflow-hidden rounded-lg border border-white/10 bg-brand-dark/50',
-              featured ? 'aspect-[16/11] lg:aspect-[21/10]' : 'aspect-[16/10]',
+              featured ? 'aspect-[16/11] lg:aspect-[16/10]' : 'aspect-[16/10]',
             )}
           >
             <img
@@ -44,14 +44,14 @@ function FloatingProjectCard({ project, index, featured }: { project: Project; i
             </div>
           </div>
 
-          <div className="pt-6 sm:pt-7">
+          <div className={cn('border-t border-white/10 pt-6 sm:pt-7', featured && 'lg:py-8')}>
             <div className="mb-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-[10px] font-bold uppercase tracking-[0.24em]">
               <span className="text-brand-primary">{project.category}</span>
               <span className="text-white/25">/</span>
               <span className="text-white/40">{project.client || 'LB CodeBase project'}</span>
               <span className="ml-auto text-white/25">{String(index + 1).padStart(2, '0')}</span>
             </div>
-            <h3 className={cn('font-display font-bold leading-none tracking-[-0.04em] text-white transition-colors duration-300 group-hover:text-brand-primary', featured ? 'text-3xl md:text-5xl' : 'text-2xl md:text-3xl')}>
+            <h3 className={cn('font-display font-bold leading-none tracking-[-0.04em] text-white transition-colors duration-300 group-hover:text-brand-primary', featured ? 'text-3xl md:text-4xl xl:text-5xl' : 'text-2xl md:text-3xl')}>
               {project.title}
             </h3>
             <p className={cn('mt-4 max-w-3xl text-sm font-normal leading-6 text-white/55', !featured && 'line-clamp-3')}>
@@ -64,6 +64,7 @@ function FloatingProjectCard({ project, index, featured }: { project: Project; i
                 </span>
               ))}
             </div>
+            {featured && <span className="mt-8 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-brand-primary">Read the case study <ArrowRight className="h-4 w-4" /></span>}
           </div>
         </article>
       </Link>

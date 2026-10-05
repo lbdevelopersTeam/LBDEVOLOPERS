@@ -171,7 +171,7 @@ export default function ContactForm({ memberId, memberName, variant = 'panel' }:
       </div>
 
       <Button className={`w-full py-4 group ${variant === 'editorial' ? '!rounded-none !bg-[var(--member-accent)] !text-black' : ''} ${variant === 'cinematic' ? 'shadow-2xl shadow-brand-primary/20' : ''}`} disabled={status === 'submitting'}>
-        {status === 'submitting' ? 'Transmitting...' : variant === 'cinematic' ? 'Initiate Transmission' : 'Send Message'}
+        {status === 'submitting' ? 'Sending...' : variant === 'cinematic' ? 'Send project inquiry' : 'Send Message'}
         <Send className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
       </Button>
       {status === 'error' && <p className="text-red-500 text-xs mt-2 uppercase tracking-widest font-black">Error in transmission. Try again.</p>}

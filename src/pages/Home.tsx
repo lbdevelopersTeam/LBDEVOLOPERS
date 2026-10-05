@@ -1,14 +1,15 @@
 import { motion } from 'motion/react';
-import { Button, SectionHeader, BentoCard } from '../components/common/UI';
+import { Button, SectionHeader } from '../components/common/UI';
 import { lazy, Suspense, useEffect, useRef, useState } from 'react';
-import { ArrowRight, Code, Palette, Zap, Globe, Cpu, Smartphone, BarChart as ChartBar, Send, Shield, Activity, Rocket, Bot } from 'lucide-react';
+import { ArrowRight, Palette, Zap, Globe, Cpu, Smartphone, Send, Shield, Activity, Rocket, Bot } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { cn } from '../lib/utils';
 import { DeferredVideo, Magnetic, TextReveal, LetterReveal } from '../components/common/Animations';
-import type { BlogPost, Paginated, Project } from '../lib/content';
+import type { BlogPost, Paginated, Project, TeamMember } from '../lib/content';
 import { cachedPublicFetch } from '../lib/public-api';
 import { homeFallbackBlogs, homeFallbackProjects } from '../lib/home-content';
 import { useContactEmail } from '../lib/site-settings';
+import MemberPortrait from '../components/team/MemberPortrait';
 
 // HeroScene3D removed to use a solid black hero background per request
 
@@ -27,29 +28,6 @@ const capabilityTracks = [
     icon: Cpu,
     title: 'Interactive Media',
     description: '3D and motion used selectively to clarify ideas and give the brand a distinct point of view.',
-  },
-];
-
-const operatingModel = [
-  {
-    icon: Code,
-    title: 'Approach',
-    description: 'We start with the audience, the business goal, and the constraints before choosing a solution.',
-  },
-  {
-    icon: ChartBar,
-    title: 'Outcomes',
-    description: 'Fast, legible products with a clear route from first visit to meaningful action.',
-  },
-  {
-    icon: Globe,
-    title: 'Stack',
-    description: 'React, Shopify, WordPress, Vercel, AWS, Cloudflare, and practical AI integrations.',
-  },
-  {
-    icon: Shield,
-    title: 'Support',
-    description: 'Maintenance, monitoring, and iterative growth after launch.',
   },
 ];
 
@@ -75,6 +53,13 @@ function DeferredMount({ children, minHeight = 320 }: { children: React.ReactNod
 }
 
 const featuredFallbackProjects = homeFallbackProjects;
+type HomeTeamMember = Pick<TeamMember, 'id' | 'slug' | 'name' | 'role' | 'specialization' | 'avatar'>;
+const homeTeamFallback: HomeTeamMember[] = [
+  { id: 'team-wajid', slug: 'wajid-hussain', name: 'Wajid Hussain', role: 'CEO, LB CodeBase', specialization: 'Automation, commerce architecture & cloud systems', avatar: '/lbt/Wajid Hussain.png' },
+  { id: 'team-mohsin', slug: 'mohsin-bilal', name: 'Mohsin Bilal', role: 'Lead Brand & Graphics Designer', specialization: 'Visual identity & brand systems', avatar: '/lbt/Mohsin.png' },
+  { id: 'team-laiba', slug: 'laiba-sahibzada', name: 'Laiba Sahibzada', role: 'Senior Frontend & Full-Stack Developer', specialization: 'Frontend engineering & web performance', avatar: '/lbt/Laiba.png' },
+  { id: 'team-ibad', slug: 'ibad-ullah', name: 'Ibad Ullah', role: 'Lead UI/UX & Product Designer', specialization: 'Product design & user experience', avatar: '/lbt/Ibdullah.png' },
+];
 const responsiveProjectImages = new Set([
   '/images/voguedecor.com.webp',
   '/images/americandreamautoprotect.com.webp',
@@ -91,6 +76,7 @@ export default function Home() {
   const contactEmail = useContactEmail();
   const [projects, setProjects] = useState<Project[]>(featuredFallbackProjects);
   const [latestBlogs, setLatestBlogs] = useState<BlogPost[]>(homeFallbackBlogs);
+  const [team, setTeam] = useState<HomeTeamMember[]>(homeTeamFallback);
 
   useEffect(() => {
     let active = true;
@@ -108,12 +94,13 @@ export default function Home() {
     }).then((data) => {
       if (active) setLatestBlogs(data.items.length ? data.items : homeFallbackBlogs);
     });
+    cachedPublicFetch<{ items: HomeTeamMember[] }>('/api/v2/team?limit=50', 'public.team.home.v2', { items: homeTeamFallback })
+      .then(({ items }) => { if (active) setTeam(items.length ? items : homeTeamFallback); });
     return () => { active = false; };
   }, []);
 
   const featuredProject = projects[0] || homeFallbackProjects[0];
   const supportingProjects = projects.slice(1, 4);
-  const portfolioCategories = Array.from(new Set(projects.map((project) => project.category))).slice(0, 3);
 
   return (
     <div className="overflow-hidden relative bg-brand-dark">
@@ -186,24 +173,16 @@ export default function Home() {
         {/* System status removed site-wide */}
       </section>
 
-      {/* Capabilities - Brand-Led Systems */}
+      {/* Studio introduction */}
       <section className="relative overflow-hidden border-y border-white/5 bg-brand-gray px-6 py-16 sm:px-8 md:px-12 md:py-20 lg:px-24">
-        <DeferredVideo
-          src="/videos/important-sections-bg.mp4"
-          allowCoarsePointer
-          className="section-background-video absolute inset-0 h-full w-full object-cover opacity-35"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-brand-dark via-brand-dark/75 to-brand-dark" />
-        <div className="absolute inset-0 opacity-[0.06] bg-[linear-gradient(90deg,rgba(255,255,255,0.16)_1px,transparent_1px),linear-gradient(rgba(255,255,255,0.16)_1px,transparent_1px)] bg-[size:88px_88px]" />
-
         <div className="relative z-10 mx-auto max-w-[1600px]">
-          <div className="grid grid-cols-1 gap-6 lg:grid-cols-[0.92fr_1.08fr]">
+          <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-[0.92fr_1.08fr] lg:gap-16">
             <motion.div
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-              className="relative flex min-h-[360px] flex-col justify-between border-t border-white/15 py-7 md:min-h-[430px] md:py-10 lg:pr-12"
+              className="relative flex flex-col justify-between border-t border-white/15 py-7 lg:pr-12"
             >
               <div className="relative z-10">
                 <div className="mb-7 inline-flex items-center gap-3">
@@ -218,13 +197,6 @@ export default function Home() {
                   We connect the work that is often split between agencies: structure, interface design, frontend engineering, commerce, and launch support.
                 </p>
 
-                <div className="mt-8 flex flex-wrap gap-2">
-                  {['Strategy', 'Design', 'Engineering', 'Growth'].map((item) => (
-                    <span key={item} className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-[9px] font-black uppercase tracking-[0.22em] text-white/70">
-                      {item}
-                    </span>
-                  ))}
-                </div>
               </div>
 
               <div className="relative z-10 mt-10 flex flex-col gap-3 sm:flex-row">
@@ -245,37 +217,15 @@ export default function Home() {
               </div>
             </motion.div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
-              className="grid grid-cols-1 gap-4 sm:grid-cols-3 lg:grid-cols-1"
-            >
-              {[
-                { value: 'Fast', label: 'Load experience', body: 'Lean frontends, smart media, and responsive delivery.' },
-                { value: 'Clear', label: 'User journeys', body: 'Simple paths from first impression to qualified action.' },
-                { value: 'Built', label: 'Scalable systems', body: 'Content, commerce, and infrastructure ready to grow.' },
-              ].map((item, index) => (
-                <div
-                  key={item.label}
-                  className="group relative border-t border-white/10 py-6 transition-colors duration-300 hover:border-white/25 md:px-2 md:py-7"
-                >
-                  <div className="absolute right-5 top-5 font-display text-5xl font-black leading-none text-white/[0.04] group-hover:text-brand-primary/10">
-                    0{index + 1}
-                  </div>
-                  <div className="relative z-10 max-w-sm">
-                    <div className="mb-4 h-px w-16 bg-brand-primary/60" />
-                    <h3 className="font-display text-3xl font-black uppercase leading-none tracking-tighter text-white">{item.value}</h3>
-                    <div className="mt-2 text-[10px] font-black uppercase tracking-[0.28em] text-blue-300">{item.label}</div>
-                    <p className="mt-5 text-sm font-light leading-6 text-white/70">{item.body}</p>
-                  </div>
-                </div>
-              ))}
-            </motion.div>
+            <figure className="relative min-w-0">
+              <img src="/images/jugomockup.webp" alt="Jugo project mockup from the LB CodeBase portfolio" loading="lazy" decoding="async" className="aspect-[4/3] w-full rounded-lg border border-white/10 object-cover" />
+              <figcaption className="mt-3 flex justify-between gap-4 border-t border-white/10 pt-3 text-[10px] font-bold uppercase tracking-[0.16em] text-white/45">
+                <span>One studio</span><span>Strategy / design / engineering</span>
+              </figcaption>
+            </figure>
           </div>
 
-          <div className="mt-6 grid grid-cols-1 gap-5 md:grid-cols-3 md:mt-8">
+          <div className="mt-12 grid grid-cols-1 gap-5 border-t border-white/10 md:mt-16 md:grid-cols-3">
             {capabilityTracks.map((item, index) => {
               const Icon = item.icon;
 
@@ -286,13 +236,11 @@ export default function Home() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.75, delay: index * 0.08 }}
-                  className="group relative flex min-h-[250px] flex-col border-t border-white/10 py-7 transition-colors duration-300 hover:border-brand-primary/50 md:min-h-[290px] md:px-2"
+                  className="group relative flex flex-col py-6 transition-colors duration-300 md:px-3 md:py-8"
                 >
-                  <div className="absolute -right-7 -top-7 font-display text-[6rem] font-black leading-none text-white/[0.035] transition-colors duration-500 group-hover:text-brand-primary/10 md:text-[7rem]">
-                    0{index + 1}
-                  </div>
-                  <div className="relative z-10 mb-10 text-white/45 transition-colors duration-300 group-hover:text-brand-primary">
+                  <div className="relative z-10 mb-5 flex items-center justify-between text-white/45 transition-colors duration-300 group-hover:text-brand-primary">
                     <Icon className="h-5 w-5" />
+                    <span className="font-display text-sm font-black text-white/25">0{index + 1}</span>
                   </div>
                   <div className="relative z-10 mt-auto">
                     <h3 className="mb-4 font-display text-2xl font-black uppercase leading-none tracking-tighter text-white transition-colors duration-500 group-hover:text-brand-primary">
@@ -305,31 +253,6 @@ export default function Home() {
             })}
           </div>
 
-          <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-            {operatingModel.map((item, index) => {
-              const Icon = item.icon;
-
-              return (
-                <motion.div
-                  key={item.title}
-                  initial={{ opacity: 0, y: 16 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.7, delay: index * 0.06 }}
-                  className="group border-l border-white/10 py-3 pl-5 transition-colors duration-300 hover:border-brand-primary/60"
-                >
-                  <div className="mb-6 flex items-center justify-between gap-4">
-                    <div className="text-white/45 transition-colors duration-300 group-hover:text-brand-primary">
-                      <Icon className="h-5 w-5" />
-                    </div>
-                    <span className="text-[10px] font-black uppercase tracking-[0.25em] text-white/65">0{index + 1}</span>
-                  </div>
-                  <h3 className="mb-3 font-display text-base font-black uppercase text-white">{item.title}</h3>
-                  <p className="text-sm font-light leading-6 text-white/70">{item.description}</p>
-                </motion.div>
-              );
-            })}
-          </div>
         </div>
       </section>
 
@@ -346,76 +269,40 @@ export default function Home() {
             align="left"
           />
           
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 md:min-h-[600px]">
-            <BentoCard span="col-span-1 md:col-span-2 md:row-span-2" className="border-t-brand-primary/70">
-              <div className="h-full flex flex-col justify-between">
-                <div className="p-4 bg-brand-primary/10 rounded-2xl w-fit mb-8">
-                  <Globe className="w-8 h-8 text-brand-primary" />
-                </div>
+          <div className="grid gap-9 border-t border-white/10 pt-8 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-16">
+            <div className="lg:sticky lg:top-28 lg:self-start">
+              <div className="overflow-hidden rounded-lg border border-white/10 bg-white/[0.03]">
+                <img src="/images/voguedecor.com.webp" srcSet="/images/voguedecor.com-480.webp 480w, /images/voguedecor.com-800.webp 800w, /images/voguedecor.com.webp 1460w" sizes="(max-width: 1023px) calc(100vw - 48px), 48vw" alt="Vogue Decor commerce project" loading="lazy" decoding="async" className="aspect-[16/10] w-full object-cover object-top" />
+              </div>
+              <div className="mt-5 flex flex-wrap items-start justify-between gap-5">
                 <div>
-                  <h3 className="text-3xl font-display font-black mb-4 uppercase tracking-tighter">Web Engineering</h3>
-                  <p className="text-white/60 text-lg font-normal leading-relaxed mb-8">
-                    React and Next.js products, from focused websites to portals, booking systems, and content platforms.
-                  </p>
-                  <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
-                    <Link to="/services" className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-brand-primary group">
-                      See our web work
-                      <ArrowRight className="w-4 h-4 group-hover:translate-x-2 transition-transform" />
-                    </Link>
-                    <Link to="/services#specialist-builds" className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-white/75 transition-colors hover:text-white group">
-                      Explore platforms
-                      <ArrowRight className="w-4 h-4 group-hover:translate-x-2 transition-transform" />
-                    </Link>
+                  <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-primary">Web engineering / commerce</p>
+                  <h3 className="mt-2 font-display text-2xl font-black uppercase text-white sm:text-3xl">Built for the real journey.</h3>
+                </div>
+                <Link to="/services" className="inline-flex min-h-11 items-center gap-2 text-xs font-bold uppercase tracking-widest text-brand-primary hover:text-white">All services <ArrowRight className="h-4 w-4" /></Link>
+              </div>
+              <p className="mt-3 max-w-xl text-sm leading-6 text-white/55">From focused websites to portals and commerce platforms, we design the experience and build the systems behind it.</p>
+            </div>
+
+            <div className="divide-y divide-white/10 border-b border-white/10">
+              {[
+                { icon: Smartphone, title: 'Mobile applications', body: 'Clear flows and platform-aware interaction.', href: '/services' },
+                { icon: Palette, title: 'Product design', body: 'Research, interfaces, and design systems built around the user.', href: '/services' },
+                { icon: Zap, title: 'E-commerce', body: 'Product discovery, checkout, and storefront operations.', href: '/services' },
+                { icon: Shield, title: 'Cloud infrastructure', body: 'Deployment and monitoring with room to grow.', href: '/tech' },
+                { icon: Bot, title: 'Automation & AI agents', body: 'n8n workflows and custom chat or voice agents connected to business systems.', href: '/services#automation-ai' },
+              ].map(({ icon: Icon, title, body, href }, index) => (
+                <Link key={title} to={href} className="group grid grid-cols-[28px_minmax(0,1fr)_20px] items-start gap-4 py-5 transition-colors hover:text-brand-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary sm:gap-6 sm:py-6">
+                  <Icon className="mt-1 h-5 w-5 text-brand-primary" aria-hidden="true" />
+                  <div>
+                    <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-white/35">0{index + 1}</p>
+                    <h3 className="mt-1 font-display text-lg font-black uppercase text-white sm:text-xl">{title}</h3>
+                    <p className="mt-2 text-sm leading-6 text-white/55">{body}</p>
                   </div>
-                </div>
-              </div>
-            </BentoCard>
-
-            <BentoCard span="col-span-1 md:col-span-2" className="flex-row items-center gap-8">
-              <div className="p-4 bg-brand-purple/10 rounded-2xl w-fit">
-                <Smartphone className="w-8 h-8 text-brand-purple" />
-              </div>
-              <div>
-                <h3 className="text-xl font-display font-black uppercase tracking-tighter mb-2">Mobile Apps</h3>
-                <p className="text-white/60 text-sm font-normal">Responsive mobile products with clear flows and platform-aware interaction.</p>
-              </div>
-            </BentoCard>
-
-            <BentoCard span="col-span-1" className="justify-center items-center text-center">
-              <Palette className="w-10 h-10 text-brand-accent mb-6" />
-              <h3 className="text-lg font-display font-black uppercase tracking-tighter">Product Design</h3>
-            </BentoCard>
-
-            <BentoCard span="col-span-1" className="justify-center items-center text-center">
-              <Zap className="w-10 h-10 text-brand-primary mb-6" />
-              <h3 className="text-lg font-display font-black uppercase tracking-tighter">E-commerce</h3>
-            </BentoCard>
-
-            <BentoCard span="col-span-1 md:col-span-2" className="bg-brand-gray/50 border-brand-primary/10">
-              <div className="flex items-center justify-between">
-                <div>
-                  <h3 className="text-xl font-display font-black uppercase tracking-tighter mb-2">Cloud Infrastructure</h3>
-                  <p className="text-white/60 text-sm font-normal">Practical AWS and Vercel deployments with monitoring and room to grow.</p>
-                </div>
-                <Shield className="w-8 h-8 text-brand-primary/50" />
-              </div>
-            </BentoCard>
-
-            <BentoCard span="col-span-1 md:col-span-2" className="border-brand-primary/20 bg-brand-primary/[0.04]">
-              <div className="flex h-full flex-col justify-between gap-7">
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-brand-primary/25 bg-brand-primary/10 text-brand-primary">
-                  <Bot className="h-6 w-6" aria-hidden="true" />
-                </div>
-                <div>
-                  <h3 className="mb-2 font-display text-xl font-black uppercase tracking-tighter text-white">Automation & AI agents</h3>
-                  <p className="max-w-lg text-sm font-normal leading-6 text-white/60">n8n workflows, practical AI integrations, and custom chat or voice agents connected to your business systems.</p>
-                  <Link to="/services#automation-ai" className="group mt-5 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-brand-primary">
-                    Explore automation services
-                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
-                  </Link>
-                </div>
-              </div>
-            </BentoCard>
+                  <ArrowRight className="mt-1 h-4 w-4 text-white/35 transition-transform group-hover:translate-x-1 group-hover:text-brand-primary" aria-hidden="true" />
+                </Link>
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -467,35 +354,6 @@ export default function Home() {
                 referrerPolicy="no-referrer"
               />
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Insights Section - Tiny Blog */}
-      <section className="py-16 px-6 sm:px-8 md:px-12 lg:px-24 md:py-20 border-t border-white/5 bg-brand-dark/80 relative z-10">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 text-center md:text-left">
-            {[
-              { value: 'Strategy', label: 'Scope and priorities' },
-              { value: 'Design', label: 'Flows and interface' },
-              { value: 'Build', label: 'Frontend and commerce' },
-              { value: 'Support', label: 'Launch and iteration' }
-            ].map((stat, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-              >
-                <div className="mb-3 font-display text-2xl font-bold leading-none tracking-tight text-white md:text-3xl">
-                  {stat.value}
-                </div>
-                <div className="text-[10px] font-bold uppercase tracking-[0.25em] text-white/40">
-                  {stat.label}
-                </div>
-              </motion.div>
-            ))}
           </div>
         </div>
       </section>
@@ -554,7 +412,7 @@ export default function Home() {
                     {featuredProject.completionDate || 'Live System'}
                   </span>
                 </div>
-                <h3 className="max-w-3xl font-display text-4xl font-black uppercase leading-none text-white md:text-6xl">
+                <h3 className="max-w-3xl font-display text-4xl font-black uppercase leading-none text-white md:text-5xl">
                   {featuredProject.title}
                 </h3>
                 <p className="mt-6 max-w-2xl text-base font-light leading-relaxed text-white/55 md:text-lg">
@@ -635,22 +493,53 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="mt-6 grid grid-cols-1 gap-3 border-y border-white/5 py-6 sm:grid-cols-3 sm:gap-4">
-            {[
-              { label: 'Featured systems', value: projects.length.toString().padStart(2, '0') },
-              { label: 'Primary categories', value: portfolioCategories.join(' / ') || 'Digital' },
-              { label: 'Archive status', value: 'Live' },
-            ].map((item) => (
-                  <div key={item.label} className="min-w-0 border-l border-white/10 py-2 pl-4">
-                <div className="text-[9px] font-black uppercase tracking-[0.24em] text-white/65 sm:text-[10px]">{item.label}</div>
-                <div className="mt-3 break-words font-display text-lg font-black uppercase leading-tight text-white sm:text-xl">
-                  {item.value}
-                </div>
-              </div>
-            ))}
-          </div>
         </div>
       </section>
+
+      {/* People behind the projects */}
+      {team.length > 0 && (
+        <section className="border-t border-white/10 bg-brand-gray px-6 py-16 sm:px-8 md:px-12 md:py-20 lg:px-24">
+          <div className="mx-auto max-w-[1600px]">
+            <div className="mb-10 flex flex-col gap-5 md:mb-14 md:flex-row md:items-end md:justify-between">
+              <SectionHeader badge="The team" title={<>Different disciplines. <br /><span className="text-white/45">One shared standard.</span></>} description="Meet the people responsible for the strategy, design, and engineering behind the work." className="!mb-0" />
+              <Link to="/about#team-directory" className="inline-flex min-h-11 w-fit items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-brand-primary transition-colors hover:text-white">Meet the full team <ArrowRight className="h-4 w-4" /></Link>
+            </div>
+
+            <div className="grid gap-8 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:gap-12">
+              <Link to={`/team/${team[0].slug}`} className="group grid overflow-hidden border border-white/10 bg-black sm:grid-cols-[minmax(0,0.7fr)_minmax(0,1fr)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary">
+                <div className="h-[340px] overflow-hidden bg-white/[0.04] sm:h-auto sm:min-h-[380px]">
+                  <MemberPortrait src={team[0].avatar} alt={`${team[0].name}, ${team[0].role}`} sizes="(max-width: 639px) 100vw, 35vw" loading="lazy" decoding="async" className="h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-[1.02]" />
+                </div>
+                <div className="flex flex-col justify-between p-6 sm:p-8">
+                  <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-primary">Featured profile / 01</span>
+                  <div className="mt-12">
+                    <p className="text-xs uppercase tracking-[0.16em] text-white/50">{team[0].role}</p>
+                    <h3 className="mt-3 font-display text-3xl font-black uppercase leading-none text-white md:text-4xl">{team[0].name}</h3>
+                    <p className="mt-4 max-w-sm text-sm leading-6 text-white/60">{team[0].specialization}</p>
+                    <span className="mt-7 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-brand-primary">View portfolio <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" /></span>
+                  </div>
+                </div>
+              </Link>
+
+              <div className="divide-y divide-white/10 border-y border-white/10">
+                {team.slice(1, 4).map((member) => (
+                  <Link key={member.id} to={`/team/${member.slug}`} className="group flex items-center gap-5 py-5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary sm:gap-7">
+                    <div className="h-24 w-20 shrink-0 overflow-hidden rounded-md bg-white/[0.04] sm:h-28 sm:w-24">
+                      <MemberPortrait src={member.avatar} alt="" sizes="96px" loading="lazy" decoding="async" className="h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-[1.04]" />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-brand-primary">{member.role}</p>
+                      <h3 className="mt-2 font-display text-lg font-black uppercase leading-tight text-white sm:text-xl">{member.name}</h3>
+                      <p className="mt-1 line-clamp-2 text-sm leading-5 text-white/50">{member.specialization}</p>
+                    </div>
+                    <ArrowRight className="h-4 w-4 shrink-0 text-white/40 transition-transform group-hover:translate-x-1 group-hover:text-brand-primary" aria-hidden="true" />
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Process Section - Cinematic Flow */}
       <section className="py-16 px-6 sm:px-8 md:px-12 lg:px-24 md:py-20 relative overflow-hidden bg-brand-dark">
@@ -663,7 +552,7 @@ export default function Home() {
             className="mb-16"
           />
           
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 relative">
+          <ol className="grid grid-cols-1 border-t border-white/10 md:grid-cols-4">
             {[
               { 
                 step: '01', 
@@ -686,21 +575,19 @@ export default function Home() {
                 desc: 'We verify performance and accessibility, support launch, and prioritize the next iteration.'
               },
             ].map((p, i) => (
-              <motion.div
+              <motion.li
                 key={i}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.8, delay: i * 0.1 }}
-                className="group relative flex h-full flex-col justify-between border-t border-white/10 py-7 transition-colors duration-300 hover:border-brand-primary/60 lg:px-2"
+                className="group relative border-l border-white/10 py-6 pl-7 transition-colors duration-300 md:border-l-0 md:border-t md:px-4 md:py-7 first:md:pl-0 last:md:pr-0"
               >
                 <div>
-                  <div className="flex items-center justify-between mb-12">
-                    <div className="text-4xl font-display font-black text-white/5 group-hover:text-brand-primary/20 transition-colors">
+                  <span className="absolute -left-[5px] top-8 h-2 w-2 rounded-full bg-brand-primary md:-top-[5px] md:left-4 first:md:left-0" aria-hidden="true" />
+                  <div className="mb-6 flex items-center justify-between">
+                    <div className="font-display text-2xl font-black text-brand-primary">
                       {p.step}
-                    </div>
-                    <div className="flex h-8 w-8 items-center justify-center text-brand-primary">
-                      <div className="h-1.5 w-1.5 rounded-full bg-brand-primary" />
                     </div>
                   </div>
                   <h3 className="text-xl font-display font-black mb-4 tracking-tighter uppercase group-hover:text-brand-primary transition-colors">
@@ -710,9 +597,9 @@ export default function Home() {
                     {p.desc}
                   </p>
                 </div>
-              </motion.div>
+              </motion.li>
             ))}
-          </div>
+          </ol>
         </div>
       </section>
 
@@ -750,7 +637,7 @@ export default function Home() {
                 referrerPolicy="no-referrer"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-brand-dark via-brand-dark/40 to-transparent p-8 md:p-12 flex flex-col justify-center items-center text-center">
-                <h3 className="text-2xl md:text-4xl font-display font-black text-white mb-4 uppercase tracking-tighter max-w-xl text-center lg:text-left">{latestBlogs[0]?.title || 'THE ARCHITECTURE OF A $100M APP.'}</h3>
+                <h3 className="text-2xl md:text-4xl font-display font-black text-white mb-4 uppercase tracking-tighter max-w-xl text-center lg:text-left">{latestBlogs[0]?.title || 'Notes from the work'}</h3>
                 <div className="flex items-center justify-center gap-3 text-brand-primary text-[10px] font-black uppercase tracking-widest">
                   Read article <ArrowRight className="w-4 h-4" />
                 </div>
@@ -758,7 +645,7 @@ export default function Home() {
             </motion.div>
 
             <div className="lg:col-span-4 flex flex-col gap-6">
-              {(latestBlogs.length > 1 ? latestBlogs.slice(1, 3) : homeFallbackBlogs.slice(0, 2)).map((post, i) => (
+              {latestBlogs.slice(1, 3).map((post, i) => (
                 <Link
                   key={post.id || i}
                   to={`/blog/${post.slug}`}
@@ -780,6 +667,12 @@ export default function Home() {
                   </div>
                 </Link>
               ))}
+              {latestBlogs.length < 2 && (
+                <div className="flex flex-1 flex-col justify-between border-t border-white/10 py-6">
+                  <p className="max-w-xs text-sm leading-6 text-white/55">Read more practical notes on design decisions, frontend engineering, and delivery.</p>
+                  <Link to="/blog" className="mt-6 inline-flex min-h-11 items-center gap-2 text-xs font-bold uppercase tracking-widest text-brand-primary">Browse the journal <ArrowRight className="h-4 w-4" /></Link>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -814,32 +707,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Final CTA */}
-      <section className="py-24 px-6 md:px-20">
-        <motion.div 
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="relative mx-auto max-w-6xl overflow-hidden rounded-lg border border-brand-primary/50 bg-[#111633] p-8 text-center sm:p-10 md:p-16 lg:p-20"
-        >
-          <div className="relative z-10">
-            <h2 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-display font-black text-white mb-6 sm:mb-8 lg:mb-10 leading-[0.9] tracking-tighter uppercase">
-              Have a product in mind?
-            </h2>
-            <p className="text-white/80 text-base sm:text-lg md:text-xl max-w-2xl mx-auto mb-8 sm:mb-10 lg:mb-12 font-light leading-relaxed">
-              Tell us what needs to work, who it is for, and where the current experience falls short.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <Button variant="secondary" size="lg" className="w-full sm:w-auto px-8 sm:px-16" onClick={() => navigate('/contact')}>
-                Start a conversation
-              </Button>
-              <Button variant="ghost" size="lg" className="w-full sm:w-auto border border-white/30 px-8 sm:px-16" onClick={() => window.location.href=`mailto:${contactEmail}`}>
-                Email us
-              </Button>
-            </div>
-          </div>
-        </motion.div>
-      </section>
     </div>
   );
 }

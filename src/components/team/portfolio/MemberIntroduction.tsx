@@ -1,10 +1,12 @@
 import { motion, useReducedMotion } from 'motion/react';
-import { Award, BriefcaseBusiness, CheckCircle2, Globe, MapPin, TrendingUp, UserCheck, Zap } from 'lucide-react';
+import { Award, BriefcaseBusiness, CheckCircle2, Globe, MapPin, UserCheck, Zap } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { MemberProfile, SectionHeading } from './shared';
 
 export default function MemberIntroduction({ member }: { member: MemberProfile }) {
   const reducedMotion = useReducedMotion();
   const projectDisciplines = Array.from(new Set(member.projects.map((project) => project.category).filter(Boolean)));
+  const spotlight = member.projects[0];
 
   const facts = [
     { label: 'Practice', value: member.role, icon: UserCheck },
@@ -22,7 +24,6 @@ export default function MemberIntroduction({ member }: { member: MemberProfile }
         <SectionHeading
           index="01"
           label="About"
-          description={`A strategic look into ${member.name}'s engineering and design philosophies, client accomplishments, and working standards at LB CodeBase.`}
         >
           A focused practice.<br />
           <span className="text-white/28">Built around real work.</span>
@@ -34,9 +35,9 @@ export default function MemberIntroduction({ member }: { member: MemberProfile }
               initial={reducedMotion ? false : { opacity: 0, y: 18 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.3 }}
-              className="member-intro-copy font-display font-black uppercase leading-[1.1] text-white"
+              className="max-w-2xl text-xl font-semibold leading-snug text-white md:text-2xl"
             >
-              {member.tagline || member.bio}
+              {member.specialization || member.tagline || member.bio}
             </motion.p>
 
             <motion.div
@@ -47,33 +48,19 @@ export default function MemberIntroduction({ member }: { member: MemberProfile }
               className="mt-7 space-y-4 text-base leading-7 text-white/60 md:text-lg md:leading-8"
             >
               <p>{member.fullBio || member.bio}</p>
-              <p className="text-sm leading-relaxed text-white/45 md:text-base">
-                Every project published in this portfolio is an engineered solution delivered in collaboration with the LB CodeBase team. The credited roles and responsibilities showcase hands-on individual contribution to production architectures.
-              </p>
             </motion.div>
 
-            {/* Impact Highlights */}
-            <div className="mt-8 grid gap-4 sm:grid-cols-2">
-              <div className="member-glass rounded-xl p-5">
-                <div className="flex items-center gap-3 text-[var(--member-accent)]">
-                  <CheckCircle2 className="h-5 w-5" />
-                  <span className="font-display text-sm font-black uppercase text-white">Production-Tested</span>
+            {spotlight?.thumbnail && (
+              <Link to={`/team/${member.slug}/projects/${spotlight.slug}`} className="group mt-9 block border-t border-white/10 pt-5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--member-accent)]">
+                <div className="overflow-hidden rounded-lg border border-white/10 bg-white/[0.03]">
+                  <img src={spotlight.thumbnail} alt={`${spotlight.title} project preview`} loading="lazy" decoding="async" className="aspect-[16/9] w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.02]" />
                 </div>
-                <p className="mt-2 text-xs leading-relaxed text-white/50">
-                  Architectures engineered for high uptime, fast rendering, and zero-compromise security.
-                </p>
-              </div>
-
-              <div className="member-glass rounded-xl p-5">
-                <div className="flex items-center gap-3 text-[var(--member-accent)]">
-                  <TrendingUp className="h-5 w-5" />
-                  <span className="font-display text-sm font-black uppercase text-white">Conversion-Focused</span>
+                <div className="mt-3 flex flex-wrap items-center justify-between gap-2 text-xs text-white/55">
+                  <span className="font-bold text-white">{spotlight.title}</span>
+                  <span>{spotlight.memberRole || member.role}</span>
                 </div>
-                <p className="mt-2 text-xs leading-relaxed text-white/50">
-                  Every interaction, layout hierarchy, and micro-motion is shaped to guide user intent to action.
-                </p>
-              </div>
-            </div>
+              </Link>
+            )}
           </div>
 
           {/* Quick Facts Matrix Card */}
