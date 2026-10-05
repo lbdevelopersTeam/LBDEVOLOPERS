@@ -96,24 +96,20 @@ export default function ProjectDetail() {
             Back to portfolio
           </Link>
           <div className="relative z-10 max-w-4xl">
-            <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} className="mb-8 inline-flex items-center gap-2 overflow-hidden rounded-full border border-white/10 bg-white/5 px-3 py-1 backdrop-blur-sm">
-              <span className="flex h-1.5 w-1.5 animate-pulse rounded-full bg-brand-primary" />
-              <LetterReveal text={project.category.toUpperCase()} className="text-[10px] font-black uppercase tracking-[0.3em] text-white/60" />
+            <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} className="mb-7 inline-flex items-center gap-3">
+              <span className="h-px w-9 bg-brand-primary" />
+              <LetterReveal text={project.category.toUpperCase()} className="text-[10px] font-bold uppercase tracking-[0.28em] text-white/55" />
             </motion.div>
             <div className="mb-10 overflow-hidden">
               <motion.h1 initial={{ y: '100%' }} animate={{ y: 0 }} transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1], delay: 0.1 }} className="fluid-display font-display font-black uppercase leading-none text-3d">
                 {project.title}
               </motion.h1>
             </div>
-            <TextReveal text={project.shortDescription || project.description || ''} className="text-xl font-light leading-relaxed text-white/50 md:text-2xl" />
+            <TextReveal text={project.shortDescription || project.description || ''} className="max-w-3xl text-xl font-normal leading-8 text-white/58 md:text-2xl md:leading-9" />
           </div>
         </section>
 
-        <div className="mb-16 grid grid-cols-1 gap-6 border-y border-white/5 py-10 sm:grid-cols-2 md:mb-20 md:gap-8 md:py-12 lg:grid-cols-5">
-          <div>
-            <div className="mb-2 text-[10px] font-bold uppercase tracking-widest text-white/40">Project</div>
-            <div className="text-lg font-medium">{project.title}</div>
-          </div>
+        <div className="mb-16 grid grid-cols-1 gap-6 border-y border-white/10 py-8 sm:grid-cols-2 md:mb-20 md:gap-8 lg:grid-cols-4">
           <div>
             <div className="mb-2 text-[10px] font-bold uppercase tracking-widest text-white/40">Client</div>
             <div className="text-lg font-medium">{project.client || project.title}</div>
@@ -123,16 +119,18 @@ export default function ProjectDetail() {
             <div className="text-lg font-medium">{project.industry || project.category}</div>
           </div>
           <div>
-            <div className="mb-2 text-[10px] font-bold uppercase tracking-widest text-white/40">Completed</div>
-            <div className="text-lg font-medium">{project.completionDate || 'Ongoing'}</div>
-          </div>
-          <div>
             <div className="mb-2 text-[10px] font-bold uppercase tracking-widest text-white/40">Category</div>
             <div className="text-lg font-medium">{project.category}</div>
           </div>
+          {project.completionDate && (
+            <div>
+              <div className="mb-2 text-[10px] font-bold uppercase tracking-widest text-white/40">Completed</div>
+              <div className="text-lg font-medium">{project.completionDate}</div>
+            </div>
+          )}
         </div>
 
-        <div className="mb-20 md:mb-32 overflow-hidden rounded-[1.5rem] md:rounded-[3rem] border border-white/5 bg-brand-gray">
+        <div className="mb-20 overflow-hidden rounded-lg border border-white/10 bg-brand-gray md:mb-32">
           <img src={project.thumbnail || project.image} alt={project.title} className="h-auto w-full" referrerPolicy="no-referrer" />
         </div>
 
@@ -159,7 +157,7 @@ export default function ProjectDetail() {
                   viewport={{ once: true, amount: 0.15 }}
                   transition={{ duration: 0.6, delay: index * 0.06 }}
                   onClick={() => setActiveGalleryIndex(index)}
-                  className="group relative overflow-hidden rounded-[1.5rem] border border-white/10 bg-brand-gray text-left outline-none transition-colors hover:border-brand-primary/40 focus-visible:ring-2 focus-visible:ring-brand-primary md:rounded-[2rem]"
+                  className="group relative overflow-hidden rounded-lg border border-white/10 bg-brand-gray text-left outline-none transition-colors hover:border-brand-primary/40 focus-visible:ring-2 focus-visible:ring-brand-primary"
                   aria-label={`Open ${project.title} gallery image ${index + 1} of ${project.gallery.length}`}
                 >
                   <img
@@ -169,7 +167,7 @@ export default function ProjectDetail() {
                     decoding="async"
                     className="aspect-[16/10] w-full object-cover object-center transition duration-700 group-hover:scale-[1.02]"
                   />
-                  <span className="absolute bottom-4 right-4 inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-black/70 text-white backdrop-blur-md transition group-hover:border-brand-primary/50 group-hover:bg-brand-primary" aria-hidden="true">
+                  <span className="absolute bottom-4 right-4 inline-flex h-11 w-11 items-center justify-center rounded-md border border-white/15 bg-black/70 text-white transition group-hover:border-brand-primary/50 group-hover:bg-brand-primary" aria-hidden="true">
                     <Expand className="h-4 w-4" />
                   </span>
                 </motion.button>
@@ -182,33 +180,29 @@ export default function ProjectDetail() {
           <div className="space-y-12 lg:col-span-2">
             <section>
               <h3 className="mb-6 font-display text-3xl md:text-4xl font-black uppercase tracking-tight">The Build</h3>
-              <div
-                className="prose prose-invert max-w-none text-lg font-light leading-relaxed text-white/50"
-                dangerouslySetInnerHTML={{ __html: sanitizeHtml(project.fullDescription) }}
-              />
+              {project.fullDescription ? (
+                <div
+                  className="prose prose-invert max-w-none text-lg font-normal leading-relaxed text-white/58"
+                  dangerouslySetInnerHTML={{ __html: sanitizeHtml(project.fullDescription) }}
+                />
+              ) : (
+                <p className="max-w-3xl text-lg font-normal leading-8 text-white/58">{project.shortDescription || project.description}</p>
+              )}
             </section>
-            <div className="grid grid-cols-1 gap-6 pt-8 sm:grid-cols-2">
-              {project.technologies.map((tech) => (
-                <div key={tech} className="flex items-center gap-4 text-white/80">
-                  <CheckCircle2 className="h-5 w-5 text-brand-primary" />
-                  {tech}
-                </div>
-              ))}
-            </div>
           </div>
 
           <aside className="space-y-8">
-            <div className="rounded-[1.5rem] md:rounded-[2rem] border border-white/5 bg-white/5 p-6 md:p-10">
+            <div className="border-t border-white/15 py-6 md:py-8">
               <h4 className="mb-8 text-xl font-bold">Tech Stack</h4>
               <div className="flex flex-wrap gap-3">
                 {project.technologies.map((tech) => (
-                  <span key={tech} className="rounded-full border border-white/5 bg-brand-gray px-4 py-2 text-xs text-white/60">
+                  <span key={tech} className="border-b border-white/10 py-2 text-xs text-white/60">
                     {tech}
                   </span>
                 ))}
               </div>
             </div>
-            <div className="rounded-[1.5rem] md:rounded-[2rem] border border-brand-primary/20 bg-brand-primary/10 p-6 md:p-10">
+            <div className="border-t border-brand-primary/50 py-6 md:py-8">
               <h4 className="mb-8 text-xl font-bold">Links</h4>
               <div className="space-y-3">
                 {project.liveUrl && (
@@ -239,8 +233,8 @@ export default function ProjectDetail() {
                 { index: '02', label: 'The Challenge', body: project.challenge },
                 { index: '03', label: 'The Solution', body: project.solution },
               ].filter((item) => item.body).map((item) => (
-                <article key={item.label} className="rounded-[1.5rem] border border-white/10 bg-white/[0.025] p-6 md:rounded-[2rem] md:p-8">
-                  <div className="flex items-center justify-between border-b border-white/8 pb-5">
+                <article key={item.label} className="border-t border-white/12 py-7 lg:pr-6">
+                  <div className="flex items-center justify-between pb-3">
                     <span className="font-display text-2xl font-black text-brand-primary">{item.index}</span>
                     <span className="text-[9px] font-black uppercase tracking-[0.2em] text-white/35">Strategy</span>
                   </div>
@@ -259,7 +253,7 @@ export default function ProjectDetail() {
               <h2 className="mt-4 font-display text-3xl font-black uppercase tracking-tighter text-white md:text-5xl">How the work moved.</h2>
               <p className="mt-5 max-w-xl text-base font-light leading-7 text-white/50">A deliberate sequence connecting discovery, structure, visual direction, implementation, and refinement.</p>
             </div>
-            <ol className="divide-y divide-white/8 rounded-[1.5rem] border border-white/10 bg-white/[0.025] px-6 md:rounded-[2rem] md:px-8">
+            <ol className="divide-y divide-white/10 border-y border-white/10">
               {project.process!.map((step, index) => (
                 <li key={`${step}-${index}`} className="grid grid-cols-[44px_minmax(0,1fr)] gap-4 py-6 md:grid-cols-[60px_minmax(0,1fr)] md:gap-6 md:py-7">
                   <span className="font-display text-xl font-black text-brand-primary">{String(index + 1).padStart(2, '0')}</span>
@@ -278,7 +272,7 @@ export default function ProjectDetail() {
             </div>
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {[...(project.results || []), ...(project.achievements || [])].map((result, index) => (
-                <div key={`${result}-${index}`} className="flex gap-4 rounded-[1.25rem] border border-white/10 bg-brand-gray p-5 md:p-6">
+                <div key={`${result}-${index}`} className="flex gap-4 border-t border-white/10 py-5 md:pr-6">
                   <CheckCircle2 className="mt-1 h-5 w-5 shrink-0 text-brand-primary" />
                   <p className="text-sm leading-6 text-white/65 md:text-base">{result}</p>
                 </div>
@@ -287,7 +281,7 @@ export default function ProjectDetail() {
           </section>
         )}
 
-        <section className="rounded-[1.5rem] md:rounded-[3rem] border border-white/5 bg-brand-gray px-6 py-16 md:py-32 text-center">
+        <section className="rounded-lg border border-brand-primary/30 bg-[#111633] px-6 py-16 text-center md:py-24">
           <h2 className="mb-8 font-display text-3xl md:text-4xl font-bold">Have a similar project?</h2>
           <Button size="lg" onClick={() => navigate('/contact')}>
             Let's discuss it

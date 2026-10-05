@@ -16,17 +16,17 @@ const capabilityTracks = [
   {
     icon: Palette,
     title: 'Brand Platforms',
-    description: 'Cohesive digital platforms focused on conversion and storytelling.',
+    description: 'Clear brand and content systems for websites that need to explain, persuade, and convert.',
   },
   {
     icon: Zap,
     title: 'Product Experiences',
-    description: 'E-commerce and product systems optimized for trust and velocity.',
+    description: 'Commerce and product journeys designed around real customer decisions.',
   },
   {
     icon: Cpu,
     title: 'Interactive Media',
-    description: 'Immersive 3D, animation, and motion that elevate brand perception.',
+    description: '3D and motion used selectively to clarify ideas and give the brand a distinct point of view.',
   },
 ];
 
@@ -34,17 +34,17 @@ const operatingModel = [
   {
     icon: Code,
     title: 'Approach',
-    description: 'We combine human-centered strategy with deterministic engineering to ship experiences that scale.',
+    description: 'We start with the audience, the business goal, and the constraints before choosing a solution.',
   },
   {
     icon: ChartBar,
     title: 'Outcomes',
-    description: 'Faster load times, higher conversions, and infrastructure ready for global distribution.',
+    description: 'Fast, legible products with a clear route from first visit to meaningful action.',
   },
   {
     icon: Globe,
-    title: 'Tooling',
-    description: 'Vercel, Netlify, AWS, Cloudflare, Shopify Plus, OpenAI integrations.',
+    title: 'Stack',
+    description: 'React, Shopify, WordPress, Vercel, AWS, Cloudflare, and practical AI integrations.',
   },
   {
     icon: Shield,
@@ -127,10 +127,10 @@ export default function Home() {
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-                className="inline-flex items-center gap-3 px-5 py-2 bg-white/[0.03] rounded-full border border-white/10 mb-10 backdrop-blur-xl"
+                className="mb-8 inline-flex items-center gap-3 text-[10px] font-bold uppercase tracking-[0.28em] text-white/55"
               >
-                <span className="flex h-2 w-2 rounded-full bg-brand-primary animate-pulse shadow-[0_0_15px_rgba(61,90,254,0.8)]" />
-                <LetterReveal text="NEXT-GEN DIGITAL BUREAU" className="text-[10px] font-black uppercase tracking-[0.5em] text-white/60" />
+                <span className="h-px w-9 bg-brand-primary" />
+                <LetterReveal text="DESIGN + ENGINEERING STUDIO" />
               </motion.div>
               
               <div className="overflow-hidden mb-12">
@@ -140,14 +140,14 @@ export default function Home() {
                   transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
                   className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-black leading-[0.95] tracking-tighter uppercase"
                 >
-                  ENGINEERING <br />
-                  <span className="text-brand-primary italic">ABSOLUTE.</span>
+                  WE DESIGN AND BUILD <br />
+                  <span className="text-brand-primary">DIGITAL PRODUCTS.</span>
                 </motion.h1>
               </div>
               
               <TextReveal 
-                text="We architect high-fidelity digital ecosystems for visionary brands. Defining the intersection of cinematic design and absolute technical performance."
-                className="text-white/60 text-lg md:text-2xl max-w-2xl leading-tight font-light mb-16"
+                text="LB CodeBase builds websites, commerce platforms, and product experiences for teams that care about clarity, performance, and craft."
+                className="mb-12 max-w-2xl text-lg font-normal leading-7 text-white/58 md:text-xl md:leading-8"
               />
               
               <motion.div 
@@ -158,12 +158,12 @@ export default function Home() {
               >
                 <Magnetic strength={0.2}>
                   <Button size="lg" className="w-full sm:w-auto" onClick={() => navigate('/contact')}>
-                    Initiate Mission
+                    Start a project
                   </Button>
                 </Magnetic>
                 <Magnetic strength={0.1}>
                   <Button variant="outline" size="lg" className="w-full border-white/10 sm:w-auto" onClick={() => navigate('/portfolio')}>
-                    Explore Archive
+                    View selected work
                   </Button>
                 </Magnetic>
               </motion.div>
@@ -203,22 +203,19 @@ export default function Home() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-              className="glass relative flex min-h-[360px] flex-col justify-between overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.025] p-6 shadow-[0_30px_120px_rgba(0,0,0,0.35)] md:min-h-[430px] md:rounded-[4rem] md:p-10"
+              className="relative flex min-h-[360px] flex-col justify-between border-t border-white/15 py-7 md:min-h-[430px] md:py-10 lg:pr-12"
             >
-              <div className="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-brand-primary/70 to-transparent" />
-              <div className="absolute -bottom-24 -right-24 h-72 w-72 rounded-full bg-brand-primary/15 blur-3xl" />
-
               <div className="relative z-10">
-                <div className="mb-8 inline-flex items-center gap-3 rounded-full border border-brand-primary/20 bg-brand-primary/10 px-4 py-2">
-                  <span className="h-1.5 w-1.5 rounded-full bg-brand-primary shadow-[0_0_18px_rgba(61,90,254,0.7)]" />
-                  <span className="text-[10px] font-black uppercase tracking-[0.35em] text-blue-300">Capabilities</span>
+                <div className="mb-7 inline-flex items-center gap-3">
+                  <span className="h-px w-8 bg-brand-primary" />
+                  <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-brand-primary">Capabilities</span>
                 </div>
 
                 <h2 className="max-w-3xl font-display text-3xl font-black uppercase leading-[0.95] tracking-tighter text-white sm:text-4xl md:text-5xl">
-                  Brand systems that move with precision.
+                  One team from product thinking to production code.
                 </h2>
                 <p className="mt-6 max-w-2xl text-sm font-light leading-7 text-white/55 md:text-base">
-                  Strategy, design, engineering, and growth shaped into one fast, conversion-ready product system.
+                  We connect the work that is often split between agencies: structure, interface design, frontend engineering, commerce, and launch support.
                 </p>
 
                 <div className="mt-8 flex flex-wrap gap-2">
@@ -233,14 +230,14 @@ export default function Home() {
               <div className="relative z-10 mt-10 flex flex-col gap-3 sm:flex-row">
                 <Link
                   to="/portfolio"
-                  className="inline-flex items-center justify-center gap-3 rounded-full border border-brand-primary/50 bg-brand-primary px-6 py-3.5 text-[10px] font-black uppercase tracking-[0.24em] text-white transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_0_40px_-10px_rgba(61,90,254,0.6)]"
+                  className="inline-flex items-center justify-center gap-3 rounded-md border border-brand-primary bg-brand-primary px-6 py-3.5 text-[10px] font-black uppercase tracking-[0.2em] text-white transition-colors duration-300 hover:bg-[#526bff]"
                 >
                   View Portfolio
                   <ArrowRight className="h-4 w-4" />
                 </Link>
                 <Link
                   to="/contact"
-                  className="inline-flex items-center justify-center gap-3 rounded-full border border-white/10 px-6 py-3.5 text-[10px] font-black uppercase tracking-[0.24em] text-white transition-all duration-500 hover:-translate-y-1 hover:border-white/20 hover:bg-white/5"
+                  className="inline-flex items-center justify-center gap-3 rounded-md border border-white/15 px-6 py-3.5 text-[10px] font-black uppercase tracking-[0.2em] text-white transition-colors duration-300 hover:border-white/30 hover:bg-white/5"
                 >
                   Start a Project
                   <Send className="h-4 w-4" />
@@ -262,7 +259,7 @@ export default function Home() {
               ].map((item, index) => (
                 <div
                   key={item.label}
-                  className="glass group relative overflow-hidden rounded-[1.5rem] border border-white/10 bg-black/35 p-5 transition-all duration-500 hover:-translate-y-1 hover:border-brand-primary/40 hover:bg-white/[0.045] md:rounded-[2.5rem] md:p-7"
+                  className="group relative border-t border-white/10 py-6 transition-colors duration-300 hover:border-white/25 md:px-2 md:py-7"
                 >
                   <div className="absolute right-5 top-5 font-display text-5xl font-black leading-none text-white/[0.04] group-hover:text-brand-primary/10">
                     0{index + 1}
@@ -289,12 +286,12 @@ export default function Home() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.75, delay: index * 0.08 }}
-                  className="glass group relative flex min-h-[270px] flex-col overflow-hidden rounded-[1.5rem] border border-white/10 bg-white/[0.025] p-6 transition-all duration-500 hover:-translate-y-2 hover:border-brand-primary/40 hover:bg-white/[0.045] md:min-h-[320px] md:rounded-[3rem] md:p-8"
+                  className="group relative flex min-h-[250px] flex-col border-t border-white/10 py-7 transition-colors duration-300 hover:border-brand-primary/50 md:min-h-[290px] md:px-2"
                 >
                   <div className="absolute -right-7 -top-7 font-display text-[6rem] font-black leading-none text-white/[0.035] transition-colors duration-500 group-hover:text-brand-primary/10 md:text-[7rem]">
                     0{index + 1}
                   </div>
-                  <div className="relative z-10 mb-10 flex h-12 w-12 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.04] text-brand-primary transition-all duration-500 group-hover:bg-brand-primary group-hover:text-white">
+                  <div className="relative z-10 mb-10 text-white/45 transition-colors duration-300 group-hover:text-brand-primary">
                     <Icon className="h-5 w-5" />
                   </div>
                   <div className="relative z-10 mt-auto">
@@ -319,10 +316,10 @@ export default function Home() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.7, delay: index * 0.06 }}
-                  className="glass group rounded-[1.5rem] border border-white/10 bg-white/[0.025] p-5 transition-all duration-500 hover:-translate-y-1 hover:border-brand-primary/30 md:rounded-[2rem]"
+                  className="group border-l border-white/10 py-3 pl-5 transition-colors duration-300 hover:border-brand-primary/60"
                 >
                   <div className="mb-6 flex items-center justify-between gap-4">
-                    <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.03] text-brand-primary transition-all duration-500 group-hover:bg-brand-primary group-hover:text-white">
+                    <div className="text-white/45 transition-colors duration-300 group-hover:text-brand-primary">
                       <Icon className="h-5 w-5" />
                     </div>
                     <span className="text-[10px] font-black uppercase tracking-[0.25em] text-white/65">0{index + 1}</span>
@@ -343,25 +340,25 @@ export default function Home() {
       <section className="py-16 px-6 sm:px-8 md:px-12 lg:px-24 md:py-20 bg-brand-dark">
         <div className="max-w-[1600px] mx-auto">
           <SectionHeader 
-            badge="Arsenal"
-            title={<>Precision-crafted <br/> digital solutions.</>}
-            description="We deploy high-end engineering and strategic design to solve complex business challenges."
+            badge="Services"
+            title={<>Focused digital work, <br/> built end to end.</>}
+            description="Design and engineering support for websites, stores, applications, and the infrastructure behind them."
             align="left"
           />
           
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6 md:min-h-[600px]">
-            <BentoCard span="col-span-1 md:col-span-2 md:row-span-2" className="bg-gradient-to-br from-brand-primary/10 to-transparent">
+            <BentoCard span="col-span-1 md:col-span-2 md:row-span-2" className="border-t-brand-primary/70">
               <div className="h-full flex flex-col justify-between">
                 <div className="p-4 bg-brand-primary/10 rounded-2xl w-fit mb-8">
                   <Globe className="w-8 h-8 text-brand-primary" />
                 </div>
                 <div>
                   <h3 className="text-3xl font-display font-black mb-4 uppercase tracking-tighter">Web Engineering</h3>
-                  <p className="text-white/70 text-lg font-light leading-relaxed mb-8">
-                    Production-grade React, Next.js, and Three.js ecosystems built for extreme scale and zero latency.
+                  <p className="text-white/60 text-lg font-normal leading-relaxed mb-8">
+                    React and Next.js products with considered content structure, responsive behavior, and maintainable frontend architecture.
                   </p>
                   <Link to="/services" className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-brand-primary group">
-                    Full Stack Details
+                    See our web work
                     <ArrowRight className="w-4 h-4 group-hover:translate-x-2 transition-transform" />
                   </Link>
                 </div>
@@ -374,13 +371,13 @@ export default function Home() {
               </div>
               <div>
                 <h3 className="text-xl font-display font-black uppercase tracking-tighter mb-2">Mobile Apps</h3>
-                <p className="text-white/70 text-sm font-light">iOS & Android experiences that redefine interaction.</p>
+                <p className="text-white/60 text-sm font-normal">Responsive mobile products with clear flows and platform-aware interaction.</p>
               </div>
             </BentoCard>
 
             <BentoCard span="col-span-1" className="justify-center items-center text-center">
               <Palette className="w-10 h-10 text-brand-accent mb-6" />
-              <h3 className="text-lg font-display font-black uppercase tracking-tighter">UI/UX Art</h3>
+              <h3 className="text-lg font-display font-black uppercase tracking-tighter">Product Design</h3>
             </BentoCard>
 
             <BentoCard span="col-span-1" className="justify-center items-center text-center">
@@ -392,7 +389,7 @@ export default function Home() {
               <div className="flex items-center justify-between">
                 <div>
                   <h3 className="text-xl font-display font-black uppercase tracking-tighter mb-2">Cloud Infrastructure</h3>
-                  <p className="text-white/70 text-sm font-light">Bullet-proof AWS & Vercel deployments.</p>
+                  <p className="text-white/60 text-sm font-normal">Practical AWS and Vercel deployments with monitoring and room to grow.</p>
                 </div>
                 <Shield className="w-8 h-8 text-brand-primary/50" />
               </div>
@@ -403,7 +400,6 @@ export default function Home() {
 
       {/* Manifesto Section - Optimized */}
       <section className="py-16 px-6 sm:px-8 md:px-12 lg:px-24 md:py-20 bg-brand-gray relative overflow-hidden">
-        <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_80%_20%,rgba(61,90,254,0.1),transparent_50%)]" />
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div>
@@ -412,19 +408,19 @@ export default function Home() {
                 whileInView={{ opacity: 1 }}
                 className="text-[10px] font-black uppercase tracking-[0.5em] text-brand-primary mb-8"
               >
-                OUR DNA
+                HOW WE WORK
               </motion.div>
               <h2 className="text-4xl md:text-5xl font-display font-black leading-[0.95] tracking-tighter uppercase mb-8 gradient-text">
-                WE DON'T DO <br /> COMPROMISE.
+                CLEAR DECISIONS, <br /> CAREFUL EXECUTION.
               </h2>
               <p className="text-white/50 text-xl font-light leading-relaxed mb-12">
-                Every pixel is intentional. Every line of code is architectural. We build platforms that command authority.
+                We reduce noise early, document the important decisions, and build interfaces that stay coherent as the product grows.
               </p>
               
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
                 {[
-                  { title: 'AUTHORITY', desc: 'Platforms that command respect through elite design.', icon: <Shield className="w-5 h-5" /> },
-                  { title: 'CONVERSION', desc: 'Data-driven psychology for exponential growth.', icon: <Activity className="w-5 h-5" /> }
+                  { title: 'CLARITY', desc: 'Content and navigation organized around what visitors need to understand next.', icon: <Shield className="w-5 h-5" /> },
+                  { title: 'MEASUREMENT', desc: 'Performance, accessibility, and conversion paths reviewed before and after launch.', icon: <Activity className="w-5 h-5" /> }
                 ].map((v, i) => (
                   <div key={i}>
                     <div className="text-brand-primary mb-4">{v.icon}</div>
@@ -436,17 +432,16 @@ export default function Home() {
             </div>
             
             <div className="relative">
-              <div className="absolute -inset-10 bg-brand-primary/5 blur-[100px]" />
               <img 
                 src="/images/sectionimage1.webp"
                 srcSet="/images/sectionimage1-480.webp 480w, /images/sectionimage1-800.webp 800w, /images/sectionimage1.webp 1264w"
                 sizes="(max-width: 1023px) calc(100vw - 48px), 50vw"
-                alt="DNA" 
+                alt="LB CodeBase design and engineering work"
                 loading="lazy"
                 decoding="async"
                 width={1264}
                 height={844}
-                className="relative z-10 w-full rounded-[1rem] md:rounded-[2rem] transition-all duration-1000 border border-white/10"
+                className="relative z-10 w-full rounded-lg border border-white/10"
                 referrerPolicy="no-referrer"
               />
             </div>
@@ -459,10 +454,10 @@ export default function Home() {
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 text-center md:text-left">
             {[
-              { value: '30+', label: 'Successful Launches' },
-              { value: '31+', label: 'Global Clients' },
-              { value: '40%+', label: 'Conversion Lift' },
-              { value: '99.9%', label: 'Uptime Reliability' }
+              { value: 'Strategy', label: 'Scope and priorities' },
+              { value: 'Design', label: 'Flows and interface' },
+              { value: 'Build', label: 'Frontend and commerce' },
+              { value: 'Support', label: 'Launch and iteration' }
             ].map((stat, i) => (
               <motion.div
                 key={i}
@@ -471,10 +466,10 @@ export default function Home() {
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
               >
-                <div className="text-4xl md:text-6xl font-display font-black text-white tracking-tighter leading-none mb-3">
+                <div className="mb-3 font-display text-2xl font-bold leading-none tracking-tight text-white md:text-3xl">
                   {stat.value}
                 </div>
-                <div className="text-[10px] font-black uppercase tracking-[0.4em] text-brand-primary">
+                <div className="text-[10px] font-bold uppercase tracking-[0.25em] text-white/40">
                   {stat.label}
                 </div>
               </motion.div>
@@ -485,15 +480,14 @@ export default function Home() {
 
       {/* Featured Projects - Curated Archive */}
       <section className="relative overflow-hidden border-t border-white/5 bg-brand-dark py-24 md:py-32">
-        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-primary/60 to-transparent" />
         <div className="absolute inset-0 opacity-[0.05] bg-[linear-gradient(90deg,rgba(255,255,255,0.16)_1px,transparent_1px),linear-gradient(rgba(255,255,255,0.16)_1px,transparent_1px)] bg-[size:96px_96px]" />
 
         <div className="relative z-10 mx-auto max-w-[1600px] px-6 md:px-12 lg:px-24">
           <div className="mb-14 flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
             <SectionHeader
-              badge="Archive"
-              title={<>Defining the <br/> <span className="text-white/65 italic uppercase">Next Standard.</span></>}
-              description="A curated selection of our most impactful digital deployments."
+              badge="Selected work"
+              title={<>Recent products, <br/> <span className="text-white/55">explained clearly.</span></>}
+              description="A selection of commerce, service, and product work with the problem, approach, and implementation behind each build."
               align="left"
               className="mb-0"
             />
@@ -509,7 +503,7 @@ export default function Home() {
           <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
             <Link
               to={`/portfolio/${featuredProject.slug}`}
-              className="project-3d-card group relative min-h-[480px] overflow-hidden rounded-[1.5rem] border border-white/10 bg-brand-gray lg:col-span-7 lg:min-h-[640px] md:rounded-[3rem]"
+              className="project-3d-card group relative min-h-[480px] overflow-hidden rounded-lg border border-white/10 bg-brand-gray lg:col-span-7 lg:min-h-[640px]"
             >
               <img
                 src={featuredProject.image || featuredProject.thumbnail}
@@ -524,7 +518,7 @@ export default function Home() {
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/45 to-transparent" />
               <div className="absolute inset-x-0 top-0 flex items-center justify-between p-5 md:p-8">
                 <span className="rounded-full border border-white/10 bg-black/30 px-4 py-2 text-[10px] font-black uppercase tracking-[0.3em] text-brand-primary backdrop-blur-md">
-                  Featured Deployment
+                  Featured case study
                 </span>
                 <div className="flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-white/10 backdrop-blur-md transition-all duration-500 group-hover:bg-brand-primary">
                   <ArrowRight className="h-5 w-5 text-white transition-transform duration-500 group-hover:translate-x-1" />
@@ -560,7 +554,7 @@ export default function Home() {
                   key={project.id}
                   to={`/portfolio/${project.slug}`}
                   className={cn(
-                    'group grid min-h-[210px] overflow-hidden rounded-[1.5rem] border border-white/10 bg-white/[0.025] transition-all duration-500 hover:-translate-y-1 hover:border-brand-primary/30 hover:bg-white/[0.045] md:grid-cols-[180px_1fr] md:rounded-[2rem]',
+                    'group grid min-h-[210px] overflow-hidden border-t border-white/10 transition-colors duration-300 hover:border-brand-primary/60 md:grid-cols-[180px_1fr]',
                     index === 0 && 'lg:min-h-[250px]',
                   )}
                 >
@@ -603,7 +597,7 @@ export default function Home() {
 
               <Link
                 to="/portfolio"
-                className="group flex min-h-[190px] flex-col justify-between rounded-[1.5rem] border border-brand-primary/20 bg-brand-primary/10 p-7 transition-all duration-500 hover:-translate-y-1 hover:border-brand-primary/50 hover:bg-brand-primary/15 md:rounded-[2rem]"
+                className="group flex min-h-[190px] flex-col justify-between border-t border-brand-primary/50 py-7 transition-colors duration-300 hover:border-brand-primary"
               >
                 <div className="flex items-center justify-between">
                   <Rocket className="h-6 w-6 text-brand-primary" />
@@ -625,7 +619,7 @@ export default function Home() {
               { label: 'Primary categories', value: portfolioCategories.join(' / ') || 'Digital' },
               { label: 'Archive status', value: 'Live' },
             ].map((item) => (
-              <div key={item.label} className="min-w-0 rounded-2xl border border-white/10 bg-white/[0.025] p-4">
+                  <div key={item.label} className="min-w-0 border-l border-white/10 py-2 pl-4">
                 <div className="text-[9px] font-black uppercase tracking-[0.24em] text-white/65 sm:text-[10px]">{item.label}</div>
                 <div className="mt-3 break-words font-display text-lg font-black uppercase leading-tight text-white sm:text-xl">
                   {item.value}
@@ -640,9 +634,9 @@ export default function Home() {
       <section className="py-16 px-6 sm:px-8 md:px-12 lg:px-24 md:py-20 relative overflow-hidden bg-brand-dark">
         <div className="max-w-7xl mx-auto">
           <SectionHeader 
-            badge="Workflow"
-            title={<>THE ANATOMY OF <br /> <span className="text-white/65 italic uppercase">EXCELLENCE.</span></>}
-            description="Our battle-tested workflow is designed for speed, quality, and extreme scalability."
+            badge="Process"
+            title={<>A practical route <br /> <span className="text-white/55">from brief to launch.</span></>}
+            description="A four-part process that keeps product decisions visible and gives design and engineering the same source of truth."
             align="left"
             className="mb-16"
           />
@@ -652,22 +646,22 @@ export default function Home() {
               { 
                 step: '01', 
                 title: 'DISCOVERY', 
-                desc: 'We tear down your objectives to build a data-driven roadmap. Analysis of market gaps forms our strategy.' 
+                desc: 'We clarify the audience, business goal, content, constraints, and the decisions that matter most.'
               },
               { 
                 step: '02', 
                 title: 'ART DIRECTION', 
-                desc: 'Digital art directed by high-fidelity prototyping. We craft cinematic journeys that convert.' 
+                desc: 'We define the information hierarchy, visual direction, and responsive behavior in working prototypes.'
               },
               { 
                 step: '03', 
                 title: 'ARCHITECTURE', 
-                desc: 'Full-stack engineering without compromises. We build scalable, bullet-proof codebases.' 
+                desc: 'We build reusable components, connect real content, and test the details across devices.'
               },
               { 
                 step: '04', 
                 title: 'DEPLOYMENT', 
-                desc: 'Zero-latency rollout with predictive monitoring. We optimize for global expansion.' 
+                desc: 'We verify performance and accessibility, support launch, and prioritize the next iteration.'
               },
             ].map((p, i) => (
               <motion.div
@@ -676,15 +670,15 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.8, delay: i * 0.1 }}
-                className="group relative p-6 sm:p-8 md:p-10 bg-white/[0.02] border border-white/5 rounded-[1rem] md:rounded-[2.5rem] h-full flex flex-col justify-between hover:border-brand-primary/40 transition-all duration-500 glass"
+                className="group relative flex h-full flex-col justify-between border-t border-white/10 py-7 transition-colors duration-300 hover:border-brand-primary/60 lg:px-2"
               >
                 <div>
                   <div className="flex items-center justify-between mb-12">
                     <div className="text-4xl font-display font-black text-white/5 group-hover:text-brand-primary/20 transition-colors">
                       {p.step}
                     </div>
-                    <div className="w-10 h-10 rounded-full border border-white/5 flex items-center justify-center group-hover:bg-brand-primary transition-all duration-500">
-                      <div className="w-1.5 h-1.5 rounded-full bg-brand-primary group-hover:bg-white animate-pulse" />
+                    <div className="flex h-8 w-8 items-center justify-center text-brand-primary">
+                      <div className="h-1.5 w-1.5 rounded-full bg-brand-primary" />
                     </div>
                   </div>
                   <h3 className="text-xl font-display font-black mb-4 tracking-tighter uppercase group-hover:text-brand-primary transition-colors">
@@ -708,11 +702,11 @@ export default function Home() {
           <div className="flex flex-col md:flex-row justify-between items-center md:items-end mb-16 gap-8">
             <SectionHeader 
               badge="Journal"
-              title="From our Lab."
-              description="Latest trends in web engineering, 3D, and strategy."
+              title="Notes from the work."
+              description="Practical writing about frontend engineering, performance, product design, and delivery."
               className="mb-0"
             />
-            <Button variant="outline" size="md" className="flex-shrink-0">Read All Posts</Button>
+            <Button variant="outline" size="md" className="flex-shrink-0" onClick={() => navigate('/blog')}>Read all posts</Button>
           </div>
           
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 lg:gap-8 px-4 sm:px-6 lg:px-0">
@@ -720,8 +714,11 @@ export default function Home() {
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="lg:col-span-8 group cursor-pointer relative rounded-[1rem] md:rounded-[3rem] overflow-hidden border border-white/5 aspect-[16/9] lg:aspect-auto h-[200px] sm:h-[250px] md:h-[400px] w-full"
+              className="lg:col-span-8 group cursor-pointer relative rounded-lg overflow-hidden border border-white/10 aspect-[16/9] lg:aspect-auto h-[200px] sm:h-[250px] md:h-[400px] w-full"
             >
+              {latestBlogs[0] && (
+                <Link to={`/blog/${latestBlogs[0].slug}`} className="absolute inset-0 z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-4px] focus-visible:outline-brand-primary" aria-label={`Read ${latestBlogs[0].title}`} />
+              )}
               <img 
                 src={latestBlogs[0]?.image || latestBlogs[0]?.coverImage || '/images/webdevolopmentservice.webp'}
                 alt={latestBlogs[0]?.title || 'Main post'} 
@@ -733,16 +730,17 @@ export default function Home() {
               <div className="absolute inset-0 bg-gradient-to-t from-brand-dark via-brand-dark/40 to-transparent p-8 md:p-12 flex flex-col justify-center items-center text-center">
                 <h3 className="text-2xl md:text-4xl font-display font-black text-white mb-4 uppercase tracking-tighter max-w-xl text-center lg:text-left">{latestBlogs[0]?.title || 'THE ARCHITECTURE OF A $100M APP.'}</h3>
                 <div className="flex items-center justify-center gap-3 text-brand-primary text-[10px] font-black uppercase tracking-widest">
-                  Read Case Study <ArrowRight className="w-4 h-4" />
+                  Read article <ArrowRight className="w-4 h-4" />
                 </div>
               </div>
             </motion.div>
 
             <div className="lg:col-span-4 flex flex-col gap-6">
               {(latestBlogs.length > 1 ? latestBlogs.slice(1, 3) : homeFallbackBlogs.slice(0, 2)).map((post, i) => (
-                <div
+                <Link
                   key={post.id || i}
-                  className="group flex gap-4 sm:gap-6 items-center p-4 sm:p-6 bg-white/[0.02] rounded-[1rem] md:rounded-[2rem] border border-white/5 hover:border-brand-primary/30 transition-all cursor-pointer glass"
+                  to={`/blog/${post.slug}`}
+                  className="group flex cursor-pointer items-center gap-4 border-t border-white/10 py-5 transition-colors hover:border-brand-primary/50 sm:gap-6"
                 >
                   <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-xl overflow-hidden flex-shrink-0">
                     <img 
@@ -758,7 +756,7 @@ export default function Home() {
                     <h3 className="text-base md:text-lg font-display font-black text-white group-hover:text-brand-primary transition-colors leading-tight uppercase mb-2">{post.title}</h3>
                     <div className="text-[10px] text-white/65 font-black uppercase tracking-widest">{post.time || post.readingTime}</div>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
           </div>
@@ -770,9 +768,9 @@ export default function Home() {
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div>
             <SectionHeader 
-              badge="Inquiry"
-              title={<>Let's build <br/> something legacy.</>}
-              description="Ready to elevate your digital presence? Our team will get back to you within 24 hours."
+              badge="Contact"
+              title={<>Tell us what <br/> you need to build.</>}
+              description="Share the product, audience, current constraints, and timeline. We will reply with focused next steps."
               className="mb-10"
             />
             <div className="space-y-8">
@@ -788,32 +786,30 @@ export default function Home() {
             </div>
           </div>
           
-          <div className="p-5 sm:p-8 md:p-10 bg-brand-dark/40 rounded-[1.25rem] md:rounded-[3rem] border border-white/10 shadow-3xl relative glass">
+          <div className="relative border-t border-white/15 py-6 sm:py-8 md:px-8 md:py-10">
             <DeferredMount minHeight={520}><ContactForm /></DeferredMount>
           </div>
         </div>
       </section>
 
-      {/* Final CTA - Neon Impact */}
+      {/* Final CTA */}
       <section className="py-24 px-6 md:px-20">
         <motion.div 
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="max-w-6xl mx-auto rounded-[1rem] md:rounded-[4rem] bg-brand-primary overflow-hidden relative p-6 sm:p-8 md:p-20 lg:p-24 text-center shadow-[0_0_100px_-20px_rgba(61,90,254,0.4)]"
+          className="relative mx-auto max-w-6xl overflow-hidden rounded-lg border border-brand-primary/50 bg-[#111633] p-8 text-center sm:p-10 md:p-16 lg:p-20"
         >
-          <div className="absolute inset-0 bg-gradient-to-br from-brand-primary to-brand-purple opacity-50" />
-          
           <div className="relative z-10">
             <h2 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-display font-black text-white mb-6 sm:mb-8 lg:mb-10 leading-[0.9] tracking-tighter uppercase">
-              Ready to create <br /> extraordinary?
+              Have a product in mind?
             </h2>
             <p className="text-white/80 text-base sm:text-lg md:text-xl max-w-2xl mx-auto mb-8 sm:mb-10 lg:mb-12 font-light leading-relaxed">
-              Join the elite brands who trust us for their digital expansion. Let's build the future together.
+              Tell us what needs to work, who it is for, and where the current experience falls short.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Button variant="secondary" size="lg" className="w-full sm:w-auto px-8 sm:px-16" onClick={() => navigate('/contact')}>
-                Consultancy
+                Start a conversation
               </Button>
               <Button variant="ghost" size="lg" className="w-full sm:w-auto border border-white/30 px-8 sm:px-16" onClick={() => window.location.href=`mailto:${contactEmail}`}>
                 Email us

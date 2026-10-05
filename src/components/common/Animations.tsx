@@ -244,14 +244,12 @@ export const ParallaxSection = ({ children, offset = 100 }: { children: React.Re
 export const FloatingShapes = () => {
   return (
     <div className="pointer-events-none fixed inset-0 z-[-1] hidden overflow-hidden md:block" aria-hidden="true">
-      {[...Array(3)].map((_, i) => (
+      {[...Array(2)].map((_, i) => (
         <div
           key={i}
           className={cn(
-            "absolute w-[500px] h-[500px] rounded-full blur-[150px] opacity-[0.08]",
-            i === 0 ? "bg-brand-primary top-[-10%] left-[-10%]" : 
-            i === 1 ? "bg-blue-500 bottom-[-10%] right-[-10%]" :
-            "bg-purple-500 top-[40%] left-[40%]"
+            "absolute h-[520px] w-[520px] rounded-full bg-brand-primary blur-[170px] opacity-[0.045]",
+            i === 0 ? "top-[-12%] left-[-12%]" : "bottom-[-16%] right-[-12%]"
           )}
         />
       ))}
@@ -420,22 +418,35 @@ export const DeferredVideo = ({
   }
 
   return (
-    <video
-      ref={videoRef}
-      muted
-      loop
-      playsInline
-      preload="none"
-      poster={poster}
-      disablePictureInPicture
-      aria-hidden="true"
-      className={cn('transition-opacity duration-1000 ease-out', className)}
-      style={videoReady ? undefined : { opacity: 0 }}
-      onLoadedData={() => setVideoReady(true)}
-      onCanPlay={() => setVideoReady(true)}
-      onError={() => setVideoReady(Boolean(poster))}
-      src={shouldLoad ? src : undefined}
-    />
+    <>
+      {poster && (
+        <img
+          src={poster}
+          alt=""
+          width={720}
+          height={900}
+          decoding="async"
+          className={className}
+          aria-hidden="true"
+        />
+      )}
+      <video
+        ref={videoRef}
+        muted
+        loop
+        playsInline
+        preload="none"
+        disablePictureInPicture
+        tabIndex={-1}
+        aria-hidden="true"
+        className={cn('transition-opacity duration-700 ease-out', className)}
+        style={videoReady ? undefined : { opacity: 0 }}
+        onLoadedData={() => setVideoReady(true)}
+        onCanPlay={() => setVideoReady(true)}
+        onError={() => setVideoReady(false)}
+        src={shouldLoad ? src : undefined}
+      />
+    </>
   );
 };
 

@@ -10,9 +10,6 @@ export default function Footer() {
   ];
   return (
     <footer className="bg-brand-dark pt-20 pb-10 px-6 border-t border-white/5 relative overflow-hidden md:pt-32 md:pb-12">
-      {/* Background abstract decoration */}
-      <div className="absolute top-0 left-1/4 hidden w-[800px] h-[800px] bg-brand-primary/5 blur-[200px] -z-10 rounded-full -translate-y-1/2 md:block" />
-      
       <div className="max-w-[1600px] mx-auto">
         {/* Large Cinematic Background Text */}
         <div className="absolute top-20 left-0 right-0 hidden pointer-events-none select-none overflow-hidden opacity-[0.02] whitespace-nowrap sm:block">
@@ -26,7 +23,7 @@ export default function Footer() {
               <span className="brand-text">CodeBase</span>
             </Link>
             <p className="text-white/70 text-base leading-relaxed mb-10 max-w-md font-light md:text-xl md:mb-12">
-              Engineering high-fidelity digital ecosystems for visionary brands. We define the intersection of cinematic design and absolute technical performance.
+              LB CodeBase designs and builds websites, commerce platforms, and digital products from our studio in Swat, Pakistan.
             </p>
             <div className="flex flex-wrap gap-4">
               {contactChannels.map((channel) => (
@@ -36,7 +33,7 @@ export default function Footer() {
                   target={channel.href.startsWith('https://') ? '_blank' : undefined}
                   rel={channel.href.startsWith('https://') ? 'noopener noreferrer' : undefined}
                   aria-label={channel.label}
-                  className="w-14 h-14 rounded-2xl border border-white/5 bg-white/[0.02] flex items-center justify-center hover:bg-brand-primary hover:border-brand-primary transition-all group duration-500 hover:-translate-y-2 glass"
+                  className="flex h-12 w-12 items-center justify-center rounded-md border border-white/10 text-white/65 transition-colors duration-300 hover:border-brand-primary hover:text-white"
                 >
                   <channel.icon aria-hidden="true" className="w-5 h-5 text-white group-hover:text-white transition-colors" />
                 </a>
@@ -89,7 +86,7 @@ export default function Footer() {
             <p className="text-white/70 text-sm mb-6 md:mb-10 font-light leading-relaxed">Share your goals, constraints, and launch window. We will reply with a clear next step.</p>
             <Link
               to="/contact"
-              className="inline-flex min-h-14 w-full items-center justify-between rounded-2xl border border-white/10 bg-white/[0.02] px-6 text-[10px] font-black uppercase tracking-[0.18em] text-white transition-colors hover:border-brand-primary hover:bg-brand-primary/10"
+              className="inline-flex min-h-14 w-full items-center justify-between rounded-md border border-white/10 px-6 text-[10px] font-black uppercase tracking-[0.18em] text-white transition-colors hover:border-brand-primary hover:bg-brand-primary/10"
             >
               Send a project brief
               <ArrowRight aria-hidden="true" className="h-5 w-5 text-brand-primary" />
@@ -103,7 +100,7 @@ export default function Footer() {
               <Mail className="w-6 h-6" />
             </div>
             <div>
-              <div className="text-[9px] font-black text-white/65 uppercase tracking-[0.2em] sm:tracking-[0.3em] mb-1">Direct Communication</div>
+              <div className="text-[9px] font-black text-white/55 uppercase tracking-[0.2em] sm:tracking-[0.3em] mb-1">Email</div>
               <a href={`mailto:${contactEmail}`} className="break-all text-sm font-bold tracking-tight text-white hover:text-brand-primary">{contactEmail}</a>
             </div>
           </div>
@@ -112,7 +109,7 @@ export default function Footer() {
               <Phone className="w-6 h-6" />
             </div>
             <div>
-              <div className="text-[9px] font-black text-white/65 uppercase tracking-[0.2em] sm:tracking-[0.3em] mb-1">WhatsApp Hub</div>
+              <div className="text-[9px] font-black text-white/55 uppercase tracking-[0.2em] sm:tracking-[0.3em] mb-1">Phone / WhatsApp</div>
               <a href="tel:+923489077329" className="text-white text-sm font-bold tracking-tight hover:text-brand-primary">+92 348 9077329</a>
             </div>
           </div>
@@ -121,7 +118,7 @@ export default function Footer() {
               <MapPin className="w-6 h-6" />
             </div>
             <div>
-              <div className="text-[9px] font-black text-white/65 uppercase tracking-[0.2em] sm:tracking-[0.3em] mb-1">Engineering Base</div>
+              <div className="text-[9px] font-black text-white/55 uppercase tracking-[0.2em] sm:tracking-[0.3em] mb-1">Studio</div>
               <div className="text-white text-sm font-bold tracking-tight">Mingora, Swat, Pakistan</div>
             </div>
           </div>

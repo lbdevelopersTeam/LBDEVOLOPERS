@@ -17,7 +17,7 @@ export function Button({
   ...props 
 }: ButtonProps) {
   const variants = {
-    primary: 'bg-brand-primary text-white hover:shadow-[0_0_40px_-10px_rgba(61,90,254,0.6)] border border-brand-primary/50',
+    primary: 'bg-brand-primary text-white hover:bg-[#526bff] border border-brand-primary',
     secondary: 'bg-white text-brand-dark hover:bg-white/90',
     outline: 'bg-transparent border border-white/10 text-white hover:bg-white/5 active:bg-white/10 hover:border-white/20',
     ghost: 'bg-transparent text-white hover:bg-white/5',
@@ -31,11 +31,11 @@ export function Button({
 
   return (
     <motion.button
-      whileHover={{ y: -4, scale: 1.02 }}
-      whileTap={{ scale: 0.98 }}
+      whileHover={{ y: -2 }}
+      whileTap={{ scale: 0.99 }}
       data-cursor={(props as any)['data-cursor'] || "CLICK"}
       className={cn(
-        'max-w-full rounded-full transition-all duration-500 inline-flex items-center justify-center gap-3 active:scale-95 whitespace-normal text-center leading-tight',
+        'max-w-full rounded-md transition-[background-color,border-color,color,transform] duration-300 inline-flex items-center justify-center gap-3 whitespace-normal text-center leading-tight',
         variants[variant],
         sizes[size],
         className
@@ -73,9 +73,9 @@ export function SectionHeader({
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="inline-flex max-w-full items-center gap-2 rounded-full border border-brand-primary/20 bg-brand-primary/10 px-4 py-1.5 text-[10px] font-bold uppercase tracking-[0.22em] text-blue-300 sm:tracking-[0.4em] mb-8"
+          className="mb-6 inline-flex max-w-full items-center gap-3 text-[10px] font-bold uppercase tracking-[0.22em] text-brand-primary sm:tracking-[0.32em]"
         >
-          <span className="w-1.5 h-1.5 rounded-full bg-brand-primary animate-pulse" />
+          <span className="h-px w-8 bg-brand-primary/80" />
           {badge}
         </motion.div>
       )}
@@ -84,7 +84,7 @@ export function SectionHeader({
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
-        className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-display font-black mb-6 tracking-tighter leading-[0.95] uppercase gradient-text break-words"
+        className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-6 tracking-[-0.04em] leading-[0.98] text-white break-words"
       >
         {title}
       </motion.h2>
@@ -94,7 +94,7 @@ export function SectionHeader({
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 1, delay: 0.4 }}
-          className="text-white/70 text-base md:text-xl leading-relaxed font-light max-w-2xl"
+          className="text-white/58 text-base md:text-lg leading-7 font-normal max-w-2xl"
           style={{ margin: align === 'center' ? '0 auto' : '0' }}
         >
           {description}

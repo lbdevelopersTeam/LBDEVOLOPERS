@@ -138,8 +138,8 @@ export default function Navbar() {
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
         className={cn(
-          "max-w-[1400px] mx-auto rounded-[2rem] transition-[background-color,border-color,box-shadow,padding] duration-300 border border-transparent",
-          scrolled ? "bg-brand-dark/40 backdrop-blur-2xl border-white/10 px-4 py-3 shadow-[0_20px_50px_rgba(0,0,0,0.5)] sm:px-8" : "px-3 py-3 sm:px-4 sm:py-4"
+          "mx-auto max-w-[1400px] rounded-xl border border-transparent transition-[background-color,border-color,padding] duration-300",
+          scrolled ? "border-white/10 bg-black/82 px-4 py-3 backdrop-blur-xl sm:px-6" : "px-3 py-3 sm:px-4 sm:py-4"
         )}
       >
         <div className="flex items-center justify-between">
@@ -159,25 +159,17 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop Nav */}
-          <div className="hidden lg:flex items-center bg-white/[0.03] border border-white/5 rounded-full px-2 py-1 backdrop-blur-sm">
+          <div className="hidden items-center gap-1 lg:flex">
             {navLinks.map((link) => (
               <Link
                 key={link.name}
                 to={link.href}
                 className={cn(
-                  'text-[9px] font-black uppercase tracking-[0.2em] transition-all duration-500 px-6 py-2.5 rounded-full relative group overflow-hidden',
-                  isActiveLink(link.name, link.href) ? 'text-white' : 'text-white/40 hover:text-white'
+                  'group relative border-b px-4 py-2.5 text-[9px] font-black uppercase tracking-[0.18em] transition-colors duration-300',
+                  isActiveLink(link.name, link.href) ? 'border-brand-primary text-white' : 'border-transparent text-white/45 hover:border-white/20 hover:text-white'
                 )}
               >
                 <span className="relative z-10">{link.name}</span>
-                {isActiveLink(link.name, link.href) && (
-                  <motion.div 
-                    layoutId="nav-pill"
-                    className="absolute inset-0 bg-brand-primary/20 border border-brand-primary/30 rounded-full"
-                    transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
-                  />
-                )}
-                <div className="absolute inset-0 bg-white/5 translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
               </Link>
             ))}
           </div>
@@ -186,7 +178,7 @@ export default function Navbar() {
             <a
               href="/documents/LB-CodeBase-Company-Profile.pdf"
               download="LB-CodeBase-Company-Profile.pdf"
-              className="hidden lg:flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-5 py-2.5 text-[9px] font-black uppercase tracking-[0.2em] text-white/70 transition-all hover:border-brand-primary/40 hover:bg-brand-primary/10 hover:text-white"
+              className="hidden items-center gap-2 border-b border-white/15 px-2 py-2.5 text-[9px] font-black uppercase tracking-[0.18em] text-white/60 transition-colors hover:border-brand-primary hover:text-white lg:flex"
               aria-label="Download the LB CodeBase company profile PDF"
             >
               <Download className="h-3 w-3" />
@@ -196,9 +188,9 @@ export default function Navbar() {
             <Magnetic strength={0.1}>
               <Link
                 to="/contact"
-                className="hidden xl:flex px-8 py-2.5 bg-brand-primary text-white rounded-full text-[9px] font-black uppercase tracking-[0.2em] hover:shadow-[0_0_30px_rgba(61,90,254,0.5)] hover:scale-105 transition-all items-center gap-3 group"
+                className="group hidden items-center gap-3 rounded-md bg-brand-primary px-7 py-3 text-[9px] font-black uppercase tracking-[0.18em] text-white transition-colors hover:bg-[#526bff] xl:flex"
               >
-                Inquiry
+                Start a project
                 <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
               </Link>
             </Magnetic>
@@ -239,9 +231,7 @@ export default function Navbar() {
             onClick={beginMenuClose}
             className="fixed inset-0 z-[110] bg-black/80 px-3 pb-4 pt-20 lg:hidden"
           >
-            <div className="absolute inset-x-4 top-24 h-40 rounded-full bg-brand-primary/10 blur-[90px]" />
-            
-            <div onClick={(event) => event.stopPropagation()} className="glass relative z-10 mx-auto flex max-h-[calc(100dvh-6rem)] w-full max-w-md flex-col overflow-y-auto overscroll-contain rounded-[2rem] border border-white/10 bg-brand-dark/90 p-4 shadow-[0_30px_90px_rgba(0,0,0,0.55)]">
+            <div onClick={(event) => event.stopPropagation()} className="relative z-10 mx-auto flex max-h-[calc(100dvh-6rem)] w-full max-w-md flex-col overflow-y-auto overscroll-contain rounded-xl border border-white/10 bg-[#080808] p-4">
               <div className="mb-4 flex items-center justify-between border-b border-white/10 pb-4">
                 <Link to="/" onClick={(event) => closeThenNavigate(event, '/')} className="brand-logo-image-frame" aria-label="LB CodeBase home">
                   <img src="/images/LB CodeBase Logo.webp" alt="LB CodeBase" width="144" height="32" decoding="async" className="brand-logo-image" />
@@ -268,10 +258,10 @@ export default function Navbar() {
                       to={link.href}
                       onClick={(event) => closeThenNavigate(event, link.href)}
                       className={cn(
-                        'flex items-center justify-between rounded-2xl border px-4 py-3 text-sm font-black uppercase tracking-[0.16em] transition-all',
+                        'flex items-center justify-between border-b px-2 py-3.5 text-sm font-black uppercase tracking-[0.14em] transition-colors',
                         isActiveLink(link.name, link.href)
-                          ? 'border-brand-primary/35 bg-brand-primary/15 text-white'
-                          : 'border-white/10 bg-white/[0.03] text-white/55 hover:border-white/20 hover:text-white'
+                          ? 'border-brand-primary text-white'
+                          : 'border-white/10 text-white/55 hover:border-white/25 hover:text-white'
                       )}
                     >
                       <span>{link.name}</span>
@@ -291,7 +281,7 @@ export default function Navbar() {
                   href="/documents/LB-CodeBase-Company-Profile.pdf"
                   download="LB-CodeBase-Company-Profile.pdf"
                   onClick={beginMenuClose}
-                  className="group mb-2 flex min-h-16 w-full items-center gap-3 rounded-2xl border border-white/10 bg-gradient-to-r from-white/[0.075] to-white/[0.025] p-2.5 pr-3 text-left transition-all hover:border-brand-primary/40 hover:from-brand-primary/15 hover:to-white/[0.035] active:scale-[0.99]"
+                  className="group mb-2 flex min-h-16 w-full items-center gap-3 rounded-md border border-white/10 bg-white/[0.025] p-2.5 pr-3 text-left transition-colors hover:border-brand-primary/40 active:scale-[0.99]"
                   aria-label="Download the LB CodeBase company profile PDF"
                 >
                   <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-brand-primary/25 bg-brand-primary/15 text-brand-primary shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]">
@@ -312,7 +302,7 @@ export default function Navbar() {
                 <Link
                   to="/contact"
                   onClick={(event) => closeThenNavigate(event, '/contact')}
-                  className="flex w-full items-center justify-center gap-3 rounded-2xl bg-brand-primary px-4 py-4 text-center text-[10px] font-black uppercase tracking-[0.24em] text-white shadow-2xl shadow-brand-primary/30"
+                  className="flex w-full items-center justify-center gap-3 rounded-md bg-brand-primary px-4 py-4 text-center text-[10px] font-black uppercase tracking-[0.22em] text-white"
                 >
                   Let's Talk
                   <ArrowRight className="h-4 w-4" />
