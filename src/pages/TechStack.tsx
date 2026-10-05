@@ -81,9 +81,10 @@ export default function TechStack() {
   }, []);
 
   return (
-    <div className="relative min-h-screen">
-      <section className="relative z-10 max-w-[1600px] mx-auto pt-32 pb-24 px-6 flex flex-col justify-center min-h-screen overflow-hidden">
-          <HeroBackground videoSrc="/videos/other-pages-hero.mp4" poster="/images/thesearchforabsolutesection.jpg" />
+    <div className="relative isolate min-h-screen">
+      <HeroBackground videoSrc="/videos/other-pages-hero.mp4" poster="/images/thesearchforabsolutesection.jpg" />
+
+      <section className="relative z-10 max-w-[1600px] mx-auto pt-32 pb-24 px-6 flex flex-col justify-center min-h-screen">
           <div className="max-w-4xl">
             <motion.div
               initial={{ opacity: 0, x: -20 }}
@@ -113,7 +114,7 @@ export default function TechStack() {
           </div>
         </section>
 
-        <div className="max-w-[1600px] mx-auto px-6 sm:px-8 md:px-12 lg:px-24">
+        <div className="relative z-10 max-w-[1600px] mx-auto px-6 sm:px-8 md:px-12 lg:px-24">
           {/* Connected technology layers, based on published stack data */}
           <div className="border-t border-white/10">
           {technologies.map((group, groupIdx) => (
