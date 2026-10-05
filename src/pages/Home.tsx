@@ -342,7 +342,7 @@ export default function Home() {
           <SectionHeader 
             badge="Services"
             title={<>Focused digital work, <br/> built end to end.</>}
-            description="Design and engineering support for websites, stores, applications, automation, and AI agents."
+            description="Design and engineering support for websites, stores, business platforms, automation, and AI agents."
             align="left"
           />
           
@@ -355,12 +355,18 @@ export default function Home() {
                 <div>
                   <h3 className="text-3xl font-display font-black mb-4 uppercase tracking-tighter">Web Engineering</h3>
                   <p className="text-white/60 text-lg font-normal leading-relaxed mb-8">
-                    React and Next.js products with considered content structure, responsive behavior, and maintainable frontend architecture.
+                    React and Next.js products, from focused websites to portals, booking systems, and content platforms.
                   </p>
-                  <Link to="/services" className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-brand-primary group">
-                    See our web work
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-2 transition-transform" />
-                  </Link>
+                  <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
+                    <Link to="/services" className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-brand-primary group">
+                      See our web work
+                      <ArrowRight className="w-4 h-4 group-hover:translate-x-2 transition-transform" />
+                    </Link>
+                    <Link to="/services#specialist-builds" className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-white/75 transition-colors hover:text-white group">
+                      Explore platforms
+                      <ArrowRight className="w-4 h-4 group-hover:translate-x-2 transition-transform" />
+                    </Link>
+                  </div>
                 </div>
               </div>
             </BentoCard>

@@ -1,6 +1,6 @@
 import { motion } from 'motion/react';
 import { SectionHeader, Button } from '../components/common/UI';
-import { Layout, Smartphone, Search, Database, BarChart, HardDrive, Shield, Layers, Palette, Code, Cpu, ArrowRight, Zap, Bot, Workflow, Mic2, Cable, PanelsTopLeft, Sparkles } from 'lucide-react';
+import { Layout, Smartphone, Search, Database, BarChart, HardDrive, Shield, Layers, Palette, Code, Cpu, ArrowRight, Zap, Bot, Workflow, Mic2, Cable, PanelsTopLeft, Sparkles, CalendarDays, LayoutDashboard, BookOpenText, Shapes, type LucideIcon } from 'lucide-react';
 import { TextReveal, LetterReveal, Magnetic, ImageReveal, ParallaxSection, HeroBackground } from '../components/common/Animations';
 import ProjectCalculator from '../components/common/ProjectCalculator';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
@@ -60,7 +60,41 @@ const fallbackServiceList = [
   }
 ];
 
-const automationServices = [
+type Capability = {
+  icon: LucideIcon;
+  title: string;
+  description: string;
+  examples: string[];
+};
+
+const specialistServices: Capability[] = [
+  {
+    icon: LayoutDashboard,
+    title: 'Portals & dashboards',
+    description: 'Secure spaces for customers and teams to manage the information and tasks that matter to them.',
+    examples: ['Customer and student portals', 'Role-based admin panels', 'Reporting dashboards'],
+  },
+  {
+    icon: CalendarDays,
+    title: 'Booking & reservations',
+    description: 'Clear scheduling journeys that connect availability, confirmations, and the tools behind your service.',
+    examples: ['Appointment scheduling', 'Event reservations', 'Automated reminders'],
+  },
+  {
+    icon: BookOpenText,
+    title: 'CMS & content platforms',
+    description: 'Easy-to-manage publishing experiences, built with WordPress or a custom content workflow when the brief calls for it.',
+    examples: ['Editorial websites', 'Custom admin panels', 'Blog and resource libraries'],
+  },
+  {
+    icon: Shapes,
+    title: 'Brand identity systems',
+    description: 'A coherent visual foundation that carries from a logo and color system into the website and product interface.',
+    examples: ['Logo and visual direction', 'Color and type systems', 'Practical brand guidelines'],
+  },
+];
+
+const automationServices: Capability[] = [
   {
     icon: PanelsTopLeft,
     title: 'Framer websites',
@@ -99,15 +133,38 @@ const automationServices = [
   },
 ];
 
+function CapabilityCard({ icon: Icon, title, description, examples }: Capability) {
+  return (
+    <article className="group flex h-full min-w-0 flex-col rounded-lg border border-white/10 bg-white/[0.025] p-6 transition-[border-color,background-color,transform] duration-300 hover:-translate-y-1 hover:border-brand-primary/40 hover:bg-white/[0.045] sm:p-7">
+      <div className="mb-7 flex h-11 w-11 items-center justify-center rounded-lg border border-brand-primary/25 bg-brand-primary/10 text-brand-primary transition-colors group-hover:border-brand-primary/45 group-hover:bg-brand-primary/15">
+        <Icon className="h-5 w-5" aria-hidden="true" />
+      </div>
+      <h3 className="font-display text-xl font-bold leading-tight text-white sm:text-2xl">{title}</h3>
+      <p className="mt-3 text-sm leading-6 text-white/60">{description}</p>
+      <div className="mt-7 border-t border-white/10 pt-5">
+        <p className="text-[10px] font-black uppercase tracking-[0.2em] text-brand-primary">Example use cases</p>
+        <ul className="mt-3 space-y-2.5">
+          {examples.map((example) => (
+            <li key={example} className="flex items-start gap-2.5 text-sm leading-5 text-white/70">
+              <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-brand-primary" aria-hidden="true" />
+              <span>{example}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </article>
+  );
+}
+
 export default function Services() {
   const navigate = useNavigate();
   const { hash } = useLocation();
   const [serviceList, setServiceList] = useState(fallbackServiceList);
 
   useEffect(() => {
-    if (hash !== '#automation-ai') return;
+    if (hash !== '#automation-ai' && hash !== '#specialist-builds') return;
     const frame = window.requestAnimationFrame(() => {
-      document.getElementById('automation-ai')?.scrollIntoView({ block: 'start' });
+      document.getElementById(hash.slice(1))?.scrollIntoView({ block: 'start' });
     });
     return () => window.cancelAnimationFrame(frame);
   }, [hash]);
@@ -171,7 +228,7 @@ export default function Services() {
               </div>
 
               <TextReveal 
-                text="A multidisciplinary team for websites, stores, applications, automation, and AI-powered experiences that stay useful after launch."
+                text="A multidisciplinary team for websites, stores, platforms, automation, and AI-powered experiences that stay useful after launch."
                 className="max-w-3xl text-xl font-normal leading-8 text-white/58 md:text-2xl md:leading-9"
               />
             </div>
@@ -247,6 +304,20 @@ export default function Services() {
           ))}
         </div>
 
+        {/* Specialist builds remain visible even when the main service list is CMS-managed. */}
+        <section id="specialist-builds" className="scroll-mt-28 border-t border-white/10 py-20 md:py-28">
+          <SectionHeader
+            badge="Specialist builds"
+            title={<>Useful digital systems. <br /><span className="text-white/45">Built around your work.</span></>}
+            description="Beyond a standard website, we build the focused tools and identity systems that make a digital business easier to run and easier to recognize."
+            className="mb-10 md:mb-14"
+          />
+
+          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+            {specialistServices.map((service) => <CapabilityCard key={service.title} {...service} />)}
+          </div>
+        </section>
+
         {/* Automation and AI services remain available alongside CMS-managed services. */}
         <section id="automation-ai" className="scroll-mt-28 border-t border-white/10 py-20 md:py-28">
           <SectionHeader
@@ -257,29 +328,7 @@ export default function Services() {
           />
 
           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-            {automationServices.map(({ icon: Icon, title, description, examples }) => (
-              <article
-                key={title}
-                className="group flex h-full min-w-0 flex-col rounded-lg border border-white/10 bg-white/[0.025] p-6 transition-[border-color,background-color,transform] duration-300 hover:-translate-y-1 hover:border-brand-primary/40 hover:bg-white/[0.045] sm:p-7"
-              >
-                <div className="mb-7 flex h-11 w-11 items-center justify-center rounded-lg border border-brand-primary/25 bg-brand-primary/10 text-brand-primary transition-colors group-hover:border-brand-primary/45 group-hover:bg-brand-primary/15">
-                  <Icon className="h-5 w-5" aria-hidden="true" />
-                </div>
-                <h3 className="font-display text-xl font-bold leading-tight text-white sm:text-2xl">{title}</h3>
-                <p className="mt-3 text-sm leading-6 text-white/60">{description}</p>
-                <div className="mt-7 border-t border-white/10 pt-5">
-                  <p className="text-[10px] font-black uppercase tracking-[0.2em] text-brand-primary">Example use cases</p>
-                  <ul className="mt-3 space-y-2.5">
-                    {examples.map((example) => (
-                      <li key={example} className="flex items-start gap-2.5 text-sm leading-5 text-white/70">
-                        <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-brand-primary" aria-hidden="true" />
-                        <span>{example}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </article>
-            ))}
+            {automationServices.map((service) => <CapabilityCard key={service.title} {...service} />)}
           </div>
 
           <div className="mt-9 flex flex-col gap-5 border-t border-white/10 pt-7 sm:flex-row sm:items-center sm:justify-between">
@@ -295,7 +344,7 @@ export default function Services() {
           <SectionHeader 
             badge="Investment"
             title={<>Starting points <br /> <span className="text-white/45">for common scopes.</span></>}
-            description="Indicative starting points for common website scopes. Automation, integrations, and custom agents receive a tailored quote after discovery."
+            description="Indicative starting points for common website scopes. Portals, booking systems, automation, and custom agents receive a tailored quote after discovery."
             align="left"
             className="mb-24"
           />
@@ -376,7 +425,7 @@ export default function Services() {
           <SectionHeader 
              badge="Project Estimator"
              title={<>Plan an initial <br /><span className="text-white/45">project range.</span></>}
-             description="Estimate a common web, mobile, or commerce build. For Framer, automation, or custom agents, share your workflow for a tailored scope."
+             description="Estimate a common web, mobile, or commerce build. For specialist platforms, Framer, automation, or custom agents, share your workflow for a tailored scope."
              align="center"
           />
           <div className="mt-12 md:mt-24 w-full">
