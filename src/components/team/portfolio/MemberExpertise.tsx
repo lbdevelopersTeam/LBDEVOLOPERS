@@ -34,8 +34,8 @@ export default function MemberExpertise({ member }: { member: MemberProfile }) {
   const projectRoles = Array.from(new Set(member.projects.map((project) => project.memberRole).filter(Boolean))) as string[];
 
   return (
-    <section id="skills" className="scroll-mt-28 border-b border-white/10 bg-[#080808] px-5 py-14 sm:py-16 md:px-8 md:py-20 lg:py-24">
-      <div className="mx-auto max-w-[1500px]">
+    <section id="skills" className="scroll-mt-28 border-b border-white/10 bg-[#080808] px-5 py-14 md:px-8 md:py-16 lg:py-20">
+      <div className="mx-auto max-w-[1400px]">
         <SectionHeading
           index="02"
           label="Expertise"
@@ -45,7 +45,7 @@ export default function MemberExpertise({ member }: { member: MemberProfile }) {
           <span className="text-white/28">The thinking comes first.</span>
         </SectionHeading>
 
-        <div className="mt-10 space-y-4 md:mt-14">
+        <div className="mt-9 space-y-4 md:mt-12">
           {groups.map((group, groupIndex) => {
             const Icon = categoryIcons[group.category] || Layers;
             return (
@@ -55,7 +55,7 @@ export default function MemberExpertise({ member }: { member: MemberProfile }) {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: reducedMotion ? 0 : groupIndex * 0.08, duration: 0.5 }}
-                className="member-glass grid gap-6 rounded-xl p-6 sm:p-8 md:grid-cols-[220px_minmax(0,1fr)] md:gap-10"
+                className="member-glass grid gap-6 rounded-xl p-6 sm:p-7 md:grid-cols-[190px_minmax(0,1fr)] md:gap-8"
               >
                 <div>
                   <div className="flex items-center gap-2.5">
@@ -83,7 +83,7 @@ export default function MemberExpertise({ member }: { member: MemberProfile }) {
                       whileInView={{ opacity: 1, x: 0 }}
                       viewport={{ once: true }}
                       transition={{ delay: reducedMotion ? 0 : Math.min(index * 0.03, 0.2) }}
-                      className="group flex min-h-14 items-center justify-between border-b border-white/8 py-3 pr-2 font-display text-base font-bold uppercase text-white/80 transition-colors hover:text-white md:text-lg"
+                      className="group flex min-h-12 items-center justify-between border-b border-white/8 py-2.5 pr-2 font-display text-sm font-bold uppercase text-white/80 transition-colors hover:text-white md:text-base"
                     >
                       <span className="flex items-center gap-2.5">
                         <span
@@ -105,7 +105,7 @@ export default function MemberExpertise({ member }: { member: MemberProfile }) {
               initial={reducedMotion ? false : { opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="member-glass member-glass-strong grid gap-6 rounded-xl p-6 sm:p-8 md:grid-cols-[220px_minmax(0,1fr)] md:gap-10"
+              className="member-glass member-glass-strong grid gap-6 rounded-xl p-6 sm:p-7 md:grid-cols-[190px_minmax(0,1fr)] md:gap-8"
             >
               <div>
                 <span

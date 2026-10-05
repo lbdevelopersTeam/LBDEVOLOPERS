@@ -40,14 +40,14 @@ function CaseSection({
 }) {
   if (!body) return null;
   return (
-    <section className="grid gap-6 border-t border-white/12 py-10 md:grid-cols-[200px_minmax(0,1fr)] md:gap-10 md:py-16">
+    <section className="grid gap-6 border-t border-white/12 py-10 md:grid-cols-[160px_minmax(0,1fr)] md:gap-8 md:py-14">
       <div>
         <span className="text-[10px] font-black text-[var(--member-accent)]">{index}</span>
         <p className="mt-3 text-[9px] font-black uppercase tracking-[0.16em] text-white/35">{label}</p>
       </div>
       <div className="max-w-4xl">
-        <h2 className="font-display text-2xl font-black uppercase leading-tight text-white md:text-4xl">{title}</h2>
-        <p className="mt-6 whitespace-pre-line text-base leading-relaxed text-white/60 md:text-lg md:leading-relaxed">{body}</p>
+        <h2 className="font-display text-2xl font-black uppercase leading-tight text-white md:text-3xl">{title}</h2>
+        <p className="mt-5 whitespace-pre-line text-base leading-7 text-white/60 md:text-lg md:leading-8">{body}</p>
       </div>
     </section>
   );
@@ -119,7 +119,7 @@ export default function MemberProjectDetail() {
           className={memberPortfolioClassName}
         >
           <main className="member-grid-surface min-h-[70svh] px-5 pb-16 pt-32 md:px-8 lg:pt-36" role="status" aria-label="Loading project case study">
-            <div className="mx-auto max-w-[1500px] animate-pulse">
+            <div className="mx-auto max-w-[1400px] animate-pulse">
               <div className="h-3 w-36 rounded-full bg-white/10" />
               <div className="mt-10 h-14 max-w-3xl rounded-2xl bg-white/[0.07] sm:h-20" />
               <div className="mt-6 h-5 max-w-2xl rounded-full bg-white/5" />
@@ -168,7 +168,7 @@ export default function MemberProjectDetail() {
           Case
         </div>
 
-        <div className="relative mx-auto max-w-[1500px]">
+        <div className="relative mx-auto max-w-[1400px]">
           {/* Breadcrumbs */}
           <div className="mb-6 flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.16em] text-white/50">
             <Link to={`/team/${member.slug}`} className="hover:text-white">
@@ -180,7 +180,7 @@ export default function MemberProjectDetail() {
 
           <div className="grid items-end gap-10 lg:grid-cols-12">
             <motion.div
-              initial={reducedMotion ? false : { opacity: 0, y: 22 }}
+              initial={false}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
               className="lg:col-span-9"
@@ -198,7 +198,7 @@ export default function MemberProjectDetail() {
                 {project.title}
               </h1>
 
-              <p className="mt-6 max-w-3xl text-base leading-relaxed text-white/60 md:text-xl md:leading-relaxed">
+              <p className="mt-5 max-w-3xl text-base leading-7 text-white/60 md:text-lg md:leading-8">
                 {project.shortDescription}
               </p>
             </motion.div>
@@ -234,7 +234,7 @@ export default function MemberProjectDetail() {
 
       {/* Main Thumbnail Figure */}
       <motion.figure
-        initial={reducedMotion ? false : { opacity: 0, scale: 0.985 }}
+        initial={false}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.75, delay: reducedMotion ? 0 : 0.08 }}
         className="mx-auto max-w-[1760px] px-3 md:px-6"
@@ -251,8 +251,8 @@ export default function MemberProjectDetail() {
       </motion.figure>
 
       {/* Narrative Section */}
-      <main className="mx-auto max-w-[1300px] px-5 py-16 md:px-8 md:py-24 lg:py-32">
-        <section className="grid gap-12 pb-16 lg:grid-cols-12 lg:gap-10 lg:pb-24">
+      <main className="mx-auto max-w-[1200px] px-5 py-14 md:px-8 md:py-18 lg:py-20">
+        <section className="grid gap-10 pb-14 lg:grid-cols-12 lg:gap-8 lg:pb-20">
           <div className="lg:col-span-7">
             <div className="mb-6 flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.18em] text-[var(--member-accent)]">
               <Layers className="h-4 w-4" />
@@ -278,12 +278,12 @@ export default function MemberProjectDetail() {
         </section>
 
         {/* Individual Contribution Highlight Callout */}
-        <aside className="member-glass member-glass-strong mb-16 rounded-xl p-6 sm:p-8 md:mb-24 md:p-10">
+        <aside className="member-glass member-glass-strong mb-14 rounded-xl p-6 sm:p-8 md:mb-20">
           <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.18em] text-white/40">
             <UserCheck className="h-4 w-4 text-[var(--member-accent)]" />
             <span>Individual Role & Impact</span>
           </div>
-          <p className="mt-4 max-w-5xl font-display text-xl font-black uppercase leading-tight text-white md:text-3xl">
+          <p className="mt-4 max-w-5xl font-display text-xl font-black uppercase leading-tight text-white md:text-2xl">
             {member.name} served as{' '}
             <span style={{ color: 'var(--member-accent)' }}>
               {project.memberRole || member.role}
@@ -298,19 +298,19 @@ export default function MemberProjectDetail() {
 
         {/* Process Steps */}
         {Boolean(project.process?.length) && (
-          <section className="border-t border-white/12 py-10 md:py-16">
-            <div className="grid gap-6 md:grid-cols-[200px_minmax(0,1fr)] md:gap-10">
+          <section className="border-t border-white/12 py-10 md:py-14">
+            <div className="grid gap-6 md:grid-cols-[160px_minmax(0,1fr)] md:gap-8">
               <div>
                 <span className="text-[10px] font-black text-[var(--member-accent)]">04</span>
                 <p className="mt-3 text-[9px] font-black uppercase tracking-[0.16em] text-white/35">Implementation Process</p>
               </div>
               <ol className="member-glass divide-y divide-white/8 rounded-xl px-6 sm:px-8">
                 {project.process!.map((step, index) => (
-                  <li key={`${step}-${index}`} className="grid grid-cols-[48px_minmax(0,1fr)] gap-5 py-6 md:grid-cols-[64px_minmax(0,1fr)] md:py-8">
+                  <li key={`${step}-${index}`} className="grid grid-cols-[44px_minmax(0,1fr)] gap-4 py-5 md:grid-cols-[56px_minmax(0,1fr)] md:py-6">
                     <span className="font-display text-xl font-black text-[var(--member-accent)]">
                       {String(index + 1).padStart(2, '0')}
                     </span>
-                    <p className="text-base leading-relaxed text-white/65 md:text-lg">{step}</p>
+                    <p className="text-base leading-7 text-white/65">{step}</p>
                   </li>
                 ))}
               </ol>
@@ -320,8 +320,8 @@ export default function MemberProjectDetail() {
 
         {/* Outcomes & Metrics */}
         {Boolean(project.results?.length || project.achievements?.length) && (
-          <section className="border-t border-white/12 py-10 md:py-16">
-            <div className="grid gap-6 md:grid-cols-[200px_minmax(0,1fr)] md:gap-10">
+          <section className="border-t border-white/12 py-10 md:py-14">
+            <div className="grid gap-6 md:grid-cols-[160px_minmax(0,1fr)] md:gap-8">
               <div>
                 <span className="text-[10px] font-black text-[var(--member-accent)]">05</span>
                 <p className="mt-3 text-[9px] font-black uppercase tracking-[0.16em] text-white/35">Business Outcomes</p>
@@ -343,7 +343,7 @@ export default function MemberProjectDetail() {
 
         {/* Technologies Breakdown */}
         {project.technologies.length > 0 && (
-          <section className="grid gap-6 border-t border-white/12 py-10 md:grid-cols-[200px_minmax(0,1fr)] md:gap-10 md:py-16">
+          <section className="grid gap-6 border-t border-white/12 py-10 md:grid-cols-[160px_minmax(0,1fr)] md:gap-8 md:py-14">
             <div>
               <span className="text-[10px] font-black text-[var(--member-accent)]">TX</span>
               <p className="mt-3 text-[9px] font-black uppercase tracking-[0.16em] text-white/35">Tech Stack</p>
@@ -389,7 +389,7 @@ export default function MemberProjectDetail() {
       {nextProject && (
         <Link
           to={`/team/${member.slug}/projects/${nextProject.slug}`}
-          className="group relative block min-h-[420px] overflow-hidden border-b border-white/12 md:min-h-[520px]"
+          className="group relative block min-h-[360px] overflow-hidden border-b border-white/12 md:min-h-[440px]"
         >
           <img
             src={nextProject.thumbnail}
@@ -399,7 +399,7 @@ export default function MemberProjectDetail() {
             className="absolute inset-0 h-full w-full object-cover object-top opacity-40 transition duration-700 group-hover:scale-[1.02] group-hover:opacity-55"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-black/20" />
-          <div className="relative mx-auto flex min-h-[420px] max-w-[1500px] flex-col justify-end px-5 py-14 md:min-h-[520px] md:px-8 md:py-20">
+          <div className="relative mx-auto flex min-h-[360px] max-w-[1400px] flex-col justify-end px-5 py-14 md:min-h-[440px] md:px-8 md:py-16">
             <div className="mb-4 flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.18em] text-[var(--member-accent)]">
               <Sparkles className="h-3.5 w-3.5" />
               <span>Next Case Study</span>
@@ -424,7 +424,7 @@ export default function MemberProjectDetail() {
 
       {/* Back to Profile Footer Link Bar */}
       <div className="border-b border-white/12 px-5 py-8 md:px-8">
-        <div className="mx-auto flex max-w-[1500px] items-center justify-between gap-4">
+        <div className="mx-auto flex max-w-[1400px] items-center justify-between gap-4">
           <Link
             to={`/team/${member.slug}#projects`}
             className="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.14em] text-white/70 hover:text-white"

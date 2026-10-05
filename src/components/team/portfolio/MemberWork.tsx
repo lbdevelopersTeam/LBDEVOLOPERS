@@ -14,8 +14,8 @@ export default function MemberWork({ member }: { member: MemberProfile }) {
   );
 
   return (
-    <section id="projects" className="scroll-mt-28 border-b border-white/10 px-5 py-14 sm:py-16 md:px-8 md:py-20 lg:py-24">
-      <div className="mx-auto max-w-[1500px]">
+    <section id="projects" className="scroll-mt-28 border-b border-white/10 px-5 py-14 md:px-8 md:py-16 lg:py-20">
+      <div className="mx-auto max-w-[1400px]">
         <SectionHeading
           index="03"
           label="Selected Work"
@@ -29,7 +29,7 @@ export default function MemberWork({ member }: { member: MemberProfile }) {
           <>
             {categories.length > 2 && (
               <div
-                className="mt-10 flex gap-1.5 overflow-x-auto border-b border-white/10 pb-3 no-scrollbar [scrollbar-width:none] md:mt-12"
+                className="mt-9 flex gap-1.5 overflow-x-auto border-b border-white/10 pb-3 no-scrollbar [scrollbar-width:none] md:mt-10"
                 role="tablist"
                 aria-label="Filter selected projects"
               >
@@ -59,7 +59,7 @@ export default function MemberWork({ member }: { member: MemberProfile }) {
               </div>
             )}
 
-            <motion.div layout className="mt-8 space-y-12 md:mt-12 md:space-y-16">
+            <motion.div layout className="mt-8 space-y-10 md:mt-10 md:space-y-12">
               <AnimatePresence mode="popLayout">
                 {projects.map((project, index) => {
                   const reverse = index % 2 === 1;
@@ -71,7 +71,7 @@ export default function MemberWork({ member }: { member: MemberProfile }) {
                       animate={{ opacity: 1, y: 0 }}
                       exit={reducedMotion ? undefined : { opacity: 0, y: -16 }}
                       transition={{ duration: 0.5 }}
-                      className="group grid items-center gap-8 lg:grid-cols-12 lg:gap-12"
+                      className="group grid items-center gap-6 lg:grid-cols-12 lg:gap-8"
                     >
                       {/* Project Image & Visual Anchor */}
                       <Link
@@ -102,7 +102,7 @@ export default function MemberWork({ member }: { member: MemberProfile }) {
 
                       {/* Project Meta & Narrative */}
                       <div
-                        className={`member-glass rounded-xl p-6 sm:p-8 md:p-10 lg:col-span-5 ${
+                        className={`member-glass rounded-xl p-6 sm:p-7 lg:col-span-5 ${
                           reverse ? 'lg:col-start-1 lg:row-start-1' : ''
                         }`}
                       >
@@ -118,7 +118,7 @@ export default function MemberWork({ member }: { member: MemberProfile }) {
                           </span>
                         </div>
 
-                        <h3 className="member-project-title mt-6 max-w-xl font-display font-black uppercase leading-tight text-white">
+                        <h3 className="member-project-title mt-5 max-w-xl font-display font-black uppercase leading-tight text-white">
                           {project.title}
                         </h3>
 
@@ -157,7 +157,7 @@ export default function MemberWork({ member }: { member: MemberProfile }) {
                         )}
 
                         {/* Case study & live actions */}
-                        <div className="mt-8 flex flex-wrap items-center gap-3">
+                        <div className="mt-7 flex flex-wrap items-center gap-3">
                           <Link
                             to={`/team/${member.slug}/projects/${project.slug}`}
                             className="inline-flex min-h-11 items-center gap-2.5 rounded-md px-5 text-[10px] font-black uppercase tracking-wider text-black shadow-md transition-transform hover:-translate-y-0.5"

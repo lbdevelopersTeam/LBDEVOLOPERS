@@ -89,7 +89,7 @@ export default function MemberCvPage() {
 
   return (
     <motion.div
-      initial={{ opacity: 0 }}
+      initial={false}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.35 }}
@@ -97,7 +97,7 @@ export default function MemberCvPage() {
       className={`${memberPortfolioClassName} cv-page-backdrop`}
     >
       {/* Top Page Header (Hidden in print) */}
-      <header className="cv-page-header print:hidden sticky top-0 z-30 border-b border-white/10 px-4 py-4 backdrop-blur-xl sm:px-8">
+      <header className="cv-page-header print:hidden border-b border-white/10 px-4 pb-4 pt-28 backdrop-blur-xl sm:px-8 sm:pt-32">
         <div className="mx-auto flex max-w-5xl items-center justify-between gap-4">
           <Link
             to={`/team/${member.slug}`}

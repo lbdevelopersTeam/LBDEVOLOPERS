@@ -19,8 +19,8 @@ export default function MemberCareer({
   if (!hasExperience && !hasEducation && !hasCertifications) return null;
 
   return (
-    <section id="experience" className="scroll-mt-28 border-b border-white/10 bg-[#080808] px-5 py-14 sm:py-16 md:px-8 md:py-20 lg:py-24">
-      <div className="mx-auto max-w-[1500px]">
+    <section id="experience" className="scroll-mt-28 border-b border-white/10 bg-[#080808] px-5 py-14 md:px-8 md:py-16 lg:py-20">
+      <div className="mx-auto max-w-[1400px]">
         <SectionHeading
           index={sectionIndex}
           label="Career & Credentials"
@@ -32,7 +32,7 @@ export default function MemberCareer({
 
         {/* Experience Timeline Header & CV Action */}
         {hasExperience && (
-          <div className="mt-10 space-y-6 md:mt-14">
+          <div className="mt-9 space-y-5 md:mt-12">
             <div className="flex flex-wrap items-center justify-between gap-4">
               <div className="flex items-center gap-2 text-xs font-black uppercase tracking-[0.18em] text-white/50">
                 <Briefcase className="h-4 w-4 text-[var(--member-accent)]" />
@@ -66,7 +66,7 @@ export default function MemberCareer({
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: reducedMotion ? 0 : index * 0.08, duration: 0.5 }}
-                className="member-glass relative grid gap-6 rounded-xl p-6 sm:p-8 md:grid-cols-[200px_minmax(0,1fr)_minmax(0,0.85fr)] md:gap-10 md:p-10"
+                className="member-glass relative grid gap-6 rounded-xl p-6 sm:p-7 md:grid-cols-[170px_minmax(0,1fr)_minmax(0,0.85fr)] md:gap-8"
               >
                 {/* Left Date & Tenure */}
                 <div>
@@ -90,7 +90,7 @@ export default function MemberCareer({
 
                 {/* Center Role & Overview */}
                 <div>
-                  <h3 className="font-display text-xl font-black uppercase text-white md:text-2xl">
+                  <h3 className="font-display text-lg font-black uppercase text-white md:text-xl">
                     {item.position}
                   </h3>
                   <p
@@ -167,7 +167,7 @@ export default function MemberCareer({
 
         {/* Education & Certifications Side-by-Side */}
         {(hasEducation || hasCertifications) && (
-          <div className="mt-12 grid gap-8 md:mt-14 lg:grid-cols-2 lg:gap-12">
+          <div className="mt-10 grid gap-8 md:mt-12 lg:grid-cols-2 lg:gap-8">
             {/* Education Card */}
             {hasEducation && (
               <div>

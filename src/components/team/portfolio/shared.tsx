@@ -81,14 +81,14 @@ export function SectionHeading({
   description?: string;
 }) {
   return (
-    <header className="grid gap-6 border-t border-white/15 pt-5 md:grid-cols-[180px_minmax(0,1fr)] md:gap-10">
+    <header className="grid gap-5 border-t border-white/15 pt-5 md:grid-cols-[140px_minmax(0,1fr)] md:gap-8">
       <div className="flex items-start justify-between md:block">
         <span className="text-xs font-black text-[var(--member-accent)]">{index}</span>
         <p className="mt-0 text-[10px] font-black uppercase tracking-[0.18em] text-white/40 md:mt-4">{label}</p>
       </div>
       <div>
         <h2 className="member-section-title max-w-5xl font-display font-black uppercase leading-[1.02] text-white">{children}</h2>
-        {description && <p className="mt-5 max-w-2xl text-base leading-7 text-white/48">{description}</p>}
+        {description && <p className="mt-4 max-w-2xl text-sm leading-6 text-white/50 md:text-base md:leading-7">{description}</p>}
       </div>
     </header>
   );

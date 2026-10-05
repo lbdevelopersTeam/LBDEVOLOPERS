@@ -17,8 +17,8 @@ export default function MemberIntroduction({ member }: { member: MemberProfile }
   ].filter((item) => Boolean(item.value));
 
   return (
-    <section id="about" className="scroll-mt-28 border-b border-white/10 px-5 py-14 sm:py-16 md:px-8 md:py-20 lg:py-24">
-      <div className="mx-auto max-w-[1500px]">
+    <section id="about" className="scroll-mt-28 border-b border-white/10 px-5 py-14 md:px-8 md:py-16 lg:py-20">
+      <div className="mx-auto max-w-[1400px]">
         <SectionHeading
           index="01"
           label="About"
@@ -28,7 +28,7 @@ export default function MemberIntroduction({ member }: { member: MemberProfile }
           <span className="text-white/28">Built around real work.</span>
         </SectionHeading>
 
-        <div className="mt-10 grid gap-8 md:mt-14 lg:grid-cols-12 lg:gap-8">
+        <div className="mt-9 grid gap-8 md:mt-12 lg:grid-cols-12 lg:gap-8">
           <div className="lg:col-span-7">
             <motion.p
               initial={reducedMotion ? false : { opacity: 0, y: 18 }}
@@ -44,7 +44,7 @@ export default function MemberIntroduction({ member }: { member: MemberProfile }
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.3 }}
               transition={{ delay: 0.1 }}
-              className="mt-8 space-y-5 text-base leading-relaxed text-white/60 md:text-lg md:leading-relaxed"
+              className="mt-7 space-y-4 text-base leading-7 text-white/60 md:text-lg md:leading-8"
             >
               <p>{member.fullBio || member.bio}</p>
               <p className="text-sm leading-relaxed text-white/45 md:text-base">
@@ -53,7 +53,7 @@ export default function MemberIntroduction({ member }: { member: MemberProfile }
             </motion.div>
 
             {/* Impact Highlights */}
-            <div className="mt-10 grid gap-4 sm:grid-cols-2">
+            <div className="mt-8 grid gap-4 sm:grid-cols-2">
               <div className="member-glass rounded-xl p-5">
                 <div className="flex items-center gap-3 text-[var(--member-accent)]">
                   <CheckCircle2 className="h-5 w-5" />

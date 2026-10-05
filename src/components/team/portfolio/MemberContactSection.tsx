@@ -40,8 +40,8 @@ export default function MemberContactSection({
   };
 
   return (
-    <section id="contact" className="scroll-mt-28 px-5 py-14 sm:py-16 md:px-8 md:py-20 lg:py-24">
-      <div className="mx-auto max-w-[1500px]">
+    <section id="contact" className="scroll-mt-28 px-5 py-14 md:px-8 md:py-16 lg:py-20">
+      <div className="mx-auto max-w-[1400px]">
         <SectionHeading
           index={sectionIndex}
           label="Direct Contact"
@@ -51,9 +51,9 @@ export default function MemberContactSection({
           <span className="text-white/28">Start the conversation.</span>
         </SectionHeading>
 
-        <div className="mt-10 grid gap-8 md:mt-14 lg:grid-cols-12 lg:gap-10">
+        <div className="mt-9 grid gap-8 md:mt-12 lg:grid-cols-12 lg:gap-8">
           {/* Left Direct Channels Card */}
-          <div className="member-glass flex flex-col justify-between rounded-xl p-6 sm:p-8 md:p-10 lg:col-span-5">
+          <div className="member-glass flex flex-col justify-between rounded-xl p-6 sm:p-8 lg:col-span-5">
             <div>
               <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.16em] text-white/50">
                 <MessageSquare className="h-4 w-4 text-[var(--member-accent)]" />
@@ -159,7 +159,7 @@ export default function MemberContactSection({
           </div>
 
           {/* Right Contact Form */}
-          <div className="member-glass member-glass-strong rounded-xl p-6 sm:p-8 md:p-10 lg:col-span-7">
+          <div className="member-glass member-glass-strong rounded-xl p-6 sm:p-8 lg:col-span-7">
             <div className="mb-6 flex items-center justify-between border-b border-white/10 pb-4">
               <div>
                 <h3 className="font-display text-lg font-black uppercase text-white">Project Inquiry Form</h3>

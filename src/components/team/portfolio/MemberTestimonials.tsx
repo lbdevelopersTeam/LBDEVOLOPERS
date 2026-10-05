@@ -15,8 +15,8 @@ export default function MemberTestimonials({
   if (!testimonials.length) return null;
 
   return (
-    <section id="testimonials" className="scroll-mt-28 border-b border-white/10 bg-[#060606] px-5 py-14 sm:py-16 md:px-8 md:py-20 lg:py-24">
-      <div className="mx-auto max-w-[1500px]">
+    <section id="testimonials" className="scroll-mt-28 border-b border-white/10 bg-[#060606] px-5 py-14 md:px-8 md:py-16 lg:py-20">
+      <div className="mx-auto max-w-[1400px]">
         <SectionHeading
           index={sectionIndex || '04'}
           label="Endorsements"
@@ -26,7 +26,7 @@ export default function MemberTestimonials({
           <span className="text-white/28">Proven in production.</span>
         </SectionHeading>
 
-        <div className="mt-10 grid gap-6 md:mt-14 md:grid-cols-2 lg:gap-8">
+        <div className="mt-9 grid gap-6 md:mt-12 md:grid-cols-2 lg:gap-8">
           {testimonials.map((item, index) => (
             <motion.article
               key={item.id || index}
@@ -34,7 +34,7 @@ export default function MemberTestimonials({
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: reducedMotion ? 0 : index * 0.1, duration: 0.5 }}
-              className="member-glass relative flex flex-col justify-between rounded-xl p-6 sm:p-8 md:p-10"
+              className="member-glass relative flex flex-col justify-between rounded-xl p-6 sm:p-8"
             >
               <div className="mb-6 flex items-center justify-between border-b border-white/10 pb-5">
                 <div className="flex items-center gap-2">
@@ -50,7 +50,7 @@ export default function MemberTestimonials({
 
               <div className="relative my-4">
                 <Quote className="pointer-events-none absolute -left-2 -top-3 h-8 w-8 text-white/[0.05]" aria-hidden="true" />
-                <p className="relative z-10 text-base font-normal leading-relaxed text-white/80 md:text-lg md:leading-8">
+                <p className="relative z-10 text-base font-normal leading-7 text-white/80 md:text-lg md:leading-8">
                   &ldquo;{item.quote}&rdquo;
                 </p>
               </div>

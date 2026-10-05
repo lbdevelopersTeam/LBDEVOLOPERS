@@ -7,7 +7,7 @@ export default function MemberFooter({ memberName }: { memberName: string }) {
 
   return (
     <footer className="border-t border-white/10 bg-black px-5 py-10 md:px-8">
-      <div className="mx-auto flex max-w-[1500px] flex-col gap-8 sm:flex-row sm:items-center sm:justify-between">
+      <div className="mx-auto flex max-w-[1400px] flex-col gap-8 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-4">
           <span
             className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg text-xs font-black text-black shadow-md"
@@ -51,7 +51,7 @@ export default function MemberFooter({ memberName }: { memberName: string }) {
         </div>
       </div>
 
-      <div className="mx-auto mt-8 flex max-w-[1500px] flex-col justify-between gap-3 border-t border-white/8 pt-6 text-[9px] font-bold uppercase tracking-wider text-white/30 sm:flex-row sm:items-center">
+      <div className="mx-auto mt-8 flex max-w-[1400px] flex-col justify-between gap-3 border-t border-white/8 pt-6 text-[9px] font-bold uppercase tracking-wider text-white/30 sm:flex-row sm:items-center">
         <p>© {currentYear} {memberName}. All rights reserved.</p>
         <p>Engineered & Powered by LB CodeBase</p>
       </div>

@@ -39,7 +39,7 @@ export default function MemberHero({ member, onOpenCv }: { member: MemberProfile
   };
 
   return (
-    <section id="member-home" className="member-grid-surface member-hero relative min-h-[92svh] overflow-hidden border-b border-white/10 px-5 pb-12 pt-28 sm:pt-32 md:px-8 md:pb-16 lg:pt-36">
+    <section id="member-home" className="member-grid-surface member-hero relative overflow-hidden border-b border-white/10 px-5 pb-14 pt-32 sm:pt-36 md:px-8 lg:pb-16 lg:pt-40">
       <HeroBackground videoSrc="/videos/other-pages-hero.mp4" poster={null} />
       <div className="pointer-events-none absolute inset-0 z-[1] bg-black/25" aria-hidden="true" />
       <div className="member-hero-light pointer-events-none absolute inset-0" aria-hidden="true" />
@@ -47,16 +47,16 @@ export default function MemberHero({ member, onOpenCv }: { member: MemberProfile
         <span className="member-hero-watermark font-display font-black uppercase text-white/[0.02]">{firstName}</span>
       </div>
 
-      <div className="relative mx-auto grid min-h-[calc(92svh-9rem)] max-w-[1500px] items-center gap-12 lg:grid-cols-12 lg:gap-8">
+      <div className="relative mx-auto grid max-w-[1400px] items-center gap-10 lg:min-h-[590px] lg:grid-cols-12 lg:gap-10">
         <motion.div
           initial={reducedMotion ? false : { opacity: 0, y: 28 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
-          className="relative z-20 lg:col-span-7"
+          className="relative z-20 min-w-0 lg:col-span-7 xl:pr-6"
         >
           {/* Availability Status Badge */}
           <div className="mb-6 flex flex-wrap items-center gap-3">
-            <span className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3.5 py-1.5 text-[10px] font-black uppercase tracking-[0.14em] text-emerald-400">
+            <span className="inline-flex max-w-full items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3.5 py-1.5 text-left text-[9px] font-black uppercase leading-4 tracking-[0.12em] text-emerald-400 sm:text-[10px] sm:tracking-[0.14em]">
               <span className="relative flex h-2 w-2">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
@@ -80,7 +80,7 @@ export default function MemberHero({ member, onOpenCv }: { member: MemberProfile
             </span>
             {member.specialization && (
               <span
-                className="rounded-md border px-4 py-2 text-[10px] font-black uppercase tracking-wider"
+                className="inline-block max-w-full break-words rounded-md border px-4 py-2 text-left text-[9px] font-black uppercase leading-4 tracking-wider sm:text-[10px]"
                 style={{
                   borderColor: 'color-mix(in srgb, var(--member-accent) 40%, transparent)',
                   backgroundColor: 'color-mix(in srgb, var(--member-accent) 12%, transparent)',
@@ -92,18 +92,18 @@ export default function MemberHero({ member, onOpenCv }: { member: MemberProfile
             )}
           </div>
 
-          <p className="mt-6 max-w-2xl text-base leading-relaxed text-white/65 md:text-xl md:leading-relaxed">
+          <p className="mt-5 max-w-2xl text-base leading-7 text-white/65 md:text-lg md:leading-8">
             {member.tagline || member.bio}
           </p>
 
           {(member.email || member.phone) && (
-            <div className="mt-6 grid max-w-2xl gap-3 sm:grid-cols-2">
+            <div className="mt-5 grid max-w-2xl gap-3 sm:grid-cols-2">
               {member.email && (
                 <a
                   href={`mailto:${member.email}`}
-                  className="member-glass group flex min-w-0 items-center gap-3 rounded-2xl p-4 transition-transform hover:-translate-y-0.5 hover:border-brand-primary/50"
+                  className="member-glass group flex min-w-0 items-center gap-3 rounded-xl p-3.5 transition-transform hover:-translate-y-0.5 hover:border-brand-primary/50"
                 >
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-brand-primary/15 text-brand-primary">
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-brand-primary/15 text-brand-primary">
                     <Mail className="h-4 w-4" />
                   </span>
                   <span className="min-w-0">
@@ -114,8 +114,8 @@ export default function MemberHero({ member, onOpenCv }: { member: MemberProfile
               )}
 
               {member.phone && (
-                <div className="member-glass flex min-w-0 items-center gap-3 rounded-2xl p-4">
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-brand-primary/15 text-brand-primary">
+                <div className="member-glass flex min-w-0 items-center gap-3 rounded-xl p-3.5">
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-brand-primary/15 text-brand-primary">
                     <Phone className="h-4 w-4" />
                   </span>
                   <span className="min-w-0 flex-1">
@@ -137,10 +137,10 @@ export default function MemberHero({ member, onOpenCv }: { member: MemberProfile
           )}
 
           {/* Action CTAs */}
-          <div className="mt-8 flex flex-wrap items-center gap-3 sm:gap-4">
+          <div className="mt-7 flex flex-wrap items-center gap-3">
             <a
               href="#projects"
-              className="group inline-flex min-h-12 items-center gap-3 rounded-md px-5 text-[10px] font-black uppercase tracking-wider text-black shadow-lg transition-transform hover:-translate-y-0.5"
+              className="group inline-flex min-h-11 items-center gap-3 rounded-md px-5 text-[10px] font-black uppercase tracking-wider text-black shadow-lg transition-transform hover:-translate-y-0.5"
               style={{
                 backgroundColor: 'var(--member-accent)',
                 boxShadow: '0 10px 30px color-mix(in srgb, var(--member-accent) 25%, transparent)',
@@ -151,7 +151,7 @@ export default function MemberHero({ member, onOpenCv }: { member: MemberProfile
 
             <a
               href="#contact"
-              className="member-glass group inline-flex min-h-12 items-center gap-3 rounded-md px-5 text-[10px] font-black uppercase tracking-wider text-white hover:border-[var(--member-accent)]/50"
+              className="member-glass group inline-flex min-h-11 items-center gap-3 rounded-md px-5 text-[10px] font-black uppercase tracking-wider text-white hover:border-[var(--member-accent)]/50"
             >
               Let&apos;s Talk <Mail className="h-4 w-4 text-[var(--member-accent)] transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
             </a>
@@ -160,7 +160,7 @@ export default function MemberHero({ member, onOpenCv }: { member: MemberProfile
               <button
                 type="button"
                 onClick={() => void handleCopyEmail()}
-                className="member-glass group relative inline-flex min-h-12 items-center gap-2.5 rounded-md px-4 text-[10px] font-bold uppercase tracking-wider text-white/80 hover:border-[var(--member-accent)]/50 hover:text-white"
+                className="member-glass group relative inline-flex min-h-11 items-center gap-2.5 rounded-md px-4 text-[10px] font-bold uppercase tracking-wider text-white/80 hover:border-[var(--member-accent)]/50 hover:text-white"
                 title="Copy Email Address"
               >
                 {copiedEmail ? (
@@ -182,7 +182,7 @@ export default function MemberHero({ member, onOpenCv }: { member: MemberProfile
               <button
                 type="button"
                 onClick={onOpenCv}
-                className="member-glass group inline-flex min-h-12 items-center gap-2.5 rounded-md px-4 text-[10px] font-bold uppercase tracking-wider text-white hover:border-[var(--member-accent)] hover:bg-white/[0.06] shadow-lg"
+                className="member-glass group inline-flex min-h-11 items-center gap-2.5 rounded-md px-4 text-[10px] font-bold uppercase tracking-wider text-white hover:border-[var(--member-accent)] hover:bg-white/[0.06] shadow-lg"
                 title="View Full Curriculum Vitae"
               >
                 <FileText className="h-4 w-4 text-[var(--member-accent)] transition-transform group-hover:scale-110" />
@@ -191,7 +191,7 @@ export default function MemberHero({ member, onOpenCv }: { member: MemberProfile
             ) : (
               <a
                 href={`/team/${member.slug}/cv`}
-                className="member-glass group inline-flex min-h-12 items-center gap-2.5 rounded-md px-4 text-[10px] font-bold uppercase tracking-wider text-white hover:border-[var(--member-accent)] hover:bg-white/[0.06] shadow-lg"
+                className="member-glass group inline-flex min-h-11 items-center gap-2.5 rounded-md px-4 text-[10px] font-bold uppercase tracking-wider text-white hover:border-[var(--member-accent)] hover:bg-white/[0.06] shadow-lg"
                 title="View Full Curriculum Vitae"
               >
                 <FileText className="h-4 w-4 text-[var(--member-accent)] transition-transform group-hover:scale-110" />
@@ -202,7 +202,7 @@ export default function MemberHero({ member, onOpenCv }: { member: MemberProfile
             <a
               href={`/api/v2/team/${member.slug}/vcard`}
               download={`${member.slug}.vcf`}
-              className="member-glass inline-flex min-h-12 items-center gap-2.5 rounded-md px-4 text-[10px] font-bold uppercase tracking-wider text-white/80 hover:border-[var(--member-accent)]/50 hover:text-white"
+              className="member-glass inline-flex min-h-11 items-center gap-2.5 rounded-md px-4 text-[10px] font-bold uppercase tracking-wider text-white/80 hover:border-[var(--member-accent)]/50 hover:text-white"
               title="Download Contact (.vcf)"
             >
               <Download className="h-4 w-4 text-[var(--member-accent)]" />
@@ -212,7 +212,7 @@ export default function MemberHero({ member, onOpenCv }: { member: MemberProfile
 
           {/* Social connections */}
           {socialPlatforms.some(({ key }) => usableLink(member.socialLinks[key])) && (
-            <div className="mt-8 flex flex-wrap items-center gap-2">
+            <div className="mt-6 flex flex-wrap items-center gap-2">
               <span className="mr-2 text-[9px] font-black uppercase tracking-[0.18em] text-white/30">Connect</span>
               {socialPlatforms.map(
                 ({ key, label, icon: Icon }) =>
@@ -239,7 +239,7 @@ export default function MemberHero({ member, onOpenCv }: { member: MemberProfile
           initial={reducedMotion ? false : { opacity: 0, x: 28, rotateY: -4 }}
           animate={{ opacity: 1, x: 0, rotateY: 0 }}
           transition={{ duration: 0.85, delay: reducedMotion ? 0 : 0.08, ease: [0.22, 1, 0.36, 1] }}
-          className="relative z-10 mx-auto w-full max-w-[580px] lg:col-span-5 lg:mx-0 lg:justify-self-end"
+          className="relative z-10 mx-auto w-full max-w-[340px] sm:max-w-[400px] lg:col-span-5 lg:mx-0 lg:max-w-[430px] lg:justify-self-end"
         >
           <div className="member-glass member-glass-strong member-portrait-card relative rounded-xl p-3 sm:p-4">
             <div
@@ -249,12 +249,12 @@ export default function MemberHero({ member, onOpenCv }: { member: MemberProfile
               {initials(member.name)}
             </div>
 
-            <div className="relative aspect-[4/5] overflow-hidden rounded-lg bg-white/[0.04]">
+            <div className="relative aspect-[4/5] overflow-hidden rounded-lg bg-white/[0.04] lg:aspect-[5/6]">
               {member.avatar ? (
                 <MemberPortrait
                   src={member.avatar}
                   alt={`${member.name}, ${member.role}`}
-                  sizes="(min-width: 1024px) 580px, 90vw"
+                  sizes="(min-width: 1024px) 430px, (min-width: 640px) 400px, 340px"
                   className="h-full w-full object-cover object-center"
                   fetchPriority="high"
                   decoding="async"
@@ -284,22 +284,22 @@ export default function MemberHero({ member, onOpenCv }: { member: MemberProfile
           </div>
 
           {/* Quick Metrics Bar */}
-          <dl className="relative z-20 -mt-6 grid grid-cols-3 gap-2.5 px-3 sm:-mt-8 sm:px-6">
-            <div className="member-glass member-glass-strong rounded-lg p-3.5 text-center sm:p-4">
+          <dl className="relative z-20 -mt-5 grid grid-cols-3 gap-2 px-3 sm:-mt-6 sm:px-5">
+            <div className="member-glass member-glass-strong rounded-lg p-3 text-center sm:p-3.5">
               <dt className="text-[8px] font-black uppercase tracking-[0.15em] text-white/35">Work</dt>
               <dd className="mt-1.5 font-display text-xl font-black text-white sm:text-2xl">
                 {String(member.projects.length).padStart(2, '0')}
               </dd>
               <p className="mt-0.5 text-[8px] font-bold uppercase tracking-wider text-white/40">Projects</p>
             </div>
-            <div className="member-glass member-glass-strong rounded-lg p-3.5 text-center sm:p-4">
+            <div className="member-glass member-glass-strong rounded-lg p-3 text-center sm:p-3.5">
               <dt className="text-[8px] font-black uppercase tracking-[0.15em] text-white/35">Experience</dt>
-              <dd className="mt-1.5 truncate font-display text-xl font-black text-white sm:text-2xl">
+              <dd className="mt-1.5 font-display text-lg font-black leading-tight text-white sm:text-xl">
                 {member.yearsExperience || `${member.experience?.length || 4}+ Yrs`}
               </dd>
               <p className="mt-0.5 text-[8px] font-bold uppercase tracking-wider text-white/40">Track Record</p>
             </div>
-            <div className="member-glass member-glass-strong rounded-lg p-3.5 text-center sm:p-4">
+            <div className="member-glass member-glass-strong rounded-lg p-3 text-center sm:p-3.5">
               <dt className="text-[8px] font-black uppercase tracking-[0.15em] text-white/35">Team</dt>
               <dd
                 className="mt-1.5 font-display text-xl font-black sm:text-2xl"
