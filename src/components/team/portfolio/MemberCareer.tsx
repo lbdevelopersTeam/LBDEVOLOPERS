@@ -24,7 +24,7 @@ export default function MemberCareer({
         <SectionHeading
           index={sectionIndex}
           label="Career & Credentials"
-          description="Roles, education, and credentials from this member's published profile."
+          description="A chronological account of leadership roles, engineering milestones, verified certifications, and academic foundations."
         >
           Professional record.<br />
           <span className="text-white/28">Roles and milestones.</span>
@@ -32,7 +32,7 @@ export default function MemberCareer({
 
         {/* Experience Timeline Header & CV Action */}
         {hasExperience && (
-          <div className="mt-9 md:mt-12">
+          <div className="mt-9 space-y-5 md:mt-12">
             <div className="flex flex-wrap items-center justify-between gap-4">
               <div className="flex items-center gap-2 text-xs font-black uppercase tracking-[0.18em] text-white/50">
                 <Briefcase className="h-4 w-4 text-[var(--member-accent)]" />
@@ -59,7 +59,6 @@ export default function MemberCareer({
               )}
             </div>
 
-            <div className="mt-7 border-l border-white/12">
             {member.experience!.map((item, index) => (
               <motion.article
                 key={item.id || index}
@@ -67,9 +66,8 @@ export default function MemberCareer({
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: reducedMotion ? 0 : index * 0.08, duration: 0.5 }}
-                className="relative grid gap-6 border-t border-white/10 py-7 pl-6 md:grid-cols-[150px_minmax(0,1fr)_minmax(0,0.85fr)] md:gap-8 md:pl-8"
+                className="member-glass relative grid gap-6 rounded-xl p-6 sm:p-7 md:grid-cols-[170px_minmax(0,1fr)_minmax(0,0.85fr)] md:gap-8"
               >
-                <span className="absolute -left-[5px] top-8 h-2 w-2 rounded-full bg-[var(--member-accent)]" aria-hidden="true" />
                 {/* Left Date & Tenure */}
                 <div>
                   <div className="flex items-center gap-2">
@@ -143,7 +141,7 @@ export default function MemberCareer({
                   {Boolean(item.achievements?.length) && (
                     <div className="mt-6 space-y-2.5">
                       <p className="text-[9px] font-black uppercase tracking-[0.16em] text-white/35">
-                        Selected Work
+                        Quantifiable Impact
                       </p>
                       <ul className="space-y-2.5">
                         {item.achievements!.map((ach) => (
@@ -164,7 +162,6 @@ export default function MemberCareer({
                 </div>
               </motion.article>
             ))}
-            </div>
           </div>
         )}
 

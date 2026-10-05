@@ -7,7 +7,6 @@ import { MemberProfile, SectionHeading, usableLink } from './shared';
 export default function MemberWork({ member }: { member: MemberProfile }) {
   const [activeCategory, setActiveCategory] = useState('All');
   const reducedMotion = useReducedMotion();
-  const isDesigner = /design|visual|brand/i.test(member.role);
   const categories = useMemo(() => ['All', ...new Set(member.projects.map((project) => project.category))], [member.projects]);
   const projects = useMemo(
     () => member.projects.filter((project) => activeCategory === 'All' || project.category === activeCategory),
@@ -20,7 +19,7 @@ export default function MemberWork({ member }: { member: MemberProfile }) {
         <SectionHeading
           index="03"
           label="Selected Work"
-          description={isDesigner ? 'Interface and visual work shown at a scale where the details can be inspected.' : 'Published builds with the problem, implementation, and individual contribution in view.'}
+          description="Production case studies engineered in collaboration with LB CodeBase. Each project highlights specific individual contributions."
         >
           Projects with purpose.<br />
           <span className="text-white/28">Contribution in context.</span>
@@ -77,18 +76,18 @@ export default function MemberWork({ member }: { member: MemberProfile }) {
                       {/* Project Image & Visual Anchor */}
                       <Link
                         to={`/team/${member.slug}/projects/${project.slug}`}
-                        className={`group/image relative block overflow-hidden rounded-lg border border-white/10 bg-white/[0.025] p-2 sm:p-2.5 ${isDesigner ? 'lg:col-span-8' : 'lg:col-span-7'} ${
-                          reverse ? (isDesigner ? 'lg:col-start-5' : 'lg:col-start-6') : ''
+                        className={`member-glass group/image relative block overflow-hidden rounded-xl p-2.5 sm:p-3 lg:col-span-7 ${
+                          reverse ? 'lg:col-start-6' : ''
                         }`}
                         aria-label={`View ${project.title} case study`}
                       >
-                        <div className={`overflow-hidden rounded-md bg-black/40 ${isDesigner ? 'aspect-[4/3] sm:aspect-[16/10]' : 'aspect-[16/10]'}`}>
+                        <div className="aspect-[16/10] overflow-hidden rounded-lg bg-black/40">
                           <img
                             src={project.thumbnail}
                             alt={`${project.title} project preview`}
                             loading={index === 0 ? 'eager' : 'lazy'}
                             decoding="async"
-                            className="h-full w-full object-cover object-top transition-transform duration-700 ease-out group-hover/image:scale-[1.02]"
+                            className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover/image:scale-[1.03]"
                           />
                         </div>
                         <span
@@ -103,7 +102,7 @@ export default function MemberWork({ member }: { member: MemberProfile }) {
 
                       {/* Project Meta & Narrative */}
                       <div
-                        className={`border-t border-white/10 py-5 lg:py-7 ${isDesigner ? 'lg:col-span-4' : 'lg:col-span-5'} ${
+                        className={`member-glass rounded-xl p-6 sm:p-7 lg:col-span-5 ${
                           reverse ? 'lg:col-start-1 lg:row-start-1' : ''
                         }`}
                       >
@@ -114,12 +113,12 @@ export default function MemberWork({ member }: { member: MemberProfile }) {
                           >
                             {String(index + 1).padStart(2, '0')}
                           </span>
-                          <span className="text-[9px] font-black uppercase tracking-[0.16em] text-white/60">
+                          <span className="rounded-full border border-white/15 bg-white/[0.04] px-3 py-1 text-[9px] font-black uppercase tracking-[0.16em] text-white/60">
                             {project.category}
                           </span>
                         </div>
 
-                        <h3 className="member-project-title mt-5 max-w-xl font-display font-bold leading-tight tracking-tight text-white">
+                        <h3 className="member-project-title mt-5 max-w-xl font-display font-black uppercase leading-tight text-white">
                           {project.title}
                         </h3>
 
@@ -128,7 +127,13 @@ export default function MemberWork({ member }: { member: MemberProfile }) {
                         </p>
 
                         {/* Contribution Attribution Block */}
-                        <div className="mt-6 border-l-2 pl-4" style={{ borderLeftColor: 'var(--member-accent)' }}>
+                        <div
+                          className="mt-6 rounded-lg border-l-2 p-4"
+                          style={{
+                            borderLeftColor: 'var(--member-accent)',
+                            backgroundColor: 'color-mix(in srgb, var(--member-accent) 6%, transparent)',
+                          }}
+                        >
                           <p className="text-[9px] font-black uppercase tracking-[0.16em] text-white/40">
                             Credited Role & Contribution
                           </p>
@@ -190,16 +195,6 @@ export default function MemberWork({ member }: { member: MemberProfile }) {
                           )}
                         </div>
                       </div>
-
-                      {isDesigner && project.gallery.length > 1 && (
-                        <div className={`grid grid-cols-2 gap-3 ${reverse ? 'lg:col-start-5' : ''} lg:col-span-8`} aria-label={`${project.title} supporting visuals`}>
-                          {project.gallery.filter((image) => image !== project.thumbnail).slice(0, 2).map((image, galleryIndex) => (
-                            <Link key={`${image}-${galleryIndex}`} to={`/team/${member.slug}/projects/${project.slug}`} className="overflow-hidden rounded-md border border-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--member-accent)]">
-                              <img src={image} alt={`${project.title} detail ${galleryIndex + 1}`} loading="lazy" decoding="async" className="aspect-[16/10] w-full object-cover object-top transition-transform duration-500 hover:scale-[1.02]" />
-                            </Link>
-                          ))}
-                        </div>
-                      )}
                     </motion.article>
                   );
                 })}

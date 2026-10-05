@@ -55,21 +55,18 @@ export function initials(name: string) {
 }
 
 export function memberSectionIndices({
-  hasProcess,
   hasCareer,
   hasTestimonials,
 }: {
-  hasProcess: boolean;
   hasCareer: boolean;
   hasTestimonials: boolean;
 }) {
   let nextIndex = 4;
-  const process = hasProcess ? String(nextIndex++).padStart(2, '0') : undefined;
   const career = hasCareer ? String(nextIndex++).padStart(2, '0') : undefined;
   const testimonials = hasTestimonials ? String(nextIndex++).padStart(2, '0') : undefined;
   const contact = String(nextIndex).padStart(2, '0');
 
-  return { process, career, testimonials, contact };
+  return { career, testimonials, contact };
 }
 
 export function SectionHeading({

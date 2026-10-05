@@ -87,17 +87,17 @@ export default function Careers() {
         </section>
 
         {/* Culture Section */}
-        <div className="grid grid-cols-1 gap-x-10 gap-y-0 border-t border-white/10 mb-16 md:mb-24 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6 mb-16 md:mb-24">
           {[
             { icon: <Zap className="text-brand-primary" />, title: 'Innovation First', desc: 'We experiment with the latest tech to stay ahead.' },
             { icon: <Heart className="text-brand-primary" />, title: 'Culture of Trust', desc: 'We value autonomy and transparency above all.' },
-            { icon: <Globe className="text-brand-primary" />, title: 'Connected Work', desc: 'Collaborate across disciplines and locations.' },
+            { icon: <Globe className="text-brand-primary" />, title: 'Global Impact', desc: 'Work on products used by millions worldwide.' },
             { icon: <Target className="text-brand-primary" />, title: 'Growth Mindset', desc: 'Continuous learning is part of our DNA.' },
           ].map((item, i) => (
-            <div key={i} className="border-b border-white/10 py-7 md:py-9">
-              <div className="mb-5">{item.icon}</div>
-              <h4 className="text-lg font-bold mb-2">{item.title}</h4>
-              <p className="text-white/50 text-sm leading-relaxed">{item.desc}</p>
+            <div key={i} className="p-6 md:p-10 bg-white/5 rounded-2xl md:rounded-3xl border border-white/5">
+              <div className="mb-6">{item.icon}</div>
+              <h4 className="text-xl font-bold mb-4">{item.title}</h4>
+              <p className="text-white/40 text-sm leading-relaxed">{item.desc}</p>
             </div>
           ))}
         </div>
@@ -105,14 +105,14 @@ export default function Careers() {
         {/* Positions */}
         <section className="mb-24">
           <h3 className="text-3xl font-display font-black mb-10 uppercase tracking-tight">Open Positions</h3>
-          <div className="border-t border-white/10">
+          <div className="space-y-6">
             {positions.map((job, i) => (
               <motion.div
                 key={i}
                 initial={{ opacity: 0, scale: 0.98 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
-                className="group border-b border-white/10 py-6 md:py-8 transition-colors hover:border-brand-primary/50 flex flex-col md:flex-row justify-between items-start md:items-center gap-6 md:gap-8"
+                className="group p-5 sm:p-8 bg-brand-gray border border-white/5 rounded-[1.5rem] md:rounded-[2rem] hover:border-brand-primary/50 transition-all cursor-pointer flex flex-col md:flex-row justify-between items-start md:items-center gap-6 md:gap-8"
               >
                 <div>
                   <div className="flex items-center gap-3 mb-2">
@@ -140,13 +140,16 @@ export default function Careers() {
         </section>
 
         {/* CTA */}
-        <section className="border border-white/10 bg-brand-gray px-6 py-12 text-center sm:px-10 md:py-16 relative overflow-hidden">
+        <section className="p-6 sm:p-10 md:p-24 bg-brand-primary rounded-[1.5rem] md:rounded-[3.5rem] text-center relative overflow-hidden group">
+          <div className="absolute top-0 right-0 p-12 text-white/10 rotate-12 group-hover:rotate-45 transition-transform duration-1000">
+            <Zap className="w-40 h-40" />
+          </div>
           <div className="relative z-10">
-            <h2 className="text-3xl md:text-5xl font-display font-black text-white mb-5 uppercase tracking-tighter leading-tight">Don't see a fit?</h2>
-            <p className="text-white/60 text-base md:text-lg max-w-2xl mx-auto mb-8 font-light">
+            <h2 className="text-3xl md:text-5xl font-display font-black text-white mb-8 uppercase tracking-tighter leading-none">Don't see a fit?</h2>
+            <p className="text-white/80 text-base md:text-xl max-w-2xl mx-auto mb-10 font-light">
               We're always looking for extraordinary talent. Send us your CV and we'll keep you in mind for future openings.
             </p>
-            <Button size="lg">Send an application</Button>
+            <Button variant="secondary" size="lg" className="bg-brand-dark text-white hover:bg-brand-dark/90">Send spontaneous application</Button>
           </div>
         </section>
       </div>

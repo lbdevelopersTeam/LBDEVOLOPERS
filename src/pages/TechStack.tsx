@@ -2,7 +2,7 @@ import { motion } from 'motion/react';
 import { useContactEmail } from '../lib/site-settings';
 import { HeroBackground, LetterReveal, TextReveal } from '../components/common/Animations';
 import { SectionHeader, Button } from '../components/common/UI';
-import { Globe, Smartphone, Layout, Server } from 'lucide-react';
+import { Cpu, Globe, Database, Smartphone, Shield, Zap, Layout, Server } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { cachedFetch } from '../lib/content';
 import { useNavigate } from 'react-router-dom';
@@ -81,7 +81,7 @@ export default function TechStack() {
   }, []);
 
   return (
-    <div className="relative isolate min-h-screen">
+    <div className="relative min-h-screen">
       <HeroBackground videoSrc="/videos/other-pages-hero.mp4" poster="/images/thesearchforabsolutesection.jpg" />
 
       <section className="relative z-10 max-w-[1600px] mx-auto pt-32 pb-24 px-6 flex flex-col justify-center min-h-screen">
@@ -114,31 +114,43 @@ export default function TechStack() {
           </div>
         </section>
 
-        <div className="relative z-10 max-w-[1600px] mx-auto px-6 sm:px-8 md:px-12 lg:px-24">
-          {/* Connected technology layers, based on published stack data */}
-          <div className="border-t border-white/10">
+        <div className="max-w-[1600px] mx-auto px-6 sm:px-8 md:px-12 lg:px-24">
+          {/* Tech Grid */}
+          <div className="space-y-16 md:space-y-24">
           {technologies.map((group, groupIdx) => (
-            <section key={group.category} className="grid gap-7 border-b border-white/10 py-10 md:py-14 lg:grid-cols-[minmax(0,0.42fr)_minmax(0,1fr)] lg:gap-16">
-              <div className="flex items-start gap-4 lg:sticky lg:top-32 lg:self-start">
-                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md border border-brand-primary/25 bg-brand-primary/10 text-brand-primary">{group.icon}</span>
+            <section key={group.category} className="relative">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-5 sm:gap-8 mb-10 md:mb-20">
+                <div className="w-16 h-16 md:w-20 md:h-20 bg-brand-primary/10 border border-brand-primary/20 rounded-2xl md:rounded-3xl flex items-center justify-center text-brand-primary shadow-[0_0_50px_rgba(61,90,254,0.1)]">
+                  {group.icon}
+                </div>
                 <div>
-                  <div className="mb-2 text-[10px] font-black uppercase tracking-[0.25em] text-brand-primary">Layer 0{groupIdx + 1}</div>
-                  <h2 className="font-display text-2xl font-black uppercase leading-tight tracking-tighter text-white sm:text-3xl">{group.category}</h2>
+                  <div className="text-[10px] font-black uppercase tracking-[0.25em] sm:tracking-[0.5em] text-brand-primary/40 mb-2">Layer 0{groupIdx + 1}</div>
+                  <h2 className="text-3xl md:text-5xl font-display font-black tracking-tighter uppercase">{group.category}</h2>
                 </div>
               </div>
 
-              <div className="divide-y divide-white/10 border-t border-white/10">
-                {group.techs.map((tech) => (
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-8">
+                {group.techs.map((tech, i) => (
                   <motion.div
                     key={tech.name}
-                    initial={{ opacity: 0, y: 12 }}
+                    initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.4 }}
-                    className="grid gap-2 py-5 sm:grid-cols-[minmax(0,0.4fr)_minmax(0,1fr)] sm:gap-8"
+                    transition={{ delay: i * 0.1, duration: 1, ease: [0.22, 1, 0.36, 1] }}
+                    className="p-4 sm:p-6 md:p-8 lg:p-10 rounded-[0.75rem] md:rounded-[1.5rem] bg-white/[0.02] border border-white/5 hover:border-brand-primary/40 transition-all duration-700 group relative overflow-hidden glass"
                   >
-                    <h3 className="font-display text-base font-black uppercase text-white sm:text-lg">{tech.name}</h3>
-                    <p className="text-sm leading-6 text-white/55">{tech.description}</p>
+                    <div className="absolute top-0 right-0 p-4 md:p-6 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <Zap className="w-4 h-4 md:w-5 md:h-5 text-brand-primary animate-pulse" />
+                    </div>
+
+                    <div className="text-[9px] sm:text-[10px] font-black uppercase tracking-[0.3em] text-brand-primary mb-2 sm:mb-4 md:mb-8">{tech.level}</div>
+                    <h3 className="text-base sm:text-lg md:text-xl lg:text-2xl font-display font-black mb-1 sm:mb-2 md:mb-4 uppercase tracking-tight group-hover:text-brand-primary transition-colors">{tech.name}</h3>
+                    <p className="text-white/40 text-[10px] sm:text-xs md:text-sm leading-relaxed font-light">{tech.description}</p>
+                    
+                    <div className="mt-3 sm:mt-4 md:mt-6 lg:mt-12 pt-2 sm:pt-4 md:pt-8 border-t border-white/5 flex items-center justify-between">
+                      <span className="text-[9px] font-black uppercase tracking-widest text-white/20">Operational</span>
+                      <div className="w-2 h-2 rounded-full bg-brand-primary shadow-[0_0_10px_rgba(61,90,254,1)]" />
+                    </div>
                   </motion.div>
                 ))}
               </div>
@@ -146,23 +158,24 @@ export default function TechStack() {
           ))}
         </div>
 
-        {/* Bottom CTA */}
-        <section className="my-20 md:my-28">
+        {/* Bottom CTA - Optimized Impact */}
+        <section className="mt-24 md:mt-40 lg:mt-60 relative">
           <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="relative overflow-hidden rounded-lg border border-brand-primary/40 bg-[#111633] p-8 text-center sm:p-12 md:p-16"
+            className="p-6 sm:p-10 md:p-20 lg:p-32 rounded-[1.5rem] md:rounded-[4rem] bg-brand-primary overflow-hidden relative text-center shadow-[0_0_100px_rgba(61,90,254,0.3)]"
           >
+            <div className="absolute inset-0 bg-gradient-to-br from-brand-primary to-brand-purple opacity-50" />
             <div className="relative z-10">
-              <h2 className="mb-5 font-display text-3xl font-black uppercase leading-tight tracking-tighter text-white sm:text-4xl md:text-5xl">Choose the right tools for the job.</h2>
-              <p className="mx-auto mb-8 max-w-2xl text-base leading-7 text-white/65">Tell us what your team needs to build. We will recommend a stack that fits the product and the people maintaining it.</p>
+              <h2 className="text-3xl sm:text-4xl md:text-6xl lg:text-8xl font-display font-black text-white tracking-tighter uppercase mb-8 md:mb-12 leading-[0.9] md:leading-[0.8]">Build the <br /> extraordinary.</h2>
+              <p className="text-white/80 text-base md:text-2xl mb-10 md:mb-16 max-w-2xl mx-auto font-light">Join the elite brands that trust our architectural absolute.</p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
                 <Button variant="secondary" size="lg" className="w-full sm:w-auto" onClick={() => navigate('/contact')}>
-                  Discuss a project
+                  Consultancy
                 </Button>
                 <Button variant="ghost" size="lg" className="w-full sm:w-auto border border-white/20" onClick={() => window.location.href=`mailto:${contactEmail}`}>
-                  Email a brief
+                  Technical Brief
                 </Button>
               </div>
             </div>

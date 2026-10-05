@@ -14,7 +14,7 @@ const fallbackServiceList = [
     title: "DESIGN A WEBSITE",
     desc: "A new website shaped around your audience, content, and business goals, with responsive prototypes before development begins.",
     features: ["Interface System", "Mobile-First Design", "Content Hierarchy", "Interaction Design"],
-    image: "/images/designwebsiteservice.webp"
+    image: "/images/designwebsiteservice.png"
   },
   {
     icon: <Layers className="w-8 h-8" />,
@@ -35,14 +35,14 @@ const fallbackServiceList = [
     title: "APP DEVELOPMENT",
     desc: "Cross-platform mobile products with clear flows, responsive feedback, and the platform integrations needed for release.",
     features: ["React Native", "Firebase Integration", "App Store Deployment", "Push Cloud Services"],
-    image: "/images/appdevolopmentservice.webp"
+    image: "/images/appdevolopmentservice.jpeg"
   },
   {
     icon: <Zap className="w-8 h-8" />,
     title: "SHOPIFY & E-COM",
     desc: "Shopify and WooCommerce stores with practical catalog structure, custom themes, useful integrations, and a clear route to checkout.",
     features: ["Custom Liquid Themes", "Checkout Optimization", "API Integrations", "CRO Strategy"],
-    image: "/images/shopifyecommerseservice.webp"
+    image: "/images/shopifyecommerseservice.jpg"
   },
   {
     icon: <Search className="w-8 h-8" />,
@@ -56,7 +56,7 @@ const fallbackServiceList = [
     title: "GROWTH & MAINTENANCE",
     desc: "Ongoing maintenance, measurement, security updates, and product iteration after launch.",
     features: ["Priority Support", "Conversion Review", "Security Monitoring", "Feature Iteration"],
-    image: "/images/growthandmintainenceservice.webp"
+    image: "/images/growthandmintainenceservice.jpg"
   }
 ];
 
@@ -135,13 +135,13 @@ const automationServices: Capability[] = [
 
 function CapabilityCard({ icon: Icon, title, description, examples }: Capability) {
   return (
-    <article className="group flex h-full min-w-0 flex-col border-t border-white/15 py-6 transition-colors duration-300 hover:border-brand-primary/50 sm:py-7">
-      <div className="mb-5 flex h-9 w-9 items-center justify-center text-brand-primary">
+    <article className="group flex h-full min-w-0 flex-col rounded-lg border border-white/10 bg-white/[0.025] p-6 transition-[border-color,background-color,transform] duration-300 hover:-translate-y-1 hover:border-brand-primary/40 hover:bg-white/[0.045] sm:p-7">
+      <div className="mb-7 flex h-11 w-11 items-center justify-center rounded-lg border border-brand-primary/25 bg-brand-primary/10 text-brand-primary transition-colors group-hover:border-brand-primary/45 group-hover:bg-brand-primary/15">
         <Icon className="h-5 w-5" aria-hidden="true" />
       </div>
       <h3 className="font-display text-xl font-bold leading-tight text-white sm:text-2xl">{title}</h3>
       <p className="mt-3 text-sm leading-6 text-white/60">{description}</p>
-      <div className="mt-6 border-t border-white/10 pt-5">
+      <div className="mt-7 border-t border-white/10 pt-5">
         <p className="text-[10px] font-black uppercase tracking-[0.2em] text-brand-primary">Example use cases</p>
         <ul className="mt-3 space-y-2.5">
           {examples.map((example) => (
@@ -275,7 +275,7 @@ export default function Services() {
                   <div className="text-[10px] font-black uppercase tracking-[0.25em] sm:tracking-[0.5em] text-white/20">Service 0{i + 1}</div>
                 </div>
                 
-                <h3 className="text-3xl sm:text-4xl md:text-5xl font-display font-black uppercase tracking-tighter leading-none group-hover:text-brand-primary transition-colors">
+                <h3 className="text-3xl sm:text-4xl md:text-6xl font-display font-black uppercase tracking-tighter leading-none group-hover:text-brand-primary transition-colors">
                   {s.title}
                 </h3>
                 

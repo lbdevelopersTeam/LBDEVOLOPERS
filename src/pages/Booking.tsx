@@ -100,7 +100,7 @@ export default function Booking() {
           align="center"
         />
 
-        <div className="mt-10 grid grid-cols-1 overflow-hidden border border-white/10 bg-[#0c0c0c] md:mt-14 md:grid-cols-12">
+        <div className="mt-10 grid min-h-[600px] grid-cols-1 overflow-hidden rounded-[1.5rem] border border-white/5 bg-[#0c0c0c] md:mt-16 md:grid-cols-12 md:rounded-[2.5rem]">
           <div className="border-b border-white/5 bg-brand-gray p-6 md:col-span-4 md:border-b-0 md:border-r md:p-10">
             <div className="mb-8 flex h-16 w-16 items-center justify-center rounded-full border border-brand-primary/20 bg-brand-primary/10">
               <Globe aria-hidden="true" className="w-8 h-8 text-brand-primary animate-spin-slow" />
@@ -136,7 +136,7 @@ export default function Booking() {
                       aria-label={option.label}
                       aria-pressed={selectedDate === option.value}
                       onClick={() => setSelectedDate(option.value)}
-                      className={`flex flex-col items-center border p-4 transition-colors duration-300 ${
+                      className={`flex flex-col items-center rounded-2xl border p-4 transition-all duration-300 ${
                         selectedDate === option.value
                           ? 'border-brand-primary bg-brand-primary/10'
                           : 'border-white/5 bg-white/5 hover:border-white/20'
@@ -169,7 +169,7 @@ export default function Booking() {
                       type="button"
                       aria-pressed={selectedTime === time}
                       onClick={() => setSelectedTime(time)}
-                      className={`border p-4 text-center transition-colors duration-300 ${
+                      className={`rounded-xl border p-4 text-center transition-all duration-300 ${
                         selectedTime === time
                           ? 'border-brand-primary bg-brand-primary/10'
                           : 'border-white/5 bg-white/5 hover:border-white/20'

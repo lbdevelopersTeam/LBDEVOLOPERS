@@ -40,13 +40,13 @@ const FAQItem: React.FC<{ question: string; answer: string; i: number }> = ({ qu
         className="w-full py-7 md:py-10 flex justify-between items-center gap-5 text-left focus:outline-none"
       >
         <span className={cn(
-          "text-lg md:text-2xl font-display font-bold tracking-tight transition-colors duration-300",
+          "text-xl md:text-3xl font-display font-black tracking-tighter transition-colors duration-500",
           isOpen ? "text-brand-primary" : "text-white/80 group-hover:text-white"
         )}>{question}</span>
         <motion.div 
           animate={{ rotate: isOpen ? 45 : 0 }}
           className={cn(
-            "w-10 h-10 md:w-12 md:h-12 flex-shrink-0 rounded-full flex items-center justify-center border transition-all duration-300",
+            "w-11 h-11 md:w-14 md:h-14 flex-shrink-0 rounded-2xl flex items-center justify-center border transition-all duration-500",
             isOpen ? "bg-brand-primary border-brand-primary text-white" : "border-white/10 text-white/40 group-hover:border-white/30"
           )}
         >
@@ -62,7 +62,7 @@ const FAQItem: React.FC<{ question: string; answer: string; i: number }> = ({ qu
             transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
             className="overflow-hidden"
           >
-            <p className="text-white/60 text-base md:text-lg leading-relaxed pb-8 md:pb-10 max-w-3xl font-light">
+            <p className="text-white/40 text-base md:text-xl leading-relaxed pb-10 md:pb-12 max-w-3xl font-light">
               {answer}
             </p>
           </motion.div>
@@ -138,13 +138,14 @@ export default function FAQ() {
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
-          className="mt-20 md:mt-28 px-6 py-12 sm:px-10 md:py-16 bg-brand-gray text-center relative overflow-hidden border border-white/10"
+          className="mt-20 md:mt-32 p-6 sm:p-10 md:p-24 bg-brand-gray rounded-[1.5rem] md:rounded-[4rem] text-center relative overflow-hidden border border-white/5"
         >
-            <h3 className="text-3xl md:text-5xl font-display font-black mb-5 tracking-tighter uppercase">Still curious?</h3>
-            <p className="text-white/60 text-base md:text-lg mb-8 max-w-2xl mx-auto font-light">Tell us what you are planning, and we can help identify a practical next step.</p>
+            <div className="absolute top-0 right-0 w-64 h-64 bg-brand-primary/10 blur-[100px] -translate-y-1/2 translate-x-1/2" />
+            <h3 className="text-3xl md:text-5xl font-display font-black mb-6 md:mb-8 tracking-tighter uppercase">STILL CURIOUS?</h3>
+            <p className="text-white/40 text-base md:text-xl mb-8 md:mb-12 max-w-2xl mx-auto font-light">Our engineering team is ready to break down the complexities of your next big move.</p>
             <Magnetic strength={0.2}>
               <Button size="lg" data-cursor="TALK">
-                Get in touch
+                Initiate Contact
                 <ArrowRight className="ml-2 w-5 h-5" />
               </Button>
             </Magnetic>
