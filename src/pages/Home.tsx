@@ -118,7 +118,7 @@ export default function Home() {
   return (
     <div className="overflow-hidden relative bg-brand-dark">
       {/* Hero Section */}
-      <section id="home-hero" className="section-transition relative min-h-screen flex items-center pt-24 sm:pt-28 md:pt-32 pb-12 overflow-hidden bg-black">
+      <section id="home-hero" className="section-transition relative min-h-screen flex items-center pt-32 sm:pt-36 md:pt-40 pb-12 overflow-hidden bg-black">
         <div className="absolute inset-0 z-0 bg-black" />
         <motion.div className="max-w-[1600px] mx-auto w-full px-4 sm:px-6 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
