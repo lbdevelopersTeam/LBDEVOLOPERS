@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
-import { Check, Info, ArrowRight, Zap, Globe, Smartphone, Palette, Shield, Search } from 'lucide-react';
+import { motion } from 'motion/react';
+import { Check, Zap, Globe, Smartphone, Palette, Shield, Search } from 'lucide-react';
 import { Button } from './UI';
 import { cn } from '../../lib/utils';
 import { useNavigate } from 'react-router-dom';
@@ -60,9 +60,11 @@ export default function ProjectCalculator() {
                 {CATEGORIES.map((cat) => (
                   <button
                     key={cat.id}
+                    type="button"
+                    aria-pressed={category === cat.id}
                     onClick={() => setCategory(cat.id)}
                     className={cn(
-                      "flex flex-col items-center gap-3 p-4 rounded-[1.25rem] md:rounded-[2rem] border transition-all duration-1000 relative overflow-hidden group",
+                      "flex flex-col items-center gap-3 p-4 rounded-[1.25rem] md:rounded-[2rem] border transition-colors duration-200 [-webkit-tap-highlight-color:transparent] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2 focus-visible:ring-offset-brand-dark",
                       category === cat.id 
                         ? 'border-brand-primary bg-brand-primary/5 text-white' 
                         : 'border-white/5 bg-white/[0.01] text-white/20 hover:border-white/20'
@@ -75,9 +77,6 @@ export default function ProjectCalculator() {
                       {cat.icon}
                     </div>
                     <span className="font-black text-[11px] uppercase tracking-[0.18em] sm:tracking-[0.3em] text-center">{cat.name}</span>
-                    {category === cat.id && (
-                      <motion.div layoutId="active-cat" className="absolute inset-0 border border-brand-primary rounded-[2rem] pointer-events-none" />
-                    )}
                   </button>
                 ))}
               </div>
@@ -90,9 +89,11 @@ export default function ProjectCalculator() {
                 {ADDONS.map((addon) => (
                   <button
                     key={addon.id}
+                    type="button"
+                    aria-pressed={selectedAddons.includes(addon.id)}
                     onClick={() => toggleAddon(addon.id)}
                     className={cn(
-                      "flex items-center justify-between gap-4 p-4 rounded-[1.25rem] md:rounded-[2.5rem] border transition-all duration-700 group relative overflow-hidden",
+                      "flex items-center justify-between gap-4 p-4 rounded-[1.25rem] md:rounded-[2.5rem] border transition-all duration-700 group relative overflow-hidden [-webkit-tap-highlight-color:transparent]",
                       selectedAddons.includes(addon.id)
                         ? 'border-brand-primary bg-brand-primary/5 text-white'
                         : 'border-white/5 bg-white/[0.01] text-white/20 hover:border-white/20'
