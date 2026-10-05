@@ -419,7 +419,7 @@ export const DeferredVideo = ({
 
   return (
     <>
-      {poster && (
+      {poster && !videoReady && (
         <img
           src={poster}
           alt=""
@@ -439,7 +439,7 @@ export const DeferredVideo = ({
         disablePictureInPicture
         tabIndex={-1}
         aria-hidden="true"
-        className={cn('transition-opacity duration-700 ease-out', className)}
+        className={cn(!poster && 'transition-opacity duration-700 ease-out', className)}
         style={videoReady ? undefined : { opacity: 0 }}
         onLoadedData={() => setVideoReady(true)}
         onCanPlay={() => setVideoReady(true)}

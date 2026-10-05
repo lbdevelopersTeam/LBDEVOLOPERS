@@ -176,7 +176,7 @@ export default function Home() {
                   src="/videos/home-hero-side.mp4"
                   poster="/images/home-hero-side-poster.webp"
                   allowCoarsePointer
-                  className="home-hero-video absolute inset-0 h-full w-full object-cover mix-blend-screen"
+                  className="home-hero-video absolute inset-0 h-full w-full object-cover"
                 />
               </div>
             </div>
