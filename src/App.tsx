@@ -66,28 +66,51 @@ function useConstrainedDevice() {
 
 const staticRouteSeo: Record<string, Omit<SeoOptions, 'canonicalPath'>> = {
   '/': {
-    title: 'LB CodeBase | Premium Digital Agency',
-    description: 'LB CodeBase designs and engineers high-performance websites, applications, e-commerce platforms, and digital products.',
+    title: 'Web Development & AI Automation Agency in Pakistan | LB CodeBase',
+    description: 'LB CodeBase is a Pakistan-based digital product studio building high-performance websites, Shopify stores, web apps, and practical AI automation systems.',
+    schema: {
+      '@context': 'https://schema.org',
+      '@type': 'ProfessionalService',
+      '@id': 'https://lbcodebase.com/#organization',
+      name: 'LB CodeBase',
+      url: 'https://lbcodebase.com/',
+      logo: 'https://lbcodebase.com/favicon.svg',
+      description: 'Digital product design, web development, commerce, and AI automation studio based in Pakistan.',
+      email: 'mailto:lbdevelopers.agency@gmail.com',
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: 'Mingora, Swat',
+        addressCountry: 'PK',
+      },
+      areaServed: ['Pakistan', 'United Arab Emirates', 'Saudi Arabia', 'United Kingdom', 'United States'],
+      serviceType: [
+        'Web development',
+        'Shopify development',
+        'WordPress development',
+        'AI automation',
+        'Digital product design',
+      ],
+    },
   },
   '/about': {
-    title: 'About & Team | LB CodeBase',
-    description: 'Learn about LB CodeBase and meet the engineering, design, automation, and strategy specialists behind the work.',
+    title: 'About LB CodeBase | Web Design, Engineering & AI Automation',
+    description: 'Meet the Pakistan-based design, engineering, commerce, and automation team behind LB CodeBase digital products and websites.',
   },
   '/services': {
-    title: 'Digital Engineering Services | LB CodeBase',
-    description: 'Explore web development, portals, booking systems, CMS platforms, brand identity, Framer websites, n8n automation, and custom chat and voice agents from LB CodeBase.',
+    title: 'Web Development, Shopify & AI Automation Services | LB CodeBase',
+    description: 'Explore website development, React apps, Shopify and WordPress, portals, n8n workflows, AI agents, integrations, and ongoing digital support.',
   },
   '/portfolio': {
-    title: 'Selected Work | LB CodeBase',
-    description: 'Explore selected websites, commerce platforms, applications, and digital products engineered by LB CodeBase.',
+    title: 'Web Design, Shopify & Digital Product Case Studies | LB CodeBase',
+    description: 'Explore LB CodeBase case studies across Shopify commerce, WordPress, React interfaces, web apps, brand platforms, and digital products.',
   },
   '/blog': {
-    title: 'Engineering Journal | LB CodeBase',
-    description: 'Read practical perspectives on product engineering, performance, design systems, commerce, and digital growth.',
+    title: 'Web Development & AI Automation Insights | LB CodeBase',
+    description: 'Read practical insights on website performance, Shopify commerce, WordPress, product design, web engineering, and AI automation.',
   },
   '/contact': {
-    title: 'Contact LB CodeBase | Start a Project',
-    description: 'Tell LB CodeBase about your website, application, e-commerce, product design, or engineering project.',
+    title: 'Start a Web Development or Automation Project | LB CodeBase',
+    description: 'Tell LB CodeBase about your website, Shopify store, web app, digital product, or AI automation project and get a focused next step.',
   },
   '/booking': {
     title: 'Request a Strategy Call | LB CodeBase',

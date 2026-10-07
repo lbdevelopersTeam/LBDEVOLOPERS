@@ -25,11 +25,18 @@ export function useSeo({ title, description, image, canonicalPath, schema }: Seo
     upsertMeta('meta[property="og:title"]', 'property', 'og:title', title);
     upsertMeta('meta[property="og:description"]', 'property', 'og:description', description);
     upsertMeta('meta[property="og:type"]', 'property', 'og:type', 'website');
+    upsertMeta('meta[property="og:url"]', 'property', 'og:url', new URL(canonicalPath || window.location.pathname, window.location.origin).href);
+    upsertMeta('meta[name="twitter:card"]', 'name', 'twitter:card', 'summary_large_image');
+    upsertMeta('meta[name="twitter:title"]', 'name', 'twitter:title', title);
+    upsertMeta('meta[name="twitter:description"]', 'name', 'twitter:description', description);
 
     if (image) {
-      upsertMeta('meta[property="og:image"]', 'property', 'og:image', new URL(image, window.location.origin).href);
+      const absoluteImage = new URL(image, window.location.origin).href;
+      upsertMeta('meta[property="og:image"]', 'property', 'og:image', absoluteImage);
+      upsertMeta('meta[name="twitter:image"]', 'name', 'twitter:image', absoluteImage);
     } else {
       document.head.querySelector('meta[property="og:image"]')?.remove();
+      document.head.querySelector('meta[name="twitter:image"]')?.remove();
     }
 
     let canonical = document.head.querySelector<HTMLLinkElement>('link[rel="canonical"]');

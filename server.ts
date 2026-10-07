@@ -83,14 +83,12 @@ async function startServer() {
         '', '/about', '/services', '/portfolio', '/blog', '/contact', '/booking', '/planner',
         '/tech', '/faq', '/careers', '/privacy', '/terms',
       ].map((route) => `${baseUrl}${route}`);
-      const [members, projects, blogs, memberProjects, services] = await Promise.all([
+      const [members, projects, blogs, memberProjects] = await Promise.all([
         database.selectFrom('team_members').select(['id', 'slug']).where('deleted_at', 'is', null).where('active', '=', true).execute(),
         database.selectFrom('projects').select(['id', 'slug']).where('deleted_at', 'is', null).where('status', '=', 'published').execute(),
         database.selectFrom('blog_posts').select('slug').where('deleted_at', 'is', null).where('status', '=', 'published').execute(),
         database.selectFrom('project_team_members').select(['project_id', 'team_member_id']).execute(),
-        database.selectFrom('services').select('slug').where('deleted_at', 'is', null).where('active', '=', true).execute(),
       ]);
-      for (const service of services) urls.push(`${baseUrl}/services/${service.slug}`);
       for (const project of projects) urls.push(`${baseUrl}/portfolio/${project.slug}`);
       for (const post of blogs) urls.push(`${baseUrl}/blog/${post.slug}`);
       for (const member of members) {
