@@ -228,6 +228,11 @@
 .studio-site .capability-card-usecases li { padding: 0; border: 0; border-radius: 0; background: transparent; font-size: 14px; color: var(--studio-copy); }
 .studio-site .capability-card-usecases li::before { content: '—'; color: var(--studio-accent); }
 .studio-site .services-directory-card { min-height: 310px; padding: 24px; }
+.studio-site .services-directory-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.studio-site .services-directory-card { min-width: 0; }
+.studio-site .services-directory-card strong { overflow-wrap: anywhere; }
+.studio-site .services-page [id^="service-detail-"] h3 { overflow-wrap: anywhere; }
+.studio-site .footer-main-grid a { overflow-wrap: anywhere; }
 .studio-site .services-directory-card:hover { transform: translateY(-2px); }
 .studio-site .services-directory-icon { margin: 16px 0 24px; }
 .studio-site .services-directory-card small { font-size: 14px; color: var(--studio-copy); }
@@ -263,6 +268,7 @@
 .studio-site :where(.bg-brand-primary/10, .bg-brand-primary/5, [class*="bg-brand-purple/"]) { background-color: rgba(124,58,237,.06); }
 .studio-site .member-portfolio { --member-background: #000; --member-surface: #071020; --member-border: var(--studio-line); }
 @media (max-width: 1023px) {
+  .studio-site .services-directory-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .studio-site .services-process-grid { grid-template-columns: 1fr; max-width: 680px; gap: 40px; }
   .studio-site .services-process-grid > li { padding-top: 0; }
   .studio-site .services-process-card { min-height: 248px; }
@@ -296,6 +302,18 @@
   .studio-site .capability-card { min-height: 0; padding: 24px; }
   .studio-site .capability-card-usecases { margin-top: 24px; }
   .studio-site .studio-button { padding-inline: 20px; }
+  .studio-site .services-page [id^="service-detail-"] h3 { font-size: clamp(26px, 7vw, 36px); line-height: 1.12; }
+  .studio-site .services-investment .grid > div { padding: 24px; }
+  .studio-site .services-estimator .project-estimate-panel { padding: 20px; }
+  .studio-site .project-calculator > .glass { border-radius: 20px; }
+}
+@media (max-width: 639px) {
+  .studio-site .services-directory-grid { grid-template-columns: minmax(0, 1fr); }
+  .studio-site .services-directory-card { min-height: 0; padding: 24px; }
+  .studio-site .services-directory-card strong { font-size: 20px; line-height: 1.25; }
+  .studio-site .services-directory-icon { margin: 12px 0 16px; }
+  .studio-site .services-directory-link { margin-top: 20px; }
+  .studio-site .services-final-cta > div { padding: 24px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .studio-site *, .studio-site *::before, .studio-site *::after { animation: none !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }

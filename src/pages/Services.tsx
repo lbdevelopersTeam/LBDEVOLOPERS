@@ -269,7 +269,7 @@ export default function Services() {
                 />
               </motion.div>
 
-              <div className="overflow-hidden mb-12">
+              <div className="mb-12">
                 <motion.h1
                   initial={{ y: "100%" }}
                   animate={{ y: 0 }}
@@ -323,7 +323,7 @@ export default function Services() {
                 </ParallaxSection>
               </div>
               
-              <div className={`lg:col-span-6 space-y-7 md:space-y-10 ${i % 2 === 0 ? 'lg:order-2' : 'lg:order-1'}`}>
+              <div className={`min-w-0 lg:col-span-6 space-y-7 md:space-y-10 ${i % 2 === 0 ? 'lg:order-2' : 'lg:order-1'}`}>
                 <div className="flex flex-wrap items-center gap-4 sm:gap-6">
                   <div className="text-brand-primary">
                     {s.icon}
@@ -342,8 +342,8 @@ export default function Services() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-6 pt-4">
                   {s.features.map((f, j) => (
                     <div key={j} className="flex items-center gap-4 group/item">
-                      <div className="h-1.5 w-1.5 rounded-full bg-brand-primary" />
-                      <span className="text-sm font-bold uppercase tracking-widest text-white/60">{f}</span>
+                      <div className="h-1.5 w-1.5 shrink-0 rounded-full bg-brand-primary" />
+                      <span className="min-w-0 break-words text-sm font-bold uppercase tracking-widest text-white/60">{f}</span>
                     </div>
                   ))}
                 </div>
@@ -464,7 +464,7 @@ export default function Services() {
                 <div className="space-y-3 sm:space-y-4 md:space-y-6 mb-8 sm:mb-10 md:mb-16">
                   {p.features.map((f, j) => (
                     <div key={j} className="flex items-center gap-4">
-                      <CheckCircle2 className={cn("w-4 h-4", p.popular ? "text-white" : "text-brand-primary")} />
+                      <CheckCircle2 className={cn("w-4 h-4 shrink-0", p.popular ? "text-white" : "text-brand-primary")} />
                       <span className={cn("text-xs md:text-sm font-bold uppercase tracking-widest", p.popular ? "text-white/90" : "text-white/60")}>{f}</span>
                     </div>
                   ))}
@@ -504,7 +504,7 @@ export default function Services() {
             className="relative overflow-hidden rounded-lg border border-brand-primary/40 bg-[#111633] p-8 text-center sm:p-12 md:p-16 lg:p-20"
           >
             <div className="relative z-10 max-w-4xl mx-auto">
-              <h2 className="mb-8 font-display text-3xl font-bold leading-[0.95] tracking-tight text-white sm:text-4xl md:text-5xl">Have a defined problem?</h2>
+              <h2 className="mb-8 font-display text-3xl font-bold leading-[1.15] tracking-tight text-white sm:text-4xl md:text-5xl">Have a defined problem?</h2>
               <p className="mb-10 text-base font-normal text-white/65 sm:mb-12 sm:text-lg md:text-xl">Share the current product, the people using it, and what needs to improve.</p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
                 <Button variant="secondary" size="lg" className="w-full sm:w-auto" onClick={() => navigate('/booking')}>

@@ -16,8 +16,8 @@ export default function Footer() {
           <span className="text-[7rem] md:text-[12rem] lg:text-[18rem] font-display font-black tracking-tighter uppercase leading-none">LB CODEBASE</span>
         </div>
 
-        <div className="grid grid-cols-1 gap-12 md:grid-cols-2 md:gap-16 lg:grid-cols-12 lg:gap-20 mb-20 md:mb-32 relative z-10">
-          <div className="lg:col-span-5">
+        <div className="footer-main-grid grid grid-cols-2 gap-x-6 gap-y-10 md:gap-12 xl:gap-16 lg:grid-cols-12 mb-16 md:mb-24 relative z-10">
+          <div className="col-span-2 min-w-0 lg:col-span-5">
             <Link to="/" className="brand-logo mb-10">
               <div className="brand-mark">LB</div>
               <span className="brand-text">CodeBase</span>
@@ -41,9 +41,9 @@ export default function Footer() {
             </div>
           </div>
 
-          <div className="lg:col-span-2">
+          <nav aria-label="Footer navigation" className="min-w-0 lg:col-span-2">
             <h2 className="text-[10px] font-black mb-6 md:mb-10 text-blue-300 uppercase tracking-[0.25em] sm:tracking-[0.4em]">Navigation</h2>
-            <ul className="space-y-4 md:space-y-6">
+            <ul className="space-y-1 md:space-y-2">
               {[
                 { label: 'Home', href: '/' },
                 { label: 'About', href: '/about' },
@@ -60,11 +60,11 @@ export default function Footer() {
                 </li>
               ))}
             </ul>
-          </div>
+          </nav>
 
-          <div className="lg:col-span-2">
+          <nav aria-label="Footer support" className="min-w-0 lg:col-span-2">
             <h2 className="text-[10px] font-black mb-6 md:mb-10 text-blue-300 uppercase tracking-[0.25em] sm:tracking-[0.4em]">Support</h2>
-            <ul className="space-y-4 md:space-y-6">
+            <ul className="space-y-1 md:space-y-2">
               {[
                 { label: 'Inquiry', href: '/contact' },
                 { label: 'Careers', href: '/careers' },
@@ -79,9 +79,9 @@ export default function Footer() {
                 </li>
               ))}
             </ul>
-          </div>
+          </nav>
 
-          <div className="md:col-span-2 lg:col-span-3">
+          <div className="col-span-2 min-w-0 lg:col-span-3">
             <h2 className="text-[10px] font-black mb-6 md:mb-10 text-blue-300 uppercase tracking-[0.25em] sm:tracking-[0.4em]">Start a Project</h2>
             <p className="text-white/70 text-sm mb-6 md:mb-10 font-light leading-relaxed">Share your goals, constraints, and launch window. We will reply with a clear next step.</p>
             <Link

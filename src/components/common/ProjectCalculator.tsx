@@ -33,7 +33,7 @@ export default function ProjectCalculator() {
     selectedAddons.reduce((sum, id) => sum + (ADDONS.find(a => a.id === id)?.price || 0), 0);
 
   return (
-    <div className="w-full py-8 px-3 sm:px-4 relative overflow-hidden transition-all duration-1000">
+    <div className="project-calculator w-full py-8 relative overflow-hidden transition-all duration-1000">
       {/* Background Typography */}
       <div aria-hidden="true" className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none select-none opacity-[0.02] whitespace-nowrap">
         <div className="text-8xl md:text-[12rem] lg:text-[18rem] font-display font-black leading-none">ESTIMATE</div>
@@ -45,9 +45,9 @@ export default function ProjectCalculator() {
             <div className="text-xs font-semibold uppercase tracking-widest text-brand-primary mb-3">Project estimate</div>
             <h3 className="text-2xl md:text-4xl font-display">Choose what <span className="text-brand-accent">you need.</span></h3>
           </div>
-          <div className="flex items-center gap-4 px-4 sm:px-6 md:px-8 py-3 md:py-4 bg-white/5 rounded-2xl md:rounded-3xl border border-white/5 backdrop-blur-3xl">
+          <div className="flex shrink-0 items-center gap-3 px-4 py-3 bg-white/5 rounded-2xl border border-white/5">
             <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-brand-primary animate-pulse shadow-[0_0_20px_rgba(61,90,254,0.8)]" />
-            <span className="text-[10px] font-black uppercase tracking-[0.18em] sm:tracking-[0.3em] md:tracking-[0.4em] text-white/40">Real-time Calculation Active</span>
+            <span className="text-sm text-white/70">Live estimate</span>
           </div>
         </div>
         
@@ -56,7 +56,7 @@ export default function ProjectCalculator() {
             {/* Category Selection */}
             <div>
               <label className="text-[10px] font-black uppercase tracking-[0.22em] sm:tracking-[0.5em] md:tracking-[0.6em] text-white/20 mb-4 block underline decoration-brand-primary/40 underline-offset-4">Architecture Selection</label>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
+              <div className="estimate-categories grid grid-cols-1 sm:grid-cols-3 gap-4">
                 {CATEGORIES.map((cat) => (
                   <button
                     key={cat.id}
@@ -85,7 +85,7 @@ export default function ProjectCalculator() {
             {/* Addons */}
             <div>
               <label className="text-[10px] font-black uppercase tracking-[0.22em] sm:tracking-[0.5em] md:tracking-[0.6em] text-white/20 mb-4 block underline decoration-brand-primary/40 underline-offset-4">Technical Parameters</label>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
+              <div className="estimate-addons grid grid-cols-1 min-[1200px]:grid-cols-2 gap-4">
                 {ADDONS.map((addon) => (
                   <button
                     key={addon.id}
@@ -93,26 +93,26 @@ export default function ProjectCalculator() {
                     aria-pressed={selectedAddons.includes(addon.id)}
                     onClick={() => toggleAddon(addon.id)}
                     className={cn(
-                      "flex items-center justify-between gap-4 p-4 rounded-[1.25rem] md:rounded-[2.5rem] border transition-all duration-700 group relative overflow-hidden [-webkit-tap-highlight-color:transparent]",
+                      "flex min-w-0 items-center justify-between gap-3 p-4 rounded-[1.25rem] border transition-colors duration-200 group relative [-webkit-tap-highlight-color:transparent]",
                       selectedAddons.includes(addon.id)
                         ? 'border-brand-primary bg-brand-primary/5 text-white'
                         : 'border-white/5 bg-white/[0.01] text-white/20 hover:border-white/20'
                     )}
                   >
-                    <div className="flex min-w-0 items-center gap-3 sm:gap-6">
+                    <div className="flex min-w-0 items-center gap-3">
                       <div className={cn(
-                        "w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-700",
+                        "w-8 h-8 shrink-0 rounded-xl flex items-center justify-center transition-colors duration-200",
                         selectedAddons.includes(addon.id) ? "text-brand-primary" : "text-white/10"
                       )}>
                         {addon.icon}
                       </div>
-                      <div className="text-left">
-                        <span className="font-bold text-[10px] uppercase tracking-[0.12em] sm:tracking-[0.2em] mb-0">{addon.name}</span>
+                      <div className="min-w-0 text-left">
+                        <span className="block text-sm font-medium leading-5 [overflow-wrap:anywhere]">{addon.name}</span>
                         <div className="text-[10px] font-black text-brand-primary/60">+${addon.price}</div>
                       </div>
                     </div>
                     <div className={cn(
-                      "w-7 h-7 rounded-full border flex items-center justify-center transition-all duration-700",
+                      "w-7 h-7 shrink-0 rounded-full border flex items-center justify-center transition-colors duration-200",
                       selectedAddons.includes(addon.id) ? "bg-brand-primary border-brand-primary scale-110 shadow-lg shadow-brand-primary/20" : "border-white/10"
                     )}>
                       {selectedAddons.includes(addon.id) && <Check className="w-4 h-4 text-white" strokeWidth={4} />}
