@@ -15,6 +15,27 @@ Requirements: Node.js 22+ and MariaDB 10.6+.
 
 ## Hostinger deployment
 
+### Express backend preset (admin and database-backed features)
+
+For the Express preset that exposes an entry file but no custom build field:
+
+- Framework preset: **Express**
+- Branch: the branch containing these deployment files
+- Node.js version: **22**
+- Root directory: **./**
+- Package manager: **npm**
+- Entry file: **server.js**
+
+Set `NODE_ENV=production` and `VITE_PUBLIC_API_ENABLED=true` in Hostinger's environment variables **before installation/redeployment**. Configure the real `DATABASE_URL` and `IP_HASH_SALT` privately. The `postinstall` hook builds the unchanged public app into `dist/public` and the existing backend into `dist/server.mjs`. The tracked `server.js` entry loads that bundle. `npm start` uses the same entry. If your host exposes custom build settings instead, the existing `npm run build:node` command remains available.
+
+The hook skips local/development installs and production static-only installs where `VITE_PUBLIC_API_ENABLED` is not `true`. Build tools are available even when npm omits development dependencies. Do not disable lifecycle scripts with `--ignore-scripts` on this backend deployment: that would skip compilation. A failed build stops installation rather than starting an incomplete app.
+
+This is a **deployment build only**. It does not connect to MariaDB, migrate/seed data, or change credentials. Back up existing data and perform any required database setup separately. Merely setting `ADMIN_INITIAL_PASSWORD` does not create an account; the password takes effect through the seed command, which also imports portfolio content. Remove it after successful setup. Never commit real secrets to `.env.example` or Git.
+
+After redeployment, check `/api/v2/health`: a working database connection returns JSON with `status: "ok"` and `database: "mariadb"`, not the website HTML. Database startup failures still stop the production server; inspect runtime logs for those separately. Local deployment regression checks run with `npm run test:deployment`.
+
+### Static frontend preset (no admin backend)
+
 For Hostinger's Git-connected **Static frontend web app**, use the Vite configuration below.
 
 - Repository root: the directory containing this `package.json`
