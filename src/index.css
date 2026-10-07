@@ -1072,6 +1072,12 @@
 }
 
 @media (hover: none), (pointer: coarse) {
+  /* Skip navigation is useful for keyboard users, but should not become a
+     persistent white overlay on touch-only phone layouts. */
+  .skip-link {
+    display: none !important;
+  }
+
   .animate-pulse,
   .animate-pulse-slow,
   .animate-float,

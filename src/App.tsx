@@ -217,7 +217,7 @@ function AppShell() {
       <StaticRouteSeo />
       <a
         href="#main-content"
-        className="fixed left-4 top-4 z-[200] -translate-y-24 rounded-full bg-white px-5 py-3 text-xs font-bold text-black transition-transform focus:translate-y-0"
+        className="skip-link fixed left-4 top-4 z-[200] -translate-y-24 rounded-full bg-white px-5 py-3 text-xs font-bold text-black transition-transform focus:translate-y-0"
       >
         Skip to content
       </a>
