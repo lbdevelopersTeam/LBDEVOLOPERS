@@ -6,12 +6,11 @@ import { cn } from '../../lib/utils';
 import { Magnetic } from '../common/Animations';
 
 const navLinks = [
-  { name: 'Home', href: '/' },
-  { name: 'About', href: '/about' },
-  { name: 'Portfolio', href: '/portfolio' },
   { name: 'Services', href: '/services' },
-  { name: 'Tech', href: '/tech' },
-  { name: 'Consultancy', href: '/contact' },
+  { name: 'Portfolio', href: '/portfolio' },
+  { name: 'About', href: '/about' },
+  { name: 'Tech Stack', href: '/tech' },
+  { name: 'Journal', href: '/blog' },
 ];
 
 export default function Navbar() {
@@ -21,6 +20,24 @@ export default function Navbar() {
   const location = useLocation();
   const navigate = useNavigate();
   const pendingNavigation = useRef<string | null>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
+  const menuTriggerRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const frame = requestAnimationFrame(() => menuRef.current?.querySelector<HTMLElement>('a, button')?.focus());
+    const trapFocus = (event: KeyboardEvent) => {
+      if (event.key !== 'Tab') return;
+      const items = menuRef.current?.querySelectorAll<HTMLElement>('a[href], button:not(:disabled)');
+      if (!items?.length) return;
+      const first = items[0];
+      const last = items[items.length - 1];
+      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+      else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+    };
+    window.addEventListener('keydown', trapFocus);
+    return () => { cancelAnimationFrame(frame); window.removeEventListener('keydown', trapFocus); };
+  }, [isOpen]);
 
   useEffect(() => {
     let frame = 0;
@@ -84,10 +101,14 @@ export default function Navbar() {
 
     document.body.style.overflow = 'hidden';
     document.documentElement.style.overflow = 'hidden';
+    const background = Array.from(document.querySelectorAll<HTMLElement>('#main-content, .studio-site > footer'));
+    const previousInert = background.map((element) => element.inert);
+    background.forEach((element) => { element.inert = true; });
     window.addEventListener('keydown', closeOnEscape);
     return () => {
       document.body.style.overflow = previousBodyOverflow;
       document.documentElement.style.overflow = previousHtmlOverflow;
+      background.forEach((element, index) => { element.inert = previousInert[index]; });
       window.removeEventListener('keydown', closeOnEscape);
     };
   }, [menuIsActive]);
@@ -96,7 +117,7 @@ export default function Navbar() {
     if (name === 'About') {
       return location.pathname === '/about' || location.pathname.startsWith('/team/');
     }
-    return location.pathname === href;
+    return location.pathname === href || location.pathname.startsWith(`${href}/`);
   };
 
   const beginMenuClose = () => {
@@ -122,6 +143,7 @@ export default function Navbar() {
     const href = pendingNavigation.current;
     pendingNavigation.current = null;
     setIsMenuExiting(false);
+    if (!href) requestAnimationFrame(() => menuTriggerRef.current?.focus());
     if (href) navigate(href);
   };
 
@@ -138,14 +160,16 @@ export default function Navbar() {
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
         className={cn(
-          "mx-auto max-w-[1400px] rounded-[2rem] border border-transparent transition-[background-color,border-color,box-shadow,padding] duration-300",
-          scrolled ? "border-white/10 bg-brand-dark/40 px-4 py-3 shadow-[0_20px_50px_rgba(0,0,0,0.5)] backdrop-blur-2xl sm:px-8" : "px-3 py-3 sm:px-4 sm:py-4"
+          "studio-nav-shell mx-auto max-w-[1290px] rounded-full border transition-[background-color,border-color,box-shadow,padding] duration-300",
+          scrolled
+            ? "border-white/15 bg-[#0a0b1c]/80 px-4 py-2.5 shadow-[0_22px_70px_rgba(0,0,0,0.48)] backdrop-blur-2xl sm:px-7"
+            : "border-white/15 bg-[#08091a]/60 px-3 py-3 shadow-[0_18px_60px_rgba(0,0,0,0.26)] backdrop-blur-xl sm:px-5 sm:py-3.5"
         )}
       >
         <div className="flex items-center justify-between">
           <Link 
             to="/" 
-            className="brand-logo-image-frame"
+            className="brand-logo-image-frame w-[9.5rem] sm:w-[11.5rem]"
             aria-label="LB CodeBase home"
           >
             <img
@@ -159,13 +183,14 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop Nav */}
-          <div className="hidden items-center rounded-full border border-white/5 bg-white/[0.03] px-2 py-1 backdrop-blur-sm lg:flex">
+          <div className="hidden items-center gap-1 lg:flex">
             {navLinks.map((link) => (
               <Link
                 key={link.name}
                 to={link.href}
+                aria-current={isActiveLink(link.name, link.href) ? 'page' : undefined}
                 className={cn(
-                  'group relative overflow-hidden rounded-full px-5 py-2.5 text-[9px] font-black uppercase tracking-[0.18em] transition-colors duration-300',
+                  'group relative overflow-hidden rounded-full px-4 py-3 text-sm font-medium tracking-[-0.02em] transition-colors duration-300 xl:px-5',
                   isActiveLink(link.name, link.href) ? 'text-white' : 'text-white/45 hover:text-white'
                 )}
               >
@@ -173,11 +198,10 @@ export default function Navbar() {
                 {isActiveLink(link.name, link.href) && (
                   <motion.div
                     layoutId="nav-pill"
-                    className="absolute inset-0 rounded-full border border-brand-primary/30 bg-brand-primary/20"
+                    className="absolute inset-0 rounded-full border border-brand-primary/30 bg-brand-primary/15"
                     transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }}
                   />
                 )}
-                <div className="absolute inset-0 translate-y-full bg-white/5 transition-transform duration-300 group-hover:translate-y-0" />
               </Link>
             ))}
           </div>
@@ -186,7 +210,7 @@ export default function Navbar() {
             <a
               href="/documents/LB-CodeBase-Company-Profile.pdf"
               download="LB-CodeBase-Company-Profile.pdf"
-              className="hidden items-center gap-2 border-b border-white/15 px-2 py-2.5 text-[9px] font-black uppercase tracking-[0.18em] text-white/60 transition-colors hover:border-brand-primary hover:text-white lg:flex"
+              className="hidden items-center gap-2 border-b border-white/15 px-2 py-2.5 text-[9px] font-black uppercase tracking-[0.18em] text-white/60 transition-colors hover:border-brand-primary hover:text-white 2xl:flex"
               aria-label="Download the LB CodeBase company profile PDF"
             >
               <Download className="h-3 w-3" />
@@ -196,7 +220,7 @@ export default function Navbar() {
             <Magnetic strength={0.1}>
               <Link
                 to="/contact"
-                className="group hidden items-center gap-3 rounded-md bg-brand-primary px-7 py-3 text-[9px] font-black uppercase tracking-[0.18em] text-white transition-colors hover:bg-[#526bff] xl:flex"
+              className="group hidden items-center gap-2 rounded-full bg-gradient-to-r from-[#4c5fff] to-[#6b58ff] px-6 py-3.5 text-sm font-semibold tracking-[-0.02em] text-white shadow-[0_8px_24px_rgba(61,90,254,0.3)] transition-all hover:-translate-y-0.5 hover:shadow-[0_12px_30px_rgba(61,90,254,0.42)] xl:flex"
               >
                 Start a project
                 <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
@@ -204,6 +228,7 @@ export default function Navbar() {
             </Magnetic>
 
             <button
+              ref={menuTriggerRef}
               type="button"
               aria-label={isOpen ? 'Close navigation menu' : 'Open navigation menu'}
               aria-expanded={isOpen}
@@ -228,6 +253,7 @@ export default function Navbar() {
       <AnimatePresence initial={false} onExitComplete={finishMenuClose}>
         {isOpen && (
           <motion.div
+            ref={menuRef}
             id="mobile-navigation"
             role="dialog"
             aria-modal="true"
@@ -239,7 +265,7 @@ export default function Navbar() {
             onClick={beginMenuClose}
             className="fixed inset-0 z-[110] bg-black/80 px-3 pb-4 pt-20 lg:hidden"
           >
-            <div onClick={(event) => event.stopPropagation()} className="glass relative z-10 mx-auto flex max-h-[calc(100dvh-6rem)] w-full max-w-md flex-col overflow-y-auto overscroll-contain rounded-[2rem] border border-white/10 bg-brand-dark/90 p-4 shadow-[0_30px_90px_rgba(0,0,0,0.55)]">
+            <div onClick={(event) => event.stopPropagation()} className="mobile-menu-surface glass relative z-10 mx-auto flex max-h-[calc(100dvh-6rem)] w-full max-w-md flex-col overflow-y-auto overscroll-contain rounded-[2rem] border border-white/10 bg-brand-dark/90 p-4 shadow-[0_30px_90px_rgba(0,0,0,0.55)]">
               <div className="mb-4 flex items-center justify-between border-b border-white/10 pb-4">
                 <Link to="/" onClick={(event) => closeThenNavigate(event, '/')} className="brand-logo-image-frame" aria-label="LB CodeBase home">
                   <img src="/images/LB CodeBase Logo.webp" alt="LB CodeBase" width="144" height="32" decoding="async" className="brand-logo-image" />
@@ -248,7 +274,7 @@ export default function Navbar() {
                   type="button"
                   aria-label="Close navigation menu"
                   onClick={beginMenuClose}
-                  className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-white/70 transition-colors hover:text-white"
+                  className="flex h-11 w-11 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-white/70 transition-colors hover:text-white"
                 >
                   <X className="h-5 w-5" />
                 </button>
@@ -264,6 +290,7 @@ export default function Navbar() {
                   >
                     <Link
                       to={link.href}
+                      aria-current={isActiveLink(link.name, link.href) ? 'page' : undefined}
                       onClick={(event) => closeThenNavigate(event, link.href)}
                       className={cn(
                         'flex items-center justify-between border-b px-2 py-3.5 text-sm font-black uppercase tracking-[0.14em] transition-colors',

@@ -20,7 +20,7 @@ import {
   Printer,
   Quote,
   Share2,
-  Sparkles,
+  CircleHelp,
   UserCheck,
   X,
 } from 'lucide-react';
@@ -513,7 +513,7 @@ export default function MemberCvView({ member, isModal = false, onClose }: Membe
           {/* Executive Summary / Full Bio */}
           <section className="cv-print-break-avoid">
             <h2 className="cv-section-heading cv-text-heading mb-3 flex items-center gap-2 text-xs font-black uppercase tracking-[0.2em] text-white/40">
-              <Sparkles className="h-3.5 w-3.5" style={{ color: primaryAccent }} />
+              <CircleHelp className="h-3.5 w-3.5" style={{ color: primaryAccent }} />
               Executive Profile Summary
             </h2>
             <div className="cv-glass-card rounded-2xl border border-white/10 bg-white/[0.02] p-5 sm:p-6">

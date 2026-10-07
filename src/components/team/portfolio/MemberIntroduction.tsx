@@ -1,5 +1,5 @@
 import { motion, useReducedMotion } from 'motion/react';
-import { Award, BriefcaseBusiness, CheckCircle2, Globe, MapPin, TrendingUp, UserCheck, Zap } from 'lucide-react';
+import { Award, BriefcaseBusiness, CheckCircle2, Globe, MapPin, TrendingUp, UserCheck, Gauge } from 'lucide-react';
 import { MemberProfile, SectionHeading } from './shared';
 
 export default function MemberIntroduction({ member }: { member: MemberProfile }) {
@@ -11,7 +11,7 @@ export default function MemberIntroduction({ member }: { member: MemberProfile }
     { label: 'Specialization', value: member.specialization, icon: BriefcaseBusiness },
     { label: 'Track Record', value: member.yearsExperience, icon: Award },
     { label: 'Location', value: member.location, icon: MapPin },
-    { label: 'Availability', value: member.availability, icon: Zap },
+    { label: 'Availability', value: member.availability, icon: Gauge },
     { label: 'Languages', value: member.languages?.join(', '), icon: Globe },
     { label: 'Project Disciplines', value: projectDisciplines.join(' / '), icon: CheckCircle2 },
   ].filter((item) => Boolean(item.value));

@@ -59,6 +59,7 @@ export default function MemberCareer({
               )}
             </div>
 
+            <div className="member-career-timeline">
             {member.experience!.map((item, index) => (
               <motion.article
                 key={item.id || index}
@@ -66,7 +67,7 @@ export default function MemberCareer({
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: reducedMotion ? 0 : index * 0.08, duration: 0.5 }}
-                className="member-glass relative grid gap-6 rounded-xl p-6 sm:p-7 md:grid-cols-[170px_minmax(0,1fr)_minmax(0,0.85fr)] md:gap-8"
+                className="member-career-entry member-glass relative grid gap-6 rounded-xl p-6 sm:p-7 md:grid-cols-[170px_minmax(0,1fr)_minmax(0,0.85fr)] md:gap-8"
               >
                 {/* Left Date & Tenure */}
                 <div>
@@ -162,6 +163,7 @@ export default function MemberCareer({
                 </div>
               </motion.article>
             ))}
+            </div>
           </div>
         )}
 

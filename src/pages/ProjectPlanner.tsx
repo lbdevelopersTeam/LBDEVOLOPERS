@@ -1,7 +1,6 @@
 import { motion, AnimatePresence } from 'motion/react';
 import { useState } from 'react';
-import { SectionHeader, Button } from '../components/common/UI';
-import { ArrowRight, ArrowLeft, CheckCircle2, Layout, Monitor, Smartphone, Palette, Zap, Globe } from 'lucide-react';
+import { ArrowRight, ArrowLeft, CheckCircle2, Layout, Monitor, Smartphone, Palette, Gauge, Globe } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const steps = [
@@ -10,7 +9,7 @@ const steps = [
     question: "What type of product are we building?",
     options: [
       { id: 'new', label: 'New Website Design', icon: <Palette className="w-6 h-6" /> },
-      { id: 'redesign', label: 'Website Redesign', icon: <Zap className="w-6 h-6" /> },
+      { id: 'redesign', label: 'Website Redesign', icon: <Gauge className="w-6 h-6" /> },
       { id: 'app', label: 'Mobile Application', icon: <Smartphone className="w-6 h-6" /> },
       { id: 'ecommerce', label: 'E-commerce Platform', icon: <Layout className="w-6 h-6" /> },
     ]
@@ -19,7 +18,7 @@ const steps = [
     id: 'focus',
     question: "What is your primary focus?",
     options: [
-      { id: 'speed', label: 'Velocity & Performance', icon: <Zap className="w-6 h-6" /> },
+      { id: 'speed', label: 'Velocity & Performance', icon: <Gauge className="w-6 h-6" /> },
       { id: 'aesthetic', label: 'Visual Storytelling', icon: <Palette className="w-6 h-6" /> },
       { id: 'conversion', label: 'Conversion & Growth', icon: <Monitor className="w-6 h-6" /> },
       { id: 'architect', label: 'Technical Infrastructure', icon: <Globe className="w-6 h-6" /> },
@@ -29,9 +28,9 @@ const steps = [
     id: 'budget',
     question: "What is your estimated investment tier?",
     options: [
-      { id: 'essential', label: '$2.5k - $5k (Essential)', icon: null },
-      { id: 'premium', label: '$7.5k - $15k (Premium)', icon: null },
-      { id: 'elite', label: '$20k+ (Enterprise)', icon: null },
+      { id: 'essential', label: 'Under $500', icon: null },
+      { id: 'premium', label: '$500 – $2,500', icon: null },
+      { id: 'elite', label: '$2,500+', icon: null },
       { id: 'discuss', label: 'Let\'s Discuss', icon: null },
     ]
   }
@@ -41,6 +40,7 @@ export default function ProjectPlanner() {
   const [currentStep, setCurrentStep] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [isFinished, setIsFinished] = useState(false);
+  const brief = steps.map((step) => `${step.question}\n${step.options.find((option) => option.id === answers[step.id])?.label || 'Not specified'}`).join('\n\n');
 
   const handleOptionSelect = (optionId: string) => {
     setAnswers({ ...answers, [steps[currentStep].id]: optionId });
@@ -73,7 +73,7 @@ export default function ProjectPlanner() {
                   />
                 ))}
               </div>
-              <span className="text-[10px] font-black tracking-widest text-white/40 uppercase">
+              <span role="status" className="text-[10px] font-black tracking-widest text-white/40 uppercase">
                 Step {currentStep + 1} of {steps.length}
               </span>
             </div>
@@ -96,7 +96,9 @@ export default function ProjectPlanner() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {steps[currentStep].options.map((option) => (
                     <button
+                      type="button"
                       key={option.id}
+                      aria-pressed={answers[steps[currentStep].id] === option.id}
                       onClick={() => handleOptionSelect(option.id)}
                     className={`group p-5 sm:p-8 rounded-[1.5rem] md:rounded-[2rem] border text-left transition-all duration-500 hover:border-brand-primary/50 relative overflow-hidden ${
                         answers[steps[currentStep].id] === option.id 
@@ -136,17 +138,16 @@ export default function ProjectPlanner() {
             <div className="w-24 h-24 rounded-full bg-brand-primary/10 border border-brand-primary/20 flex items-center justify-center mx-auto mb-10">
               <CheckCircle2 className="w-12 h-12 text-brand-primary" />
             </div>
-            <h2 className="text-3xl md:text-6xl font-display font-black mb-6 uppercase tracking-tighter">Plan Complete.</h2>
+            <h2 className="text-3xl md:text-6xl font-display font-black mb-6 uppercase tracking-tighter">Your starting brief.</h2>
             <p className="text-white/60 text-base md:text-xl font-light mb-10 md:mb-12 max-w-xl mx-auto leading-relaxed">
-              We've analyzed your project parameters. Our strategy team is ready to review your vision.
+              Review your choices below. Continue to Contact to add your details and send the brief. Nothing has been submitted yet.
             </p>
+            <dl className="mb-10 space-y-5 text-left">
+              {steps.map((step) => <div key={step.id} className="border-b border-white/10 pb-5"><dt className="text-sm text-white/60">{step.question}</dt><dd className="mt-2 text-lg text-white">{step.options.find((option) => option.id === answers[step.id])?.label}</dd></div>)}
+            </dl>
             <div className="flex flex-col md:flex-row gap-4 justify-center">
-              <Link to="/contact">
-                <Button size="lg" className="w-full md:w-auto">Submit Specification</Button>
-              </Link>
-              <Link to="/booking">
-                <Button size="lg" variant="outline" className="w-full md:w-auto">Book Strategy Session</Button>
-              </Link>
+              <Link to="/contact" state={{ projectBrief: { subject: 'Project inquiry', message: brief } }} className="studio-button studio-button-primary inline-flex items-center justify-center">Continue with this brief</Link>
+              <button type="button" className="studio-button studio-button-secondary" onClick={() => { setIsFinished(false); setCurrentStep(0); }}>Edit choices</button>
             </div>
           </motion.div>
         )}

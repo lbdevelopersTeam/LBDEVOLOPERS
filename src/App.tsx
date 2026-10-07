@@ -9,7 +9,6 @@ import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 import WhatsAppButton from './components/common/WhatsAppButton';
 import { MotionConfig } from 'motion/react';
-import { FloatingShapes } from './components/common/Animations';
 import ScrollToTop from './components/common/ScrollToTop';
 import { useSeo, type SeoOptions } from './lib/seo';
 import Home from './pages/Home';
@@ -211,7 +210,6 @@ export default function App() {
 function AppShell() {
   const location = useLocation();
   const isAdmin = location.pathname.startsWith('/admin');
-  const isHome = location.pathname === '/';
 
   return (
     <>
@@ -219,12 +217,11 @@ function AppShell() {
       <StaticRouteSeo />
       <a
         href="#main-content"
-        className="fixed left-4 top-4 z-[200] hidden -translate-y-24 rounded-full bg-white px-5 py-3 text-xs font-black uppercase tracking-widest text-black transition-transform focus:translate-y-0 lg:block"
+        className="fixed left-4 top-4 z-[200] -translate-y-24 rounded-full bg-white px-5 py-3 text-xs font-bold text-black transition-transform focus:translate-y-0"
       >
         Skip to content
       </a>
-      <div id="top" className="flex min-h-screen flex-col">
-        {!isAdmin && !isHome && <FloatingShapes />}
+      <div id="top" className={`flex min-h-screen flex-col${isAdmin ? '' : ' studio-site'}`}>
         {!isAdmin && <Navbar />}
         <main id="main-content" tabIndex={-1} className="flex-grow outline-none">
           <AnimatedRoutes />

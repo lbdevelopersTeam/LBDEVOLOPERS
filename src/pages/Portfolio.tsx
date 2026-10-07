@@ -6,6 +6,7 @@ import { SectionHeader, Button } from '../components/common/UI';
 import { HeroBackground, LetterReveal, SplitTextReveal, TextReveal } from '../components/common/Animations';
 import { cachedFetch, fallbackProjects, mergeCuratedProjects, Paginated, Project } from '../lib/content';
 import { cn } from '../lib/utils';
+import { PortfolioBreakdown, PortfolioStandards } from '../components/common/StudioVisuals';
 
 const categories = ['All', 'Web', 'Mobile', 'E-commerce', 'Custom'];
 
@@ -124,7 +125,7 @@ export default function Portfolio() {
               <LetterReveal text="SELECTED WORK" className="text-[10px] font-bold uppercase tracking-[0.3em] text-white/55" />
             </motion.div>
             <SplitTextReveal
-              text="WORK, WITH CONTEXT."
+              text="Real work. Clear context."
               as="h1"
               className="mb-12 font-display text-4xl font-black uppercase leading-[0.95] tracking-tighter text-3d sm:text-5xl md:text-6xl lg:text-7xl"
             />
@@ -137,6 +138,8 @@ export default function Portfolio() {
       </section>
 
       <div className="mx-auto max-w-[1600px] px-6 py-16 sm:px-8 md:px-12 md:py-20 lg:px-24">
+        <PortfolioBreakdown projects={projects} />
+        <PortfolioStandards />
         <section className="mb-12 border-y border-white/10 py-5 md:mb-16">
           <div className="flex flex-col items-center justify-between gap-6 md:flex-row">
             <div className="flex flex-wrap justify-center gap-3 md:justify-start">
@@ -144,6 +147,7 @@ export default function Portfolio() {
                 <button
                   key={category}
                   onClick={() => setFilter(category)}
+                  aria-pressed={filter === category}
                   className={cn(
                     'min-h-11 border-b px-4 py-3 text-[10px] font-black uppercase tracking-[0.2em] transition-colors duration-300 sm:px-5',
                     filter === category

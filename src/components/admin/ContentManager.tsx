@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { Edit3, Save, Search, Trash2, Plus, Sparkles, X, CheckCircle2 } from 'lucide-react';
+import { Edit3, Save, Search, Trash2, Plus, CircleHelp, X, CheckCircle2 } from 'lucide-react';
 import { fetchJson, slugify, tagsFromString } from '../../lib/content';
 import { cn } from '../../lib/utils';
 import MediaUploadButton from './MediaUploadButton';

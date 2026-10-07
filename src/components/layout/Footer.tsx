@@ -12,7 +12,7 @@ export default function Footer() {
     <footer className="bg-brand-dark pt-20 pb-10 px-6 border-t border-white/5 relative overflow-hidden md:pt-32 md:pb-12">
       <div className="max-w-[1600px] mx-auto">
         {/* Large Cinematic Background Text */}
-        <div className="absolute top-20 left-0 right-0 hidden pointer-events-none select-none overflow-hidden opacity-[0.02] whitespace-nowrap sm:block">
+        <div aria-hidden="true" className="absolute top-20 left-0 right-0 hidden pointer-events-none select-none overflow-hidden opacity-[0.02] whitespace-nowrap sm:block">
           <span className="text-[7rem] md:text-[12rem] lg:text-[18rem] font-display font-black tracking-tighter uppercase leading-none">LB CODEBASE</span>
         </div>
 

@@ -83,9 +83,7 @@ export default function BlogPost() {
       <div className="min-h-screen bg-brand-dark flex flex-col items-center justify-center p-6 text-center">
         <h1 className="text-4xl font-display font-black uppercase mb-6 tracking-tighter">Transmission Lost</h1>
         <p className="text-white/40 mb-10 max-w-md uppercase tracking-widest text-xs">The requested log ID does not exist in our historical archive.</p>
-        <Link to="/blog">
-          <Button variant="outline">Return to Repository</Button>
-        </Link>
+<Link to="/blog" className="studio-button studio-button-secondary inline-flex items-center justify-center">Return to Repository</Link>
       </div>
     );
   }
@@ -207,9 +205,7 @@ export default function BlogPost() {
             <div className="p-6 md:p-8 bg-brand-primary/10 border border-brand-primary/20 rounded-[1.5rem] md:rounded-[2rem]">
                <h4 className="text-sm font-black uppercase tracking-tighter mb-4 text-white">Project Consultancy</h4>
                <p className="text-xs text-white/60 mb-6 leading-relaxed">Inspired by this insight? Let's discuss your next infrastructure shift.</p>
-               <Link to="/contact">
-                 <Button className="w-full text-[10px]">Initialize Protocol</Button>
-               </Link>
+<Link to="/contact" className="studio-button studio-button-primary inline-flex items-center justify-center">Discuss your project</Link>
             </div>
           </aside>
         </div>
@@ -219,9 +215,7 @@ export default function BlogPost() {
            <div className="relative z-10">
               <h3 className="text-3xl md:text-6xl font-display font-black uppercase mb-6 tracking-tighter">CONTINUE THE CONVERSATION.</h3>
               <p className="text-white/80 max-w-xl mx-auto mb-12 text-sm leading-relaxed">Bring us your goals, constraints, and current stack. We will respond with a practical next step.</p>
-              <Link to="/contact" className="inline-flex">
-                <Button variant="secondary" className="uppercase font-black text-[10px] tracking-widest px-8">Start a Project Brief</Button>
-              </Link>
+<Link to="/contact" className="studio-button studio-button-primary inline-flex items-center justify-center">Start a Project Brief</Link>
            </div>
         </div>
       </div>

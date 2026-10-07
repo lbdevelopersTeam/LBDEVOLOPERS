@@ -4,6 +4,8 @@ import React, { useState } from 'react';
 import { Plus, Minus, ArrowRight } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { TextReveal, LetterReveal, Magnetic, HeroBackground } from '../components/common/Animations';
+import { FAQGuide } from '../components/common/StudioVisuals';
+import { useNavigate } from 'react-router-dom';
 
 const faqs = [
   {
@@ -36,6 +38,9 @@ const FAQItem: React.FC<{ question: string; answer: string; i: number }> = ({ qu
       className="border-b border-white/5 last:border-none group"
     >
       <button
+        type="button"
+        aria-expanded={isOpen}
+        aria-controls={`faq-answer-${i}`}
         onClick={() => setIsOpen(!isOpen)}
         className="w-full py-7 md:py-10 flex justify-between items-center gap-5 text-left focus:outline-none"
       >
@@ -56,6 +61,7 @@ const FAQItem: React.FC<{ question: string; answer: string; i: number }> = ({ qu
       <AnimatePresence>
         {isOpen && (
           <motion.div
+            id={`faq-answer-${i}`}
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
@@ -73,14 +79,15 @@ const FAQItem: React.FC<{ question: string; answer: string; i: number }> = ({ qu
 }
 
 export default function FAQ() {
+  const navigate = useNavigate();
   return (
     <motion.div 
       initial={false}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="pb-12 px-6 sm:px-8 md:px-12 lg:px-24"
+      className="inner-page pb-12"
     >
-      <div className="max-w-[1600px] mx-auto">
+      <div>
         {/* Proper FAQ Hero */}
         <section className="relative min-h-screen flex items-center pt-24 pb-12 overflow-hidden">
           <HeroBackground poster="/images/thesearchforabsolutesection.jpg" />
@@ -105,8 +112,8 @@ export default function FAQ() {
                 transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
                 className="fluid-display font-display font-black uppercase leading-none"
               >
-                YOUR <br />
-                <span className="text-white/10 uppercase italic tracking-tighter">ANSWERS.</span>
+                Good questions.<br />
+                <span className="text-brand-primary">Clear answers.</span>
               </motion.h1>
             </div>
 
@@ -128,10 +135,11 @@ export default function FAQ() {
           </motion.div>
         </section>
 
-        <div className="max-w-5xl mt-8 border-t border-white/5">
-          {faqs.map((faq, i) => (
-            <FAQItem key={i} question={faq.question} answer={faq.answer} i={i} />
-          ))}
+        <div className="studio-faq-layout mt-8">
+          <div className="max-w-5xl border-t border-white/5">
+            {faqs.map((faq, i) => <FAQItem key={i} question={faq.question} answer={faq.answer} i={i} />)}
+          </div>
+          <FAQGuide />
         </div>
 
         <motion.div 
@@ -144,8 +152,8 @@ export default function FAQ() {
             <h3 className="text-3xl md:text-5xl font-display font-black mb-6 md:mb-8 tracking-tighter uppercase">STILL CURIOUS?</h3>
             <p className="text-white/40 text-base md:text-xl mb-8 md:mb-12 max-w-2xl mx-auto font-light">Our engineering team is ready to break down the complexities of your next big move.</p>
             <Magnetic strength={0.2}>
-              <Button size="lg" data-cursor="TALK">
-                Initiate Contact
+              <Button size="lg" onClick={() => navigate('/contact')}>
+                Contact the team
                 <ArrowRight className="ml-2 w-5 h-5" />
               </Button>
             </Magnetic>

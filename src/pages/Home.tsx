@@ -1,7 +1,7 @@
-import { motion } from 'motion/react';
+import { motion, useReducedMotion } from 'motion/react';
 import { Button, SectionHeader, BentoCard } from '../components/common/UI';
 import { lazy, Suspense, useEffect, useRef, useState } from 'react';
-import { ArrowRight, Code, Palette, Zap, Globe, Cpu, Smartphone, BarChart as ChartBar, Send, Shield, Activity, Rocket, Bot } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, ChevronLeft, ChevronRight, Code, Palette, Gauge, Globe, Cpu, Smartphone, BarChart as ChartBar, Send, Shield, Activity, Rocket, Bot } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { cn } from '../lib/utils';
 import { DeferredVideo, Magnetic, TextReveal, LetterReveal } from '../components/common/Animations';
@@ -9,6 +9,7 @@ import type { BlogPost, Paginated, Project } from '../lib/content';
 import { cachedPublicFetch } from '../lib/public-api';
 import { homeFallbackBlogs, homeFallbackProjects } from '../lib/home-content';
 import { useContactEmail } from '../lib/site-settings';
+import { DeliveryRoadmap, HomeCapabilities, PlatformMatrix, ResultsDashboard, ServiceMatrix, StrategyTimeline, StudioProofPanel, WorkShowcase } from '../components/common/StudioVisuals';
 
 // HeroScene3D removed to use a solid black hero background per request
 
@@ -19,7 +20,7 @@ const capabilityTracks = [
     description: 'Clear brand and content systems for websites that need to explain, persuade, and convert.',
   },
   {
-    icon: Zap,
+    icon: Gauge,
     title: 'Product Experiences',
     description: 'Commerce and product journeys designed around real customer decisions.',
   },
@@ -83,8 +84,74 @@ const responsiveProjectImages = new Set([
 ]);
 
 const projectImageSrcSet = (src: string) => responsiveProjectImages.has(src)
-  ? `${src.replace('.webp', '-480.webp')} 480w, ${src.replace('.webp', '-800.webp')} 800w, ${src} 1460w`
+  ? `${encodeURI(src.replace('.webp', '-480.webp'))} 480w, ${encodeURI(src.replace('.webp', '-800.webp'))} 800w, ${encodeURI(src)} 1460w`
   : undefined;
+
+function FeaturedProjectCarousel({ projects }: { projects: Project[] }) {
+  const slides = projects.slice(0, 5);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const [interacting, setInteracting] = useState(false);
+  const reducedMotion = useReducedMotion();
+
+  useEffect(() => {
+    if (paused || interacting || reducedMotion || slides.length < 2) return undefined;
+    const timer = window.setInterval(() => setActiveIndex((current) => (current + 1) % slides.length), 6500);
+    return () => window.clearInterval(timer);
+  }, [paused, interacting, reducedMotion, slides.length]);
+
+  if (!slides.length) return null;
+  const safeIndex = Math.min(activeIndex, slides.length - 1);
+  const project = slides[safeIndex];
+  const image = project.image || project.thumbnail;
+
+  const move = (direction: -1 | 1) => {
+    setActiveIndex((current) => (current + direction + slides.length) % slides.length);
+  };
+
+  return (
+    <section className="studio-project-carousel" aria-labelledby="featured-carousel-heading"
+      onMouseEnter={() => setInteracting(true)} onMouseLeave={() => setInteracting(false)}
+      onFocusCapture={() => setInteracting(true)}
+      onBlurCapture={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) setInteracting(false); }}>
+      <div className="studio-container">
+        <div className="studio-carousel-heading">
+          <div>
+            <p className="studio-eyebrow">Selected work / swipe through</p>
+            <h2 id="featured-carousel-heading">A closer look at<br /><span className="studio-gradient-text">what we make.</span></h2>
+          </div>
+          <div className="studio-carousel-controls">
+            <span aria-live="polite">{String(activeIndex + 1).padStart(2, '0')} / {String(slides.length).padStart(2, '0')}</span>
+            <button type="button" onClick={() => move(-1)} aria-label="Previous featured project"><ChevronLeft size={19} aria-hidden="true" /></button>
+            <button type="button" onClick={() => move(1)} aria-label="Next featured project"><ChevronRight size={19} aria-hidden="true" /></button>
+          </div>
+        </div>
+
+        <div className="studio-carousel-frame" role="region" aria-roledescription="carousel" aria-label="Featured portfolio projects">
+          <div className="studio-carousel-glow" aria-hidden="true" />
+          <div className="studio-carousel-image">
+            <img key={image} src={image} srcSet={projectImageSrcSet(image)} sizes="(max-width: 767px) 100vw, 58vw" alt={project.title} />
+            <span className="studio-carousel-image-label">{project.category || 'Selected project'}</span>
+          </div>
+          <div className="studio-carousel-copy" aria-live={paused || interacting || reducedMotion ? 'polite' : 'off'}>
+            <span className="studio-carousel-index">Case study {String(activeIndex + 1).padStart(2, '0')}</span>
+            <h3>{project.title}</h3>
+            <p>{project.shortDescription || project.description}</p>
+            <div className="studio-carousel-tags">{project.technologies.slice(0, 3).map((technology) => <span key={technology}>{technology}</span>)}</div>
+            <Link to={`/portfolio/${project.slug}`} className="studio-text-link">View case study <ArrowUpRight size={18} aria-hidden="true" /></Link>
+          </div>
+        </div>
+
+        <div className="studio-carousel-footer">
+          <div className="studio-carousel-dots" role="group" aria-label="Choose featured project">
+            {slides.map((item, index) => <button key={item.id} type="button" aria-pressed={safeIndex === index} aria-label={`Show ${item.title}`} onClick={() => setActiveIndex(index)}><span /></button>)}
+          </div>
+          {!reducedMotion && <button type="button" className="carousel-pause" aria-pressed={paused} onClick={() => setPaused(!paused)}>{paused ? 'Resume slideshow' : 'Pause slideshow'}</button>}
+        </div>
+      </div>
+    </section>
+  );
+}
 
 export default function Home() {
   const navigate = useNavigate();
@@ -116,74 +183,85 @@ export default function Home() {
   const portfolioCategories = Array.from(new Set(projects.map((project) => project.category))).slice(0, 3);
 
   return (
-    <div className="overflow-hidden relative bg-brand-dark">
+    <div className="relative overflow-hidden bg-brand-dark">
       {/* Hero Section */}
-      <section id="home-hero" className="section-transition relative min-h-screen flex items-center pt-32 sm:pt-36 md:pt-40 pb-12 overflow-hidden bg-black">
-        <div className="absolute inset-0 z-0 bg-black" />
-        <motion.div className="max-w-[1600px] mx-auto w-full px-4 sm:px-6 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            <div className="lg:col-span-7">
+      <section id="home-hero" className="section-transition relative isolate flex min-h-[760px] items-center overflow-hidden bg-[#03030b] pb-16 pt-32 sm:min-h-[820px] sm:pt-36 lg:min-h-[900px] lg:pt-40">
+        <div className="home-hero-ambient" aria-hidden="true" />
+        <motion.div className="home-hero-content relative z-20 mx-auto w-full max-w-[1600px] px-5 sm:px-8 lg:px-16">
+          <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-6">
+            <div className="max-w-3xl lg:col-span-7">
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-                className="mb-8 inline-flex items-center gap-3 text-[10px] font-bold uppercase tracking-[0.28em] text-white/55"
+                className="mb-7 inline-flex items-center gap-3 text-[10px] font-bold uppercase tracking-[0.3em] text-white/65"
               >
                 <span className="h-px w-9 bg-brand-primary" />
                 <LetterReveal text="DESIGN + ENGINEERING STUDIO" />
               </motion.div>
               
-              <div className="overflow-hidden mb-12">
+              <div className="mb-8 max-w-4xl overflow-hidden sm:mb-10">
                 <motion.h1
                   initial={{ y: "100%" }}
                   animate={{ y: 0 }}
                   transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
-                  className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-black leading-[0.95] tracking-tighter uppercase"
+                  className="text-[clamp(2.75rem,7vw,6.75rem)] font-display font-black uppercase leading-[0.9] tracking-[-0.07em] text-white drop-shadow-[0_8px_34px_rgba(0,0,0,0.35)]"
                 >
-                  WE DESIGN AND BUILD <br />
-                  <span className="text-brand-primary">DIGITAL PRODUCTS.</span>
+                  We design and build <br />
+                  <span className="bg-gradient-to-r from-[#31d7ff] via-[#31a8ff] to-[#6e7cff] bg-clip-text text-transparent">digital products.</span>
                 </motion.h1>
               </div>
               
               <TextReveal 
                 text="LB CodeBase builds websites, commerce platforms, and product experiences for teams that care about clarity, performance, and craft."
-                className="mb-12 max-w-2xl text-lg font-normal leading-7 text-white/58 md:text-xl md:leading-8"
+                className="mb-9 max-w-xl text-base font-normal leading-7 text-white/70 sm:mb-11 sm:text-lg sm:leading-8"
               />
               
               <motion.div 
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 1 }}
-                className="flex flex-col sm:flex-row gap-4 sm:gap-6"
+                className="flex flex-col gap-3 sm:flex-row sm:gap-4"
               >
                 <Magnetic strength={0.2}>
-                  <Button size="lg" className="w-full sm:w-auto" onClick={() => navigate('/contact')}>
+                  <Button size="lg" className="w-full shadow-[0_0_30px_rgba(61,90,254,0.28)] sm:w-auto" onClick={() => navigate('/contact')}>
                     Start a project
                   </Button>
                 </Magnetic>
                 <Magnetic strength={0.1}>
-                  <Button variant="outline" size="lg" className="w-full border-white/10 sm:w-auto" onClick={() => navigate('/portfolio')}>
+                  <Button variant="outline" size="lg" className="w-full border-white/25 bg-white/[0.03] sm:w-auto" onClick={() => navigate('/portfolio')}>
                     View selected work
                   </Button>
                 </Magnetic>
               </motion.div>
+
             </div>
-            
-            {/* Side Video */}
-            <div className="lg:col-span-5 relative">
-              <div className="home-hero-video-frame relative aspect-[4/3] overflow-hidden rounded-2xl bg-black sm:aspect-[16/10] md:rounded-3xl lg:aspect-[4/5]">
-                <DeferredVideo
-                  src="/videos/home-hero-side.mp4"
-                  poster="/images/home-hero-side-poster.webp"
-                  allowCoarsePointer
-                  className="home-hero-video absolute inset-0 h-full w-full object-cover"
-                />
-              </div>
+
+            <div className="home-hero-floating-stage relative z-30 order-last flex min-h-[280px] items-center justify-center lg:col-span-5 lg:min-h-[560px]">
+              <div className="pointer-events-none absolute inset-0 rounded-full bg-[radial-gradient(circle,rgba(73,93,255,0.3),transparent_62%)] blur-3xl" />
+              <video
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="auto"
+                disablePictureInPicture
+                tabIndex={-1}
+                aria-hidden="true"
+                poster="/videos/LB CodeBase Futuristic Digital Studio.png"
+                className="home-hero-floating-video relative z-10 h-full w-full object-contain object-center"
+              >
+                <source src="/videos/lb-codebase-hero-transparent.webm" type="video/webm" />
+              </video>
             </div>
           </div>
         </motion.div>
 
         {/* System status removed site-wide */}
+      </section>
+
+      <section className="trusted-by-strip" aria-label="Trusted by teams across sectors">
+        <div className="trusted-by-inner"><span className="trusted-by-label">Trusted by teams building what’s next</span><div className="trusted-by-list"><span>VOGUE DECOR</span><span>SPARKALADS</span><span>NOOR GEMSTONE</span><span>GAO TEK</span><span>JUGO</span></div></div>
       </section>
 
       {/* Capabilities - Brand-Led Systems */}
@@ -196,7 +274,8 @@ export default function Home() {
         <div className="absolute inset-0 bg-gradient-to-b from-brand-dark via-brand-dark/75 to-brand-dark" />
         <div className="absolute inset-0 opacity-[0.06] bg-[linear-gradient(90deg,rgba(255,255,255,0.16)_1px,transparent_1px),linear-gradient(rgba(255,255,255,0.16)_1px,transparent_1px)] bg-[size:88px_88px]" />
 
-        <div className="relative z-10 mx-auto max-w-[1600px]">
+        <HomeCapabilities />
+        <div className="home-capabilities-old relative z-10 mx-auto max-w-[1600px]">
           <div className="grid grid-cols-1 gap-6 lg:grid-cols-[0.92fr_1.08fr]">
             <motion.div
               initial={{ opacity: 0, y: 24 }}
@@ -212,7 +291,7 @@ export default function Home() {
                 </div>
 
                 <h2 className="max-w-3xl font-display text-3xl font-black uppercase leading-[0.95] tracking-tighter text-white sm:text-4xl md:text-5xl">
-                  One team from product thinking to production code.
+                  One team <span className="studio-highlight">from product thinking to production code.</span>
                 </h2>
                 <p className="mt-6 max-w-2xl text-sm font-light leading-7 text-white/55 md:text-base">
                   We connect the work that is often split between agencies: structure, interface design, frontend engineering, commerce, and launch support.
@@ -335,6 +414,12 @@ export default function Home() {
 
       {/* Partners - Infinite Marquee */}
       <DeferredMount minHeight={240}><PartnerShowcase /></DeferredMount>
+      <FeaturedProjectCarousel projects={projects} />
+      <WorkShowcase />
+      <ServiceMatrix />
+      <StrategyTimeline />
+      <ResultsDashboard />
+      <PlatformMatrix />
 
       {/* Services - The Bento Grid */}
       <section className="py-16 px-6 sm:px-8 md:px-12 lg:px-24 md:py-20 bg-brand-dark">
@@ -387,7 +472,7 @@ export default function Home() {
             </BentoCard>
 
             <BentoCard span="col-span-1" className="justify-center items-center text-center">
-              <Zap className="w-10 h-10 text-brand-primary mb-6" />
+              <Gauge className="w-10 h-10 text-brand-primary mb-6" />
               <h3 className="text-lg font-display font-black uppercase tracking-tighter">E-commerce</h3>
             </BentoCard>
 
@@ -421,7 +506,7 @@ export default function Home() {
       </section>
 
       {/* Manifesto Section - Optimized */}
-      <section className="py-16 px-6 sm:px-8 md:px-12 lg:px-24 md:py-20 bg-brand-gray relative overflow-hidden">
+      <section className="home-manifesto-old py-16 px-6 sm:px-8 md:px-12 lg:px-24 md:py-20 bg-brand-gray relative overflow-hidden">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div>
@@ -472,7 +557,7 @@ export default function Home() {
       </section>
 
       {/* Insights Section - Tiny Blog */}
-      <section className="py-16 px-6 sm:px-8 md:px-12 lg:px-24 md:py-20 border-t border-white/5 bg-brand-dark/80 relative z-10">
+      <section className="home-insights-old py-16 px-6 sm:px-8 md:px-12 lg:px-24 md:py-20 border-t border-white/5 bg-brand-dark/80 relative z-10">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 text-center md:text-left">
             {[
@@ -652,69 +737,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Process Section - Cinematic Flow */}
-      <section className="py-16 px-6 sm:px-8 md:px-12 lg:px-24 md:py-20 relative overflow-hidden bg-brand-dark">
-        <div className="max-w-7xl mx-auto">
-          <SectionHeader 
-            badge="Process"
-            title={<>A practical route <br /> <span className="text-white/55">from brief to launch.</span></>}
-            description="A four-part process that keeps product decisions visible and gives design and engineering the same source of truth."
-            align="left"
-            className="mb-16"
-          />
-          
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 relative">
-            {[
-              { 
-                step: '01', 
-                title: 'DISCOVERY', 
-                desc: 'We clarify the audience, business goal, content, constraints, and the decisions that matter most.'
-              },
-              { 
-                step: '02', 
-                title: 'ART DIRECTION', 
-                desc: 'We define the information hierarchy, visual direction, and responsive behavior in working prototypes.'
-              },
-              { 
-                step: '03', 
-                title: 'ARCHITECTURE', 
-                desc: 'We build reusable components, connect real content, and test the details across devices.'
-              },
-              { 
-                step: '04', 
-                title: 'DEPLOYMENT', 
-                desc: 'We verify performance and accessibility, support launch, and prioritize the next iteration.'
-              },
-            ].map((p, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8, delay: i * 0.1 }}
-                className="group relative flex h-full flex-col justify-between border-t border-white/10 py-7 transition-colors duration-300 hover:border-brand-primary/60 lg:px-2"
-              >
-                <div>
-                  <div className="flex items-center justify-between mb-12">
-                    <div className="text-4xl font-display font-black text-white/5 group-hover:text-brand-primary/20 transition-colors">
-                      {p.step}
-                    </div>
-                    <div className="flex h-8 w-8 items-center justify-center text-brand-primary">
-                      <div className="h-1.5 w-1.5 rounded-full bg-brand-primary" />
-                    </div>
-                  </div>
-                  <h3 className="text-xl font-display font-black mb-4 tracking-tighter uppercase group-hover:text-brand-primary transition-colors">
-                    {p.title}
-                  </h3>
-                  <p className="text-white/70 text-sm font-light leading-relaxed">
-                    {p.desc}
-                  </p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <DeliveryRoadmap />
+      <StudioProofPanel />
 
       <DeferredMount minHeight={520}><ClientReviews /></DeferredMount>
 
@@ -786,7 +810,7 @@ export default function Home() {
       </section>
 
       {/* Inquiry Form - Professional Glass */}
-      <section className="py-16 px-6 sm:px-8 md:px-12 lg:px-24 md:py-20 bg-brand-gray/50 border-y border-white/5 relative overflow-hidden">
+      <section className="home-contact-section py-16 px-6 sm:px-8 md:px-12 lg:px-24 md:py-20 bg-brand-gray/50 border-y border-white/5 relative overflow-hidden">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div>
             <SectionHeader 
@@ -815,7 +839,7 @@ export default function Home() {
       </section>
 
       {/* Final CTA */}
-      <section className="py-24 px-6 md:px-20">
+      <section className="home-final-cta py-24 px-6 md:px-20">
         <motion.div 
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}

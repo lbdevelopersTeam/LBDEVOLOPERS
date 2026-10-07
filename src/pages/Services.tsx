@@ -1,12 +1,13 @@
 import { motion } from 'motion/react';
 import { SectionHeader, Button } from '../components/common/UI';
-import { Layout, Smartphone, Search, Database, BarChart, HardDrive, Shield, Layers, Palette, Code, Cpu, ArrowRight, Zap, Bot, Workflow, Mic2, Cable, PanelsTopLeft, Sparkles, CalendarDays, LayoutDashboard, BookOpenText, Shapes, type LucideIcon } from 'lucide-react';
+import { Layout, Smartphone, Search, Database, BarChart, HardDrive, Shield, Layers, Palette, Code, Cpu, ArrowRight, CheckCircle2, Bot, Workflow, Mic2, Cable, PanelsTopLeft, Gauge, ShoppingBag, CalendarDays, LayoutDashboard, BookOpenText, Shapes, type LucideIcon } from 'lucide-react';
 import { TextReveal, LetterReveal, Magnetic, ImageReveal, ParallaxSection, HeroBackground } from '../components/common/Animations';
 import ProjectCalculator from '../components/common/ProjectCalculator';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { cn } from '../lib/utils';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, type CSSProperties } from 'react';
 import { cachedFetch } from '../lib/content';
+import BrandLogo from '../components/common/BrandLogo';
 
 const fallbackServiceList = [
   {
@@ -38,7 +39,7 @@ const fallbackServiceList = [
     image: "/images/appdevolopmentservice.jpeg"
   },
   {
-    icon: <Zap className="w-8 h-8" />,
+    icon: <BrandLogo name="Shopify" className="h-8 w-8" />,
     title: "SHOPIFY & E-COM",
     desc: "Shopify and WooCommerce stores with practical catalog structure, custom themes, useful integrations, and a clear route to checkout.",
     features: ["Custom Liquid Themes", "Checkout Optimization", "API Integrations", "CRO Strategy"],
@@ -60,8 +61,58 @@ const fallbackServiceList = [
   }
 ];
 
+function ServicePageDirectory({ onStart }: { onStart: (index: number) => void }) {
+return <section className="services-directory" aria-labelledby="services-directory-heading"><div className="services-page-container"><div className="services-section-intro"><div><span className="services-kicker">What we can take off your plate</span><h2 id="services-directory-heading">Choose the<br /><em>right starting point.</em></h2></div><p>Some teams need a new experience. Others need a better system behind the one they already have. Start with the problem, then choose the depth of support.</p></div><div className="services-directory-grid">{fallbackServiceList.map((service, index) => <button type="button" key={service.title} onClick={() => onStart(index)} className="services-directory-card"><span className="services-directory-number">0{index + 1}</span><span className="services-directory-icon">{service.icon}</span><strong>{service.title}</strong><small>{service.desc}</small><span className="services-directory-link">Explore service <ArrowRight size={15} aria-hidden="true" /></span></button>)}</div></div></section>;
+}
+
+function ServicePageProcess() {
+  const steps = [
+    { title: 'Frame', detail: 'Audience, business goals, constraints', output: 'A clear brief', icon: Search },
+    { title: 'Shape', detail: 'Flows, content, and interface system', output: 'An agreed direction', icon: Palette },
+    { title: 'Build', detail: 'Production code, integrations, and QA', output: 'A working system', icon: Code },
+    { title: 'Improve', detail: 'Launch support, measurement, iteration', output: 'The next improvement', icon: Gauge },
+  ];
+  return (
+    <section className="services-process" aria-labelledby="services-process-heading">
+      <div className="services-page-container">
+        <div className="services-section-intro services-section-intro-centered">
+          <div><span className="services-kicker">A calmer way to ship</span><h2 id="services-process-heading">A clear path from<br /><em>brief to better.</em></h2></div>
+          <p>Each stage has a decision to make and an artifact to review. You always know what is happening next.</p>
+        </div>
+        <ol className="services-process-grid">
+          {steps.map(({ title, detail, output, icon: Icon }, index) => (
+            <li key={title} style={{ '--process-step': index } as CSSProperties}>
+              <div className="services-process-card" data-step={`0${index + 1}`}>
+                <div className="services-process-card-top">
+                  <span className="services-process-number">0{index + 1}</span>
+                  <Icon aria-hidden="true" size={21} />
+                </div>
+                <h3>{title}</h3>
+                <p>{detail}</p>
+                <div className="services-process-output"><span>Outcome</span><strong>{output}</strong></div>
+              </div>
+              {index < steps.length - 1 && (
+                <span className="services-process-connector" aria-hidden="true">
+                  <svg className="desktop-flow-connector" viewBox="0 0 34 34" fill="none"><path d="M0 33H17V1H33M28 0L33 1L29 6" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" /></svg>
+                  <ArrowRight className="mobile-flow-arrow" size={24} />
+                </span>
+              )}
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+  );
+}
+
+function ServicePageFit() {
+  const rows = [['New website', 'Brand system · UX · Frontend'], ['Existing website', 'Audit · Redesign · Migration'], ['Commerce', 'Catalog · Shopify · Checkout'], ['Operations', 'Automation · AI agents · Integrations']];
+  return <section className="services-fit" aria-labelledby="services-fit-heading"><div className="services-page-container services-fit-grid"><div><span className="services-kicker">Pick the shape of the work</span><h2 id="services-fit-heading">The service<br /><em>fits the situation.</em></h2><p>We are comfortable entering early, in the middle of a redesign, or when the system needs to become more reliable after launch.</p></div><div className="services-fit-table">{rows.map(([need, answer], index) => <div key={need}><span>0{index + 1}</span><strong>{need}</strong><p>{answer}</p><ArrowRight size={18} aria-hidden="true" /></div>)}</div></div></section>;
+}
+
 type Capability = {
   icon: LucideIcon;
+  brand?: string;
   title: string;
   description: string;
   examples: string[];
@@ -83,6 +134,7 @@ const specialistServices: Capability[] = [
   {
     icon: BookOpenText,
     title: 'CMS & content platforms',
+    brand: 'WordPress',
     description: 'Easy-to-manage publishing experiences, built with WordPress or a custom content workflow when the brief calls for it.',
     examples: ['Editorial websites', 'Custom admin panels', 'Blog and resource libraries'],
   },
@@ -98,17 +150,19 @@ const automationServices: Capability[] = [
   {
     icon: PanelsTopLeft,
     title: 'Framer websites',
+    brand: 'Framer',
     description: 'Fast, expressive marketing sites with a content system your team can update without rebuilding the experience.',
     examples: ['Campaign landing pages', 'CMS-driven portfolios', 'Responsive interactions'],
   },
   {
     icon: Workflow,
     title: 'n8n workflow automation',
+    brand: 'n8n',
     description: 'Connected workflows that move information between the tools your team already uses, with clear failure handling.',
     examples: ['Lead routing into a CRM', 'Client onboarding flows', 'Order and status updates'],
   },
   {
-    icon: Sparkles,
+    icon: Gauge,
     title: 'AI process automation',
     description: 'Practical AI steps inside existing operations, with human review where accuracy and judgment matter.',
     examples: ['Document intake', 'Support ticket triage', 'Content classification'],
@@ -133,20 +187,20 @@ const automationServices: Capability[] = [
   },
 ];
 
-function CapabilityCard({ icon: Icon, title, description, examples }: Capability) {
+function CapabilityCard({ icon: Icon, brand, title, description, examples, index = 0 }: Capability & { index?: number }) {
   return (
-    <article className="group flex h-full min-w-0 flex-col rounded-lg border border-white/10 bg-white/[0.025] p-6 transition-[border-color,background-color,transform] duration-300 hover:-translate-y-1 hover:border-brand-primary/40 hover:bg-white/[0.045] sm:p-7">
-      <div className="mb-7 flex h-11 w-11 items-center justify-center rounded-lg border border-brand-primary/25 bg-brand-primary/10 text-brand-primary transition-colors group-hover:border-brand-primary/45 group-hover:bg-brand-primary/15">
-        <Icon className="h-5 w-5" aria-hidden="true" />
-      </div>
+    <article className="capability-card group flex h-full min-w-0 flex-col rounded-lg border border-white/10 bg-white/[0.025] p-6 transition-[border-color,background-color,transform] duration-300 hover:-translate-y-1 hover:border-brand-primary/40 hover:bg-white/[0.045] sm:p-7">
+      {brand ? <BrandLogo name={brand} className="brand-watermark" /> : <Icon className="brand-watermark" aria-hidden="true" />}
+      <div className="capability-card-top"><span className="capability-card-number">0{index + 1}</span><div className="capability-card-icon flex h-11 w-11 items-center justify-center rounded-lg border border-brand-primary/25 bg-brand-primary/10 text-brand-primary transition-colors group-hover:border-brand-primary/45 group-hover:bg-brand-primary/15">
+        {brand ? <BrandLogo name={brand} className="h-6 w-6" /> : <Icon className="h-5 w-5" aria-hidden="true" />}
+      </div></div>
       <h3 className="font-display text-xl font-bold leading-tight text-white sm:text-2xl">{title}</h3>
       <p className="mt-3 text-sm leading-6 text-white/60">{description}</p>
-      <div className="mt-7 border-t border-white/10 pt-5">
+      <div className="capability-card-usecases mt-7 border-t border-white/10 pt-5">
         <p className="text-[10px] font-black uppercase tracking-[0.2em] text-brand-primary">Example use cases</p>
-        <ul className="mt-3 space-y-2.5">
+        <ul className="mt-3 flex flex-wrap gap-2">
           {examples.map((example) => (
-            <li key={example} className="flex items-start gap-2.5 text-sm leading-5 text-white/70">
-              <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-brand-primary" aria-hidden="true" />
+            <li key={example} className="flex items-start gap-2.5 rounded-full border border-white/10 bg-white/[0.035] px-3 py-1.5 text-xs leading-5 text-white/70">
               <span>{example}</span>
             </li>
           ))}
@@ -195,7 +249,7 @@ export default function Services() {
       initial={false}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="relative overflow-x-clip"
+      className="services-page relative overflow-x-clip"
     >
       {/* Proper Services Hero */}
       <section className="relative min-h-screen flex items-center pt-32 pb-24 overflow-hidden">
@@ -222,8 +276,8 @@ export default function Services() {
                   transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
                   className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-black uppercase leading-[0.95] tracking-tighter"
                 >
-                  DESIGN, BUILD, <br />
-                  <span className="text-brand-primary">AND SUPPORT.</span>
+                  Design, build,<br />
+                  <span className="text-brand-primary">and support.</span>
                 </motion.h1>
               </div>
 
@@ -243,12 +297,14 @@ export default function Services() {
           </motion.div>
         </section>
 
-        {/* Cinematic Service List */}
-        <div className="max-w-[1600px] mx-auto px-6 sm:px-8 md:px-12 lg:px-16 xl:px-20">
+        <ServicePageDirectory onStart={(index) => document.getElementById(`service-detail-${index}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' })} />
+        <ServicePageProcess />
+        <div className="services-content">
           <div className="space-y-16 md:space-y-24 mb-20 md:mb-32">
           {serviceList.map((s, i) => (
             <motion.div
               key={i}
+              id={`service-detail-${i}`}
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
@@ -304,8 +360,10 @@ export default function Services() {
           ))}
         </div>
 
-        {/* Specialist builds remain visible even when the main service list is CMS-managed. */}
-        <section id="specialist-builds" className="scroll-mt-28 border-t border-white/10 py-20 md:py-28">
+        </div>
+
+        {/* Full-width sections with their own content containers. */}
+        <section id="specialist-builds" className="services-specialist scroll-mt-28 border-t border-white/10 py-20 md:py-28">
           <SectionHeader
             badge="Specialist builds"
             title={<>Useful digital systems. <br /><span className="text-white/45">Built around your work.</span></>}
@@ -314,12 +372,12 @@ export default function Services() {
           />
 
           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-            {specialistServices.map((service) => <CapabilityCard key={service.title} {...service} />)}
+            {specialistServices.map((service, index) => <CapabilityCard key={service.title} {...service} index={index} />)}
           </div>
         </section>
 
         {/* Automation and AI services remain available alongside CMS-managed services. */}
-        <section id="automation-ai" className="scroll-mt-28 border-t border-white/10 py-20 md:py-28">
+        <section id="automation-ai" className="services-automation scroll-mt-28 border-t border-white/10 py-20 md:py-28">
           <SectionHeader
             badge="Automation & AI"
             title={<>Make the work flow. <br /><span className="text-white/45">Keep people in control.</span></>}
@@ -328,7 +386,7 @@ export default function Services() {
           />
 
           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-            {automationServices.map((service) => <CapabilityCard key={service.title} {...service} />)}
+            {automationServices.map((service, index) => <CapabilityCard key={service.title} {...service} index={index} />)}
           </div>
 
           <div className="mt-9 flex flex-col gap-5 border-t border-white/10 pt-7 sm:flex-row sm:items-center sm:justify-between">
@@ -339,8 +397,12 @@ export default function Services() {
           </div>
         </section>
 
+        <ServicePageFit />
+
+        <div className="services-content">
+
         {/* Pricing tiers */}
-        <section className="py-20 md:py-32 border-t border-white/5">
+        <section className="services-investment py-20 md:py-32 border-t border-white/5">
           <SectionHeader 
             badge="Investment"
             title={<>Starting points <br /> <span className="text-white/45">for common scopes.</span></>}
@@ -402,7 +464,7 @@ export default function Services() {
                 <div className="space-y-3 sm:space-y-4 md:space-y-6 mb-8 sm:mb-10 md:mb-16">
                   {p.features.map((f, j) => (
                     <div key={j} className="flex items-center gap-4">
-                      <Zap className={cn("w-4 h-4", p.popular ? "text-white" : "text-brand-primary")} />
+                      <CheckCircle2 className={cn("w-4 h-4", p.popular ? "text-white" : "text-brand-primary")} />
                       <span className={cn("text-xs md:text-sm font-bold uppercase tracking-widest", p.popular ? "text-white/90" : "text-white/60")}>{f}</span>
                     </div>
                   ))}
@@ -421,7 +483,7 @@ export default function Services() {
         </section>
 
         {/* Project Calculator - Premium Wrapper */}
-        <section className="py-20 md:py-32 lg:py-40 border-t border-white/5">
+        <section className="services-estimator py-20 md:py-32 lg:py-40 border-t border-white/5">
           <SectionHeader 
              badge="Project Estimator"
              title={<>Plan an initial <br /><span className="text-white/45">project range.</span></>}
@@ -434,7 +496,7 @@ export default function Services() {
         </section>
 
         {/* Global CTA */}
-        <section className="py-20 sm:py-32 lg:py-40 relative">
+        <section className="services-final-cta py-20 sm:py-32 lg:py-40 relative">
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}

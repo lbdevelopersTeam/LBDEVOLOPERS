@@ -2,7 +2,7 @@ import { Dribbble, Github, Globe2, Instagram, Linkedin, Palette, Twitter } from 
 import { CSSProperties, ReactNode } from 'react';
 import { Project, TeamMember } from '../../../lib/content';
 
-export const MEMBER_PORTFOLIO_ACCENT = '#3D5AFE';
+export const MEMBER_PORTFOLIO_ACCENT = '#b8a1ff';
 export const memberPortfolioTheme = {
   '--member-accent': MEMBER_PORTFOLIO_ACCENT,
 } as CSSProperties;

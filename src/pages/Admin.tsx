@@ -34,7 +34,7 @@ import {
   LoaderCircle,
   RefreshCw,
   ShieldCheck,
-  Sparkles,
+  CircleHelp,
   Copy,
   Send,
   Check,
@@ -1238,7 +1238,7 @@ export default function Admin() {
         <aside className="sticky top-0 hidden h-screen w-[292px] shrink-0 flex-col border-r border-white/[0.08] bg-[#08080b] p-5 lg:flex">
           <div className="mb-8 flex items-center gap-3 px-2 pt-2">
             <span className="flex h-11 w-11 items-center justify-center rounded-2xl border border-brand-primary/25 bg-brand-primary/10 text-brand-primary">
-              <Sparkles className="h-5 w-5" aria-hidden="true" />
+              <CircleHelp className="h-5 w-5" aria-hidden="true" />
             </span>
             <div>
               <div className="text-[9px] font-black uppercase tracking-[0.25em] text-brand-primary">LB CodeBase</div>

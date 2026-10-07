@@ -274,7 +274,7 @@ export const Marquee = ({ children, speed = 25, reverse = false }: { children: R
         className={`flex shrink-0 items-center gap-12 ${motionEnabled ? 'home-marquee-track will-change-transform' : ''}`}
       >
         {children}
-        {motionEnabled && children}
+        {motionEnabled && <div className="contents" aria-hidden="true" inert>{children}</div>}
       </div>
     </div>
   );
@@ -283,7 +283,7 @@ export const Marquee = ({ children, speed = 25, reverse = false }: { children: R
 /**
  * Hero Background Media Container
  */
-export const HeroBackground = ({ videoSrc, poster }: { videoSrc?: string, poster?: string | null }) => {
+export const HeroBackground = ({ videoSrc = '/videos/other-pages-hero.mp4', poster }: { videoSrc?: string, poster?: string | null }) => {
   const fallbackPoster = poster === undefined ? '/images/thesearchforabsolutesection.jpg' : poster;
   const [videoFailed, setVideoFailed] = useState(false);
   const [videoReady, setVideoReady] = useState(() => Boolean(videoSrc && readyVideoSources.has(videoSrc)));
@@ -306,7 +306,6 @@ export const HeroBackground = ({ videoSrc, poster }: { videoSrc?: string, poster
 
   return (
     <div className="hero-background-media pointer-events-none absolute inset-0 z-0 overflow-hidden bg-brand-dark" aria-hidden="true">
-      <div className="absolute inset-0 z-10 bg-brand-dark/20" />
       <div className="hero-background-vignette absolute inset-0 z-10" />
       {showPoster && fallbackPoster && (
         <img

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { Copy, Check, Eye, Trash2, Images, Sparkles } from 'lucide-react';
+import { Copy, Check, Eye, Trash2, Images, CircleHelp } from 'lucide-react';
 import { fetchJson } from '../../lib/content';
 import { cn } from '../../lib/utils';
 import MediaUploadButton from './MediaUploadButton';
@@ -75,7 +75,7 @@ export default function MediaManager() {
         <div className="relative z-10 grid gap-6 md:grid-cols-[minmax(0,1fr)_auto] md:items-end">
           <div className="space-y-3">
             <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.25em] text-brand-primary">
-              <Sparkles className="h-4 w-4" /> Cloud Media Storage
+              <CircleHelp className="h-4 w-4" /> Cloud Media Storage
             </div>
             <h3 className="font-display text-2xl font-black text-white sm:text-3xl">Upload & Optimize Assets</h3>
             <p className="max-w-xl text-sm leading-relaxed text-white/50">

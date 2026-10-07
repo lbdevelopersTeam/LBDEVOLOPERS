@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { Edit3, Save, Trash2, UserPlus, Shield, Sparkles } from 'lucide-react';
+import { Edit3, Save, Trash2, UserPlus, Shield, CircleHelp } from 'lucide-react';
 import { fetchJson } from '../../lib/content';
 import { cn } from '../../lib/utils';
 import { ConfirmModal } from './AdminModal';

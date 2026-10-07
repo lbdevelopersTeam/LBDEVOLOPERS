@@ -2,24 +2,28 @@ import React, { useEffect, useId, useRef, useState } from 'react';
 import { motion } from 'motion/react';
 import { Button } from './UI';
 import { Send, CheckCircle2 } from 'lucide-react';
-import { apiRequestUrl, publicApiEnabled } from '../../lib/content';
+import { publicApiEnabled } from '../../lib/content';
+import { inquiryEmailUrl, inquiryError, sendInquiry } from '../../lib/inquiry';
 import { useContactEmail } from '../../lib/site-settings';
 
 interface ContactFormProps {
   memberId?: string;
   memberName?: string;
   variant?: 'panel' | 'editorial' | 'cinematic';
+  initialMessage?: string;
+  initialSubject?: string;
 }
 
-export default function ContactForm({ memberId, memberName, variant = 'panel' }: ContactFormProps = {}) {
+export default function ContactForm({ memberId, memberName, variant = 'panel', initialMessage = '', initialSubject = '' }: ContactFormProps = {}) {
   const fieldId = useId();
   const contactEmail = useContactEmail();
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+  const [error, setError] = useState('');
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    subject: '',
-    message: '',
+    subject: initialSubject,
+    message: initialMessage,
     website: '',
   });
   const submissionController = useRef<AbortController | null>(null);
@@ -28,37 +32,26 @@ export default function ContactForm({ memberId, memberName, variant = 'panel' }:
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (submissionController.current) return;
     setStatus('submitting');
+    setError('');
 
     if (!publicApiEnabled) {
-      const recipient = memberName ? `${memberName} at LB CodeBase` : 'LB CodeBase';
-      const body = [`Hello ${recipient},`, '', formData.message, '', `From: ${formData.name}`, `Reply to: ${formData.email}`].join('\n');
-      window.location.href = `mailto:${contactEmail}?subject=${encodeURIComponent(formData.subject)}&body=${encodeURIComponent(body)}`;
+      window.location.href = inquiryEmailUrl(contactEmail, formData);
       setStatus('success');
       return;
     }
 
-    submissionController.current?.abort();
     const controller = new AbortController();
     submissionController.current = controller;
     
     try {
-      const res = await fetch(apiRequestUrl('/api/v2/messages'), {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...formData, memberId }),
-        signal: controller.signal,
-      });
+      await sendInquiry({ ...formData, memberId }, controller.signal);
       if (controller.signal.aborted) return;
-      
-      if (res.ok) {
-        setStatus('success');
-        setFormData({ name: '', email: '', subject: '', message: '', website: '' });
-      } else {
-        setStatus('error');
-      }
-    } catch {
-      if (!controller.signal.aborted) setStatus('error');
+      setStatus('success');
+      setFormData({ name: '', email: '', subject: '', message: '', website: '' });
+    } catch (cause) {
+      if (!controller.signal.aborted) { setError(inquiryError(cause)); setStatus('error'); }
     } finally {
       if (submissionController.current === controller) submissionController.current = null;
     }
@@ -67,17 +60,19 @@ export default function ContactForm({ memberId, memberName, variant = 'panel' }:
   if (status === 'success') {
     return (
       <motion.div 
+        role="status"
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         className={variant === 'editorial' ? 'border-y border-white/12 py-12 text-left' : variant === 'cinematic' ? 'rounded-3xl border border-brand-primary/20 bg-brand-primary/10 p-8 text-left' : 'p-12 text-center bg-brand-primary/10 border border-brand-primary/20 rounded-3xl'}
       >
         <CheckCircle2 className={`mb-6 h-12 w-12 ${variant === 'editorial' ? 'text-[var(--member-accent)]' : 'mx-auto text-brand-primary'}`} />
-        <h3 className="mb-4 font-display text-2xl font-black uppercase tracking-normal">Message received</h3>
+        <h3 className="mb-4 font-display text-2xl font-black uppercase tracking-normal">{publicApiEnabled ? 'Message received' : 'Your email draft is ready'}</h3>
         <p className="text-white/70 mb-8">
           {publicApiEnabled
             ? `Your message has been sent${memberName ? ` to ${memberName}` : ''}. The team will follow up using the email you provided.`
-            : `Your email app has been opened with the message ready for ${memberName || 'LB CodeBase'}. Send it there to complete your inquiry.`}
+            : `Continue in your email app and press Send to contact ${memberName || 'LB CodeBase'}. If no app opened, use the email link below. Nothing has been submitted on this website.`}
         </p>
+        {!publicApiEnabled && <a className="studio-text-link block mb-6" href={inquiryEmailUrl(contactEmail, formData)}>Open email draft</a>}
         <Button onClick={() => setStatus('idle')} variant="outline">Send Another Message</Button>
       </motion.div>
     );
@@ -95,7 +90,7 @@ export default function ContactForm({ memberId, memberName, variant = 'panel' }:
       : 'w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand-primary transition-colors glass';
 
   return (
-    <form className="space-y-6" onSubmit={handleSubmit} autoComplete="off">
+    <form className="space-y-6" onSubmit={handleSubmit} aria-busy={status === 'submitting'}>
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         <div className="space-y-2">
           <label htmlFor={`${fieldId}-name`} className={labelClass}>Full Name</label>
@@ -105,7 +100,7 @@ export default function ContactForm({ memberId, memberName, variant = 'panel' }:
             required
             minLength={2}
             maxLength={120}
-            autoComplete="off"
+            autoComplete="name"
             value={formData.name}
             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
             className={fieldClass}
@@ -118,7 +113,7 @@ export default function ContactForm({ memberId, memberName, variant = 'panel' }:
             id={`${fieldId}-email`}
             required
             maxLength={254}
-            autoComplete="off"
+            autoComplete="email"
             value={formData.email}
             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
             className={fieldClass}
@@ -135,11 +130,14 @@ export default function ContactForm({ memberId, memberName, variant = 'panel' }:
           onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
           className={`${fieldClass} appearance-none`}
         >
-          <option className="bg-brand-dark" value="" aria-label="No service selected" />
+          <option className="bg-brand-dark" value="" disabled>Select a service</option>
+          <option className="bg-brand-dark" value="Project inquiry">Project inquiry</option>
           <option className="bg-brand-dark" value="High-Performance Web Ecosystem">Web Development</option>
           <option className="bg-brand-dark" value="Brand Authority Definition">UI/UX Design</option>
           <option className="bg-brand-dark" value="Next-Gen Mobile Architecture">Mobile App</option>
           <option className="bg-brand-dark" value="Strategic Engineering Consultancy">Engineering Consultancy</option>
+          <option className="bg-brand-dark" value="Automation and integrations">Automation & integrations</option>
+          <option className="bg-brand-dark" value="Commerce">Commerce / Shopify</option>
         </select>
       </div>
 
@@ -170,11 +168,11 @@ export default function ContactForm({ memberId, memberName, variant = 'panel' }:
         />
       </div>
 
-      <Button className={`w-full py-4 group ${variant === 'editorial' ? '!rounded-none !bg-[var(--member-accent)] !text-black' : ''} ${variant === 'cinematic' ? 'shadow-2xl shadow-brand-primary/20' : ''}`} disabled={status === 'submitting'}>
-        {status === 'submitting' ? 'Transmitting...' : variant === 'cinematic' ? 'Initiate Transmission' : 'Send Message'}
+      <Button type="submit" className="w-full py-4 group" disabled={status === 'submitting'}>
+        {status === 'submitting' ? 'Sending…' : publicApiEnabled ? 'Send message' : 'Continue by email'}
         <Send className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
       </Button>
-      {status === 'error' && <p className="text-red-500 text-xs mt-2 uppercase tracking-widest font-black">Error in transmission. Try again.</p>}
+      <p role={status === 'error' ? 'alert' : 'status'} className="text-sm text-white/70">{status === 'error' ? error : status === 'submitting' ? 'Sending your message. Please wait.' : !publicApiEnabled ? 'This opens an email draft; you send it from your email app.' : ''}</p>
     </form>
   );
 }

@@ -14,6 +14,7 @@ export function Button({
   variant = 'primary', 
   size = 'md', 
   className,
+  type = 'button',
   ...props 
 }: ButtonProps) {
   const variants = {
@@ -31,6 +32,7 @@ export function Button({
 
   return (
     <motion.button
+      type={type}
       whileHover={{ y: -2 }}
       whileTap={{ scale: 0.99 }}
       data-cursor={(props as any)['data-cursor'] || "CLICK"}
@@ -38,6 +40,9 @@ export function Button({
         'max-w-full rounded-md transition-[background-color,border-color,color,transform] duration-300 inline-flex items-center justify-center gap-3 whitespace-normal text-center leading-tight',
         variants[variant],
         sizes[size],
+        'studio-button',
+        variant === 'primary' && 'studio-button-primary',
+        variant === 'secondary' && 'studio-button-secondary',
         className
       )}
       {...props}

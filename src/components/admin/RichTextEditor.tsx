@@ -3,7 +3,7 @@ import Link from '@tiptap/extension-link';
 import { EditorContent, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import { useEffect, useState } from 'react';
-import { Bold, Code, Heading2, Image as ImageIcon, Italic, Link as LinkIcon, List, Quote, Sparkles, Unlink } from 'lucide-react';
+import { Bold, Code, Heading2, Image as ImageIcon, Italic, Link as LinkIcon, List, Quote, CircleHelp, Unlink } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import { PromptModal } from './AdminModal';
 
@@ -101,7 +101,7 @@ export default function RichTextEditor({ value, onChange }: RichTextEditorProps)
           )}
         </div>
         <div className="hidden items-center gap-1.5 text-[9px] font-black uppercase tracking-widest text-white/30 sm:flex">
-          <Sparkles className="h-3 w-3 text-brand-primary/60" /> Formatted text
+          <CircleHelp className="h-3 w-3 text-brand-primary/60" /> Formatted text
         </div>
       </div>
 

@@ -5,9 +5,11 @@ import { Calendar, User, Clock, ArrowRight, Loader2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { TextReveal, LetterReveal, HeroBackground } from '../components/common/Animations';
 import { BlogPost, cachedFetch, fallbackBlogs, Paginated } from '../lib/content';
+import { EditorialSignal } from '../components/common/StudioVisuals';
 
 export default function Blog() {
   const [blogs, setBlogs] = useState<BlogPost[]>(fallbackBlogs);
+  const [visibleCount, setVisibleCount] = useState(6);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const mounted = useRef(false);
@@ -73,8 +75,8 @@ export default function Blog() {
                   transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
                   className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-black uppercase tracking-tighter leading-[0.95]"
                 >
-                  THE DIGITAL <br />
-                  <span className="text-white/20 italic block uppercase">JOURNAL.</span>
+                  Notes on design,<br />
+                  <span className="text-brand-primary block">code, and the work.</span>
                 </motion.h1>
               </div>
 
@@ -90,7 +92,7 @@ export default function Blog() {
                 <div className="text-[10px] font-black text-brand-primary uppercase tracking-[0.4em] mb-6">Trending Topics</div>
                 <div className="space-y-4">
                    {['#NextJS15', '#AIAgentic', '#FramerMotion', '#WebArchitecture'].map((tag, i) => (
-                     <div key={i} className="text-lg font-display font-black text-white/40 hover:text-white transition-colors cursor-pointer uppercase">{tag}</div>
+                     <div key={i} className="text-lg font-display font-semibold text-white/60">{tag}</div>
                    ))}
                 </div>
              </div>
@@ -108,7 +110,8 @@ export default function Blog() {
           </motion.div>
         </section>
 
-        <div className="max-w-[1600px] mx-auto px-6 sm:px-8 md:px-12 lg:px-24">
+        <div className="max-w-[1600px] mx-auto px-6 py-16 sm:px-8 md:px-12 lg:px-24">
+          <div className="studio-blog-intro"><div><p className="studio-eyebrow">Ideas worth keeping</p><h2>Notes from the<br /><span className="studio-gradient-text">workbench.</span></h2></div><EditorialSignal /></div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 md:gap-12">
           {error && (
             <div className="col-span-full rounded-2xl border border-red-500/20 bg-red-500/10 p-5 text-red-100">
@@ -126,13 +129,13 @@ export default function Blog() {
                <p className="text-white/20 uppercase font-black tracking-[0.2em] sm:tracking-[0.4em]">No logs deployed in current sector.</p>
             </div>
           ) : (
-            blogs.map((post) => (
+            blogs.slice(0, visibleCount).map((post) => (
               <motion.article
                 key={post.id}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                className="group flex flex-col h-full"
+                className="studio-journal-card group flex flex-col h-full"
               >
                 <div className="aspect-[16/10] overflow-hidden rounded-lg md:rounded-2xl mb-8 border border-white/5 relative">
                   <img 
@@ -140,6 +143,10 @@ export default function Blog() {
                     alt={post.title} 
                     className="w-full h-full object-cover group-hover:scale-110 transition-all duration-700"
                     referrerPolicy="no-referrer"
+                    loading="lazy"
+                    decoding="async"
+                    width={1200}
+                    height={750}
                   />
                   <div className="absolute top-4 left-4 px-3 py-1 bg-brand-dark/80 backdrop-blur-md rounded-full text-[9px] font-black uppercase tracking-widest text-brand-primary border border-white/10">
                     {post.category}
@@ -166,7 +173,7 @@ export default function Blog() {
 
         {blogs.length > 6 && (
           <div className="mt-20 text-center">
-            <Button variant="outline" size="lg">Load more articles</Button>
+            {visibleCount < blogs.length && <Button variant="outline" size="lg" onClick={() => setVisibleCount((count) => count + 6)}>Load more articles</Button>}
           </div>
         )}
       </div>

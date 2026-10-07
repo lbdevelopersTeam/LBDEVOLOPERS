@@ -8,6 +8,7 @@ import TeamMemberCard from '../components/team/TeamMemberCard';
 import MemberPortrait from '../components/team/MemberPortrait';
 import { applyCuratedProfileFallback, cachedFetch, fallbackTeam, TeamMember } from '../lib/content';
 import { useSeo } from '../lib/seo';
+import { FounderProfile, JourneyTimeline, StudioMetrics } from '../components/common/StudioVisuals';
 
 export default function About() {
   const [teamMembers, setTeamMembers] = useState<TeamMember[]>(fallbackTeam);
@@ -64,7 +65,7 @@ export default function About() {
               >
                 <span className="flex h-1.5 w-1.5 rounded-full bg-brand-primary animate-pulse" />
                 <LetterReveal 
-                  text="OUR GENESIS" 
+                  text="THE STUDIO"
                   className="text-[10px] font-black uppercase tracking-[0.4em] text-white/60" 
                 />
               </motion.div>
@@ -76,13 +77,13 @@ export default function About() {
                   transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
                   className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-black tracking-tighter uppercase leading-[0.95]"
                 >
-                  ENGINEERING <br />
-                  <span className="text-brand-primary italic">THE FUTURE.</span>
+                  Thoughtful people.<br />
+                  <span className="text-brand-primary">Useful digital work.</span>
                 </motion.h1>
               </div>
 
               <TextReveal 
-                text="LB CodeBase is a high-fidelity digital engineering agency founded by Wajid Hussain. We define the intersection of cinematic design and absolute technical performance."
+                text="We are LB CodeBase, a design and engineering studio founded by Wajid Hussain. We bring strategy, thoughtful design, and practical development together to build products people enjoy using."
                 className="mb-16 max-w-full text-lg font-light leading-snug text-white/60 sm:text-xl md:max-w-3xl md:text-3xl md:leading-tight"
               />
               
@@ -115,6 +116,15 @@ export default function About() {
           </motion.div>
         </section>
 
+        <section className="studio-section studio-about-signal" aria-label="Studio facts">
+          <div className="studio-container">
+            <StudioMetrics items={[{ value: '2022', label: 'Founded', detail: 'Built with intent' }, { value: 'Global', label: 'Operating model', detail: 'Remote by design' }, { value: '50+', label: 'Masterworks', detail: 'Across sectors' }, { value: '01', label: 'Shared standard', detail: 'Clarity over noise' }]} />
+          </div>
+        </section>
+
+        <FounderProfile />
+        <JourneyTimeline />
+
         {/* Cinematic Narrative */}
         <section className="py-20">
           <div className="max-w-[1600px] mx-auto px-6 sm:px-8 md:px-12 lg:px-24">
@@ -135,14 +145,14 @@ export default function About() {
               <div className="min-w-0 space-y-10 md:space-y-16">
                 <div className="text-[10px] font-black uppercase tracking-[0.25em] sm:tracking-[0.5em] text-brand-primary">OUR PHILOSOPHY</div>
                 <h2 className="text-4xl md:text-5xl font-display font-black tracking-tighter uppercase leading-[0.95]">THE SEARCH <br /><span className="text-white/20 uppercase italic">FOR ABSOLUTE.</span></h2>
-                <p className="text-white/40 text-xl md:text-2xl leading-relaxed font-light">
-                  We don't believe in "good enough." We believe in surgical precision, cinematic art direction, and code that performs at elite levels. Every project is a testament to our pursuit of digital perfection.
+                <p className="studio-callout text-xl md:text-2xl leading-relaxed font-light">
+                  Good design makes things easier to understand. Good engineering makes them reliable to use. We bring both to every project, with clear communication and care for the details from the first brief through launch.
                 </p>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 pt-4 md:pt-8">
                   {[
-                    { title: "Technical Absolute", desc: "Surgical code architecture designed for extreme velocity and zero latency." },
-                    { title: "Artistic Intent", desc: "Cinematic visual systems that command attention and define authority." }
+                    { title: "Built to last", desc: "Maintainable code, considered architecture, and performance tested on real devices." },
+                    { title: "Designed to connect", desc: "Clear visual systems that help people understand your brand and take the next step." }
                   ].map((item, i) => (
                     <div key={i} className="space-y-6 group">
                       <div className="h-px w-12 bg-brand-primary transition-[width] duration-500 group-hover:w-full" />

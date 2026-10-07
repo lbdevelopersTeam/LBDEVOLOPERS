@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { Edit3, Save, Settings, Sparkles } from 'lucide-react';
+import { Edit3, Save, Settings, CircleHelp } from 'lucide-react';
 import { fetchJson } from '../../lib/content';
 import { cn } from '../../lib/utils';
 

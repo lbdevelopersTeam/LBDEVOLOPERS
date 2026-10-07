@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { ArrowRight, Cpu, Layers3, Radar, Rocket, ShieldCheck, Zap } from 'lucide-react';
+import { ArrowRight, Cpu, Layers3, Radar, Rocket, ShieldCheck, Gauge } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const slides = [
@@ -36,7 +36,7 @@ const slides = [
     metric: '+45%',
     metricLabel: 'conversion lift',
     accent: '#7C4DFF',
-    icon: Zap,
+    icon: Gauge,
     chips: ['Catalog', 'Checkout', 'Analytics'],
     visualTitle: 'Revenue Flow Model',
   },

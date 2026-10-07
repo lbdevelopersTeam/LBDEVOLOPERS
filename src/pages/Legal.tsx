@@ -12,9 +12,9 @@ export default function Legal() {
       initial={false}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="pb-12 px-6 sm:px-8 md:px-12 lg:px-24"
+      className="pb-12"
     >
-      <div className="max-w-[1600px] mx-auto">
+      <div>
         {/* Proper Legal Hero */}
         <section className="relative min-h-screen flex items-center pt-24 pb-12 overflow-hidden">
           <HeroBackground poster="/images/thesearchforabsolutesection.jpg" />
@@ -39,8 +39,7 @@ export default function Legal() {
                 transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
                 className="fluid-display font-display font-black uppercase leading-none"
               >
-                {isPrivacy ? "PRIVACY" : "TERMS"} <br />
-                <span className="text-white/10 uppercase italic tracking-tighter block mt-2">POLICIES.</span>
+                {isPrivacy ? 'Privacy policy' : 'Terms of service'}
               </motion.h1>
             </div>
 
@@ -62,7 +61,7 @@ export default function Legal() {
           </motion.div>
         </section>
 
-        <div className="max-w-4xl mt-8">
+        <div className="max-w-4xl mx-auto mt-8 px-6 sm:px-8 md:px-12">
           <div className="prose prose-invert prose-base md:prose-lg max-w-none space-y-10 md:space-y-12 text-white/60">
           <section>
             <h3 className="text-xl md:text-2xl font-display font-bold text-white mb-5 md:mb-6">1. Information We Collect</h3>

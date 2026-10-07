@@ -2,7 +2,9 @@ import { type FormEvent, useEffect, useMemo, useRef, useState } from 'react';
 import { motion } from 'motion/react';
 import { SectionHeader, Button } from '../components/common/UI';
 import { Calendar, Clock, Globe, ArrowRight, CheckCircle2 } from 'lucide-react';
-import { fetchJson } from '../lib/content';
+import { publicApiEnabled } from '../lib/content';
+import { inquiryEmailUrl, inquiryError, sendInquiry } from '../lib/inquiry';
+import { useContactEmail } from '../lib/site-settings';
 import { useNavigate } from 'react-router-dom';
 
 interface AvailableDate {
@@ -14,19 +16,20 @@ interface AvailableDate {
 
 const buildAvailableDates = (): AvailableDate[] => {
   const options: AvailableDate[] = [];
-  const cursor = new Date();
-  cursor.setHours(12, 0, 0, 0);
+  const parts = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Karachi', year: 'numeric', month: '2-digit', day: '2-digit' }).formatToParts(new Date());
+  const part = (type: string) => parts.find((item) => item.type === type)!.value;
+  const cursor = new Date(`${part('year')}-${part('month')}-${part('day')}T12:00:00Z`);
 
   while (options.length < 5) {
-    cursor.setDate(cursor.getDate() + 1);
-    const weekday = cursor.getDay();
+    cursor.setUTCDate(cursor.getUTCDate() + 1);
+    const weekday = cursor.getUTCDay();
     if (weekday === 0 || weekday === 6) continue;
 
     options.push({
       value: cursor.toISOString().slice(0, 10),
-      day: new Intl.DateTimeFormat('en-US', { weekday: 'short' }).format(cursor).toUpperCase(),
-      date: new Intl.DateTimeFormat('en-US', { day: '2-digit' }).format(cursor),
-      label: new Intl.DateTimeFormat('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' }).format(cursor),
+      day: new Intl.DateTimeFormat('en-US', { weekday: 'short', timeZone: 'UTC' }).format(cursor).toUpperCase(),
+      date: new Intl.DateTimeFormat('en-US', { day: '2-digit', timeZone: 'UTC' }).format(cursor),
+      label: new Intl.DateTimeFormat('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' }).format(cursor),
     });
   }
 
@@ -37,6 +40,7 @@ const fieldClass = 'w-full rounded-xl border border-white/10 bg-white/[0.035] px
 
 export default function Booking() {
   const navigate = useNavigate();
+  const contactEmail = useContactEmail();
   const dates = useMemo(buildAvailableDates, []);
   const [step, setStep] = useState(1);
   const [selectedDate, setSelectedDate] = useState('');
@@ -53,29 +57,25 @@ export default function Booking() {
 
   const submitRequest = async (event: FormEvent) => {
     event.preventDefault();
-    if (!selectedDateOption || !selectedTime) return;
+    if (!selectedDateOption || !selectedTime || submissionController.current) return;
 
     setSubmitting(true);
     setError('');
-    submissionController.current?.abort();
     const controller = new AbortController();
     submissionController.current = controller;
     try {
-      await fetchJson<{ id: string }>('/api/v2/messages', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        signal: controller.signal,
-        body: JSON.stringify({
+      const inquiry = {
           name: details.name,
           email: details.email,
           subject: `Strategy call request — ${selectedDateOption.label}`,
           message: `Requested time: ${selectedDateOption.label} at ${selectedTime} Pakistan Standard Time.\n\nProject context: ${details.notes}`,
           website: details.website,
-        }),
-      });
+      };
+      if (publicApiEnabled) await sendInquiry(inquiry, controller.signal);
+      else window.location.href = inquiryEmailUrl(contactEmail, inquiry);
       if (!controller.signal.aborted) setStep(4);
-    } catch {
-      if (!controller.signal.aborted) setError('We could not send your request. Please try again or use the contact page.');
+    } catch (cause) {
+      if (!controller.signal.aborted) setError(inquiryError(cause));
     } finally {
       if (submissionController.current === controller) {
         submissionController.current = null;
@@ -189,7 +189,7 @@ export default function Booking() {
             )}
 
             {step === 3 && (
-              <motion.form initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} onSubmit={submitRequest} autoComplete="off">
+              <motion.form initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} onSubmit={submitRequest} aria-busy={submitting}>
                 <h2 className="mb-3 flex items-center gap-3 text-base font-bold uppercase tracking-widest md:text-lg">
                   <span className="flex h-8 w-8 items-center justify-center rounded-full bg-brand-primary text-xs text-white">3</span>
                   Your details
@@ -221,7 +221,7 @@ export default function Booking() {
                 <div className="mt-8 flex flex-col-reverse justify-between gap-4 sm:flex-row">
                   <Button type="button" variant="outline" onClick={() => setStep(2)}>Back</Button>
                   <Button type="submit" disabled={submitting} className="px-10 disabled:cursor-wait disabled:opacity-60">
-                    {submitting ? 'Sending request…' : 'Request this time'}
+                    {submitting ? 'Sending request…' : publicApiEnabled ? 'Request this time' : 'Continue by email'}
                   </Button>
                 </div>
               </motion.form>
@@ -232,10 +232,11 @@ export default function Booking() {
                 <div className="mx-auto mb-8 flex h-20 w-20 items-center justify-center rounded-full border border-green-500/20 bg-green-500/10">
                   <CheckCircle2 aria-hidden="true" className="w-10 h-10 text-green-500" />
                 </div>
-                <h2 className="mb-4 font-display text-3xl font-black uppercase">Request received</h2>
+                <h2 className="mb-4 font-display text-3xl font-black uppercase">{publicApiEnabled ? 'Request received' : 'Your email draft is ready'}</h2>
                 <p className="mx-auto mb-10 max-w-md leading-relaxed text-white/60">
-                  We received your request for <span className="font-bold text-white">{selectedDateOption?.label}</span> at <span className="font-bold text-white">{selectedTime}</span>. We will email you to confirm availability and meeting details.
+                  {publicApiEnabled ? 'We received your request for ' : 'Send the draft in your email app to request '}<span className="font-bold text-white">{selectedDateOption?.label}</span> at <span className="font-bold text-white">{selectedTime} Pakistan Standard Time</span>. This is a preference, not a confirmed booking. {publicApiEnabled ? 'We will email you to confirm availability.' : 'Nothing has been submitted on this website.'}
                 </p>
+                {!publicApiEnabled && <a className="studio-text-link block mb-6" href={inquiryEmailUrl(contactEmail, { ...details, subject: 'Strategy call request', message: `Requested time: ${selectedDateOption?.label} at ${selectedTime} Pakistan Standard Time.\n\n${details.notes}` })}>Open email draft</a>}
                 <Button onClick={() => navigate('/')}>Return Home</Button>
               </motion.div>
             )}

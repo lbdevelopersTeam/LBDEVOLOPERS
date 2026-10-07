@@ -78,7 +78,8 @@ export default function MemberContactSection({
                     <button
                       type="button"
                       onClick={() => void handleCopy()}
-                      className="flex h-8 w-8 shrink-0 items-center justify-center rounded border border-white/15 bg-white/[0.05] text-white/70 transition-colors hover:border-[var(--member-accent)]/60 hover:text-white"
+                      aria-label={copied ? 'Email address copied' : `Copy ${member.name}'s email address`}
+                      className="flex h-11 w-11 shrink-0 items-center justify-center rounded border border-white/15 bg-white/[0.05] text-white/70 transition-colors hover:border-[var(--member-accent)]/60 hover:text-white"
                       title="Copy Email"
                     >
                       {copied ? <Check className="h-4 w-4 text-emerald-400" /> : <Copy className="h-3.5 w-3.5" />}

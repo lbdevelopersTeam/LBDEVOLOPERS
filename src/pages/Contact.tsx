@@ -3,9 +3,13 @@ import { Mail, Phone, MapPin, Send, MessageSquare } from 'lucide-react';
 import { LetterReveal, TextReveal, HeroBackground } from '../components/common/Animations';
 import ContactForm from '../components/common/ContactForm';
 import { useContactEmail } from '../lib/site-settings';
+import { ContactFlow } from '../components/common/StudioVisuals';
+import { useLocation } from 'react-router-dom';
 
 export default function Contact() {
   const contactEmail = useContactEmail();
+  const { state } = useLocation();
+  const brief = state?.projectBrief;
   const contactChannels = [
     { icon: Mail, href: `mailto:${contactEmail}`, label: 'Email LB CodeBase' },
     { icon: MessageSquare, href: 'https://wa.me/923489077329?text=Hello%2C%20I%20would%20like%20to%20discuss%20a%20project.', label: 'Chat with LB CodeBase on WhatsApp' },
@@ -30,7 +34,7 @@ export default function Contact() {
               >
                 <span className="flex h-1.5 w-1.5 rounded-full bg-brand-primary animate-pulse" />
                 <LetterReveal 
-                  text="INITIATION" 
+                  text="LET'S WORK TOGETHER"
                   className="text-[10px] font-black uppercase tracking-[0.4em] text-white/60" 
                 />
               </motion.div>
@@ -42,13 +46,13 @@ export default function Contact() {
                   transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
                   className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-black uppercase leading-[0.95] tracking-tighter"
                 >
-                  LET'S DEFINE <br />
-                  <span className="text-brand-primary italic">THE NEXT.</span>
+                  Your next idea.<br />
+                  <span className="text-brand-primary">Starts here.</span>
                 </motion.h1>
               </div>
 
               <TextReveal 
-                text="Ready to engineer your digital evolution? Secure your position in the next generation of global market leaders. Initiate the connection below."
+                text="Tell us what you are building, what needs to improve, and when you want to launch. We will help you work out the right next step."
                 className="text-white/60 text-xl md:text-3xl max-w-3xl leading-tight font-light"
               />
             </div>
@@ -75,18 +79,20 @@ export default function Contact() {
           </motion.div>
         </section>
 
-        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 md:px-12 lg:px-24">
+        <ContactFlow />
+
+        <div className="max-w-[1600px] mx-auto px-4 py-16 sm:px-6 md:px-12 lg:px-24">
           <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] gap-8 sm:gap-12 lg:gap-24 mb-16 sm:mb-24 lg:mb-32">
           {/* Contact Info */}
           <div className="min-w-0 space-y-12 sm:space-y-16 lg:space-y-20">
             <div>
-              <div className="text-[10px] font-black uppercase tracking-[0.24em] sm:tracking-[0.4em] text-brand-primary mb-8 md:mb-12">COMMUNICATION HUBS</div>
+              <div className="text-[10px] font-black uppercase tracking-[0.24em] sm:tracking-[0.4em] text-brand-primary mb-8 md:mb-12">CONTACT DETAILS</div>
               
               <div className="space-y-10 md:space-y-16">
                 {[
-                  { icon: Mail, label: "Secure Channel", val: contactEmail },
-                  { icon: Phone, label: "Direct Line", val: "+92 348 9077329" },
-                  { icon: MapPin, label: "Base Operations", val: "Mingora, Swat, Pakistan" }
+                  { icon: Mail, label: "Email", val: contactEmail },
+                  { icon: Phone, label: "Phone / WhatsApp", val: "+92 348 9077329" },
+                  { icon: MapPin, label: "Our studio", val: "Mingora, Swat, Pakistan" }
                 ].map((item, i) => (
                   <motion.div 
                     key={i}
@@ -100,7 +106,7 @@ export default function Contact() {
                     </div>
                     <div>
                       <div className="text-[9px] font-black text-white/20 uppercase tracking-[0.18em] sm:tracking-[0.3em] mb-2">{item.label}</div>
-                      <div className="text-base sm:text-lg md:text-2xl font-display font-black uppercase tracking-tight group-hover:text-brand-primary transition-colors break-all">{item.val}</div>
+                      <div className="text-base sm:text-lg md:text-xl font-medium tracking-tight group-hover:text-brand-primary transition-colors break-words">{item.val}</div>
                     </div>
                   </motion.div>
                 ))}
@@ -137,9 +143,9 @@ export default function Contact() {
                 <Send className="w-40 h-40" />
               </div>
 
-              <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-display font-black uppercase tracking-tighter mb-8 sm:mb-10 lg:mb-12">TRANSMIT <span className="text-brand-primary italic">DATA.</span></h3>
+              <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-display font-bold tracking-tighter mb-8">Tell us about <span className="text-brand-primary">your project.</span></h3>
               
-              <ContactForm variant="cinematic" />
+              <ContactForm variant="cinematic" initialSubject={typeof brief?.subject === 'string' ? brief.subject : ''} initialMessage={typeof brief?.message === 'string' ? brief.message : ''} />
             </motion.div>
           </div>
         </div>

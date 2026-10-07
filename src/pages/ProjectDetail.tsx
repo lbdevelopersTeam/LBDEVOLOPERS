@@ -80,9 +80,7 @@ export default function ProjectDetail() {
     return (
       <div className="flex min-h-screen flex-col items-center justify-center bg-brand-dark p-6 text-center">
         <h1 className="mb-6 font-display text-4xl font-black uppercase tracking-tighter">Project Not Found</h1>
-        <Link to="/portfolio">
-          <Button variant="outline">Return to Portfolio</Button>
-        </Link>
+<Link to="/portfolio" className="studio-button studio-button-secondary inline-flex items-center justify-center">Return to Portfolio</Link>
       </div>
     );
   }

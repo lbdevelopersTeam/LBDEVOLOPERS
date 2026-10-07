@@ -56,10 +56,9 @@ export default function MemberHero({ member, onOpenCv }: { member: MemberProfile
         >
           {/* Availability Status Badge */}
           <div className="mb-6 flex flex-wrap items-center gap-3">
-            <span className="inline-flex max-w-full items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3.5 py-1.5 text-left text-[9px] font-black uppercase leading-4 tracking-[0.12em] text-emerald-400 sm:text-[10px] sm:tracking-[0.14em]">
+            <span className="inline-flex max-w-full items-center gap-2 rounded-full border border-cyan-300/25 bg-cyan-300/5 px-3.5 py-1.5 text-left text-[9px] font-semibold leading-5 tracking-normal text-cyan-200 sm:text-sm">
               <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-cyan-300" />
               </span>
               {member.availability || 'Available for Engagements'}
             </span>
@@ -140,11 +139,7 @@ export default function MemberHero({ member, onOpenCv }: { member: MemberProfile
           <div className="mt-7 flex flex-wrap items-center gap-3">
             <a
               href="#projects"
-              className="group inline-flex min-h-11 items-center gap-3 rounded-md px-5 text-[10px] font-black uppercase tracking-wider text-black shadow-lg transition-transform hover:-translate-y-0.5"
-              style={{
-                backgroundColor: 'var(--member-accent)',
-                boxShadow: '0 10px 30px color-mix(in srgb, var(--member-accent) 25%, transparent)',
-              }}
+              className="studio-button studio-button-primary group inline-flex items-center gap-3"
             >
               View Case Studies <ArrowDownRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:translate-y-0.5" />
             </a>

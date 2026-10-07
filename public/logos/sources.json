@@ -1,0 +1,176 @@
+{
+  "retrieved": "2026-10-07",
+  "note": "Original artwork from vendor-owned brand pages, kits, or repositories. Brand marks remain the property of their owners; usage is descriptive, not a partnership claim.",
+  "assets": [
+    {
+      "name": "shopify",
+      "source": "https://cdn.shopify.com/shopifycloud/brochure/assets/brand-assets/shopify-logo-shopping-bag-monotone-white-7624c6bd631b29ccc947e40d10b4705ee512bc9ec31c7aceb56d9617a04be936.svg",
+      "zipEntry": null
+    },
+    {
+      "name": "shopify-wordmark",
+      "source": "https://cdn.shopify.com/shopifycloud/brochure/assets/brand-assets/shopify-logo-monotone-white-7edf88561b256e005e9b9d003c283c39dcbd74ec844dfc9a3912edeec39b4d7e.svg",
+      "zipEntry": null
+    },
+    {
+      "name": "vercel",
+      "source": "https://k2mkucxia43oc7fa.public.blob.vercel-storage.com/front/press/vercel-assets.zip",
+      "zipEntry": "Vercel/icon/dark/vercel-icon-dark.svg"
+    },
+    {
+      "name": "vercel-wordmark",
+      "source": "https://k2mkucxia43oc7fa.public.blob.vercel-storage.com/front/press/vercel-assets.zip",
+      "zipEntry": "Vercel/logotype/dark/vercel-logotype-dark.svg"
+    },
+    {
+      "name": "netlify",
+      "source": "https://www.netlify.com/assets/logos/netlify-logo-full.zip",
+      "zipEntry": "netlify-logo-full/small/darkmode/logo-netlify-small-monochrome-darkmode.svg"
+    },
+    {
+      "name": "n8n",
+      "source": "https://n8n.io/brandguidelines/logo-white.svg",
+      "zipEntry": null
+    },
+    {
+      "name": "cloudflare",
+      "source": "https://cf-assets.www.cloudflare.com/dzlvafdwdttg/735eoClKJf9XfkqCJs1mfZ/b6767158f39af8d538517df918b8fc2e/logo-white-desktop.svg",
+      "zipEntry": null
+    },
+    {
+      "name": "google-cloud",
+      "source": "https://www.gstatic.com/cgc/google-cloud-logo-fullcolor.svg",
+      "zipEntry": null
+    },
+    {
+      "name": "stripe",
+      "source": "https://assets.stripeassets.com/fzn2n1nzq965/7q0dJGs6fRS1LRmMpChoAF/87def4edfbb7fd5aef4ab9baf904b2db/Stripe_logo_kit.zip",
+      "zipEntry": "asset-wordmark/Stripe wordmark - White.svg"
+    },
+    {
+      "name": "openai",
+      "source": "https://cdn.openai.com/brand/OpenAI-Logos-2025.zip",
+      "zipEntry": "OpenAI-logos(new)/SVGs/OpenAI-white-wordmark.svg"
+    },
+    {
+      "name": "framer",
+      "source": "https://framerusercontent.com/assets/zV7FeUWWi047l7iVSzIq88uDvw.zip",
+      "zipEntry": "Framer Logos/Framer Icon/Framer Icon White.svg"
+    },
+    {
+      "name": "ebay",
+      "source": "https://static.ebayinc.com/static/theme/images/logo.svg?v=39f786a",
+      "zipEntry": null
+    },
+    {
+      "name": "react",
+      "source": "https://raw.githubusercontent.com/facebook/create-react-app/282c03f9525fdf8061ffa1ec50dce89296d916bd/test/fixtures/relative-paths/src/logo.svg",
+      "zipEntry": null
+    },
+    {
+      "name": "aws",
+      "source": "https://aws.amazon.com/trademark-guidelines/",
+      "zipEntry": "@svg:1",
+      "note": "Original inline geometry with standalone white monochrome fill matching the dark site."
+    },
+    {
+      "name": "postgresql",
+      "source": "https://wiki.postgresql.org/images/7/72/PostgreSQL_logo.1color_white.svg",
+      "zipEntry": null
+    },
+    {
+      "name": "wordpress",
+      "source": "https://s.w.org/style/images/about/WordPress-logotype-wmark-white.png",
+      "zipEntry": null,
+      "note": "Official white PNG preserved byte-for-byte inside SVG image wrapper."
+    },
+    {
+      "name": "nextjs",
+      "source": "https://k2mkucxia43oc7fa.public.blob.vercel-storage.com/front/press/nextjs-assets.zip",
+      "zipEntry": "NEXTJS/icon/dark-background/nextjs-icon-dark-background.svg"
+    },
+    {
+      "name": "tailwindcss",
+      "source": "https://tailwindcss.com/_next/static/media/tailwindcss-mark.0~s.iziag2xd..svg",
+      "zipEntry": null
+    },
+    {
+      "name": "nodejs",
+      "source": "https://nodejs.org/static/logos/jsIconGreen.svg",
+      "zipEntry": null
+    },
+    {
+      "name": "bun",
+      "source": "https://bun.sh/logo.svg",
+      "zipEntry": null
+    },
+    {
+      "name": "motion",
+      "source": "https://motion.dev/favicon.svg",
+      "zipEntry": null
+    },
+    {
+      "name": "swift",
+      "source": "https://developer.apple.com/swift/resources/images/swift_logo_color.svg",
+      "zipEntry": null
+    },
+    {
+      "name": "php",
+      "source": "https://www.php.net/images/logos/php-logo-white.svg",
+      "zipEntry": null,
+      "attribution": "PHP wordmark by Levi Morrison, supplied by PHP.net; original unmodified artwork."
+    },
+    {
+      "name": "gemini",
+      "source": "https://www.gstatic.com/images/branding/productlogos/gemini_2025/v1/web-24dp/logo_gemini_2025_color_2x_web_24dp.png",
+      "zipEntry": null,
+      "note": "Official PNG preserved byte-for-byte inside SVG image wrapper."
+    },
+    {
+      "name": "openai-mark",
+      "source": "https://cdn.openai.com/brand/OpenAI-Logos-2025.zip",
+      "zipEntry": "OpenAI-logos(new)/SVGs/OpenAI-white-monoblossom.svg"
+    },
+    {
+      "name": "kotlin",
+      "source": "https://resources.jetbrains.com/storage/products/kotlin/docs/kotlin_logos.zip",
+      "zipEntry": "Kotlin Ecosystem Logos/Kotlin/Primary/Kotlin icon.svg"
+    },
+    {
+      "name": "docker",
+      "source": "https://www.docker.com/static/Docker-Logos-1.zip",
+      "zipEntry": "docker-logos/SVG/docker-mark-ocean-blue.svg"
+    },
+    {
+      "name": "redis",
+      "source": "https://redis.io/",
+      "zipEntry": "@svg:1"
+    },
+    {
+      "name": "pinecone",
+      "source": "https://mintcdn.com/pinecone/HsZKO51bNmpAasdT/logo/Pinecone-Full-Logo-White.svg",
+      "zipEntry": null
+    },
+    {
+      "name": "mysql",
+      "source": "https://www.mysql.com/common/logos/logo-mysql-170x115.png",
+      "zipEntry": null,
+      "note": "Official PNG preserved byte-for-byte inside SVG image wrapper."
+    },
+    {
+      "name": "kubernetes",
+      "source": "https://raw.githubusercontent.com/kubernetes/kubernetes/master/logo/logo.svg",
+      "zipEntry": null
+    },
+    {
+      "name": "supabase",
+      "source": "https://raw.githubusercontent.com/supabase/supabase/master/packages/common/assets/images/supabase-logo-icon.svg",
+      "zipEntry": null
+    },
+    {
+      "name": "laravel",
+      "source": "https://raw.githubusercontent.com/laravel/art/master/logo-mark/5%20svg/3%20rgb/1%20Full%20Color/laravel-mark-rgb-red.svg",
+      "zipEntry": null
+    }
+  ]
+}

@@ -1,4 +1,6 @@
 @import "tailwindcss";
+@import "./studio.css";
+@import "./public-theme.css";
 
 @font-face {
   font-family: "Outfit";
@@ -20,11 +22,11 @@
   --font-sans: "Outfit", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Sora", ui-sans-serif, system-ui, sans-serif;
 
-  --color-brand-primary: #3D5AFE;
+  --color-brand-primary: #7c3aed;
   --color-brand-dark: #000000;
-  --color-brand-gray: #080808;
-  --color-brand-purple: #7C4DFF;
-  --color-brand-accent: #00E5FF;
+  --color-brand-gray: #071020;
+  --color-brand-purple: #7c3aed;
+  --color-brand-accent: #67d9ff;
   
   --animate-float: float 6s ease-in-out infinite;
   --animate-shimmer: shimmer 2s linear infinite;
@@ -34,12 +36,9 @@
 /* Admin operations workspace */
 .admin-console {
   color-scheme: dark;
-  background-image:
-    radial-gradient(circle at 82% -8%, rgba(61, 90, 254, 0.09), transparent 28rem),
-    linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px);
-  background-size: auto, 72px 72px, 72px 72px;
+  background: #000;
 }
+.admin-console :where(*, *::before, *::after) { background-image: none !important; }
 
 .admin-console input,
 .admin-console select,
@@ -765,6 +764,14 @@
     transform: scale(1.015);
   }
 
+  .home-hero-floating-video {
+    transform: scale(1.04);
+    opacity: 0.96;
+    mix-blend-mode: screen;
+    -webkit-mask-image: linear-gradient(to bottom, black 0%, black 78%, transparent 100%);
+    mask-image: linear-gradient(to bottom, black 0%, black 78%, transparent 100%);
+  }
+
   .home-hero-video-frame::after {
     position: absolute;
     inset: 0;
@@ -796,6 +803,13 @@
       background:
         linear-gradient(to bottom, rgba(0, 0, 0, 0.06) 0%, transparent 38%, rgba(0, 0, 0, 0.48) 70%, #000 100%),
         radial-gradient(ellipse at center, transparent 42%, rgba(0, 0, 0, 0.62) 100%);
+    }
+
+    .home-hero-floating-video {
+      transform: scale(1.08);
+      opacity: 0.82;
+      -webkit-mask-image: linear-gradient(to bottom, black 0%, black 62%, transparent 100%);
+      mask-image: linear-gradient(to bottom, black 0%, black 62%, transparent 100%);
     }
 
     .section-background-video {

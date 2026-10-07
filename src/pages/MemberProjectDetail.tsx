@@ -1,5 +1,5 @@
 import { motion, useReducedMotion } from 'motion/react';
-import { ArrowLeft, ArrowRight, ArrowUpRight, CheckCircle2, ExternalLink, Github, Layers, Sparkles, UserCheck } from 'lucide-react';
+import { ArrowLeft, ArrowRight, ArrowUpRight, CheckCircle2, ExternalLink, Github, Layers, CircleHelp, UserCheck } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import MemberNotFound from '../components/team/MemberNotFound';
@@ -401,7 +401,7 @@ export default function MemberProjectDetail() {
           <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-black/20" />
           <div className="relative mx-auto flex min-h-[360px] max-w-[1400px] flex-col justify-end px-5 py-14 md:min-h-[440px] md:px-8 md:py-16">
             <div className="mb-4 flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.18em] text-[var(--member-accent)]">
-              <Sparkles className="h-3.5 w-3.5" />
+              <CircleHelp className="h-3.5 w-3.5" />
               <span>Next Case Study</span>
             </div>
             <div className="flex items-end justify-between gap-6">
