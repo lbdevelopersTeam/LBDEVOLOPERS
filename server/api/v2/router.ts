@@ -120,7 +120,8 @@ export function createV2Router(db: Kysely<Database>): Router {
 
   router.post('/auth/login', loginLimiter, asyncHandler(async (req, res) => {
     const input = validate(loginSchema, req.body);
-    const user = await db.selectFrom('users').selectAll().where(sql`lower(username)`, '=', input.username).where('deleted_at', 'is', null).executeTakeFirst();
+    const user = await db.selectFrom('users').selectAll().where(sql`lower(username)`, '=', input.username).where('deleted_at', 'is', null).executeTakeFirst()
+      || await db.selectFrom('users').selectAll().where(sql`lower(email)`, '=', input.username).where('deleted_at', 'is', null).executeTakeFirst();
     const valid = await verifyPassword(input.password, user?.password_hash || await dummyHash);
     if (!user || !valid || !user.is_active) throw new ApiError(401, 'INVALID_CREDENTIALS', 'Invalid username or password.');
     await db.transaction().execute(async (trx) => {

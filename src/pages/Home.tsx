@@ -186,6 +186,10 @@ export default function Home() {
     <div className="relative overflow-hidden bg-brand-dark">
       {/* Hero Section */}
       <section id="home-hero" className="section-transition relative isolate flex min-h-[760px] items-center overflow-hidden bg-[#03030b] pb-16 pt-32 sm:min-h-[820px] sm:pt-36 lg:min-h-[900px] lg:pt-40">
+        <video className="home-hero-bg-video" autoPlay muted loop playsInline preload="metadata" poster="/images/home-hero-side-poster.webp" aria-hidden="true">
+          <source src="/videos/other-pages-hero.mp4" type="video/mp4" />
+        </video>
+        <div className="home-hero-glass" aria-hidden="true" />
         <div className="home-hero-ambient" aria-hidden="true" />
         <motion.div className="home-hero-content relative z-20 mx-auto w-full max-w-[1600px] px-5 sm:px-8 lg:px-16">
           <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-6">
@@ -244,11 +248,11 @@ export default function Home() {
                 muted
                 loop
                 playsInline
-                preload="auto"
+                preload="metadata"
                 disablePictureInPicture
                 tabIndex={-1}
                 aria-hidden="true"
-                poster="/videos/LB CodeBase Futuristic Digital Studio.png"
+                poster="/images/home-hero-side-poster.webp"
                 className="home-hero-floating-video relative z-10 h-full w-full object-contain object-center"
               >
                 <source src="/videos/lb-codebase-hero-transparent.webm" type="video/webm" />

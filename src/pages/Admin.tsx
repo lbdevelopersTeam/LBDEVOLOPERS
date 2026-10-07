@@ -936,6 +936,12 @@ export default function Admin() {
         setLoginError('ADMIN SERVICE TEMPORARILY UNAVAILABLE. PLEASE TRY AGAIN LATER.');
       } else if (caught instanceof ApiRequestError && caught.status === 429) {
         setLoginError('TOO MANY LOGIN ATTEMPTS. PLEASE WAIT AND TRY AGAIN.');
+      } else if (caught instanceof ApiRequestError && (caught.code === 'API_DISABLED' || caught.code === 'NETWORK_ERROR' || caught.code === 'REQUEST_TIMEOUT')) {
+        setLoginError('ADMIN API CONFIGURATION ERROR. CHECK THE DEPLOYED API URL AND DATABASE ENVIRONMENT.');
+      } else if (caught instanceof ApiRequestError && caught.status === 400) {
+        setLoginError(caught.message.toUpperCase());
+      } else if (caught instanceof ApiRequestError && caught.code !== 'INVALID_CREDENTIALS') {
+        setLoginError(`ADMIN LOGIN FAILED (${caught.code}). CHECK THE SERVER LOGS.`);
       } else {
         setLoginError('ACCESS DENIED. INVALID CREDENTIALS.');
       }
@@ -1195,7 +1201,7 @@ export default function Admin() {
             type="text"
             value={username}
             onChange={(event) => setUsername(event.target.value)}
-            placeholder="Admin username"
+            placeholder="Admin username or email"
             autoComplete="username"
             className="mb-4 w-full rounded-xl border border-white/10 bg-white/[0.035] px-4 py-4 text-white outline-none transition focus:border-brand-primary focus:ring-4 focus:ring-brand-primary/10"
           />

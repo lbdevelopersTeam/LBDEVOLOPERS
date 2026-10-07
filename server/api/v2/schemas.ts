@@ -18,7 +18,7 @@ const richText = z.string().max(100_000).transform((value) => sanitizeHtml(value
 }));
 
 export const loginSchema = z.object({
-  username: username.transform((value) => value.toLowerCase()),
+  username: z.string().trim().min(3).max(200).transform((value) => value.toLowerCase()),
   password: z.string().min(8).max(200),
 }).strict();
 

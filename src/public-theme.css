@@ -1,10 +1,10 @@
 /* Public design tokens. Studio.css owns layout; this file owns the palette
    and common surfaces. Admin and printable CVs keep their own styles. */
 .studio-site {
-  --color-brand-dark: #000;
-  --color-brand-gray: #071020;
-  --color-brand-primary: #7c3aed;
-  --color-brand-purple: #7c3aed;
+  --color-brand-dark: #080b12;
+  --color-brand-gray: #101c2a;
+  --color-brand-primary: #168cff;
+  --color-brand-purple: #4f6bdb;
   --color-brand-accent: #67d9ff;
   --studio-ink: #fff;
   --studio-copy: #c3cedf;
@@ -12,7 +12,7 @@
   --studio-line: rgba(158, 180, 216, .18);
   --studio-panel: rgba(9, 19, 38, .72);
   --studio-panel-hover: rgba(15, 29, 52, .86);
-  --studio-accent: #b8a1ff;
+  --studio-accent: #62d9ff;
   --studio-highlight: #67d9ff;
   --studio-shadow: inset 0 1px 0 rgba(255,255,255,.045), 0 12px 32px rgba(0,0,0,.18);
   --studio-radius: 18px;
@@ -64,8 +64,8 @@
   border: 1px solid var(--studio-line);
   border-radius: var(--studio-radius);
   box-shadow: var(--studio-shadow);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
   transition: border-color 220ms ease, background-color 220ms ease;
 }
 .studio-site :where(.glass, .premium-card):hover { background: var(--studio-panel); transform: none; }
@@ -322,3 +322,12 @@
   .studio-site #home-hero .lg\:col-span-7 { grid-column: 1 / -1; max-width: 900px; }
   .studio-site #home-hero { min-height: auto; }
 }
+
+/* Runtime performance guardrails: defer off-screen painting and keep the hero glass lightweight. */
+.studio-site section:not(#home-hero) { content-visibility: auto; contain-intrinsic-size: 520px; }
+.studio-site #home-hero .home-hero-bg-video { position: absolute; inset: 0; z-index: 0; width: 100%; height: 100%; object-fit: cover; opacity: .32; }
+.studio-site #home-hero .home-hero-glass { position: absolute; inset: 0; z-index: 1; pointer-events: none; background: rgba(8, 18, 31, .68); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); }
+.studio-site #home-hero .home-hero-content { z-index: 20; }
+.studio-site #home-hero .home-hero-floating-stage { z-index: 30; isolation: isolate; }
+.studio-site #home-hero .home-hero-floating-video { position: relative; z-index: 3; filter: drop-shadow(0 0 28px rgba(22, 140, 255, .28)); }
+.studio-site .studio-nav-shell { backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
