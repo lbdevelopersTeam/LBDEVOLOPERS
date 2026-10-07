@@ -79,13 +79,18 @@ async function startServer() {
     if (!database) return res.status(503).end();
     try {
       const baseUrl = (process.env.PUBLIC_SITE_URL || `${req.protocol}://${req.get('host')}`).replace(/\/$/, '');
-      const urls = ['', '/about', '/services', '/portfolio', '/blog', '/contact'].map((route) => `${baseUrl}${route}`);
-      const [members, projects, blogs, memberProjects] = await Promise.all([
+      const urls = [
+        '', '/about', '/services', '/portfolio', '/blog', '/contact', '/booking', '/planner',
+        '/tech', '/faq', '/careers', '/privacy', '/terms',
+      ].map((route) => `${baseUrl}${route}`);
+      const [members, projects, blogs, memberProjects, services] = await Promise.all([
         database.selectFrom('team_members').select(['id', 'slug']).where('deleted_at', 'is', null).where('active', '=', true).execute(),
         database.selectFrom('projects').select(['id', 'slug']).where('deleted_at', 'is', null).where('status', '=', 'published').execute(),
         database.selectFrom('blog_posts').select('slug').where('deleted_at', 'is', null).where('status', '=', 'published').execute(),
         database.selectFrom('project_team_members').select(['project_id', 'team_member_id']).execute(),
+        database.selectFrom('services').select('slug').where('deleted_at', 'is', null).where('active', '=', true).execute(),
       ]);
+      for (const service of services) urls.push(`${baseUrl}/services/${service.slug}`);
       for (const project of projects) urls.push(`${baseUrl}/portfolio/${project.slug}`);
       for (const post of blogs) urls.push(`${baseUrl}/blog/${post.slug}`);
       for (const member of members) {
@@ -100,6 +105,13 @@ async function startServer() {
     } catch (error) {
       return next(error);
     }
+  });
+
+  app.get('/robots.txt', (req, res) => {
+    const baseUrl = (process.env.PUBLIC_SITE_URL || `${req.protocol}://${req.get('host')}`).replace(/\/$/, '');
+    res.type('text/plain').set('Cache-Control', 'public, max-age=3600').send(
+      `User-agent: *\nAllow: /\nDisallow: /admin\nDisallow: /api/\nDisallow: /uploads/\nSitemap: ${baseUrl}/sitemap.xml\n`,
+    );
   });
 
   const authenticateAdminPage = database ? authenticate(database) : null;
