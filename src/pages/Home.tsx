@@ -252,7 +252,6 @@ export default function Home() {
                 disablePictureInPicture
                 tabIndex={-1}
                 aria-hidden="true"
-                poster="/images/home-hero-side-poster.webp"
                 className="home-hero-floating-video relative z-10 h-full w-full object-contain object-center"
               >
                 <source src="/videos/lb-codebase-hero-transparent.webm" type="video/webm" />
