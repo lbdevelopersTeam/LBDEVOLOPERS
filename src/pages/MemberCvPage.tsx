@@ -8,6 +8,7 @@ import {
   MemberProfile,
   memberPortfolioClassName,
   memberPortfolioTheme,
+  normalizeMemberProfile,
 } from '../components/team/portfolio/shared';
 import { applyCuratedProfileFallback, fallbackTeam, mergeCuratedMemberProjects, Project } from '../lib/content';
 import { useSeo } from '../lib/seo';
@@ -15,7 +16,7 @@ import { memberPortraitUrl } from '../components/team/MemberPortrait';
 
 const fallbackMemberFor = (slug?: string): MemberProfile | null => {
   const member = fallbackTeam.find((item) => item.slug === slug);
-  return member ? mergeCuratedMemberProjects({ ...member, projects: [] as Project[] }) : null;
+  return member ? normalizeMemberProfile(mergeCuratedMemberProjects({ ...member, projects: [] as Project[] })) : null;
 };
 
 export default function MemberCvPage() {
@@ -40,19 +41,19 @@ export default function MemberCvPage() {
       })
       .then((data) => {
         if (!cancelled) {
-          const resolvedMember = applyCuratedProfileFallback(data);
+          const resolvedMember = applyCuratedProfileFallback(normalizeMemberProfile(data));
           setMember(
-            mergeCuratedMemberProjects({
+            normalizeMemberProfile(mergeCuratedMemberProjects({
               ...resolvedMember,
               email: resolvedMember.email?.trim() || fallback?.email || '',
               phone: resolvedMember.phone?.trim() || fallback?.phone || '',
-            })
+            }))
           );
         }
       })
       .catch((error: Error) => {
         if (cancelled) return;
-        if (error.message !== 'not-found' && fallback) setMember(fallback);
+        if (fallback) setMember(fallback);
         else setNotFound(true);
       })
       .finally(() => {

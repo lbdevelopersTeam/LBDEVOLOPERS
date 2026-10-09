@@ -3,7 +3,7 @@ import { ArrowLeft, ArrowRight, ArrowUpRight, CheckCircle2, ExternalLink, Github
 import { useEffect, useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import MemberNotFound from '../components/team/MemberNotFound';
-import { memberPortfolioClassName, memberPortfolioTheme, usableLink } from '../components/team/portfolio/shared';
+import { memberPortfolioClassName, memberPortfolioTheme, normalizeMemberProfile, usableLink } from '../components/team/portfolio/shared';
 import { fallbackTeam, mergeCuratedMemberProjects, Project, TeamMember } from '../lib/content';
 import { sanitizeHtml } from '../lib/sanitize';
 import { useSeo } from '../lib/seo';
@@ -74,7 +74,17 @@ export default function MemberProjectDetail() {
         if (!response.ok) throw new Error('request-failed');
         return response.json() as Promise<CaseStudyResponse>;
       })
-      .then((response) => { if (!cancelled) setData(response); })
+      .then((response) => {
+        if (!cancelled) {
+          const profile = normalizeMemberProfile({ ...response.member, projects: [response.project] });
+          setData({
+            ...response,
+            member: profile,
+            project: profile.projects[0],
+            related: Array.isArray(response.related) ? response.related : [],
+          });
+        }
+      })
       .catch(() => {
         if (!cancelled && !fallback) setNotFound(true);
       })

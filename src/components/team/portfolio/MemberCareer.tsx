@@ -19,7 +19,7 @@ export default function MemberCareer({
   if (!hasExperience && !hasEducation && !hasCertifications) return null;
 
   return (
-    <section id="experience" className="scroll-mt-28 border-b border-white/10 bg-[#080808] px-5 py-14 md:px-8 md:py-16 lg:py-20">
+    <section id="experience" className="scroll-mt-28 border-b border-white/10 px-5 py-14 md:px-8 md:py-16 lg:py-20">
       <div className="mx-auto max-w-[1400px]">
         <SectionHeading
           index={sectionIndex}

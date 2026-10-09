@@ -1,6 +1,6 @@
 import { motion } from 'motion/react';
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import MemberNotFound from '../components/team/MemberNotFound';
 import MemberHero from '../components/team/portfolio/MemberHero';
 import MemberIntroduction from '../components/team/portfolio/MemberIntroduction';
@@ -10,10 +10,13 @@ import MemberCareer from '../components/team/portfolio/MemberCareer';
 import MemberTestimonials from '../components/team/portfolio/MemberTestimonials';
 import MemberContactSection from '../components/team/portfolio/MemberContactSection';
 import MemberCvModal from '../components/team/portfolio/MemberCvModal';
+import MemberNavbar from '../components/team/portfolio/MemberNavbar';
+import MemberFooter from '../components/team/portfolio/MemberFooter';
 import {
   MemberProfile,
   memberPortfolioClassName,
   memberPortfolioTheme,
+  normalizeMemberProfile,
   memberSectionIndices,
   socialPlatforms,
   usableLink,
@@ -24,18 +27,24 @@ import { useSeo } from '../lib/seo';
 
 const fallbackMemberFor = (slug?: string): MemberProfile | null => {
   const member = fallbackTeam.find((item) => item.slug === slug);
-  return member ? mergeCuratedMemberProjects({ ...member, projects: [] as Project[] }) : null;
+  return member ? normalizeMemberProfile(mergeCuratedMemberProjects({ ...member, projects: [] as Project[] })) : null;
 };
 
 export default function MemberPortfolio() {
   const { slug } = useParams();
-  const { hash } = useLocation();
+  const { hash, pathname, search } = useLocation();
+  const navigate = useNavigate();
   const handledAnchor = useRef<string | null>(null);
   const previousHash = useRef(hash);
   const [member, setMember] = useState<MemberProfile | null>(() => fallbackMemberFor(slug));
   const [loading, setLoading] = useState(() => !fallbackMemberFor(slug));
   const [notFound, setNotFound] = useState(false);
   const [cvModalOpen, setCvModalOpen] = useState(false);
+
+  const closeCv = () => {
+    setCvModalOpen(false);
+    if (hash === '#cv') navigate({ pathname, search }, { replace: true });
+  };
 
   useEffect(() => {
     if (hash === '#cv') {
@@ -58,17 +67,17 @@ export default function MemberPortfolio() {
       })
       .then((data) => {
         if (!cancelled) {
-          const resolvedMember = applyCuratedProfileFallback(data);
-          setMember(mergeCuratedMemberProjects({
+          const resolvedMember = applyCuratedProfileFallback(normalizeMemberProfile(data));
+          setMember(normalizeMemberProfile(mergeCuratedMemberProjects({
             ...resolvedMember,
             email: resolvedMember.email?.trim() || fallback?.email || '',
             phone: resolvedMember.phone?.trim() || fallback?.phone || '',
-          }));
+          })));
         }
       })
       .catch((error: Error) => {
         if (cancelled) return;
-        if (error.message !== 'not-found' && fallback) setMember(fallback);
+        if (fallback) setMember(fallback);
         else setNotFound(true);
       })
       .finally(() => {
@@ -150,6 +159,7 @@ export default function MemberPortfolio() {
       style={memberPortfolioTheme}
       className={memberPortfolioClassName}
     >
+      <MemberNavbar member={member} />
       <MemberHero member={member} onOpenCv={() => setCvModalOpen(true)} />
       <div>
         <MemberIntroduction member={member} />
@@ -160,11 +170,13 @@ export default function MemberPortfolio() {
         <MemberContactSection member={member} sectionIndex={sectionIndices.contact} />
       </div>
 
+      <MemberFooter memberName={member.name} />
+
       {/* Interactive CV Modal */}
       <MemberCvModal
         member={member}
         isOpen={cvModalOpen}
-        onClose={() => setCvModalOpen(false)}
+        onClose={closeCv}
       />
     </motion.div>
   );

@@ -2,7 +2,7 @@ import { Dribbble, Github, Globe2, Instagram, Linkedin, Palette, Twitter } from 
 import { CSSProperties, ReactNode } from 'react';
 import { Project, TeamMember } from '../../../lib/content';
 
-export const MEMBER_PORTFOLIO_ACCENT = '#b8a1ff';
+export const MEMBER_PORTFOLIO_ACCENT = '#93c9ff';
 export const memberPortfolioTheme = {
   '--member-accent': MEMBER_PORTFOLIO_ACCENT,
 } as CSSProperties;
@@ -17,6 +17,26 @@ export type MemberProfile = TeamMember & {
     certificationsCount?: number;
   };
 };
+
+/** Keep public profiles usable while older API records are being migrated. */
+export function normalizeMemberProfile(member: MemberProfile): MemberProfile {
+  return {
+    ...member,
+    skills: Array.isArray(member.skills) ? member.skills : [],
+    skillGroups: Array.isArray(member.skillGroups) ? member.skillGroups.filter((group) => Array.isArray(group.skills)) : [],
+    projects: Array.isArray(member.projects) ? member.projects.map((project) => ({
+      ...project,
+      technologies: Array.isArray(project.technologies) ? project.technologies : [],
+      gallery: Array.isArray(project.gallery) ? project.gallery : [],
+    })) : [],
+    experience: Array.isArray(member.experience) ? member.experience : [],
+    education: Array.isArray(member.education) ? member.education : [],
+    certifications: Array.isArray(member.certifications) ? member.certifications : [],
+    testimonials: Array.isArray(member.testimonials) ? member.testimonials : [],
+    languages: Array.isArray(member.languages) ? member.languages : [],
+    socialLinks: member.socialLinks && typeof member.socialLinks === 'object' ? member.socialLinks : {},
+  };
+}
 
 export const usableLink = (value?: string) => {
   if (!value || value === '#') return false;
@@ -84,11 +104,11 @@ export function SectionHeading({
     <header className="grid gap-5 border-t border-white/15 pt-5 md:grid-cols-[140px_minmax(0,1fr)] md:gap-8">
       <div className="flex items-start justify-between md:block">
         <span className="text-xs font-black text-[var(--member-accent)]">{index}</span>
-        <p className="mt-0 text-[10px] font-black uppercase tracking-[0.18em] text-white/40 md:mt-4">{label}</p>
+        <p className="mt-0 text-xs font-semibold uppercase tracking-[0.1em] text-white/65 md:mt-4">{label}</p>
       </div>
       <div>
         <h2 className="member-section-title max-w-5xl font-display font-black uppercase leading-[1.02] text-white">{children}</h2>
-        {description && <p className="mt-4 max-w-2xl text-sm leading-6 text-white/50 md:text-base md:leading-7">{description}</p>}
+        {description && <p className="mt-4 max-w-2xl text-base leading-7 text-white/70">{description}</p>}
       </div>
     </header>
   );

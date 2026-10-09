@@ -29,12 +29,10 @@ export default function MemberExpertise({ member }: { member: MemberProfile }) {
       ? [{ category: 'Core Practice Disciplines', skills: member.skills }]
       : [];
 
-  if (!groups.length) return null;
-
   const projectRoles = Array.from(new Set(member.projects.map((project) => project.memberRole).filter(Boolean))) as string[];
 
   return (
-    <section id="skills" className="scroll-mt-28 border-b border-white/10 bg-[#080808] px-5 py-14 md:px-8 md:py-16 lg:py-20">
+    <section id="skills" className="scroll-mt-28 border-b border-white/10 px-5 py-14 md:px-8 md:py-16 lg:py-20">
       <div className="mx-auto max-w-[1400px]">
         <SectionHeading
           index="02"
@@ -46,6 +44,11 @@ export default function MemberExpertise({ member }: { member: MemberProfile }) {
         </SectionHeading>
 
         <div className="mt-9 space-y-4 md:mt-12">
+          {!groups.length && (
+            <p className="member-glass rounded-xl p-6 text-base text-white/70">
+              This profile's expertise is being updated. Explore the case studies below to see recent work.
+            </p>
+          )}
           {groups.map((group, groupIndex) => {
             const Icon = categoryIcons[group.category] || Layers;
             return (

@@ -6,7 +6,7 @@ export default function MemberFooter({ memberName }: { memberName: string }) {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-white/10 bg-black px-5 py-10 md:px-8">
+    <footer className="border-t border-white/10 px-5 py-10 md:px-8">
       <div className="mx-auto flex max-w-[1400px] flex-col gap-8 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-4">
           <span
