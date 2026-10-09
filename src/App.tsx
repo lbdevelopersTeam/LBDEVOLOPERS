@@ -233,7 +233,7 @@ export default function App() {
 function AppShell() {
   const location = useLocation();
   const isAdmin = location.pathname.startsWith('/admin');
-  const isMemberPortfolio = /^\/team\/[^/]+\/?$/.test(location.pathname);
+  const isMemberRoute = /^\/team\/[^/]+(?:\/|$)/.test(location.pathname);
 
   return (
     <>
@@ -246,12 +246,12 @@ function AppShell() {
         Skip to content
       </a>
       <div id="top" className={`flex min-h-screen flex-col${isAdmin ? '' : ' studio-site'}`}>
-        {!isAdmin && !isMemberPortfolio && <Navbar />}
+        {!isAdmin && !isMemberRoute && <Navbar />}
         <main id="main-content" tabIndex={-1} className="flex-grow outline-none">
           <AnimatedRoutes />
         </main>
-        {!isAdmin && !isMemberPortfolio && <WhatsAppButton />}
-        {!isAdmin && !isMemberPortfolio && <Footer />}
+        {!isAdmin && !isMemberRoute && <WhatsAppButton />}
+        {!isAdmin && !isMemberRoute && <Footer />}
       </div>
     </>
   );

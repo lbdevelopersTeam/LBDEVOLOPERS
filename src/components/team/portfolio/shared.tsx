@@ -101,15 +101,10 @@ export function SectionHeading({
   description?: string;
 }) {
   return (
-    <header className="grid gap-5 border-t border-white/15 pt-5 md:grid-cols-[140px_minmax(0,1fr)] md:gap-8">
-      <div className="flex items-start justify-between md:block">
-        <span className="text-xs font-black text-[var(--member-accent)]">{index}</span>
-        <p className="mt-0 text-xs font-semibold uppercase tracking-[0.1em] text-white/65 md:mt-4">{label}</p>
-      </div>
-      <div>
-        <h2 className="member-section-title max-w-5xl font-display font-black uppercase leading-[1.02] text-white">{children}</h2>
-        {description && <p className="mt-4 max-w-2xl text-base leading-7 text-white/70">{description}</p>}
-      </div>
+    <header className="member-section-heading">
+      <p className="member-section-kicker"><span>{index}</span> / {label}</p>
+      <h2 className="member-section-title">{children}</h2>
+      {description && <p className="member-section-description">{description}</p>}
     </header>
   );
 }

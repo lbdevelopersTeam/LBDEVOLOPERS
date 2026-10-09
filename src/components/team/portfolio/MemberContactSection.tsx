@@ -45,10 +45,9 @@ export default function MemberContactSection({
         <SectionHeading
           index={sectionIndex}
           label="Direct Contact"
-          description={`Get in touch with ${member.name} for technical consulting, project scoping, design systems, or bespoke full-stack delivery.`}
+          description={`Send a project inquiry to ${member.name} and the LB CodeBase team.`}
         >
-          Have a project in mind?<br />
-          <span className="text-white/28">Start the conversation.</span>
+          Let's work together.
         </SectionHeading>
 
         <div className="mt-9 grid gap-8 md:mt-12 lg:grid-cols-12 lg:gap-8">

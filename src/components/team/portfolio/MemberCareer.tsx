@@ -24,10 +24,9 @@ export default function MemberCareer({
         <SectionHeading
           index={sectionIndex}
           label="Career & Credentials"
-          description="A chronological account of leadership roles, engineering milestones, verified certifications, and academic foundations."
+          description="Professional roles, education, and credentials."
         >
-          Professional record.<br />
-          <span className="text-white/28">Roles and milestones.</span>
+          Experience and education.
         </SectionHeading>
 
         {/* Experience Timeline Header & CV Action */}

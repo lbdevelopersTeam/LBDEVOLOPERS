@@ -19,10 +19,9 @@ export default function MemberWork({ member }: { member: MemberProfile }) {
         <SectionHeading
           index="03"
           label="Selected Work"
-          description="Production case studies engineered in collaboration with LB CodeBase. Each project highlights specific individual contributions."
+          description={`Selected projects and ${member.name}'s contribution to each one.`}
         >
-          Projects with purpose.<br />
-          <span className="text-white/28">Contribution in context.</span>
+          Selected work.
         </SectionHeading>
 
         {member.projects.length ? (
@@ -90,14 +89,6 @@ export default function MemberWork({ member }: { member: MemberProfile }) {
                             className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover/image:scale-[1.03]"
                           />
                         </div>
-                        <span
-                          className="absolute right-5 top-5 flex h-11 w-11 items-center justify-center rounded-lg border border-white/15 bg-black/60 text-white backdrop-blur-xl transition-all group-hover/image:scale-110"
-                          style={{
-                            color: 'var(--member-accent)',
-                          }}
-                        >
-                          <ArrowUpRight className="h-5 w-5" />
-                        </span>
                       </Link>
 
                       {/* Project Meta & Narrative */}

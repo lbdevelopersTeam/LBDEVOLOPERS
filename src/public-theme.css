@@ -266,35 +266,6 @@
 .studio-site .services-estimator > div:last-child { padding: 0; background: transparent; border: 0; }
 .studio-site .carousel-pause { min-height: 44px; padding: 8px 12px; color: var(--studio-copy); }
 .studio-site :where(.bg-brand-primary/10, .bg-brand-primary/5, [class*="bg-brand-purple/"]):not(.member-portfolio *) { background-color: rgba(124,58,237,.06); }
-.studio-site .member-portfolio {
-  --member-background: #0b1529;
-  --member-surface: #142440;
-  --member-border: rgba(174, 199, 235, .2);
-  --member-accent: #93c9ff;
-  color: #f6f9ff;
-}
-.studio-site .member-portfolio .member-glass {
-  background: rgba(22, 39, 68, .76);
-  border-color: var(--member-border);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.06), 0 12px 32px rgba(1, 9, 24, .14);
-}
-.studio-site .member-portfolio .member-glass-strong { background: rgba(15, 29, 52, .94); }
-.studio-site .member-portfolio :where(h1, h2, h3) { font-family: var(--font-display); font-weight: 700; letter-spacing: -.045em; }
-.studio-site .member-portfolio :where(.member-hero-name, .member-section-title, .member-project-title, .member-case-title, .member-intro-copy) { overflow-wrap: anywhere; }
-.studio-site .member-portfolio :where(p, li) { line-height: 1.65; }
-.studio-site .member-portfolio :where([class*="text-white/28"], [class*="text-white/30"]) { color: #abc9ea; }
-.studio-site .member-portfolio :where([class*="text-white/35"], [class*="text-white/40"], [class*="text-white/45"], [class*="text-white/50"]) { color: #aebfda; }
-.studio-site .member-portfolio :where([class*="text-white/55"], [class*="text-white/60"], [class*="text-white/65"]) { color: #c8d7ec; }
-.studio-site .member-portfolio :where([class*="text-[8px]"], [class*="text-[9px]"], [class*="text-[10px]"]) { font-size: .75rem; letter-spacing: .06em; }
-.studio-site .member-portfolio .member-hero { min-height: min(860px, 100svh); }
-.studio-site .member-portfolio .member-grid-surface { background-image: linear-gradient(rgba(174,199,235,.035) 1px, transparent 1px), linear-gradient(90deg, rgba(174,199,235,.035) 1px, transparent 1px); }
-.studio-site .member-portfolio .member-hero-light { background-image: radial-gradient(circle at 78% 45%, rgba(52, 130, 221, .18), transparent 40%); }
-.studio-site .member-portfolio :where(#skills, #experience, #testimonials) { background-color: #101e37; }
-.studio-site .member-portfolio footer { background-color: #0b1529; }
-.studio-site .member-portfolio :where(a, button) { transition-duration: 220ms; }
-@media (prefers-reduced-motion: reduce) {
-  .studio-site .member-portfolio :where(a, button, img) { transition-duration: .01ms !important; }
-}
 @media (max-width: 1023px) {
   .studio-site .services-directory-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .studio-site .services-process-grid { grid-template-columns: 1fr; max-width: 680px; gap: 40px; }

@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @import "./studio.css";
 @import "./public-theme.css";
+@import "./member-portfolio.css";
 
 @font-face {
   font-family: "Outfit";

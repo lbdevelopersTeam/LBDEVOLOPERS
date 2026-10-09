@@ -9,7 +9,6 @@ import MemberWork from '../components/team/portfolio/MemberWork';
 import MemberCareer from '../components/team/portfolio/MemberCareer';
 import MemberTestimonials from '../components/team/portfolio/MemberTestimonials';
 import MemberContactSection from '../components/team/portfolio/MemberContactSection';
-import MemberCvModal from '../components/team/portfolio/MemberCvModal';
 import MemberNavbar from '../components/team/portfolio/MemberNavbar';
 import MemberFooter from '../components/team/portfolio/MemberFooter';
 import {
@@ -32,25 +31,17 @@ const fallbackMemberFor = (slug?: string): MemberProfile | null => {
 
 export default function MemberPortfolio() {
   const { slug } = useParams();
-  const { hash, pathname, search } = useLocation();
+  const { hash } = useLocation();
   const navigate = useNavigate();
   const handledAnchor = useRef<string | null>(null);
   const previousHash = useRef(hash);
   const [member, setMember] = useState<MemberProfile | null>(() => fallbackMemberFor(slug));
   const [loading, setLoading] = useState(() => !fallbackMemberFor(slug));
   const [notFound, setNotFound] = useState(false);
-  const [cvModalOpen, setCvModalOpen] = useState(false);
-
-  const closeCv = () => {
-    setCvModalOpen(false);
-    if (hash === '#cv') navigate({ pathname, search }, { replace: true });
-  };
 
   useEffect(() => {
-    if (hash === '#cv') {
-      setCvModalOpen(true);
-    }
-  }, [hash]);
+    if (hash === '#cv' && slug) navigate(`/team/${slug}/cv`, { replace: true });
+  }, [hash, navigate, slug]);
 
   useEffect(() => {
     let cancelled = false;
@@ -160,24 +151,18 @@ export default function MemberPortfolio() {
       className={memberPortfolioClassName}
     >
       <MemberNavbar member={member} />
-      <MemberHero member={member} onOpenCv={() => setCvModalOpen(true)} />
-      <div>
+      <MemberHero member={member} />
+      <div className="member-profile-content">
         <MemberIntroduction member={member} />
         <MemberExpertise member={member} />
         <MemberWork member={member} />
-        <MemberCareer member={member} sectionIndex={sectionIndices.career} onOpenCv={() => setCvModalOpen(true)} />
+        <MemberCareer member={member} sectionIndex={sectionIndices.career} />
         <MemberTestimonials member={member} sectionIndex={sectionIndices.testimonials} />
         <MemberContactSection member={member} sectionIndex={sectionIndices.contact} />
       </div>
 
       <MemberFooter memberName={member.name} />
 
-      {/* Interactive CV Modal */}
-      <MemberCvModal
-        member={member}
-        isOpen={cvModalOpen}
-        onClose={closeCv}
-      />
     </motion.div>
   );
 }

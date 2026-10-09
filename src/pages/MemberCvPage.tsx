@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { motion } from 'motion/react';
-import { ArrowLeft, User } from 'lucide-react';
 import MemberNotFound from '../components/team/MemberNotFound';
 import MemberCvView from '../components/team/portfolio/MemberCvView';
+import MemberPageHeader from '../components/team/portfolio/MemberPageHeader';
 import {
   MemberProfile,
   memberPortfolioClassName,
@@ -97,29 +97,10 @@ export default function MemberCvPage() {
       style={memberPortfolioTheme}
       className={`${memberPortfolioClassName} cv-page-backdrop`}
     >
-      {/* Top Page Header (Hidden in print) */}
-      <header className="cv-page-header print:hidden border-b border-white/10 px-4 pb-4 pt-28 backdrop-blur-xl sm:px-8 sm:pt-32">
-        <div className="mx-auto flex max-w-5xl items-center justify-between gap-4">
-          <Link
-            to={`/team/${member.slug}`}
-            className="group flex items-center gap-2 text-xs font-black uppercase tracking-wider text-white/60 hover:text-white transition-colors"
-          >
-            <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
-            <span>Back to {member.name}&apos;s Portfolio</span>
-          </Link>
-
-          <Link
-            to={`/team/${member.slug}`}
-            className="flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-wider text-white/70 hover:border-white/20 hover:text-white transition-colors"
-          >
-            <User className="h-3.5 w-3.5" style={{ color: 'var(--member-accent)' }} />
-            <span>Profile Page</span>
-          </Link>
-        </div>
-      </header>
+      <MemberPageHeader member={member} pageLabel="Curriculum vitae" />
 
       {/* Main CV Content */}
-      <main className="relative py-4 sm:py-8">
+      <main className="relative pb-4 pt-24 sm:pb-8 sm:pt-28 print:p-0">
         <MemberCvView member={member} />
       </main>
     </motion.div>

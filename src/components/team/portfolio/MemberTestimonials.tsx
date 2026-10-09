@@ -20,10 +20,9 @@ export default function MemberTestimonials({
         <SectionHeading
           index={sectionIndex || '04'}
           label="Endorsements"
-          description={`Direct feedback from clients and leadership on high-impact projects delivered by ${member.name}.`}
+          description={`Feedback on projects delivered with ${member.name}.`}
         >
-          Trusted by founders.<br />
-          <span className="text-white/28">Proven in production.</span>
+          Client feedback.
         </SectionHeading>
 
         <div className="mt-9 grid gap-6 md:mt-12 md:grid-cols-2 lg:gap-8">

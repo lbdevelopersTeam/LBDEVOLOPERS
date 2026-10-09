@@ -1,5 +1,4 @@
-import { motion, useReducedMotion } from 'motion/react';
-import { ArrowUpRight, CheckCircle, Code2, Layers, Wrench } from 'lucide-react';
+import { CheckCircle, Code2, Layers, Wrench } from 'lucide-react';
 import { MemberProfile, SectionHeading } from './shared';
 
 const categoryIcons: Record<string, typeof Layers> = {
@@ -22,7 +21,6 @@ const categoryIcons: Record<string, typeof Layers> = {
 };
 
 export default function MemberExpertise({ member }: { member: MemberProfile }) {
-  const reducedMotion = useReducedMotion();
   const groups = member.skillGroups?.length
     ? member.skillGroups
     : member.skills.length
@@ -37,10 +35,9 @@ export default function MemberExpertise({ member }: { member: MemberProfile }) {
         <SectionHeading
           index="02"
           label="Expertise"
-          description="A structured breakdown of core competencies, frameworks, and credited technical roles across live deployments."
+          description="Core disciplines, tools, and responsibilities across published work."
         >
-          Tools serve the work.<br />
-          <span className="text-white/28">The thinking comes first.</span>
+          Expertise and capabilities.
         </SectionHeading>
 
         <div className="mt-9 space-y-4 md:mt-12">
@@ -52,12 +49,8 @@ export default function MemberExpertise({ member }: { member: MemberProfile }) {
           {groups.map((group, groupIndex) => {
             const Icon = categoryIcons[group.category] || Layers;
             return (
-              <motion.div
+              <div
                 key={`${group.category}-${groupIndex}`}
-                initial={reducedMotion ? false : { opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: reducedMotion ? 0 : groupIndex * 0.08, duration: 0.5 }}
                 className="member-glass grid gap-6 rounded-xl p-6 sm:p-7 md:grid-cols-[190px_minmax(0,1fr)] md:gap-8"
               >
                 <div>
@@ -79,35 +72,27 @@ export default function MemberExpertise({ member }: { member: MemberProfile }) {
                 </div>
 
                 <ul className="grid gap-x-8 sm:grid-cols-2">
-                  {group.skills.map((skill, index) => (
-                    <motion.li
+                  {group.skills.map((skill) => (
+                    <li
                       key={skill}
-                      initial={reducedMotion ? false : { opacity: 0, x: -10 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: reducedMotion ? 0 : Math.min(index * 0.03, 0.2) }}
-                      className="group flex min-h-12 items-center justify-between border-b border-white/8 py-2.5 pr-2 font-display text-sm font-bold uppercase text-white/80 transition-colors hover:text-white md:text-base"
+                      className="flex min-h-12 items-center border-b border-white/8 py-2.5 pr-2 text-sm text-white/80 md:text-base"
                     >
                       <span className="flex items-center gap-2.5">
                         <span
-                          className="h-1.5 w-1.5 rounded-full opacity-40 transition-opacity group-hover:opacity-100"
+                          className="h-1.5 w-1.5 shrink-0 rounded-full opacity-70"
                           style={{ backgroundColor: 'var(--member-accent)' }}
                         />
                         {skill}
                       </span>
-                      <ArrowUpRight className="h-4 w-4 text-white/20 transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-[var(--member-accent)]" />
-                    </motion.li>
+                    </li>
                   ))}
                 </ul>
-              </motion.div>
+              </div>
             );
           })}
 
           {projectRoles.length > 0 && (
-            <motion.div
-              initial={reducedMotion ? false : { opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+            <div
               className="member-glass member-glass-strong grid gap-6 rounded-xl p-6 sm:p-7 md:grid-cols-[190px_minmax(0,1fr)] md:gap-8"
             >
               <div>
@@ -139,7 +124,7 @@ export default function MemberExpertise({ member }: { member: MemberProfile }) {
                   </span>
                 ))}
               </div>
-            </motion.div>
+            </div>
           )}
         </div>
       </div>

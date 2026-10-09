@@ -3,6 +3,8 @@ import { ArrowLeft, ArrowRight, ArrowUpRight, CheckCircle2, ExternalLink, Github
 import { useEffect, useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import MemberNotFound from '../components/team/MemberNotFound';
+import MemberPageHeader from '../components/team/portfolio/MemberPageHeader';
+import MemberFooter from '../components/team/portfolio/MemberFooter';
 import { memberPortfolioClassName, memberPortfolioTheme, normalizeMemberProfile, usableLink } from '../components/team/portfolio/shared';
 import { fallbackTeam, mergeCuratedMemberProjects, Project, TeamMember } from '../lib/content';
 import { sanitizeHtml } from '../lib/sanitize';
@@ -172,11 +174,8 @@ export default function MemberProjectDetail() {
       style={memberPortfolioTheme}
       className={memberPortfolioClassName}
     >
-      <header className="member-grid-surface relative px-5 pb-12 pt-28 sm:pt-32 md:px-8 md:pb-16 lg:pt-36">
-        <div className="member-hero-light pointer-events-none absolute inset-0" aria-hidden="true" />
-        <div className="pointer-events-none absolute right-0 top-12 font-display text-[7rem] font-black uppercase leading-none text-white/[0.02] md:text-[14rem]" aria-hidden="true">
-          Case
-        </div>
+      <MemberPageHeader member={member} pageLabel="Case study" />
+      <header className="member-case-header relative px-5 pb-12 pt-28 sm:pt-32 md:px-8 md:pb-16 lg:pt-36">
 
         <div className="relative mx-auto max-w-[1400px]">
           {/* Breadcrumbs */}
@@ -455,6 +454,8 @@ export default function MemberProjectDetail() {
           )}
         </div>
       </div>
+
+      <MemberFooter memberName={member.name} />
 
     </motion.article>
   );
