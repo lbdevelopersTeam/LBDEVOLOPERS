@@ -5,6 +5,7 @@ import { Link, useParams } from 'react-router-dom';
 import MemberNotFound from '../components/team/MemberNotFound';
 import MemberPageHeader from '../components/team/portfolio/MemberPageHeader';
 import MemberFooter from '../components/team/portfolio/MemberFooter';
+import { HeroBackground } from '../components/common/Animations';
 import { memberPortfolioClassName, memberPortfolioTheme, normalizeMemberProfile, usableLink } from '../components/team/portfolio/shared';
 import { fallbackTeam, mergeCuratedMemberProjects, Project, TeamMember } from '../lib/content';
 import { sanitizeHtml } from '../lib/sanitize';
@@ -176,6 +177,7 @@ export default function MemberProjectDetail() {
     >
       <MemberPageHeader member={member} pageLabel="Case study" />
       <header className="member-case-header relative px-5 pb-12 pt-28 sm:pt-32 md:px-8 md:pb-16 lg:pt-36">
+        <HeroBackground videoSrc="/videos/other-pages-hero.mp4" poster="/images/thesearchforabsolutesection.jpg" />
 
         <div className="relative mx-auto max-w-[1400px]">
           {/* Breadcrumbs */}

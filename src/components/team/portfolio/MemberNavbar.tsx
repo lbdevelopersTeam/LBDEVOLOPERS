@@ -1,13 +1,14 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { ArrowLeft, ArrowUpRight, Menu, X } from 'lucide-react';
-import MemberPortrait from '../MemberPortrait';
-import { MemberProfile, initials } from './shared';
+import { ArrowLeft, ArrowRight, Menu, X } from 'lucide-react';
+import { MemberProfile } from './shared';
 
 export default function MemberNavbar({ member }: { member: MemberProfile }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('member-home');
   const navRef = useRef<HTMLElement>(null);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
   const location = useLocation();
   const navLinks = useMemo(() => [
     { href: '#member-home', label: 'Home' },
@@ -23,9 +24,19 @@ export default function MemberNavbar({ member }: { member: MemberProfile }) {
   useEffect(() => setIsOpen(false), [location.pathname, location.hash]);
 
   useEffect(() => {
+    const update = () => setScrolled(window.scrollY > 20);
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+    return () => window.removeEventListener('scroll', update);
+  }, []);
+
+  useEffect(() => {
     if (!isOpen) return;
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') setIsOpen(false);
+      if (event.key === 'Escape') {
+        setIsOpen(false);
+        menuButtonRef.current?.focus();
+      }
     };
     const onPointerDown = (event: PointerEvent) => {
       if (!navRef.current?.contains(event.target as Node)) setIsOpen(false);
@@ -60,19 +71,14 @@ export default function MemberNavbar({ member }: { member: MemberProfile }) {
   }, [navLinks]);
 
   return (
-    <nav ref={navRef} className="member-nav" aria-label={`${member.name} portfolio navigation`}>
+    <nav ref={navRef} className={`member-nav${scrolled ? ' member-nav-scrolled' : ''}`} aria-label={`${member.name} portfolio navigation`}>
       <div className="member-nav-inner">
-        <a href="#member-home" className="member-nav-identity" onClick={() => setIsOpen(false)}>
-          {member.avatar ? (
-            <MemberPortrait src={member.avatar} alt="" sizes="42px" className="member-nav-avatar" />
-          ) : (
-            <span className="member-nav-avatar member-nav-initials">{initials(member.name)}</span>
-          )}
-          <span className="member-nav-person">
-            <strong>{member.name}</strong>
-            <small>{member.role}</small>
-          </span>
-        </a>
+        <div className="member-nav-brand-group">
+          <Link to="/" className="member-nav-brand" aria-label="LB CodeBase home" onClick={() => setIsOpen(false)}>
+            <img src="/images/LB CodeBase Logo.webp" alt="LB CodeBase" width="144" height="32" decoding="async" />
+          </Link>
+          <span className="member-nav-context" title={`${member.name} portfolio`}>{member.name}</span>
+        </div>
 
         <div className="member-nav-links">
           {navLinks.map(({ href, label }) => (
@@ -84,12 +90,13 @@ export default function MemberNavbar({ member }: { member: MemberProfile }) {
 
         <div className="member-nav-actions">
           <Link to="/about#team-directory" className="member-nav-back">
-            <ArrowLeft size={16} aria-hidden="true" /> <span>All team</span>
+            <ArrowLeft size={15} aria-hidden="true" /> <span>All team</span>
           </Link>
           <a href="#contact" className="member-nav-contact">
-            Get in touch <ArrowUpRight size={17} aria-hidden="true" />
+            Start a project <ArrowRight size={16} aria-hidden="true" />
           </a>
           <button
+            ref={menuButtonRef}
             type="button"
             className="member-nav-toggle"
             aria-label={isOpen ? 'Close portfolio menu' : 'Open portfolio menu'}
@@ -104,6 +111,7 @@ export default function MemberNavbar({ member }: { member: MemberProfile }) {
 
       {isOpen && (
         <div id="member-nav-menu" className="member-nav-menu">
+          <p className="member-nav-menu-title">{member.name}</p>
           {navLinks.map(({ href, label }) => (
             <a key={href} href={href} onClick={() => setIsOpen(false)} aria-current={activeSection === href.slice(1) ? 'location' : undefined}>
               {label}

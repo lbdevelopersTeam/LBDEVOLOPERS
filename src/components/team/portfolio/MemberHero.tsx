@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { ArrowDownRight, ArrowUpRight, FileText, Mail, MapPin } from 'lucide-react';
+import { HeroBackground } from '../../common/Animations';
 import MemberPortrait from '../MemberPortrait';
 import { MemberProfile, initials, socialPlatforms, usableLink } from './shared';
 
@@ -8,6 +9,7 @@ export default function MemberHero({ member }: { member: MemberProfile }) {
 
   return (
     <section id="member-home" className="member-hero">
+      <HeroBackground videoSrc="/videos/other-pages-hero.mp4" poster="/images/thesearchforabsolutesection.jpg" />
       <div className="member-hero-inner">
         <div className="member-hero-copy">
           <p className="member-eyebrow">LB CodeBase <span aria-hidden="true">/</span> Team portfolio</p>
@@ -52,7 +54,7 @@ export default function MemberHero({ member }: { member: MemberProfile }) {
               <MemberPortrait
                 src={member.avatar}
                 alt={`${member.name}, ${member.role}`}
-                sizes="(min-width: 1024px) 480px, (min-width: 640px) 600px, 100vw"
+                sizes="(min-width: 1024px) 340px, (min-width: 640px) 280px, 240px"
                 fetchPriority="high"
                 className="member-hero-portrait"
               />
